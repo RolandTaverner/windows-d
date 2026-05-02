@@ -1,11 +1,28 @@
 {
     "name": "windows-d",
     "description": "The D Windows SDK projections",
-    "authors": ["Răzvan Ștefănescu"],
+    "authors": [
+        "Răzvan Ștefănescu"
+    ],
     "license": "BSL-1.0",
-    "targetType": "none",
+	"buildTypes": {
+		"debug": {
+			"buildOptions": [
+				"debugMode",
+				"debugInfo",
+				"optimize"
+			]
+		},
+		"release": {
+			"buildOptions": [
+				"releaseMode",
+				"inline",
+				"optimize"
+			]
+		}
+	},
     "dependencies": {
-        "windows-d:wind" : "*",
+        "windows-d:wind": "*",
         "windows-d:windows": "*"
     },
     "subPackages": [
@@ -14,17 +31,27 @@
             "description": "The D Windows SDK projection generator",
             "targetName": "wind",
             "targetType": "executable",
-            "targetPath": "bin",
-            "sourcePaths": ["src"]    
+            "targetPath": "bin/$BUILD_TYPE",
+            "sourcePaths": [
+                "src"
+            ]
         },
         {
             "name": "windows",
             "description": "The D Windows SDK projection library",
             "targetType": "staticLibrary",
             "targetName": "windows",
-            "targetPath": "bin",
-            "sourcePaths": ["out/windows"],
-            "importPaths": ["out"]
+            "targetPath": "bin/$BUILD_TYPE",
+            "sourcePaths": [
+                "out/windows"
+            ],
+            "importPaths": [
+                "out"
+            ]
+        },
+        {
+            "name": "default",
+            "targetType": "none"
         }
     ]
 }
