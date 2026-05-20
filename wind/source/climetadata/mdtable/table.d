@@ -1,22 +1,25 @@
 module climetadata.mdtable.table;
 
+import std.exception : enforce;
+private import std.format : format;
+private import std.traits : isIntegral;
 import std.typecons : Tuple;
 
 public import climetadata.mdtable.type;
+public import climetadata.mdtable.row : Row;
+public import climetadata.mdtable.valuekind;
 
 public alias ColumnKindSize = Tuple!(ValueKind, "kind", ubyte, "size");
 
-public struct Table
+public struct Table(MDTableType md)
 {
     @disable this();
 
-    public this(MDTableType mdType, ref const(ubyte)[] tablesHeap, uint rowCount, ColumnKindSize[] colKS)
+    public this(ref const(ubyte)[] tablesHeap, uint rowCount, ColumnKindSize[] colKS)
     {
         assert(colKS.length >= 1);
         assert(colKS.length <= 6);
         assert(colKS[0].size != 0);
-
-        this.mdType = mdType;
 
         uint rowSize = 0;
         foreach (c; colKS)
@@ -42,7 +45,30 @@ public struct Table
         this.columns = columnDescs;
     }
 
-    public const MDTableType mdType;
+    // getValue returns column value for row at index rowIndex. Row index is 0-based
+    public T getValue(T)(uint rowIndex, uint column) const if (isIntegral!T)
+    {
+        enforce(rowIndex < rowCount, format("Invalid rowIndex (%d of %d)", rowIndex, rowCount));
+        enforce(column < columns.length, format("Invalid column (%d of %d)", column, columns.length));
+        auto colDesc = columns[column];
+        assert(colDesc.size == 1 || colDesc.size == 2 || colDesc.size == 4 || colDesc.size == 8);
+        assert(colDesc.size <= T.sizeof);
+
+        auto ptr = data.ptr + rowIndex * rowSize + colDesc.offset;
+
+        switch (colDesc.size)
+        {
+            case 1:
+                return cast(T)(*ptr);
+            case 2:
+                return cast(T)(*cast(const(ushort)*)ptr);
+            case 4:
+                return cast(T)(*cast(const(uint)*)ptr);
+            default:
+                return cast(T)(*cast(const(ulong)*)ptr);
+        }
+    }
+
     public const uint rowSize;
     public const uint rowCount;
     public const(ColumnDesc[]) columns;
@@ -52,7 +78,7 @@ public struct Table
 unittest
 {
     const(ubyte)[] mockTablesHeap = [0, 1, 2, 3, 4, 5];
-    auto testTable = Table(MDTableType.unknown, mockTablesHeap, 1,
+    auto testTable = Table!(MDTableType.unknown)(mockTablesHeap, 1,
         [
             ColumnKindSize(ValueKind.Unused, 2),
             ColumnKindSize(ValueKind.String, 4),
@@ -83,15 +109,4 @@ public struct ColumnDesc
     const ushort offset; // bytes
     const ushort size; // bytes
     const ValueKind kind;
-}
-
-public enum ValueKind
-{
-    Unused,
-    Integral, // Integer number
-    Guid, // Index in Guids heap
-    String, // offset in Strings heap
-    Blob, // offset in Blobs heap
-    Index, // Index in some table
-    CodedIndex // Coded index in some table
 }

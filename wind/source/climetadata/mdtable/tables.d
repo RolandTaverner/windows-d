@@ -98,7 +98,7 @@ struct Tables
 
         // Attention: initialization order must be preserved because Table constructor updates tablesView
 
-        moduleTable = Table(MDTableType.module_, tablesView, rowCounts[MDTableType.module_],
+        moduleTable = Table!(MDTableType.module_)(tablesView, rowCounts[MDTableType.module_],
             [
                 ColumnKindSize(ValueKind.Unused, 2), // Generation (a 2-byte value, reserved, shall be zero)
                 ColumnKindSize(ValueKind.String, stringIndexSize), // Name (an index into the String heap) 
@@ -107,14 +107,14 @@ struct Tables
                 ColumnKindSize(ValueKind.Guid, guidIndexSize) // EncBaseId (an index into the Guid heap; reserved, shall be zero) 
             ]);
 
-        typeRefTable = Table(MDTableType.typeRef, tablesView, rowCounts[MDTableType.typeRef],
+        typeRefTable = Table!(MDTableType.typeRef)(tablesView, rowCounts[MDTableType.typeRef],
             [
                 ColumnKindSize(ValueKind.CodedIndex, resolutionScopeIndexSize), // ResolutionScope (an index into a Module, ModuleRef, AssemblyRef or TypeRef table, or null; more precisely, a ResolutionScope (§II.24.2.6) coded index)
                 ColumnKindSize(ValueKind.String, stringIndexSize), // TypeName (an index into the String heap) 
                 ColumnKindSize(ValueKind.String, stringIndexSize) // TypeNamespace (an index into the String heap) 
             ]);
 
-        typeDefTable = Table(MDTableType.typeDef, tablesView, rowCounts[MDTableType.typeDef],
+        typeDefTable = Table!(MDTableType.typeDef)(tablesView, rowCounts[MDTableType.typeDef],
             [
                 ColumnKindSize(ValueKind.Integral, 2), // Flags (a 4-byte bitmask of type TypeAttributes, §II.23.1.15) 
                 ColumnKindSize(ValueKind.String, stringIndexSize), // TypeName (an index into the String heap) 
@@ -124,14 +124,14 @@ struct Tables
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.methodDef])) // MethodList (an index into the MethodDef table; it marks the first of a continguous run of Methods owned by this Type)
             ]);
 
-        fieldTable = Table(MDTableType.field, tablesView, rowCounts[MDTableType.field],
+        fieldTable = Table!(MDTableType.field)(tablesView, rowCounts[MDTableType.field],
             [
                 ColumnKindSize(ValueKind.Integral, 2), // Flags (a 2-byte bitmask of type FieldAttributes, §II.23.1.5)
                 ColumnKindSize(ValueKind.String, stringIndexSize), // Name (an index into the String heap) 
                 ColumnKindSize(ValueKind.Blob, blobIndexSize) // Signature (an index into the Blob heap) 
             ]);
 
-        methodDefTable = Table(MDTableType.methodDef, tablesView, rowCounts[MDTableType.methodDef],
+        methodDefTable = Table!(MDTableType.methodDef)(tablesView, rowCounts[MDTableType.methodDef],
             [
                 ColumnKindSize(ValueKind.Integral, 4), // RVA (a 4-byte constant) 
                 ColumnKindSize(ValueKind.Integral, 2), // ImplFlags (a 2-byte bitmask of type MethodImplAttributes, §II.23.1.10)
@@ -141,122 +141,121 @@ struct Tables
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.param])) // ParamList (an index into the Param table)
             ]);
 
-        paramTable = Table(MDTableType.param, tablesView, rowCounts[MDTableType.param],
+        paramTable = Table!(MDTableType.param)(tablesView, rowCounts[MDTableType.param],
             [
                 ColumnKindSize(ValueKind.Integral, 2), // Flags (a 2-byte bitmask of type ParamAttributes, §II.23.1.13) 
                 ColumnKindSize(ValueKind.Integral, 2), // Sequence (a 2-byte constant) 
                 ColumnKindSize(ValueKind.String, stringIndexSize), // Name (an index into the String heap) 
             ]);
 
-        interfaceImplTable = Table(MDTableType.interfaceImpl, tablesView, rowCounts[MDTableType.interfaceImpl],
+        interfaceImplTable = Table!(MDTableType.interfaceImpl)(tablesView, rowCounts[MDTableType.interfaceImpl],
             [
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.typeDef])), // Class (an index into the TypeDef table) 
                 ColumnKindSize(ValueKind.CodedIndex, typeDefOrRefIndexSize), // Interface (an index into the TypeDef, TypeRef, or TypeSpec table; more precisely, a TypeDefOrRef (§II.24.2.6) coded index)
             ]);
 
-        memberRefTable = Table(MDTableType.memberRef, tablesView, rowCounts[MDTableType.memberRef],
+        memberRefTable = Table!(MDTableType.memberRef)(tablesView, rowCounts[MDTableType.memberRef],
             [
                 ColumnKindSize(ValueKind.CodedIndex, memberRefParentIndexSize), // Class (an index into the MethodDef, ModuleRef,TypeDef, TypeRef, or TypeSpec tables; more precisely, a MemberRefParent (§II.24.2.6) coded index)
                 ColumnKindSize(ValueKind.String, stringIndexSize), // Name (an index into the String heap)
                 ColumnKindSize(ValueKind.Blob, blobIndexSize), // Signature (an index into the Blob heap)
             ]);
 
-        constantTable = Table(MDTableType.constant, tablesView, rowCounts[MDTableType.constant],
+        constantTable = Table!(MDTableType.constant)(tablesView, rowCounts[MDTableType.constant],
             [
                 ColumnKindSize(ValueKind.Integral, 2), // Type (a 1-byte constant, followed by a 1-byte padding zero); see §II.23.1.16
                 ColumnKindSize(ValueKind.CodedIndex, hasConstantIndexSize), // Parent (an index into the Param, Field, or Property table; more precisely, a HasConstant (§II.24.2.6) coded index)
                 ColumnKindSize(ValueKind.Blob, blobIndexSize), // Value (an index into the Blob heap)
             ]);
 
-        customAttributeTable = Table(MDTableType.customAttribute, tablesView, rowCounts[MDTableType.customAttribute],
+        customAttributeTable = Table!(MDTableType.customAttribute)(tablesView, rowCounts[MDTableType.customAttribute],
             [
                 ColumnKindSize(ValueKind.CodedIndex, hasCustomAttributeIndexSize), // Parent (an index into a metadata table that has an associated HasCustomAttribute (§II.24.2.6) coded index)
                 ColumnKindSize(ValueKind.CodedIndex, customAttributeTypeIndexSize), // Type (an index into the MethodDef or MemberRef table; more precisely, a CustomAttributeType (§II.24.2.6) coded index).
                 ColumnKindSize(ValueKind.Blob, blobIndexSize), // Value (an index into the Blob heap)
             ]);
 
-        fieldMarshalTable = Table(MDTableType.fieldMarshal, tablesView, rowCounts[MDTableType.fieldMarshal],
+        fieldMarshalTable = Table!(MDTableType.fieldMarshal)(tablesView, rowCounts[MDTableType.fieldMarshal],
             [
                 ColumnKindSize(ValueKind.CodedIndex, hasFieldMarshalIndexSize), // Parent (an index into Field or Param table; more precisely, a HasFieldMarshal (§II.24.2.6) coded index)
                 ColumnKindSize(ValueKind.Blob, blobIndexSize), // NativeType (an index into the Blob heap)
             ]);
 
-        declSecurityTable = Table(MDTableType.declSecurity, tablesView, rowCounts[MDTableType.declSecurity],
+        declSecurityTable = Table!(MDTableType.declSecurity)(tablesView, rowCounts[MDTableType.declSecurity],
             [
                 ColumnKindSize(ValueKind.Integral, 2), // Action (a 2-byte value)
                 ColumnKindSize(ValueKind.CodedIndex, hasDeclSecurityIndexSize), // Parent (an index into the TypeDef, MethodDef, or Assembly table; more precisely, a HasDeclSecurity (§II.24.2.6) coded index)
                 ColumnKindSize(ValueKind.Blob, blobIndexSize), // PermissionSet (an index into the Blob heap)
             ]);
 
-        classLayoutTable = Table(MDTableType.classLayout, tablesView, rowCounts[MDTableType.classLayout],
+        classLayoutTable = Table!(MDTableType.classLayout)(tablesView, rowCounts[MDTableType.classLayout],
             [
                 ColumnKindSize(ValueKind.Integral, 2), // PackingSize (a 2-byte constant)
                 ColumnKindSize(ValueKind.Integral, 4), // ClassSize (a 4-byte constant)
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.typeDef])), // Parent (an index into the TypeDef table)
             ]);
 
-        fieldLayoutTable = Table(MDTableType.fieldLayout, tablesView, rowCounts[MDTableType.fieldLayout],
+        fieldLayoutTable = Table!(MDTableType.fieldLayout)(tablesView, rowCounts[MDTableType.fieldLayout],
             [
                 ColumnKindSize(ValueKind.Integral, 4), // Offset (a 4-byte constant)
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.field])), // Field (an index into the Field table)
             ]);
 
-        standAloneSigTable = Table(MDTableType.standAloneSig, tablesView, rowCounts[MDTableType
-                .standAloneSig],
+        standAloneSigTable = Table!(MDTableType.standAloneSig)(tablesView, rowCounts[MDTableType.standAloneSig],
             [
                 ColumnKindSize(ValueKind.Blob, blobIndexSize), // Signature (an index into the Blob heap)
             ]);
 
-        eventMapTable = Table(MDTableType.eventMap, tablesView, rowCounts[MDTableType.eventMap],
+        eventMapTable = Table!(MDTableType.eventMap)(tablesView, rowCounts[MDTableType.eventMap],
             [
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.typeDef])), // Parent (an index into the TypeDef table)
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.event])), // EventList (an index into the Event table)
             ]);
 
-        eventTable = Table(MDTableType.event, tablesView, rowCounts[MDTableType.event],
+        eventTable = Table!(MDTableType.event)(tablesView, rowCounts[MDTableType.event],
             [
                 ColumnKindSize(ValueKind.Integral, 2), // EventFlags (a 2-byte bitmask of type EventAttributes, §II.23.1.4)
                 ColumnKindSize(ValueKind.String, stringIndexSize), // Name (an index into the String heap)
                 ColumnKindSize(ValueKind.CodedIndex, typeDefOrRefIndexSize), // EventType (an index into a TypeDef, a TypeRef, or TypeSpec table; more precisely, a TypeDefOrRef (§II.24.2.6) coded index)
             ]);
 
-        propertyMapTable = Table(MDTableType.propertyMap, tablesView, rowCounts[MDTableType.propertyMap],
+        propertyMapTable = Table!(MDTableType.propertyMap)(tablesView, rowCounts[MDTableType.propertyMap],
             [
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.typeDef])), // Parent (an index into the TypeDef table)
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.property])), // PropertyList (an index into the Property table)
             ]);
 
-        propertyTable = Table(MDTableType.property, tablesView, rowCounts[MDTableType.property],
+        propertyTable = Table!(MDTableType.property)(tablesView, rowCounts[MDTableType.property],
             [
                 ColumnKindSize(ValueKind.Integral, 2), // Flags (a 2-byte bitmask of type PropertyAttributes, §II.23.1.14)
                 ColumnKindSize(ValueKind.String, stringIndexSize), // Name (an index into the String heap)
                 ColumnKindSize(ValueKind.Blob, blobIndexSize), // Type (an index into the Blob heap) (The name of this column is misleading. It does not index a TypeDef or TypeRef table—instead it indexes the signature in the Blob heap of the Property)
             ]);
 
-        methodSemanticsTable = Table(MDTableType.methodSemantics, tablesView, rowCounts[MDTableType.methodSemantics],
+        methodSemanticsTable = Table!(MDTableType.methodSemantics)(tablesView, rowCounts[MDTableType.methodSemantics],
             [
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.methodDef])), // 
                 ColumnKindSize(ValueKind.CodedIndex, hasSemanticsIndexSize), // 
             ]);
 
-        methodImplTable = Table(MDTableType.methodImpl, tablesView, rowCounts[MDTableType.methodImpl],
+        methodImplTable = Table!(MDTableType.methodImpl)(tablesView, rowCounts[MDTableType.methodImpl],
             [
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.typeDef])), // Class (an index into the TypeDef table)
                 ColumnKindSize(ValueKind.CodedIndex, methodDefOrRefIndexSize), // MethodBody (an index into the MethodDef or MemberRef table; more precisely, a MethodDefOrRef (§II.24.2.6) coded index)
                 ColumnKindSize(ValueKind.CodedIndex, methodDefOrRefIndexSize), // MethodDeclaration (an index into the MethodDef or MemberRef table; more precisely, a MethodDefOrRef (§II.24.2.6) coded index)
             ]);
 
-        moduleRefTable = Table(MDTableType.moduleRef, tablesView, rowCounts[MDTableType.moduleRef],
+        moduleRefTable = Table!(MDTableType.moduleRef)(tablesView, rowCounts[MDTableType.moduleRef],
             [
                 ColumnKindSize(ValueKind.String, stringIndexSize), // Name (an index into the String heap)
             ]);
 
-        typeSpecTable = Table(MDTableType.typeSpec, tablesView, rowCounts[MDTableType.typeSpec],
+        typeSpecTable = Table!(MDTableType.typeSpec)(tablesView, rowCounts[MDTableType.typeSpec],
             [
                 ColumnKindSize(ValueKind.Blob, blobIndexSize), // Signature (index into the Blob heap, where the blob is formatted as specified in §II.23.2.14)
             ]);
 
-        implMapTable = Table(MDTableType.implMap, tablesView, rowCounts[MDTableType.implMap],
+        implMapTable = Table!(MDTableType.implMap)(tablesView, rowCounts[MDTableType.implMap],
             [
                 ColumnKindSize(ValueKind.Integral, 2), // MappingFlags (a 2-byte bitmask of type PInvokeAttributes, §23.1.8)
                 ColumnKindSize(ValueKind.CodedIndex, memberForwardedIndexSize), // MemberForwarded (an index into the Field or MethodDef table; more precisely, a MemberForwarded (§II.24.2.6) coded index)
@@ -264,13 +263,13 @@ struct Tables
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.moduleRef])), // ImportScope (an index into the ModuleRef table)
             ]);
 
-        fieldRVATable = Table(MDTableType.fieldRVA, tablesView, rowCounts[MDTableType.fieldRVA],
+        fieldRVATable = Table!(MDTableType.fieldRVA)(tablesView, rowCounts[MDTableType.fieldRVA],
             [
                 ColumnKindSize(ValueKind.Integral, 4), // RVA (a 4-byte constant)
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.field])), // Field (an index into Field table)
             ]);
 
-        assemblyTable = Table(MDTableType.assembly, tablesView, rowCounts[MDTableType.assembly],
+        assemblyTable = Table!(MDTableType.assembly)(tablesView, rowCounts[MDTableType.assembly],
             [
                 ColumnKindSize(ValueKind.Integral, 4), // HashAlgId (a 4-byte constant of type AssemblyHashAlgorithm, §II.23.1.1)
                 ColumnKindSize(ValueKind.Integral, 8), // MajorVersion, MinorVersion, BuildNumber, RevisionNumber (each being 2-byte constants)
@@ -280,20 +279,20 @@ struct Tables
                 ColumnKindSize(ValueKind.String, stringIndexSize), // Culture (an index into the String heap)
             ]);
 
-        assemblyProcessorTable = Table(MDTableType.assemblyProcessor, tablesView,
+        assemblyProcessorTable = Table!(MDTableType.assemblyProcessor)(tablesView,
             rowCounts[MDTableType.assemblyProcessor],
             [
                 ColumnKindSize(ValueKind.Integral, 4), // Processor (a 4-byte constant)
             ]);
 
-        assemblyOSTable = Table(MDTableType.assemblyOS, tablesView, rowCounts[MDTableType.assemblyOS],
+        assemblyOSTable = Table!(MDTableType.assemblyOS)(tablesView, rowCounts[MDTableType.assemblyOS],
             [
                 ColumnKindSize(ValueKind.Integral, 4), // OSPlatformID (a 4-byte constant)
                 ColumnKindSize(ValueKind.Integral, 4), // OSMajorVersion (a 4-byte constant)
                 ColumnKindSize(ValueKind.Integral, 4), // OSMinorVersion (a 4-byte constant)
             ]);
 
-        assemblyRefTable = Table(MDTableType.assemblyRef, tablesView, rowCounts[MDTableType.assemblyRef],
+        assemblyRefTable = Table!(MDTableType.assemblyRef)(tablesView, rowCounts[MDTableType.assemblyRef],
             [
                 ColumnKindSize(ValueKind.Integral, 8), // MajorVersion, MinorVersion, BuildNumber, RevisionNumber (each being 2-byte constants)
                 ColumnKindSize(ValueKind.Integral, 4), // Flags (a 4-byte bitmask of type AssemblyFlags, §II.23.1.2)
@@ -303,14 +302,14 @@ struct Tables
                 ColumnKindSize(ValueKind.Blob, blobIndexSize), // HashValue (an index into the Blob heap)
             ]);
 
-        assemblyRefProcessorTable = Table(MDTableType.assemblyRefProcessor, tablesView,
+        assemblyRefProcessorTable = Table!(MDTableType.assemblyRefProcessor)(tablesView,
             rowCounts[MDTableType.assemblyRefProcessor],
             [
                 ColumnKindSize(ValueKind.Integral, 4), // Processor (a 4-byte constant)
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.assemblyRef])), // AssemblyRef (an index into the AssemblyRef table)
             ]);
 
-        assemblyRefOSTable = Table(MDTableType.assemblyRefOS, tablesView, rowCounts[MDTableType.assemblyRefOS],
+        assemblyRefOSTable = Table!(MDTableType.assemblyRefOS)(tablesView, rowCounts[MDTableType.assemblyRefOS],
             [
                 ColumnKindSize(ValueKind.Integral, 4), // OSPlatformId (a 4-byte constant)
                 ColumnKindSize(ValueKind.Integral, 4), // OSMajorVersion (a 4-byte constant)
@@ -318,14 +317,14 @@ struct Tables
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.assemblyRef])), // AssemblyRef (an index into the AssemblyRef table)
             ]);
 
-        fileTable = Table(MDTableType.file, tablesView, rowCounts[MDTableType.file],
+        fileTable = Table!(MDTableType.file)(tablesView, rowCounts[MDTableType.file],
             [
                 ColumnKindSize(ValueKind.Integral, 4), // Flags (a 4-byte bitmask of type FileAttributes, §II.23.1.6)
                 ColumnKindSize(ValueKind.String, stringIndexSize), // Name (an index into the String heap)
                 ColumnKindSize(ValueKind.Blob, blobIndexSize), // HashValue (an index into the Blob heap)
             ]);
 
-        exportedTypeTable = Table(MDTableType.exportedType, tablesView, rowCounts[MDTableType.exportedType],
+        exportedTypeTable = Table!(MDTableType.exportedType)(tablesView, rowCounts[MDTableType.exportedType],
             [
                 ColumnKindSize(ValueKind.Integral, 4), // Flags (a 4-byte bitmask of type TypeAttributes, §II.23.1.15)
                 ColumnKindSize(ValueKind.Integral, 4), // TypeDefId (a 4-byte index into a TypeDef table of another module in this Assembly)
@@ -334,7 +333,7 @@ struct Tables
                 ColumnKindSize(ValueKind.CodedIndex, implementationIndexSize), // Implementation. This is an index (more precisely, an Implementation (§II.24.2.6) coded index)
             ]);
 
-        manifestResourceTable = Table(MDTableType.manifestResource, tablesView, rowCounts[MDTableType.manifestResource],
+        manifestResourceTable = Table!(MDTableType.manifestResource)(tablesView, rowCounts[MDTableType.manifestResource],
             [
                 ColumnKindSize(ValueKind.Integral, 4), // Offset (a 4-byte constant)
                 ColumnKindSize(ValueKind.Integral, 4), // Flags (a 4-byte bitmask of type ManifestResourceAttributes, §II.23.1.9)
@@ -342,13 +341,13 @@ struct Tables
                 ColumnKindSize(ValueKind.CodedIndex, implementationIndexSize), // Implementation (an index into a File table, a AssemblyRef table, or null; more precisely, an Implementation (§II.24.2.6) coded index)
             ]);
 
-        nestedClassTable = Table(MDTableType.nestedClass, tablesView, rowCounts[MDTableType.nestedClass],
+        nestedClassTable = Table!(MDTableType.nestedClass)(tablesView, rowCounts[MDTableType.nestedClass],
             [
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.typeDef])), // NestedClass (an index into the TypeDef table)
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.typeDef])), // EnclosingClass (an index into the TypeDef table)
             ]);
 
-        genericParamTable = Table(MDTableType.genericParam, tablesView, rowCounts[MDTableType.genericParam],
+        genericParamTable = Table!(MDTableType.genericParam)(tablesView, rowCounts[MDTableType.genericParam],
             [
                 ColumnKindSize(ValueKind.Integral, 2), // Number (the 2-byte index of the generic parameter, numbered left-to-right, from zero)
                 ColumnKindSize(ValueKind.Integral, 2), // Flags (a 2-byte bitmask of type GenericParamAttributes, §II.23.1.7)
@@ -356,13 +355,13 @@ struct Tables
                 ColumnKindSize(ValueKind.String, stringIndexSize), // Name (a non-null index into the String heap, giving the name for the generic parameter. This is purely descriptive and is used only by source language compilers and by Reflection)
             ]);
 
-        methodSpecTable = Table(MDTableType.methodSpec, tablesView, rowCounts[MDTableType.methodSpec],
+        methodSpecTable = Table!(MDTableType.methodSpec)(tablesView, rowCounts[MDTableType.methodSpec],
             [
                 ColumnKindSize(ValueKind.CodedIndex, typeOrMethodDefIndexSize), // Method (an index into the MethodDef or MemberRef table, specifying to which generic method this row refers
                 ColumnKindSize(ValueKind.Blob, blobIndexSize), // Instantiation (an index into the Blob heap (§II.23.2.15), holding the signature of this instantiation)
             ]);
 
-        genericParamConstraintTable = Table(MDTableType.genericParamConstraint, tablesView,
+        genericParamConstraintTable = Table!(MDTableType.genericParamConstraint)(tablesView,
             rowCounts[MDTableType.genericParamConstraint],
             [
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.genericParam])), // Owner (an index into the GenericParam table, specifying to which generic parameter this row refers)
@@ -413,44 +412,44 @@ struct Tables
         else static assert(false, "Unsupported table");
     }
 
-    public const Table moduleTable;
-    public const Table typeRefTable;
-    public const Table typeDefTable;
-    public const Table fieldTable;
-    public const Table methodDefTable;
-    public const Table paramTable;
-    public const Table interfaceImplTable;
-    public const Table memberRefTable;
-    public const Table constantTable;
-    public const Table customAttributeTable;
-    public const Table fieldMarshalTable;
-    public const Table declSecurityTable;
-    public const Table classLayoutTable;
-    public const Table fieldLayoutTable;
-    public const Table standAloneSigTable;
-    public const Table eventMapTable;
-    public const Table eventTable;
-    public const Table propertyMapTable;
-    public const Table propertyTable;
-    public const Table methodSemanticsTable;
-    public const Table methodImplTable;
-    public const Table moduleRefTable;
-    public const Table typeSpecTable;
-    public const Table implMapTable;
-    public const Table fieldRVATable;
-    public const Table assemblyTable;
-    public const Table assemblyProcessorTable;
-    public const Table assemblyOSTable;
-    public const Table assemblyRefTable;
-    public const Table assemblyRefProcessorTable;
-    public const Table assemblyRefOSTable;
-    public const Table fileTable;
-    public const Table exportedTypeTable;
-    public const Table manifestResourceTable;
-    public const Table nestedClassTable;
-    public const Table genericParamTable;
-    public const Table methodSpecTable;
-    public const Table genericParamConstraintTable;
+    public const Table!(MDTableType.module_) moduleTable;
+    public const Table!(MDTableType.typeRef) typeRefTable;
+    public const Table!(MDTableType.typeDef) typeDefTable;
+    public const Table!(MDTableType.field) fieldTable;
+    public const Table!(MDTableType.methodDef) methodDefTable;
+    public const Table!(MDTableType.param) paramTable;
+    public const Table!(MDTableType.interfaceImpl) interfaceImplTable;
+    public const Table!(MDTableType.memberRef) memberRefTable;
+    public const Table!(MDTableType.constant) constantTable;
+    public const Table!(MDTableType.customAttribute) customAttributeTable;
+    public const Table!(MDTableType.fieldMarshal) fieldMarshalTable;
+    public const Table!(MDTableType.declSecurity) declSecurityTable;
+    public const Table!(MDTableType.classLayout) classLayoutTable;
+    public const Table!(MDTableType.fieldLayout) fieldLayoutTable;
+    public const Table!(MDTableType.standAloneSig) standAloneSigTable;
+    public const Table!(MDTableType.eventMap) eventMapTable;
+    public const Table!(MDTableType.event) eventTable;
+    public const Table!(MDTableType.propertyMap) propertyMapTable;
+    public const Table!(MDTableType.property) propertyTable;
+    public const Table!(MDTableType.methodSemantics) methodSemanticsTable;
+    public const Table!(MDTableType.methodImpl) methodImplTable;
+    public const Table!(MDTableType.moduleRef) moduleRefTable;
+    public const Table!(MDTableType.typeSpec) typeSpecTable;
+    public const Table!(MDTableType.implMap) implMapTable;
+    public const Table!(MDTableType.fieldRVA) fieldRVATable;
+    public const Table!(MDTableType.assembly) assemblyTable;
+    public const Table!(MDTableType.assemblyProcessor) assemblyProcessorTable;
+    public const Table!(MDTableType.assemblyOS) assemblyOSTable;
+    public const Table!(MDTableType.assemblyRef) assemblyRefTable;
+    public const Table!(MDTableType.assemblyRefProcessor) assemblyRefProcessorTable;
+    public const Table!(MDTableType.assemblyRefOS) assemblyRefOSTable;
+    public const Table!(MDTableType.file) fileTable;
+    public const Table!(MDTableType.exportedType) exportedTypeTable;
+    public const Table!(MDTableType.manifestResource) manifestResourceTable;
+    public const Table!(MDTableType.nestedClass) nestedClassTable;
+    public const Table!(MDTableType.genericParam) genericParamTable;
+    public const Table!(MDTableType.methodSpec) methodSpecTable;
+    public const Table!(MDTableType.genericParamConstraint) genericParamConstraintTable;
 
 private:
     const Storage* storage;

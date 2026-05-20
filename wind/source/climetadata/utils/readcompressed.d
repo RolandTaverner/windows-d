@@ -1,6 +1,6 @@
 module climetadata.utils.readcompressed;
 
-import std.exception: enforce;
+import std.exception : enforce;
 
 private import climetadata.utils.memcast;
 private import std.traits : isIntegral;
