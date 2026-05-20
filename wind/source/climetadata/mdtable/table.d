@@ -1,8 +1,8 @@
 module climetadata.mdtable.table;
 
 import std.exception : enforce;
-private import std.format : format;
-private import std.traits : isIntegral;
+import std.format : format;
+import std.traits : isIntegral;
 import std.typecons : Tuple;
 
 public import climetadata.mdtable.type;
@@ -58,14 +58,14 @@ public struct Table(MDTableType md)
 
         switch (colDesc.size)
         {
-            case 1:
-                return cast(T)(*ptr);
-            case 2:
-                return cast(T)(*cast(const(ushort)*)ptr);
-            case 4:
-                return cast(T)(*cast(const(uint)*)ptr);
-            default:
-                return cast(T)(*cast(const(ulong)*)ptr);
+        case 1:
+            return cast(T)(*ptr);
+        case 2:
+            return cast(T)(*cast(const(ushort)*) ptr);
+        case 4:
+            return cast(T)(*cast(const(uint)*) ptr);
+        default:
+            return cast(T)(*cast(const(ulong)*) ptr);
         }
     }
 

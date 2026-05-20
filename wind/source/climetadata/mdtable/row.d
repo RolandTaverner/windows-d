@@ -1,6 +1,6 @@
 module climetadata.mdtable.row;
 
-private import std.exception : enforce;
+import std.exception : enforce;
 
 import climetadata.mdtable.value;
 import climetadata.mdtable.table : Table;
@@ -19,9 +19,73 @@ public struct Row(MDTableType md)
         this.rowID = rowID;
     }
 
+    static if (md == MDTableType.module_)
+    {
+        mixin moduleGetters!();
+    } 
+    else static if (md == MDTableType.typeRef)
+    {
+        mixin typeRefGetters!();
+    }
+    else static if (md == MDTableType.typeDef)
+    {
+        mixin typeDefGetters!();
+    }
+    else static if (md == MDTableType.field)
+    {
+        mixin fieldGetters!();
+    }
+    else static if (md == MDTableType.methodDef)
+    {
+        mixin methodDefGetters!();
+    }
+
 private:
     const(Table!md*) table;
     const uint rowID; // Row ID is 1-based
+}
+
+private mixin template moduleGetters()
+{
+    mixin DeclColumn!(MDTableType.module_, 0, ushort, ValueKind.Integral, "Unused");
+    mixin DeclColumn!(MDTableType.module_, 1, uint, ValueKind.String, "Name");
+    mixin DeclColumn!(MDTableType.module_, 2, uint, ValueKind.Guid, "Mvid");
+    mixin DeclColumn!(MDTableType.module_, 3, uint, ValueKind.Guid, "EncId");
+    mixin DeclColumn!(MDTableType.module_, 4, uint, ValueKind.Guid, "EncBaseId");
+}
+
+private mixin template typeRefGetters()
+{
+    mixin DeclColumn!(MDTableType.typeRef, 0, ushort, ValueKind.CodedIndex, "ResolutionScope");
+    mixin DeclColumn!(MDTableType.typeRef, 1, uint, ValueKind.String, "TypeName");
+    mixin DeclColumn!(MDTableType.typeRef, 2, uint, ValueKind.String, "TypeNamespace");
+}
+
+private mixin template typeDefGetters()
+{
+    mixin DeclColumn!(MDTableType.typeDef, 0, ushort, ValueKind.Integral, "Flags");
+    mixin DeclColumn!(MDTableType.typeDef, 1, uint, ValueKind.String, "TypeName");
+    mixin DeclColumn!(MDTableType.typeDef, 2, uint, ValueKind.String, "TypeNamespace");
+    mixin DeclColumn!(MDTableType.typeDef, 3, uint, ValueKind.CodedIndex, "Extends");
+    mixin DeclColumn!(MDTableType.typeDef, 4, uint, ValueKind.Index, "FieldList");
+    mixin DeclColumn!(MDTableType.typeDef, 5, uint, ValueKind.Index, "MethodList");
+}
+
+private mixin template fieldGetters()
+{
+    mixin DeclColumn!(MDTableType.field, 0, ushort, ValueKind.Integral, "Flags");
+    mixin DeclColumn!(MDTableType.field, 1, uint, ValueKind.String, "Name");
+    mixin DeclColumn!(MDTableType.field, 2, uint, ValueKind.Blob, "Signature");
+}
+
+private mixin template methodDefGetters()
+{
+    mixin DeclColumn!(MDTableType.methodDef, 0, uint, ValueKind.Integral, "RVA");
+    mixin DeclColumn!(MDTableType.methodDef, 1, ushort, ValueKind.Integral, "ImplFlags");
+    mixin DeclColumn!(MDTableType.methodDef, 2, ushort, ValueKind.Integral, "Flags");
+    mixin DeclColumn!(MDTableType.methodDef, 3, uint, ValueKind.String, "Name");
+    mixin DeclColumn!(MDTableType.methodDef, 4, uint, ValueKind.Blob, "Signature");
+    mixin DeclColumn!(MDTableType.methodDef, 5, uint, ValueKind.Index, "ParamList");
 }
 
 // Declares member function (column value getter)

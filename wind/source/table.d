@@ -1,14 +1,13 @@
 module table;
 
-import std.exception: enforce;
-import std.format: format;
+import std.exception : enforce;
+import std.format : format;
 public import std.uuid : UUID;
 
-import metadata: Metadata;
+import metadata : Metadata;
 import compositeindex;
 public import md;
-import row: Row;
-
+import row : Row;
 
 public struct Table(MD md)
 {
@@ -35,11 +34,16 @@ public struct Table(MD md)
         this.rowCount = rowCount;
 
         columns[0] = Column(0, a);
-        if (b) columns[1] = Column(a, b);
-        if (c) columns[2] = Column(cast(ubyte)(a + b), c);
-        if (d) columns[3] = Column(cast(ubyte)(a + b + c), d);
-        if (e) columns[4] = Column(cast(ubyte)(a + b + c + d), e);
-        if (f) columns[5] = Column(cast(ubyte)(a + b + c + d + e), f);
+        if (b)
+            columns[1] = Column(a, b);
+        if (c)
+            columns[2] = Column(cast(ubyte)(a + b), c);
+        if (d)
+            columns[3] = Column(cast(ubyte)(a + b + c), d);
+        if (e)
+            columns[4] = Column(cast(ubyte)(a + b + c + d), e);
+        if (f)
+            columns[5] = Column(cast(ubyte)(a + b + c + d + e), f);
 
         this.data = data[0 .. rowCount * rowSize];
         data = data[rowCount * rowSize .. $];
@@ -59,14 +63,14 @@ public struct Table(MD md)
         auto ptr = data.ptr + row * rowSize + columns[column].offset;
         switch (sz)
         {
-            case 1:
-                return cast(T)(*ptr);
-            case 2:
-                return cast(T)(*cast(const(ushort)*)ptr);
-            case 4:
-                return cast(T)(*cast(const(uint)*)ptr);
-            default:
-                return cast(T)(*cast(const(ulong)*)ptr);
+        case 1:
+            return cast(T)(*ptr);
+        case 2:
+            return cast(T)(*cast(const(ushort)*) ptr);
+        case 4:
+            return cast(T)(*cast(const(uint)*) ptr);
+        default:
+            return cast(T)(*cast(const(ulong)*) ptr);
         }
     }
 
@@ -88,7 +92,7 @@ public struct Table(MD md)
     public UUID getGUID(int row, uint column) const
     {
         return db.getGUID(getValue!uint(row, column));
-    }    
+    }
 
     public auto getList(MD target)(uint row, uint column) const
     {
@@ -128,7 +132,7 @@ private struct TableEnumerator(MD md)
         this.table = table;
         static if (md == MD.typeDef)
             index = 2;
-        else 
+        else
             index = 1;
     }
 
@@ -147,6 +151,6 @@ private struct TableEnumerator(MD md)
     pragma(inline, true)
     auto front()
     {
-        return Row!md(table, index);        
+        return Row!md(table, index);
     }
 }

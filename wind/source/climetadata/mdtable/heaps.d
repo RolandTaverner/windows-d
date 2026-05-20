@@ -2,8 +2,8 @@ module climetadata.mdtable.heaps;
 
 public import std.uuid : UUID;
 
-private import climetadata.utils.memcast;
-private import climetadata.utils.readcompressed;
+import climetadata.utils.memcast;
+import climetadata.utils.readcompressed;
 
 public struct Heaps
 {

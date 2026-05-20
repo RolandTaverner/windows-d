@@ -1,12 +1,12 @@
 module climetadata.mdtable.tables;
 
-private import std.exception : enforce;
-private import std.format : format;
+import std.exception : enforce;
+import std.format : format;
 
 public import climetadata.mdtable.table;
 public import climetadata.mdtable.type;
-private import climetadata.pe.storage;
-private import climetadata.utils.memcast;
+import climetadata.pe.storage;
+import climetadata.utils.memcast;
 
 struct Tables
 {
