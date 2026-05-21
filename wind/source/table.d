@@ -96,7 +96,6 @@ public struct Table(MD md)
 
     public auto getList(MD target)(uint row, uint column) const
     {
-
         uint startIndex = getValue!uint(row, column);
         uint nextIndex;
         if (row < rowCount - 1)
@@ -119,7 +118,7 @@ private struct Column
     ubyte size;
 }
 
-private struct TableEnumerator(MD md)
+private struct TableEnumerator(MD md)~
 {
 
     const(Table!md)* table;

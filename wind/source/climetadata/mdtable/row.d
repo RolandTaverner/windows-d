@@ -39,6 +39,133 @@ public struct Row(MDTableType md)
     {
         mixin methodDefGetters!();
     }
+    else static if (md == MDTableType.param)
+    {
+        mixin paramGetters!();
+    }
+    else static if (md == MDTableType.memberRef)
+    {
+        mixin memberRefGetters!();
+    }
+    else static if (md == MDTableType.constant)
+    {
+        mixin constantGetters!();
+    }
+    else static if (md == MDTableType.customAttribute)
+    {
+        mixin customAttributeGetters!();
+    }
+    else static if (md == MDTableType.fieldMarshal)
+    {
+        mixin fieldMarshalGetters!();
+    }
+    else static if (md == MDTableType.declSecurity)
+    {
+        mixin declSecurityGetters!();
+    }
+    else static if (md == MDTableType.classLayout)
+    {
+        mixin classLayoutGetters!();
+    }
+    else static if (md == MDTableType.fieldLayout)
+    {
+        mixin fieldLayoutGetters!();
+    }
+    else static if (md == MDTableType.standAloneSig)
+    {
+        mixin standAloneSigGetters!();
+    }
+    else static if (md == MDTableType.eventMap)
+    {
+        mixin eventMapGetters!();
+    }
+    else static if (md == MDTableType.event)
+    {
+        mixin eventGetters!();
+    }
+    else static if (md == MDTableType.propertyMap)
+    {
+        mixin propertyMapGetters!();
+    }
+    else static if (md == MDTableType.property)
+    {
+        mixin propertyGetters!();
+    }
+    else static if (md == MDTableType.methodSemantics)
+    {
+        mixin methodSemanticsGetters!();
+    }
+    else static if (md == MDTableType.methodImpl)
+    {
+        mixin methodImplGetters!();
+    }
+    else static if (md == MDTableType.moduleRef)
+    {
+        mixin moduleRefGetters!();
+    }
+    else static if (md == MDTableType.typeSpec)
+    {
+        mixin typeSpecGetters!();
+    }
+    else static if (md == MDTableType.implMap)
+    {
+        mixin implMapGetters!();
+    }
+    else static if (md == MDTableType.fieldRVA)
+    {
+        mixin fieldRVAGetters!();
+    }
+    else static if (md == MDTableType.assembly)
+    {
+        mixin assemblyGetters!();
+    }
+    else static if (md == MDTableType.assemblyProcessor)
+    {
+        mixin assemblyProcessorGetters!();
+    }
+    else static if (md == MDTableType.assemblyOS)
+    {
+        mixin assemblyOSGetters!();
+    }
+    else static if (md == MDTableType.assemblyRef)
+    {
+        mixin assemblyRefGetters!();
+    }
+    else static if (md == MDTableType.assemblyRefOS)
+    {
+        mixin assemblyRefOSGetters!();
+    }
+    else static if (md == MDTableType.file)
+    {
+        mixin fileGetters!();
+    }
+    else static if (md == MDTableType.exportedType)
+    {
+        mixin exportedTypeGetters!();
+    }
+    else static if (md == MDTableType.manifestResource)
+    {
+        mixin manifestResourceGetters!();
+    }
+    else static if (md == MDTableType.nestedClass)
+    {
+        mixin nestedClassGetters!();
+    }
+    else static if (md == MDTableType.genericParam)
+    {
+        mixin genericParamGetters!();
+    }
+    else static if (md == MDTableType.methodSpec)
+    {
+        mixin methodSpecGetters!();
+    }
+    else static if (md == MDTableType.genericParamConstraint)
+    {
+        mixin genericParamConstraintGetters!();
+    }
+    else
+    {
+    }
 
 private:
     const(Table!md*) table;
@@ -88,6 +215,225 @@ private mixin template methodDefGetters()
     mixin DeclColumn!(MDTableType.methodDef, 5, uint, ValueKind.Index, "ParamList");
 }
 
+private mixin template paramGetters()
+{
+    mixin DeclColumn!(MDTableType.param, 0, ushort, ValueKind.Integral, "Flags");
+    mixin DeclColumn!(MDTableType.param, 1, ushort, ValueKind.Integral, "Sequence");
+    mixin DeclColumn!(MDTableType.param, 2, uint, ValueKind.String, "Name");
+}
+
+private mixin template interfaceImplGetters()
+{
+    mixin DeclColumn!(MDTableType.interfaceImpl, 0, uint, ValueKind.Index, "Class");
+    mixin DeclColumn!(MDTableType.interfaceImpl, 1, uint, ValueKind.CodedIndex, "Interface");
+}
+
+private mixin template memberRefGetters()
+{
+    mixin DeclColumn!(MDTableType.memberRef, 0, uint, ValueKind.CodedIndex, "Class");
+    mixin DeclColumn!(MDTableType.memberRef, 1, uint, ValueKind.String, "Name");
+    mixin DeclColumn!(MDTableType.memberRef, 2, uint, ValueKind.Blob, "Signature");
+}
+
+private mixin template constantGetters()
+{
+    mixin DeclColumn!(MDTableType.constant, 0, ushort, ValueKind.Integral, "Type");
+    mixin DeclColumn!(MDTableType.constant, 1, uint, ValueKind.CodedIndex, "Parent");
+    mixin DeclColumn!(MDTableType.constant, 2, uint, ValueKind.Blob, "Value");
+}
+
+private mixin template customAttributeGetters()
+{
+    mixin DeclColumn!(MDTableType.customAttribute, 0, uint, ValueKind.CodedIndex, "Parent");
+    mixin DeclColumn!(MDTableType.customAttribute, 1, uint, ValueKind.CodedIndex, "Type");
+    mixin DeclColumn!(MDTableType.customAttribute, 2, uint, ValueKind.Blob, "Value");
+}
+
+private mixin template fieldMarshalGetters()
+{
+    mixin DeclColumn!(MDTableType.fieldMarshal, 0, uint, ValueKind.CodedIndex, "Parent");
+    mixin DeclColumn!(MDTableType.fieldMarshal, 1, uint, ValueKind.Blob, "NativeType");
+}
+
+private mixin template declSecurityGetters()
+{
+    mixin DeclColumn!(MDTableType.declSecurity, 0, ushort, ValueKind.Integral, "Action");
+    mixin DeclColumn!(MDTableType.declSecurity, 1, uint, ValueKind.CodedIndex, "Parent");
+    mixin DeclColumn!(MDTableType.declSecurity, 2, uint, ValueKind.Blob, "PermissionSet");
+}
+
+private mixin template classLayoutGetters()
+{
+    mixin DeclColumn!(MDTableType.classLayout, 0, ushort, ValueKind.Integral, "PackingSize");
+    mixin DeclColumn!(MDTableType.classLayout, 1, uint, ValueKind.Integral, "ClassSize");
+    mixin DeclColumn!(MDTableType.classLayout, 2, uint, ValueKind.Index, "Parent");
+}
+
+private mixin template fieldLayoutGetters()
+{
+    mixin DeclColumn!(MDTableType.fieldLayout, 0, uint, ValueKind.Integral, "Offset");
+    mixin DeclColumn!(MDTableType.fieldLayout, 1, uint, ValueKind.Index, "Field");
+}
+
+private mixin template standAloneSigGetters()
+{
+    mixin DeclColumn!(MDTableType.standAloneSig, 0, uint, ValueKind.Blob, "Signature");
+}
+
+private mixin template eventMapGetters()
+{
+    mixin DeclColumn!(MDTableType.eventMap, 0, uint, ValueKind.Index, "Parent");
+    mixin DeclColumn!(MDTableType.eventMap, 1, uint, ValueKind.Index, "EventList");
+}
+
+private mixin template eventGetters()
+{
+    mixin DeclColumn!(MDTableType.event, 0, ushort, ValueKind.Integral, "EventFlags");
+    mixin DeclColumn!(MDTableType.event, 1, uint, ValueKind.String, "Name");
+    mixin DeclColumn!(MDTableType.event, 2, uint, ValueKind.CodedIndex, "EventType");
+}
+
+private mixin template propertyMapGetters()
+{
+    mixin DeclColumn!(MDTableType.propertyMap, 0, uint, ValueKind.Index, "Parent");
+    mixin DeclColumn!(MDTableType.propertyMap, 1, uint, ValueKind.Index, "PropertyList");
+}
+
+private mixin template propertyGetters()
+{
+    mixin DeclColumn!(MDTableType.property, 0, ushort, ValueKind.Integral, "Flags");
+    mixin DeclColumn!(MDTableType.property, 1, uint, ValueKind.String, "Name");
+    mixin DeclColumn!(MDTableType.property, 2, uint, ValueKind.Blob, "Type");
+}
+
+private mixin template methodSemanticsGetters()
+{
+    mixin DeclColumn!(MDTableType.methodSemantics, 0, ushort, ValueKind.Integral, "Semantics");
+    mixin DeclColumn!(MDTableType.methodSemantics, 1, uint, ValueKind.Index, "Method");
+    mixin DeclColumn!(MDTableType.methodSemantics, 2, uint, ValueKind.CodedIndex, "Association");
+}
+
+private mixin template methodImplGetters()
+{
+    mixin DeclColumn!(MDTableType.methodImpl, 0, uint, ValueKind.Index, "Class");
+    mixin DeclColumn!(MDTableType.methodImpl, 1, uint, ValueKind.CodedIndex, "MethodBody");
+    mixin DeclColumn!(MDTableType.methodImpl, 2, uint, ValueKind.CodedIndex, "MethodDeclaration");
+}
+
+private mixin template moduleRefGetters()
+{
+    mixin DeclColumn!(MDTableType.moduleRef, 0, uint, ValueKind.String, "Name");
+}
+
+private mixin template typeSpecGetters()
+{
+    mixin DeclColumn!(MDTableType.typeSpec, 0, uint, ValueKind.Blob, "Signature");
+}
+
+private mixin template implMapGetters()
+{
+    mixin DeclColumn!(MDTableType.implMap, 0, ushort, ValueKind.Integral, "MappingFlags");
+    mixin DeclColumn!(MDTableType.implMap, 1, uint, ValueKind.CodedIndex, "MemberForwarded");
+    mixin DeclColumn!(MDTableType.implMap, 2, uint, ValueKind.String, "ImportName");
+    mixin DeclColumn!(MDTableType.implMap, 3, uint, ValueKind.Index, "ImportScope");
+}
+
+private mixin template fieldRVAGetters()
+{
+    mixin DeclColumn!(MDTableType.fieldRVA, 0, uint, ValueKind.Integral, "RVA");
+    mixin DeclColumn!(MDTableType.fieldRVA, 1, uint, ValueKind.Index, "Field");
+}
+
+private mixin template assemblyGetters()
+{
+    mixin DeclColumn!(MDTableType.assembly, 0, uint, ValueKind.Integral, "HashAlgId");
+    mixin DeclColumn!(MDTableType.assembly, 1, ulong, ValueKind.Integral, "Version");
+    mixin DeclColumn!(MDTableType.assembly, 2, uint, ValueKind.Integral, "Flags");
+    mixin DeclColumn!(MDTableType.assembly, 3, uint, ValueKind.Blob, "PublicKey");
+    mixin DeclColumn!(MDTableType.assembly, 4, uint, ValueKind.String, "Name");
+    mixin DeclColumn!(MDTableType.assembly, 5, uint, ValueKind.String, "Culture");
+}
+
+private mixin template assemblyProcessorGetters()
+{
+    mixin DeclColumn!(MDTableType.assemblyProcessor, 0, uint, ValueKind.Integral, "Processor");
+}
+
+private mixin template assemblyOSGetters()
+{
+    mixin DeclColumn!(MDTableType.assemblyOS, 0, uint, ValueKind.Integral, "OSPlatformID");
+    mixin DeclColumn!(MDTableType.assemblyOS, 1, uint, ValueKind.Integral, "OSMajorVersion");
+    mixin DeclColumn!(MDTableType.assemblyOS, 2, uint, ValueKind.Integral, "OSMinorVersion");
+}
+
+private mixin template assemblyRefGetters()
+{
+    mixin DeclColumn!(MDTableType.assemblyRef, 0, ulong, ValueKind.Integral, "Version");
+    mixin DeclColumn!(MDTableType.assemblyRef, 1, uint, ValueKind.Integral, "Flags");
+    mixin DeclColumn!(MDTableType.assemblyRef, 2, uint, ValueKind.Blob, "PublicKeyOrToken");
+    mixin DeclColumn!(MDTableType.assemblyRef, 3, uint, ValueKind.String, "Name");
+    mixin DeclColumn!(MDTableType.assemblyRef, 4, uint, ValueKind.String, "Culture");
+    mixin DeclColumn!(MDTableType.assemblyRef, 5, uint, ValueKind.Blob, "HashValue");
+}
+
+private mixin template assemblyRefOSGetters()
+{
+    mixin DeclColumn!(MDTableType.assemblyRefOS, 0, uint, ValueKind.Integral, "OSPlatformId");
+    mixin DeclColumn!(MDTableType.assemblyRefOS, 1, uint, ValueKind.Integral, "OSMajorVersion");
+    mixin DeclColumn!(MDTableType.assemblyRefOS, 2, uint, ValueKind.Integral, "OSMinorVersion");
+    mixin DeclColumn!(MDTableType.assemblyRefOS, 3, uint, ValueKind.Index, "AssemblyRef");
+}
+
+private mixin template fileGetters()
+{
+    mixin DeclColumn!(MDTableType.file, 0, uint, ValueKind.Integral, "Flags");
+    mixin DeclColumn!(MDTableType.file, 1, uint, ValueKind.String, "Name");
+    mixin DeclColumn!(MDTableType.file, 2, uint, ValueKind.Blob, "HashValue");
+}
+
+private mixin template exportedTypeGetters()
+{
+    mixin DeclColumn!(MDTableType.exportedType, 0, uint, ValueKind.Integral, "Flags");
+    mixin DeclColumn!(MDTableType.exportedType, 1, uint, ValueKind.Integral, "TypeDefId");
+    mixin DeclColumn!(MDTableType.exportedType, 2, uint, ValueKind.String, "TypeName");
+    mixin DeclColumn!(MDTableType.exportedType, 3, uint, ValueKind.String, "TypeNamespace");
+    mixin DeclColumn!(MDTableType.exportedType, 4, uint, ValueKind.CodedIndex, "Implementation");
+}
+
+private mixin template manifestResourceGetters()
+{
+    mixin DeclColumn!(MDTableType.manifestResource, 0, uint, ValueKind.Integral, "Offset");
+    mixin DeclColumn!(MDTableType.manifestResource, 1, uint, ValueKind.Integral, "Flags");
+    mixin DeclColumn!(MDTableType.manifestResource, 2, uint, ValueKind.String, "Name");
+    mixin DeclColumn!(MDTableType.manifestResource, 3, uint, ValueKind.CodedIndex, "Implementation");
+}
+
+private mixin template nestedClassGetters()
+{
+    mixin DeclColumn!(MDTableType.nestedClass, 0, uint, ValueKind.Index, "NestedClass");
+    mixin DeclColumn!(MDTableType.nestedClass, 1, uint, ValueKind.Index, "EnclosingClass");
+}
+
+private mixin template genericParamGetters()
+{
+    mixin DeclColumn!(MDTableType.genericParam, 0, ushort, ValueKind.Integral, "Number");
+    mixin DeclColumn!(MDTableType.genericParam, 1, ushort, ValueKind.Integral, "Flags");
+    mixin DeclColumn!(MDTableType.genericParam, 2, uint, ValueKind.CodedIndex, "Owner");
+    mixin DeclColumn!(MDTableType.genericParam, 3, uint, ValueKind.String, "Name");
+}
+
+private mixin template methodSpecGetters()
+{
+    mixin DeclColumn!(MDTableType.methodSpec, 0, uint, ValueKind.CodedIndex, "Method");
+    mixin DeclColumn!(MDTableType.methodSpec, 1, uint, ValueKind.Blob, "Instantiation");
+}
+
+private mixin template genericParamConstraintGetters()
+{
+    mixin DeclColumn!(MDTableType.genericParamConstraint, 0, uint, ValueKind.Index, "Owner");
+    mixin DeclColumn!(MDTableType.genericParamConstraint, 1, uint, ValueKind.CodedIndex, "Constraint");
+}
+
 // Declares member function (column value getter)
 // ValueType!(T, K) get##Name(uint rowID) const { ... }
 private mixin template DeclColumn(alias md, uint column, alias T, alias K, string Name)
@@ -114,7 +460,6 @@ private mixin template DeclColumn(alias md, uint column, alias T, alias K, strin
 
     mixin(injectGetter());
 }
-
 
 unittest
 {

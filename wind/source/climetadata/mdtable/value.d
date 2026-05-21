@@ -4,15 +4,20 @@ public import climetadata.mdtable.valuekind;
 
 public struct Value(T, ValueKind K)
 {
+    public alias Kind = K;
+    public alias Type = T;
+
     public this(in T value)
     {
         this.value = value;
     }
 
-    alias value this;
+    public ValueKind kind() const
+    {
+        return Kind;
+    }
 
-    alias Kind = K;
-    alias Type = T;
+    alias value this;
 
     const T value;
 }

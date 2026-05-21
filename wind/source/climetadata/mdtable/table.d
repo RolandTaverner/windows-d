@@ -69,6 +69,17 @@ public struct Table(MDTableType md)
         }
     }
 
+    // rowID is 1-based
+    public Row!md opIndex(uint rowID) const
+    {
+        return Row!md(&this, rowID);
+    }
+
+    public auto items() const
+    {
+        return TableEnumerator!md(&this);
+    }
+
     public const uint rowSize;
     public const uint rowCount;
     public const(ColumnDesc[]) columns;
@@ -109,4 +120,39 @@ public struct ColumnDesc
     const ushort offset; // bytes
     const ushort size; // bytes
     const ValueKind kind;
+}
+
+private struct TableEnumerator(MDTableType md)
+{
+    const(Table!md*) table;
+    uint rowID;
+
+    @disable this();
+
+    this(const(Table!md*) table)
+    {
+        this.table = table;
+        static if (md == MDTableType.typeDef)
+            rowID = 2;
+        else
+            rowID = 1;
+    }
+
+    pragma(inline, true)
+    bool empty()
+    {
+        return rowID > table.rowCount;
+    }
+
+    pragma(inline, true)
+    void popFront()
+    {
+        ++rowID;
+    }
+
+    pragma(inline, true)
+    auto front()
+    {
+        return Row!md(table, rowID);
+    }
 }

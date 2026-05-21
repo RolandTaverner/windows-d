@@ -234,8 +234,9 @@ struct Tables
 
         methodSemanticsTable = Table!(MDTableType.methodSemantics)(tablesView, rowCounts[MDTableType.methodSemantics],
             [
-                ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.methodDef])), // 
-                ColumnKindSize(ValueKind.CodedIndex, hasSemanticsIndexSize), // 
+                ColumnKindSize(ValueKind.Integral, 2), // Semantics (a 2-byte bitmask of type MethodSemanticsAttributes, §II.23.1.12)
+                ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.methodDef])), // Method (an index into the MethodDef table)
+                ColumnKindSize(ValueKind.CodedIndex, hasSemanticsIndexSize), // Association (an index into the Event or Property table; more precisely, a HasSemantics (§II.24.2.6) coded index)
             ]);
 
         methodImplTable = Table!(MDTableType.methodImpl)(tablesView, rowCounts[MDTableType.methodImpl],
