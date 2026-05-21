@@ -43,6 +43,10 @@ public struct Row(MDTableType md)
     {
         mixin paramGetters!();
     }
+    else static if (md == MDTableType.interfaceImpl)
+    {
+        mixin interfaceImplGetters!();
+    }
     else static if (md == MDTableType.memberRef)
     {
         mixin memberRefGetters!();
@@ -130,6 +134,10 @@ public struct Row(MDTableType md)
     else static if (md == MDTableType.assemblyRef)
     {
         mixin assemblyRefGetters!();
+    }
+    else static if (md == MDTableType.assemblyRefProcessor)
+    {
+        mixin assemblyRefProcessorGetters!();
     }
     else static if (md == MDTableType.assemblyRefOS)
     {
@@ -381,6 +389,12 @@ private mixin template assemblyRefGetters()
     mixin DeclColumn!(MDTableType.assemblyRef, 3, uint, ValueKind.String, "Name");
     mixin DeclColumn!(MDTableType.assemblyRef, 4, uint, ValueKind.String, "Culture");
     mixin DeclColumn!(MDTableType.assemblyRef, 5, uint, ValueKind.Blob, "HashValue");
+}
+
+private mixin template assemblyRefProcessorGetters()
+{
+    mixin DeclColumn!(MDTableType.assemblyRefProcessor, 0, uint, ValueKind.Integral, "Processor");
+    mixin DeclColumn!(MDTableType.assemblyRefProcessor, 1, uint, ValueKind.Index, "AssemblyRef");
 }
 
 private mixin template assemblyRefOSGetters()

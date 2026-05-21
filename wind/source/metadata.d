@@ -575,7 +575,7 @@ private struct RandomEnumerator(MD md)
     {
         this.db = db;
         this.sourceIndex = sourceIndex;
-        this. targetColumn = targetColumn;
+        this.targetColumn = targetColumn;
         targetRow = 0;
         while (targetRow < db.getTable!md.rowCount)
         {
