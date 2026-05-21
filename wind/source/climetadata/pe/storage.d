@@ -1,12 +1,12 @@
 module climetadata.pe.storage;
 
-private import std.exception : enforce;
-private import std.format : format;
-private import std.stdio : writeln;
+import std.exception : enforce;
+import std.format : format;
+import std.stdio : writeln;
 
-private import climetadata.pe.filemap : FileMap;
-private import structs = climetadata.pe.structs;
-private import climetadata.utils.memcast;
+import climetadata.pe.filemap : FileMap;
+import structs = climetadata.pe.structs;
+import climetadata.utils.memcast;
 
 struct Storage
 {

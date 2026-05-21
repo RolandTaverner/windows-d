@@ -1,10 +1,9 @@
 module reader;
 
-import std.exception: enforce;
+import std.exception : enforce;
 private import std.traits : isIntegral;
 
 import convert;
-
 
 T peekCompressed(T = uint)(const(ubyte)[] data) if (isIntegral!T)
 {

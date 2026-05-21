@@ -19,6 +19,8 @@ import std.math;
 import std.regex;
 
 import climetadata.pe.storage : Storage;
+import climetadata.mdtable.tables;
+import climetadata.mdtable.heaps;
 
 enum maxLineWidth = 120;
 enum maxReturnTypeAlignment = 8;
@@ -1748,7 +1750,15 @@ int main(string[] args)
     
     auto s = Storage(mdFileName);
     writeln("Storage OK");
-    return 0;
+    auto tables = Tables(&s);
+    auto heaps = Heaps(s.strings(), s.blobs(), s.guids());
+
+    auto moduleTable = tables.getTable!(MDTableType.module_);
+    auto m = moduleTable[1];
+    writeln(heaps.getString(m.getName()));
+
+
+    //return 0;
     auto metadata = Metadata(mdFileName);
     auto namespaces = getNamespaces(metadata, cfgIgnoredNamespaces);
 

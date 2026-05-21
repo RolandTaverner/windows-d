@@ -1,9 +1,9 @@
 module climetadata.utils.readcompressed;
 
 import std.exception : enforce;
+import std.traits : isIntegral;
 
-private import climetadata.utils.memcast;
-private import std.traits : isIntegral;
+import climetadata.utils.memcast;
 
 // Reads compressed integer
 // See https://github.com/dotnet/coreclr/blob/e879597385221df7131042d1e0830b87f7632a01/src/inc/cor.h#L2090-L2514

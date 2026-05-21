@@ -107,16 +107,25 @@ public struct Metadata
 
         view = tables[24 .. $];
 
-        uint[MD] rowCounts;
+        uint[MD.unknown] rowCounts;
 
         for (ubyte i; i < 64; ++i)
         {
+            auto md = getMDfromIndex(i);
+
             if ((validBits & 1UL) ==  1UL)
             {
-                auto md = getMDfromIndex(i);
                 enforce(md != MD.unknown, format("Unknown metadata table (0x%02x)", i));
                 rowCounts[md] = asVal!uint(view);
-                view = view[4 .. $];                
+                view = view[4 .. $];
+
+                debug
+                {
+                    import std.conv;
+                    import std.stdio;
+
+                    writeln(i, " ", md.to!string, " rows ", rowCounts[md]);
+                }
             }
             validBits >>= 1;
         }

@@ -167,6 +167,13 @@ public struct Row(MDTableType md)
     {
     }
 
+    // Row ID is 1-based
+    pragma(inline, true)
+    public uint getRowID() const 
+    {
+        return rowID;
+    }
+
 private:
     const(Table!md*) table;
     const uint rowID; // Row ID is 1-based
@@ -435,7 +442,7 @@ private mixin template genericParamConstraintGetters()
 }
 
 // Declares member function (column value getter)
-// ValueType!(T, K) get##Name(uint rowID) const { ... }
+// ValueType!(T, K) get##Name() const { ... }
 private mixin template DeclColumn(alias md, uint column, alias T, alias K, string Name)
 {
     alias fieldSpec = FieldSpec!(T, K, Name);
@@ -449,10 +456,10 @@ private mixin template DeclColumn(alias md, uint column, alias T, alias K, strin
         immutable string extractorTypeAlias = fieldSpec.Name ~ "ExtractorType";
 
         string decl = "";
-        decl ~= "alias " ~ valueTypeAlias ~ " = " ~ valueType ~ ";\n";
-        decl ~= "alias " ~ extractorTypeAlias ~ " = " ~ extractorType ~ ";\n";
+        decl ~= "public alias " ~ valueTypeAlias ~ " = " ~ valueType ~ ";\n";
+        decl ~= "public alias " ~ extractorTypeAlias ~ " = " ~ extractorType ~ ";\n";
         
-        decl ~= valueTypeAlias ~ " get" ~ fieldSpec.Name ~ "(uint rowID) const\n";
+        decl ~= "public " ~ valueTypeAlias ~ " get" ~ fieldSpec.Name ~ "() const\n";
         decl ~= "{ return " ~ extractorTypeAlias ~ "().getValue(table, rowID);" ~ " }\n";
 
         return decl;
@@ -465,34 +472,42 @@ unittest
 {
     import climetadata.mdtable.table : ColumnKindSize;
 
-    const(ubyte)[] tablesView = [1, 0, 0, 0, 2, 0, 0, 0];
+    const(ubyte)[] tablesView = [1, 0, 0, 0, 42, 0];
     auto testTable = Table!(MDTableType.unknown)(tablesView, 1,
         [
             ColumnKindSize(ValueKind.Integral, 4),
-            ColumnKindSize(ValueKind.Integral, 4),
+            ColumnKindSize(ValueKind.Integral, 2),
         ]);
 
     struct Test
     {
         Table!(MDTableType.unknown)* table;
-
+        uint rowID = 1;
+        
         mixin DeclColumn!(MDTableType.unknown, 0, uint, ValueKind.Integral, "Id");
-        mixin DeclColumn!(MDTableType.unknown, 1, uint, ValueKind.Integral, "Name");
+        mixin DeclColumn!(MDTableType.unknown, 1, ushort, ValueKind.Integral, "Name");
     };
 
     const Test t = Test(&testTable);
     
-    assert(t.getId(1) == 1);
-    assert(t.getName(1) == 2);
+    auto id = t.getId();
+    auto name = t.getName();
+
+    static assert(is(typeof(id) == Value!(uint, ValueKind.Integral)));
+    static assert(is(typeof(name) == Value!(ushort, ValueKind.Integral)));
+
+    assert(id == 1);
+    assert(name == 42);
 }
 
+// VT must be Value!(T, K)
 struct ColumnValueExtractor(alias VT, MDTableType md, uint column)
 {
     public VT getValue(const(Table!md*) table, uint rowID) const
     {
         enforce(rowID != 0, "rowID can't be 0 (it is 1-based)");
 
-        return VT(table.getValue!(VT.Type)(rowID - 1, column));
+        return table.getValue!(VT.Type, VT.Kind)(rowID - 1, column);
     }
 };
 

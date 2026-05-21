@@ -118,7 +118,7 @@ private struct Column
     ubyte size;
 }
 
-private struct TableEnumerator(MD md)~
+private struct TableEnumerator(MD md)
 {
 
     const(Table!md)* table;

@@ -7,6 +7,7 @@ import std.typecons : Tuple;
 
 public import climetadata.mdtable.type;
 public import climetadata.mdtable.row : Row;
+public import climetadata.mdtable.value;
 public import climetadata.mdtable.valuekind;
 
 public alias ColumnKindSize = Tuple!(ValueKind, "kind", ubyte, "size");
@@ -46,27 +47,35 @@ public struct Table(MDTableType md)
     }
 
     // getValue returns column value for row at index rowIndex. Row index is 0-based
-    public T getValue(T)(uint rowIndex, uint column) const if (isIntegral!T)
+    public Value!(T, K) getValue(T, ValueKind K)(uint rowIndex, uint column) const if (isIntegral!T)
     {
         enforce(rowIndex < rowCount, format("Invalid rowIndex (%d of %d)", rowIndex, rowCount));
         enforce(column < columns.length, format("Invalid column (%d of %d)", column, columns.length));
         auto colDesc = columns[column];
         assert(colDesc.size == 1 || colDesc.size == 2 || colDesc.size == 4 || colDesc.size == 8);
         assert(colDesc.size <= T.sizeof);
+        assert(colDesc.kind == K);
 
         auto ptr = data.ptr + rowIndex * rowSize + colDesc.offset;
+
+        T value;
 
         switch (colDesc.size)
         {
         case 1:
-            return cast(T)(*ptr);
+            value = cast(T)(*ptr);
+            break;
         case 2:
-            return cast(T)(*cast(const(ushort)*) ptr);
+            value = cast(T)(*cast(const(ushort)*) ptr);
+            break;
         case 4:
-            return cast(T)(*cast(const(uint)*) ptr);
+            value = cast(T)(*cast(const(uint)*) ptr);
+            break;
         default:
-            return cast(T)(*cast(const(ulong)*) ptr);
+            value = cast(T)(*cast(const(ulong)*) ptr);
         }
+
+        return Value!(T, K)(value);
     }
 
     // rowID is 1-based

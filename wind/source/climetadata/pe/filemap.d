@@ -2,24 +2,24 @@ module climetadata.pe.filemap;
 
 version (Windows)
 {
-    private import core.sys.windows.winbase;
-    private import core.sys.windows.winnt;
-    private import std.utf;
+    import core.sys.windows.winbase;
+    import core.sys.windows.winnt;
+    import std.utf;
 }
 else version (Posix)
 {
-    private import core.sys.posix.fcntl;
-    private import core.sys.posix.sys.mman;
-    private import core.sys.posix.sys.stat;
-    private import core.sys.posix.unistd;
+    import core.sys.posix.fcntl;
+    import core.sys.posix.sys.mman;
+    import core.sys.posix.sys.stat;
+    import core.sys.posix.unistd;
 }
 else
 {
     static assert(false, "Unsupported environment");
 }
 
-private import std.exception : enforce;
-private import std.format : format;
+import std.exception : enforce;
+import std.format : format;
 
 // FileMap creates MMF using CreateFileMappingW (Windows) or mmap (Posix)
 struct FileMap

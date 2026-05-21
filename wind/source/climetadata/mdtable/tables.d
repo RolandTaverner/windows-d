@@ -30,12 +30,24 @@ struct Tables
 
         for (ubyte i; i < 64; ++i)
         {
+            auto md = toMDTableType(i);
+
             if ((validTablesBits & 1UL) != 0)
             {
-                auto md = toMDTableType(i);
                 enforce(md != MDTableType.unknown, format("Unknown metadata table (0x%02x)", i));
                 rowCounts[md] = asVal!uint(tablesView);
+                debug
+                {
+                    import std.conv;
+                    import std.stdio;
+
+                    writeln(i, " Table ", md.to!string, " rows ", rowCounts[md]);
+                }
                 tablesView = tablesView[4 .. $];
+            } 
+            else
+            {
+                rowCounts[md] = 0;
             }
             validTablesBits >>= 1;
         }
