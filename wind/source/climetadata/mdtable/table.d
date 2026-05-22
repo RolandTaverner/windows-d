@@ -147,6 +147,19 @@ public struct ColumnDesc
     const ValueKind kind;
 }
 
+bool isLastRow(MDTableType md)(scope ref const Row!md row)
+{
+    assert(row.getRowID() > 0 && row.getRowID() <= row.getTable().rowCount, "rowID out of bounds");
+    return row.getRowID() == row.getTable().rowCount;
+}
+
+Row!md getNextRow(MDTableType md)(ref const Row!md row)
+{
+    assert(!isLastRow(row), "can't get next row for last row");
+    auto nextRowID = row.getRowID() + 1;
+    return (*row.getTable())[nextRowID];
+}
+
 // Half-open sequence [startRowID, endRowID)
 public struct TableListEnumerator(MDTableType md)
 {
@@ -168,12 +181,14 @@ public struct TableListEnumerator(MDTableType md)
     pragma(inline, true);
     public void popFront()
     {
+        assert(currentRowID < endRowID, "end of the reached");
         ++currentRowID;
     }
 
     pragma(inline, true);
     public Row!md front() const
     {
+        assert(currentRowID < endRowID, "can't get value from list");
         return Row!md(table, currentRowID);
     }
 
@@ -181,4 +196,9 @@ private:
     const Table!md* table;
     uint currentRowID;
     const uint endRowID;
+}
+
+public TableListEnumerator!md emptyList(MDTableType md)(const(Table!md*) table)
+{
+    return TableListEnumerator!md(table, table.rowCount + 1, table.rowCount + 1);
 }

@@ -4,8 +4,10 @@ public import std.uuid : UUID;
 
 import climetadata.mdtable.heaps : Heaps;
 import climetadata.mdtable.row : Row;
+import climetadata.mdtable.table : emptyList, getNextRow, isLastRow;
 import climetadata.mdtable.type;
 import climetadata.mdtable.value;
+import climetadata.mdcollection.collection : CollectionListEnumerator;
 import climetadata.mdcollection.database : Database;
 
 public struct Entity(MDTableType md)
@@ -127,12 +129,8 @@ private mixin template DeclListIndexField(alias md, string Name, alias mdTarget)
 
         immutable targetTableType = "MDTableType." ~ mdTarget.stringof;
 
-        immutable string extractorType = "IndexFieldValueExtractor!(" ~ columnValueType ~ ", " ~ targetTableType ~ ")";
-        immutable string extractorTypeAlias = Name ~ "FieldValueExtractorType";
-
         string decl = "";
         decl ~= "public alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
-        decl ~= "public alias " ~ extractorTypeAlias ~ " = " ~ extractorType ~ ";\n";
 
         decl ~= "public bool null" ~ Name ~ "() const\n";
         decl ~= "{";
@@ -141,7 +139,16 @@ private mixin template DeclListIndexField(alias md, string Name, alias mdTarget)
         decl ~= "}\n";
 
         decl ~= "public auto get" ~ Name ~ "() const\n";
-        decl ~= "{ return " ~ extractorTypeAlias ~ "(db).getValue(row.get" ~ Name ~ "());" ~ " }\n";
+        decl ~= "{";
+        decl ~= "  auto isNull = null" ~ Name ~ "();\n";
+        decl ~= "  if (isNull) return CollectionListEnumerator!(" ~ targetTableType ~ ")(emptyList(" ~ "db.getTable!(" ~ targetTableType ~ ")()" ~ "), db);\n";
+        decl  ~= " auto columnValue = row.get" ~ Name ~ "();\n";
+        decl ~= "  auto isLast = isLastRow(row);\n";
+        decl ~= "  if (isLast) return db.getCollection!(" ~ targetTableType ~ ").list(columnValue, 0);\n";
+        decl ~= "  auto nextRow = getNextRow(row);\n";
+        decl ~= "  auto nextColumnValue = nextRow.get" ~ Name ~ "();\n";
+        decl ~= "  return db.getCollection!(" ~ targetTableType ~ ").list(columnValue, nextColumnValue);\n";
+        decl ~= "}";
 
         return decl;
     };
