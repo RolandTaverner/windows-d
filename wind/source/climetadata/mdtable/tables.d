@@ -128,7 +128,7 @@ struct Tables
 
         typeDefTable = Table!(MDTableType.typeDef)(tablesView, rowCounts[MDTableType.typeDef],
             [
-                ColumnKindSize(ValueKind.Integral, 2), // Flags (a 4-byte bitmask of type TypeAttributes, §II.23.1.15) 
+                ColumnKindSize(ValueKind.Integral, 4), // Flags (a 4-byte bitmask of type TypeAttributes, §II.23.1.15) 
                 ColumnKindSize(ValueKind.String, stringIndexSize), // TypeName (an index into the String heap) 
                 ColumnKindSize(ValueKind.String, stringIndexSize), // TypeNamespace (an index into the String heap) 
                 ColumnKindSize(ValueKind.CodedIndex, typeDefOrRefIndexSize), // Extends (an index into the TypeDef, TypeRef, or TypeSpec table; more precisely, a TypeDefOrRef (§II.24.2.6) coded index) 

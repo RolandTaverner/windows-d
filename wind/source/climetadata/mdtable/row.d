@@ -13,7 +13,7 @@ public struct Row(MDTableType md)
     // Attention: rowID is 1-based
     public this(const(Table!md*) table, uint rowID)
     {
-        assert(table != null);
+        assert(table != null, "Row(): table is null");
 
         this.table = table;
         this.rowID = rowID;
@@ -182,6 +182,12 @@ public struct Row(MDTableType md)
         return rowID;
     }
 
+    pragma(inline, true)
+    public const(Table!md*) getTable() const 
+    {
+        return table;
+    }
+
 private:
     const(Table!md*) table;
     const uint rowID; // Row ID is 1-based
@@ -205,7 +211,7 @@ private mixin template typeRefGetters()
 
 private mixin template typeDefGetters()
 {
-    mixin DeclColumn!(MDTableType.typeDef, 0, ushort, ValueKind.Integral, "Flags");
+    mixin DeclColumn!(MDTableType.typeDef, 0, uint, ValueKind.Integral, "Flags");
     mixin DeclColumn!(MDTableType.typeDef, 1, uint, ValueKind.String, "TypeName");
     mixin DeclColumn!(MDTableType.typeDef, 2, uint, ValueKind.String, "TypeNamespace");
     mixin DeclColumn!(MDTableType.typeDef, 3, uint, ValueKind.CodedIndex, "Extends");

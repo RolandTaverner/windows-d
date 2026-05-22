@@ -47,6 +47,11 @@ public struct Entity(MDTableType md)
         mixin interfaceImplFieldGetters!();
     }
 
+    // public ref const(Row!md) getRow() const
+    // {
+    //     return row;
+    // }
+
 private:
     const Row!md row;
     const Database* db;
@@ -92,6 +97,7 @@ private mixin template methodDefFieldGetters()
     mixin DeclSimpleField!(MDTableType.methodDef, "Flags");
     mixin DeclSimpleField!(MDTableType.methodDef, "Name");
     mixin DeclSimpleField!(MDTableType.methodDef, "Signature");
+    mixin DeclListIndexField!(MDTableType.methodDef, "ParamList", MDTableType.param);
     // mixin DeclColumn!(MDTableType.methodDef, 5, uint, ValueKind.Index, "ParamList");
 }
 
@@ -108,6 +114,9 @@ private mixin template interfaceImplFieldGetters()
     // mixin DeclColumn!(MDTableType.interfaceImpl, 1, uint, ValueKind.CodedIndex, "Interface");
 }
 
+// Declares member function (list index field value getter)
+// CollectionListEnumerator!mdTarget get##Name() const { ... }
+// bool null##Name() const { ... }
 private mixin template DeclListIndexField(alias md, string Name, alias mdTarget)
 {
     enum injectFieldGetter = ()
@@ -124,7 +133,13 @@ private mixin template DeclListIndexField(alias md, string Name, alias mdTarget)
         string decl = "";
         decl ~= "public alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
         decl ~= "public alias " ~ extractorTypeAlias ~ " = " ~ extractorType ~ ";\n";
-        
+
+        decl ~= "public bool null" ~ Name ~ "() const\n";
+        decl ~= "{";
+        decl ~=  "  const auto columnValue = row.get" ~ Name ~ "();";
+        decl ~=  "  return columnValue == 0 || columnValue > db.getTable!(" ~ targetTableType ~ ")().rowCount;";
+        decl ~= "}\n";
+
         decl ~= "public auto get" ~ Name ~ "() const\n";
         decl ~= "{ return " ~ extractorTypeAlias ~ "(db).getValue(row.get" ~ Name ~ "());" ~ " }\n";
 
@@ -137,6 +152,7 @@ private mixin template DeclListIndexField(alias md, string Name, alias mdTarget)
 
 // Declares member function (index field value getter)
 // const(Entity!mdTarget) get##Name() const { ... }
+// bool null##Name() const { ... }
 private mixin template DeclIndexField(alias md, string Name, alias mdTarget)
 {
     enum injectFieldGetter = ()
@@ -156,6 +172,12 @@ private mixin template DeclIndexField(alias md, string Name, alias mdTarget)
         
         decl ~= "public auto get" ~ Name ~ "() const\n";
         decl ~= "{ return " ~ extractorTypeAlias ~ "(db).getValue(row.get" ~ Name ~ "());" ~ " }\n";
+
+        decl ~= "public bool null" ~ Name ~ "() const\n";
+        decl ~= "{";
+        decl ~=  "  const auto columnValue = row.get" ~ Name ~ "();";
+        decl ~=  "  return columnValue == 0 || columnValue > db.getTable!(" ~ targetTableType ~ ")().rowCount;";
+        decl ~= "}\n";
 
         return decl;
     };

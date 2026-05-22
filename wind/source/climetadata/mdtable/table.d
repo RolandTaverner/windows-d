@@ -18,14 +18,14 @@ public struct Table(MDTableType md)
 
     public this(ref const(ubyte)[] tablesHeap, uint rowCount, ColumnKindSize[] colKS)
     {
-        assert(colKS.length >= 1);
-        assert(colKS.length <= 6);
-        assert(colKS[0].size != 0);
+        assert(colKS.length >= 1, "table must have at least 1 column");
+        assert(colKS.length <= 6, "table must have 6 columns at most");
+        assert(colKS[0].size != 0, "size of 1st column can't be 0");
 
         uint rowSize = 0;
         foreach (c; colKS)
         {
-            assert(c.size <= 8);
+            assert(c.size <= 8, "column size must be 8 bytes at most");
             rowSize += c.size;
         }
 
@@ -52,9 +52,9 @@ public struct Table(MDTableType md)
         enforce(rowIndex < rowCount, format("Invalid rowIndex (%d of %d)", rowIndex, rowCount));
         enforce(column < columns.length, format("Invalid column (%d of %d)", column, columns.length));
         auto colDesc = columns[column];
-        assert(colDesc.size == 1 || colDesc.size == 2 || colDesc.size == 4 || colDesc.size == 8);
-        assert(colDesc.size <= T.sizeof);
-        assert(colDesc.kind == K);
+        assert(colDesc.size == 1 || colDesc.size == 2 || colDesc.size == 4 || colDesc.size == 8, "column size must be 1, 2, 4 or 8 bytes");
+        assert(colDesc.size <= T.sizeof, "Value type size must be >= column size");
+        assert(colDesc.kind == K, "kind mismatch");
 
         auto ptr = data.ptr + rowIndex * rowSize + colDesc.offset;
 
@@ -101,11 +101,11 @@ public struct Table(MDTableType md)
 
     public TableListEnumerator!md list(uint startRowID, uint endRowID) const
     {
-        assert(startRowID);
+        assert(startRowID, "start rowID can't be 0");
         return TableListEnumerator!md(&this, startRowID, endRowID);
     }
 
-    public const uint rowSize;
+    private const uint rowSize;
     public const uint rowCount;
     public const(ColumnDesc[]) columns;
     private const(ubyte)[] data;
