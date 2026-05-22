@@ -84,9 +84,25 @@ public struct Table(MDTableType md)
         return Row!md(&this, rowID);
     }
 
-    public auto items() const
+    public TableListEnumerator!md items() const
     {
-        return TableEnumerator!md(&this);
+        static if (md == MDTableType.typeDef)
+        {
+            const uint startRowID = 2;
+        }
+        else
+        {
+            const uint startRowID = 1;
+        }
+        const uint endRowID = rowCount + 1;
+
+        return TableListEnumerator!md(&this, startRowID, endRowID);
+    }
+
+    public TableListEnumerator!md list(uint startRowID, uint endRowID) const
+    {
+        assert(startRowID);
+        return TableListEnumerator!md(&this, startRowID, endRowID);
     }
 
     public const uint rowSize;
@@ -131,37 +147,38 @@ public struct ColumnDesc
     const ValueKind kind;
 }
 
-private struct TableEnumerator(MDTableType md)
+// Half-open sequence [startRowID, endRowID)
+public struct TableListEnumerator(MDTableType md)
 {
-    const(Table!md*) table;
-    uint rowID;
-
     @disable this();
-
-    this(const(Table!md*) table)
+    
+    public this(const(Table!md*) table, uint startRowID, uint endRowID)
     {
-        this.table = table;
-        static if (md == MDTableType.typeDef)
-            rowID = 2;
-        else
-            rowID = 1;
+        this.table = table;        
+        currentRowID = startRowID;
+        this.endRowID = endRowID ? endRowID : (table.rowCount + 1);
     }
 
-    pragma(inline, true)
-    bool empty()
+    pragma(inline, true);
+    public bool empty() const
     {
-        return rowID > table.rowCount;
+        return currentRowID >= endRowID;
     }
 
-    pragma(inline, true)
-    void popFront()
+    pragma(inline, true);
+    public void popFront()
     {
-        ++rowID;
+        ++currentRowID;
     }
 
-    pragma(inline, true)
-    auto front()
+    pragma(inline, true);
+    public Row!md front() const
     {
-        return Row!md(table, rowID);
+        return Row!md(table, currentRowID);
     }
+
+private:
+    const Table!md* table;
+    uint currentRowID;
+    const uint endRowID;
 }

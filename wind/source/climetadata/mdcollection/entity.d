@@ -108,6 +108,33 @@ private mixin template interfaceImplFieldGetters()
     // mixin DeclColumn!(MDTableType.interfaceImpl, 1, uint, ValueKind.CodedIndex, "Interface");
 }
 
+private mixin template DeclListIndexField(alias md, string Name, alias mdTarget)
+{
+    enum injectFieldGetter = ()
+    {
+        immutable tableType = "MDTableType." ~ md.stringof;
+        immutable string columnValueType = "Row!(" ~ tableType ~ ")." ~ Name ~ "ValueType";
+        immutable string columnValueTypeAlias = Name ~ "ColumnValueType";
+
+        immutable targetTableType = "MDTableType." ~ mdTarget.stringof;
+
+        immutable string extractorType = "IndexFieldValueExtractor!(" ~ columnValueType ~ ", " ~ targetTableType ~ ")";
+        immutable string extractorTypeAlias = Name ~ "FieldValueExtractorType";
+
+        string decl = "";
+        decl ~= "public alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
+        decl ~= "public alias " ~ extractorTypeAlias ~ " = " ~ extractorType ~ ";\n";
+        
+        decl ~= "public auto get" ~ Name ~ "() const\n";
+        decl ~= "{ return " ~ extractorTypeAlias ~ "(db).getValue(row.get" ~ Name ~ "());" ~ " }\n";
+
+        return decl;
+    };
+
+    mixin(injectFieldGetter());
+}
+
+
 // Declares member function (index field value getter)
 // const(Entity!mdTarget) get##Name() const { ... }
 private mixin template DeclIndexField(alias md, string Name, alias mdTarget)
@@ -164,6 +191,15 @@ struct IndexFieldValueExtractor(value, MDTableType mdTarget) if (value.Kind == V
 
 // Declares member function (field value getter)
 // GetFieldValueType!(ValueType!(T, K)) get##Name() const { ... }
+//
+// Example for string field 'Name' at module table:
+//
+// public alias NameColumnValueType = Row!(MDTableType.module_).NameValueType;
+// public alias NameFieldValueExtractorType = FieldValueExtractor!NameColumnValueType);
+// public auto getName() const // returns string because Row!(MDTableType.module_).NameValueType is Value(MDTableType.module_, ValueKind.String)
+// {
+//     return NameFieldValueExtractorType(db.heaps()).getValue(row.getName());
+// }
 private mixin template DeclSimpleField(alias md, string Name)
 {
     enum injectFieldGetter = ()
@@ -173,7 +209,7 @@ private mixin template DeclSimpleField(alias md, string Name)
         immutable string columnValueType = "Row!(" ~ tableType ~ ")." ~ Name ~ "ValueType";
         immutable string columnValueTypeAlias = Name ~ "ColumnValueType";
 
-        immutable string extractorType = "FieldValueExtractor!(" ~ columnValueType ~ ")";
+        immutable string extractorType = "FieldValueExtractor!(" ~ columnValueTypeAlias ~ ")";
         immutable string extractorTypeAlias = Name ~ "FieldValueExtractorType";
 
         string decl = "";

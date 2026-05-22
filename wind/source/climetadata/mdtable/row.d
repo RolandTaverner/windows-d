@@ -11,7 +11,7 @@ public struct Row(MDTableType md)
     @disable this();
 
     // Attention: rowID is 1-based
-    public this(in const(Table!md*) table, uint rowID)
+    public this(const(Table!md*) table, uint rowID)
     {
         assert(table != null);
 
