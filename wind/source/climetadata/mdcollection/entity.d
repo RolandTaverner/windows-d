@@ -8,6 +8,7 @@ import climetadata.mdtable.table : emptyList, getNextRow, isLastRow;
 import climetadata.mdtable.type;
 import climetadata.mdtable.value;
 import climetadata.mdcollection.collection : CollectionListEnumerator;
+import climetadata.mdcollection.compositeindex;
 import climetadata.mdcollection.database : Database;
 
 public struct Entity(MDTableType md)
@@ -71,6 +72,7 @@ private mixin template moduleFieldGetters()
 private mixin template typeRefFieldGetters()
 {
     //mixin DeclColumn!(MDTableType.typeRef, 0, ushort, ValueKind.CodedIndex, "ResolutionScope");
+    mixin DeclCodedIndexField!(MDTableType.typeRef, "ResolutionScope", ResolutionScope);
     mixin DeclSimpleField!(MDTableType.typeRef, "TypeName");
     mixin DeclSimpleField!(MDTableType.typeRef, "TypeNamespace");
 }
@@ -81,8 +83,8 @@ private mixin template typeDefFieldGetters()
     mixin DeclSimpleField!(MDTableType.typeDef, "TypeName");
     mixin DeclSimpleField!(MDTableType.typeDef, "TypeNamespace");
     // mixin DeclColumn!(MDTableType.typeDef, 3, uint, ValueKind.CodedIndex, "Extends");
-    // mixin DeclIndexField!(MDTableType.typeDef, "FieldList", MDTableType.field);
-    // mixin DeclIndexField!(MDTableType.typeDef, "MethodList", MDTableType.methodDef);
+    mixin DeclListIndexField!(MDTableType.typeDef, "FieldList", MDTableType.field);
+    mixin DeclListIndexField!(MDTableType.typeDef, "MethodList", MDTableType.methodDef);
 }
 
 private mixin template fieldFieldGetters()
@@ -100,7 +102,6 @@ private mixin template methodDefFieldGetters()
     mixin DeclSimpleField!(MDTableType.methodDef, "Name");
     mixin DeclSimpleField!(MDTableType.methodDef, "Signature");
     mixin DeclListIndexField!(MDTableType.methodDef, "ParamList", MDTableType.param);
-    // mixin DeclColumn!(MDTableType.methodDef, 5, uint, ValueKind.Index, "ParamList");
 }
 
 private mixin template paramFieldGetters()
@@ -117,20 +118,58 @@ private mixin template interfaceImplFieldGetters()
 }
 
 // Declares member function (list index field value getter)
+// CodedIndexValueType!CodedIndexType get##Name() const { ... }
+// bool null##Name() const { ... }
+private mixin template DeclCodedIndexField(alias md, string Name, CodedIndexType)
+{
+    enum injectFieldGetter = ()
+    {
+        immutable string tableType = "MDTableType." ~ md.stringof;
+        immutable string columnValueType = "Row!(" ~ tableType ~ ")." ~ Name ~ "ValueType";
+        immutable string columnValueTypeAlias = Name ~ "ColumnValueType";
+
+        immutable string codedIndexValueType = "CodedIndexValueType!(" ~ CodedIndexType.stringof ~ ")";
+        immutable string codedIndexValueTypeAlias = Name ~ "CodedIndexValueType";
+
+        //immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
+
+        string decl = "";
+        decl ~= "public alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
+        decl ~= "static assert(" ~ columnValueTypeAlias ~ ".Kind == ValueKind.CodedIndex);\n";
+        decl ~= "public alias " ~ codedIndexValueTypeAlias ~ " = " ~ codedIndexValueType ~ ";\n";
+
+        decl ~= "public bool null" ~ Name ~ "() const\n";
+        decl ~= "{";
+        decl ~=  "  const auto columnValue = row.get" ~ Name ~ "();";
+        decl ~=  "  return columnValue == 0;";
+        decl ~= "}\n";
+
+        // decl ~= "public auto get" ~ Name ~ "() const\n";
+        // decl ~= "{ return " ~ extractorTypeAlias ~ "(db).getValue(row.get" ~ Name ~ "());" ~ " }\n";
+
+
+        return decl;
+    };
+
+    mixin(injectFieldGetter());
+}
+
+// Declares member function (list index field value getter)
 // CollectionListEnumerator!mdTarget get##Name() const { ... }
 // bool null##Name() const { ... }
 private mixin template DeclListIndexField(alias md, string Name, alias mdTarget)
 {
     enum injectFieldGetter = ()
     {
-        immutable tableType = "MDTableType." ~ md.stringof;
+        immutable string tableType = "MDTableType." ~ md.stringof;
         immutable string columnValueType = "Row!(" ~ tableType ~ ")." ~ Name ~ "ValueType";
         immutable string columnValueTypeAlias = Name ~ "ColumnValueType";
 
-        immutable targetTableType = "MDTableType." ~ mdTarget.stringof;
+        immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
 
         string decl = "";
         decl ~= "public alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
+        decl ~= "static assert(" ~ columnValueTypeAlias ~ ".Kind == ValueKind.Index);\n";
 
         decl ~= "public bool null" ~ Name ~ "() const\n";
         decl ~= "{";
@@ -156,7 +195,6 @@ private mixin template DeclListIndexField(alias md, string Name, alias mdTarget)
     mixin(injectFieldGetter());
 }
 
-
 // Declares member function (index field value getter)
 // const(Entity!mdTarget) get##Name() const { ... }
 // bool null##Name() const { ... }
@@ -164,19 +202,20 @@ private mixin template DeclIndexField(alias md, string Name, alias mdTarget)
 {
     enum injectFieldGetter = ()
     {
-        immutable tableType = "MDTableType." ~ md.stringof;
+        immutable string tableType = "MDTableType." ~ md.stringof;
         immutable string columnValueType = "Row!(" ~ tableType ~ ")." ~ Name ~ "ValueType";
         immutable string columnValueTypeAlias = Name ~ "ColumnValueType";
 
-        immutable targetTableType = "MDTableType." ~ mdTarget.stringof;
+        immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
 
         immutable string extractorType = "IndexFieldValueExtractor!(" ~ columnValueType ~ ", " ~ targetTableType ~ ")";
         immutable string extractorTypeAlias = Name ~ "FieldValueExtractorType";
 
         string decl = "";
         decl ~= "public alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
+        decl ~= "static assert(" ~ columnValueTypeAlias ~ ".Kind == ValueKind.Index);\n";
         decl ~= "public alias " ~ extractorTypeAlias ~ " = " ~ extractorType ~ ";\n";
-        
+
         decl ~= "public auto get" ~ Name ~ "() const\n";
         decl ~= "{ return " ~ extractorTypeAlias ~ "(db).getValue(row.get" ~ Name ~ "());" ~ " }\n";
 
@@ -219,12 +258,12 @@ struct IndexFieldValueExtractor(value, MDTableType mdTarget) if (value.Kind == V
 }
 
 // Declares member function (field value getter)
-// GetFieldValueType!(ValueType!(T, K)) get##Name() const { ... }
+// GetSimpleFieldValueType!(ValueType!(T, K)) get##Name() const { ... }
 //
-// Example for string field 'Name' at module table:
+// Example for string field 'Name' at 'module_' table:
 //
-// public alias NameColumnValueType = Row!(MDTableType.module_).NameValueType;
-// public alias NameFieldValueExtractorType = FieldValueExtractor!NameColumnValueType);
+// public alias NameColumnValueType = Row!(MDTableType.module_).NameValueType; // == Value!(MDTableType.module_, ValueKind.String)
+// public alias NameFieldValueExtractorType = FieldValueExtractor!(NameColumnValueType);
 // public auto getName() const // returns string because Row!(MDTableType.module_).NameValueType is Value(MDTableType.module_, ValueKind.String)
 // {
 //     return NameFieldValueExtractorType(db.heaps()).getValue(row.getName());
@@ -233,7 +272,7 @@ private mixin template DeclSimpleField(alias md, string Name)
 {
     enum injectFieldGetter = ()
     {
-        immutable tableType = "MDTableType." ~ md.stringof;
+        immutable string tableType = "MDTableType." ~ md.stringof;
 
         immutable string columnValueType = "Row!(" ~ tableType ~ ")." ~ Name ~ "ValueType";
         immutable string columnValueTypeAlias = Name ~ "ColumnValueType";
@@ -258,17 +297,17 @@ unittest
 {
     alias ModuleEntity = Entity!(MDTableType.module_);
 
-    static assert(is(GetFieldValueType!(ModuleEntity.UnusedColumnValueType) == ushort));
-    static assert(is(GetFieldValueType!(ModuleEntity.NameColumnValueType) == string));
-    static assert(is(GetFieldValueType!(ModuleEntity.MvidColumnValueType) == UUID));
-    static assert(is(GetFieldValueType!(ModuleEntity.EncIdColumnValueType) == UUID));
-    static assert(is(GetFieldValueType!(ModuleEntity.EncBaseIdColumnValueType) == UUID));
+    static assert(is(GetSimpleFieldValueType!(ModuleEntity.UnusedColumnValueType) == ushort));
+    static assert(is(GetSimpleFieldValueType!(ModuleEntity.NameColumnValueType) == string));
+    static assert(is(GetSimpleFieldValueType!(ModuleEntity.MvidColumnValueType) == UUID));
+    static assert(is(GetSimpleFieldValueType!(ModuleEntity.EncIdColumnValueType) == UUID));
+    static assert(is(GetSimpleFieldValueType!(ModuleEntity.EncBaseIdColumnValueType) == UUID));
 }
 
 // value is Value<T, K>
 struct FieldValueExtractor(value)
 {
-    public alias ReturnValueType = GetFieldValueType!(value);
+    public alias ReturnValueType = GetSimpleFieldValueType!(value);
     
     public this(const (Heaps*) heaps)
     {
@@ -328,41 +367,41 @@ unittest
 }
 
 // value is Value<T, K>
-template GetFieldValueType(value) 
+template GetSimpleFieldValueType(value)
 {
     static if (value.Kind == ValueKind.Integral)
     {
-        alias GetFieldValueType = value.Type;
+        alias GetSimpleFieldValueType = value.Type;
     } 
     else static if (value.Kind == ValueKind.Guid)
     {
-        alias GetFieldValueType = UUID;
+        alias GetSimpleFieldValueType = UUID;
     }
     else static if (value.Kind == ValueKind.String)
     {
-        alias GetFieldValueType = string;
+        alias GetSimpleFieldValueType = string;
     }
     else static if (value.Kind == ValueKind.Blob)
     {
-        alias GetFieldValueType = const(ubyte)[];
+        alias GetSimpleFieldValueType = const(ubyte)[];
     }
     else
     {
-        alias GetFieldValueType = void;
+        alias GetSimpleFieldValueType = void;
     }
 }
 
 unittest
 {
     alias Val1 = Value!(ushort, ValueKind.Integral);
-    static assert(is(GetFieldValueType!(Val1) == ushort));
+    static assert(is(GetSimpleFieldValueType!(Val1) == ushort));
 
     alias Val2 = Value!(uint, ValueKind.String);
-    static assert(is(GetFieldValueType!(Val2) == string));
+    static assert(is(GetSimpleFieldValueType!(Val2) == string));
 
     alias Val3 = Value!(uint, ValueKind.Guid);
-    static assert(is(GetFieldValueType!(Val3) == UUID));
+    static assert(is(GetSimpleFieldValueType!(Val3) == UUID));
 
     alias Val4 = Value!(uint, ValueKind.Blob);
-    static assert(is(GetFieldValueType!(Val4) == const(ubyte)[]));
+    static assert(is(GetSimpleFieldValueType!(Val4) == const(ubyte)[]));
 }
