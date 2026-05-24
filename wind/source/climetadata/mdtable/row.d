@@ -204,7 +204,7 @@ private mixin template moduleGetters()
 
 private mixin template typeRefGetters()
 {
-    mixin DeclColumn!(MDTableType.typeRef, 0, ushort, ValueKind.CodedIndex, "ResolutionScope");
+    mixin DeclColumn!(MDTableType.typeRef, 0, uint, ValueKind.CodedIndex, "ResolutionScope");
     mixin DeclColumn!(MDTableType.typeRef, 1, uint, ValueKind.String, "TypeName");
     mixin DeclColumn!(MDTableType.typeRef, 2, uint, ValueKind.String, "TypeNamespace");
 }

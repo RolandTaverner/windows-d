@@ -45,7 +45,7 @@ enum TypeDefOrRef
     typeSpec,
 }
 
-public alias TypeDefOrRefValue = Algebraic!(TypeDef, TypeRef, TypeSpec);
+public alias TypeDefOrRefValue = Algebraic!(TypeDefEntity, TypeRefEntity, TypeSpecEntity);
 
 // private template isCodedIndexType(CodedIndexType) if (is(CodedIndexType == TypeDefOrRef))
 // {
@@ -85,7 +85,7 @@ enum HasConstant
     property,
 }
 
-public alias HasConstantValue = Algebraic!(Field, Param, Property);
+public alias HasConstantValue = Algebraic!(FieldEntity, ParamEntity, PropertyEntity);
 
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == HasConstant))
 {
@@ -140,10 +140,10 @@ enum HasCustomAttribute
 }
 
 public alias HasCustomAttributeValue = Algebraic!(
-    MethodDef, Field, TypeRef, TypeDef, Param, InterfaceImpl, MemberRef,
-    Module, DeclSecurity, Property, Event, StandAloneSig, ModuleRef,
-    TypeSpec, Assembly, AssemblyRef, File, ExportedType, ManifestResource,
-    GenericParam, GenericParamConstraint, MethodSpec);
+    MethodDefEntity, FieldEntity, TypeRefEntity, TypeDefEntity, ParamEntity, InterfaceImplEntity, MemberRefEntity,
+    ModuleEntity, DeclSecurityEntity, PropertyEntity, EventEntity, StandAloneSigEntity, ModuleRefEntity,
+    TypeSpecEntity, AssemblyEntity, AssemblyRefEntity, FileEntity, ExportedTypeEntity, ManifestResourceEntity,
+    GenericParamEntity, GenericParamConstraintEntity, MethodSpecEntity);
 
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == HasCustomAttribute))
 {
@@ -196,7 +196,7 @@ enum HasFieldMarshal
     param,
 }
 
-public alias HasFieldMarshalValue = Algebraic!(Field, Param);
+public alias HasFieldMarshalValue = Algebraic!(FieldEntity, ParamEntity);
 
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == HasFieldMarshal))
 {
@@ -230,7 +230,7 @@ enum HasDeclSecurity
     assembly,
 }
 
-public alias HasDeclSecurityValue = Algebraic!(TypeDef, MethodDef, Assembly);
+public alias HasDeclSecurityValue = Algebraic!(TypeDefEntity, MethodDefEntity, AssemblyEntity);
 
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == HasDeclSecurity))
 {
@@ -267,7 +267,7 @@ enum MemberRefParent
     typeSpec,
 }
 
-public alias MemberRefParentValue = Algebraic!(TypeDef, TypeRef, ModuleRef, MethodDef, TypeSpec);
+public alias MemberRefParentValue = Algebraic!(TypeDefEntity, TypeRefEntity, ModuleRefEntity, MethodDefEntity, TypeSpecEntity);
 
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == MemberRefParent))
 {
@@ -303,7 +303,7 @@ enum HasSemantics
     property,
 }
 
-public alias HasSemanticsValue = Algebraic!(Event, Property);
+public alias HasSemanticsValue = Algebraic!(EventEntity, PropertyEntity);
 
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == HasSemantics))
 {
@@ -336,7 +336,7 @@ enum MethodDefOrRef
     memberRef,
 }
 
-public alias MethodDefOrRefValue = Algebraic!(MethodDef, MemberRef);
+public alias MethodDefOrRefValue = Algebraic!(MethodDefEntity, MemberRefEntity);
 
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == MethodDefOrRef))
 {
@@ -369,7 +369,7 @@ enum MemberForwarded
     methodDef,
 }
 
-public alias MemberForwardedValue = Algebraic!(Field, MethodDef);
+public alias MemberForwardedValue = Algebraic!(FieldEntity, MethodDefEntity);
 
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == MemberForwarded))
 {
@@ -403,7 +403,7 @@ enum Implementation
     exportedType,
 }
 
-public alias ImplementationValue = Algebraic!(File, AssemblyRef, ExportedType);
+public alias ImplementationValue = Algebraic!(FileEntity, AssemblyRefEntity, ExportedTypeEntity);
 
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == Implementation))
 {
@@ -440,7 +440,7 @@ enum CustomAttributeType
     __notUsed3,
 }
 
-public alias CustomAttributeTypeValue = Algebraic!(MethodDef, MemberRef);
+public alias CustomAttributeTypeValue = Algebraic!(MethodDefEntity, MemberRefEntity);
 
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == CustomAttributeType))
 {
@@ -477,7 +477,7 @@ enum ResolutionScope
     typeRef,
 }
 
-public alias ResolutionScopeValue = Algebraic!(Module, ModuleRef, AssemblyRef, TypeRef);
+public alias ResolutionScopeValue = Algebraic!(ModuleEntity, ModuleRefEntity, AssemblyRefEntity, TypeRefEntity);
 
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == ResolutionScope))
 {
@@ -512,7 +512,7 @@ enum TypeOrMethodDef
     methodDef,
 }
 
-public alias TypeOrMethodDefValue = Algebraic!(TypeDef, MethodDef);
+public alias TypeOrMethodDefValue = Algebraic!(TypeDefEntity, MethodDefEntity);
 
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == TypeOrMethodDef))
 {
