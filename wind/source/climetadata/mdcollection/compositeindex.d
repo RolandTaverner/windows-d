@@ -3,6 +3,7 @@ module climetadata.mdcollection.compositeindex;
 public import std.variant : Algebraic;
 public import climetadata.mdcollection.entitytypes;
 import climetadata.mdcollection.bits;
+import climetadata.mdcollection.database : Database;
 import climetadata.mdtable.type;
 
 struct CompositeIndex(CodedIndexType)
@@ -24,9 +25,9 @@ struct CompositeIndex(CodedIndexType)
         return codedIndex >> indexBits!CodedIndexType;
     }
 
-    CodedIndexType type()
+    CodedIndexType type() const
     {
-        return cast(T)(codedIndex & ((1 << indexBits!CodedIndexType) - 1));
+        return cast(CodedIndexType)(codedIndex & ((1 << indexBits!CodedIndexType) - 1));
     }
 }
 
@@ -304,38 +305,24 @@ public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == Res
     alias CodedIndexValueType = ResolutionScopeValue;
 }
 
-template CodedIndexMDTableType(CodedIndexType, CodedIndexType m) if (is(CodedIndexType == ResolutionScope))
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == ResolutionScope)) 
 {
-    static if (m == ResolutionScope.module_)
+    switch (codedIndex.type())
     {
-        alias CodedIndexMDTableType = MDTableType.module_;
-    }
-    else static if (m == ResolutionScope.moduleRef)
-    {
-        alias CodedIndexMDTableType = MDTableType.moduleRef;
-    }
-    else static if (m == ResolutionScope.assemblyRef)
-    {
-        alias CodedIndexMDTableType = MDTableType.assemblyRef;
-    }
-    else static if (m == ResolutionScope.typeRef)
-    {
-        alias CodedIndexMDTableType = MDTableType.typeRef;
-    }
-    else
-    {
-        static assert(false, "invalid coded index membder");
+        case ResolutionScope.module_: return ResolutionScopeValue(db.getCollection!(MDTableType.module_)[codedIndex.index()]);
+        case ResolutionScope.moduleRef:  return ResolutionScopeValue(db.getCollection!(MDTableType.moduleRef)[codedIndex.index()]);
+        case ResolutionScope.assemblyRef: return ResolutionScopeValue(db.getCollection!(MDTableType.assemblyRef)[codedIndex.index()]);
+        case ResolutionScope.typeRef: return ResolutionScopeValue(db.getCollection!(MDTableType.typeRef)[codedIndex.index()]);
+        default:
+            assert(false, "invalid ResolutionScope coded index membder");
     }
 }
 
 unittest
 {
     static assert (is(CodedIndexValueType!(ResolutionScope) == ResolutionScopeValue));
-
-    static assert(CodedIndexMDTableType!(ResolutionScope, ResolutionScope.module_) == MDTableType.module_);
-    static assert(CodedIndexMDTableType!(ResolutionScope, ResolutionScope.moduleRef) == MDTableType.moduleRef);
-    static assert(CodedIndexMDTableType!(ResolutionScope, ResolutionScope.assemblyRef) == MDTableType.assemblyRef);
-    static assert(CodedIndexMDTableType!(ResolutionScope, ResolutionScope.typeRef) == MDTableType.typeRef);
 }
 
 //=============================================================================

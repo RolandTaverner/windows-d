@@ -71,11 +71,12 @@ private mixin template moduleFieldGetters()
 
 private mixin template typeRefFieldGetters()
 {
-    //mixin DeclColumn!(MDTableType.typeRef, 0, ushort, ValueKind.CodedIndex, "ResolutionScope");
-    mixin DeclCodedIndexField!(MDTableType.typeRef, "ResolutionScope", ResolutionScope);
+    //mixin DeclCodedIndexField!(MDTableType.typeRef, "ResolutionScope", ResolutionScope);
     mixin DeclSimpleField!(MDTableType.typeRef, "TypeName");
     mixin DeclSimpleField!(MDTableType.typeRef, "TypeNamespace");
 }
+
+mixin DeclCodedIndexFieldGetter!(MDTableType.typeRef, "ResolutionScope", ResolutionScope);
 
 private mixin template typeDefFieldGetters()
 {
@@ -120,38 +121,63 @@ private mixin template interfaceImplFieldGetters()
 // Declares member function (list index field value getter)
 // CodedIndexValueType!CodedIndexType get##Name() const { ... }
 // bool null##Name() const { ... }
-private mixin template DeclCodedIndexField(alias md, string Name, CodedIndexType)
+private mixin template DeclCodedIndexFieldGetter(alias md, string Name, CodedIndexType)
 {
-    enum injectFieldGetter = ()
+    enum injectCodedIndexFieldGetter = ()
     {
         immutable string tableType = "MDTableType." ~ md.stringof;
+        immutable string entityType = "Entity!(" ~ tableType ~ ")";
         immutable string columnValueType = "Row!(" ~ tableType ~ ")." ~ Name ~ "ValueType";
         immutable string columnValueTypeAlias = Name ~ "ColumnValueType";
 
         immutable string codedIndexValueType = "CodedIndexValueType!(" ~ CodedIndexType.stringof ~ ")";
         immutable string codedIndexValueTypeAlias = Name ~ "CodedIndexValueType";
 
-        //immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
+        immutable string extractorType = "CodedIndexFieldValueExtractor!("  ~ CodedIndexType.stringof ~ ")";
+        immutable string extractorTypeAlias = Name ~ "CodedIndexFieldValueExtractor";
 
         string decl = "";
-        decl ~= "public alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
-        decl ~= "static assert(" ~ columnValueTypeAlias ~ ".Kind == ValueKind.CodedIndex);\n";
-        decl ~= "public alias " ~ codedIndexValueTypeAlias ~ " = " ~ codedIndexValueType ~ ";\n";
 
-        decl ~= "public bool null" ~ Name ~ "() const\n";
+        decl ~= "public bool null" ~ Name ~ "(in " ~ entityType ~ " entity)\n";
         decl ~= "{";
-        decl ~=  "  const auto columnValue = row.get" ~ Name ~ "();";
+        decl ~=  "  const auto columnValue = entity.row.get" ~ Name ~ "();";
         decl ~=  "  return columnValue == 0;";
         decl ~= "}\n";
 
-        // decl ~= "public auto get" ~ Name ~ "() const\n";
-        // decl ~= "{ return " ~ extractorTypeAlias ~ "(db).getValue(row.get" ~ Name ~ "());" ~ " }\n";
+        // decl ~= extractorTypeAlias ~ " e;\n";
+
+        decl ~= "public auto get" ~ Name ~ "(in " ~ entityType ~ " entity)\n";
+        decl ~= "{";
+        decl ~= "alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
+        decl ~= "static assert(" ~ columnValueTypeAlias ~ ".Kind == ValueKind.CodedIndex);\n";
+        decl ~= "alias " ~ codedIndexValueTypeAlias ~ " = " ~ codedIndexValueType ~ ";\n";
+        decl ~= "alias " ~ extractorTypeAlias ~ " = " ~ extractorType ~ ";\n";
+
+        decl ~=  "  return false;";
+        decl ~= "}\n";
 
 
         return decl;
     };
 
-    mixin(injectFieldGetter());
+    mixin(injectCodedIndexFieldGetter());
+}
+
+struct CodedIndexFieldValueExtractor(CodedIndexType)
+{
+    alias ValueType = CodedIndexValueType!(CodedIndexType);
+
+    public this(const Database* db)
+    {
+        this.db = db;
+    }
+    
+    public ValueType getValue(in CompositeIndex!(CodedIndexType) codedIndex) const
+    {
+        return getCodedIndexValue!(CodedIndexType)(db, codedIndex);
+    }
+
+    private const Database* db;    
 }
 
 // Declares member function (list index field value getter)
