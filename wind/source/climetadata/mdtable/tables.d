@@ -370,7 +370,7 @@ struct Tables
 
         methodSpecTable = Table!(MDTableType.methodSpec)(tablesView, rowCounts[MDTableType.methodSpec],
             [
-                ColumnKindSize(ValueKind.CodedIndex, typeOrMethodDefIndexSize), // Method (an index into the MethodDef or MemberRef table, specifying to which generic method this row refers
+                ColumnKindSize(ValueKind.CodedIndex, typeOrMethodDefIndexSize), // Method (an index into the MethodDef or MemberRef table, specifying to which generic method this row refers; that is, which generic method this row is an instantiation of; more precisely, a MethodDefOrRef (§II.24.2.6) coded index) 
                 ColumnKindSize(ValueKind.Blob, blobIndexSize), // Instantiation (an index into the Blob heap (§II.23.2.15), holding the signature of this instantiation)
             ]);
 
@@ -378,7 +378,7 @@ struct Tables
             rowCounts[MDTableType.genericParamConstraint],
             [
                 ColumnKindSize(ValueKind.Index, indexSize(rowCounts[MDTableType.genericParam])), // Owner (an index into the GenericParam table, specifying to which generic parameter this row refers)
-                ColumnKindSize(ValueKind.CodedIndex, typeDefOrRefIndexSize), // Constraint (an index into the TypeDef, TypeRef, or TypeSpec tables, specifying from which class this generic parameter is constrained to derive
+                ColumnKindSize(ValueKind.CodedIndex, typeDefOrRefIndexSize), // Constraint (an index into the TypeDef, TypeRef, or TypeSpec tables, specifying from which class this generic parameter is constrained to derive; or which interface this generic parameter is constrained to implement; more precisely, a TypeDefOrRef (§II.24.2.6) coded index) 
             ]);
     }
 

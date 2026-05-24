@@ -10,22 +10,22 @@ struct CompositeIndex(CodedIndexType)
 {
     public const uint codedIndex;
 
-    this(uint codedIndex)
+    public this(uint codedIndex)
     {
         this.codedIndex = codedIndex;
     }
 
-    this(uint decodedIndex, CodedIndexType value)
+    public this(uint decodedIndex, CodedIndexType value)
     {
         this.codedIndex = (decodedIndex << indexBits!CodedIndexType) | value;
     }
 
-    uint index() const
+    public uint index() const
     {
         return codedIndex >> indexBits!CodedIndexType;
     }
 
-    CodedIndexType type() const
+    public CodedIndexType type() const
     {
         return cast(CodedIndexType)(codedIndex & ((1 << indexBits!CodedIndexType) - 1));
     }
@@ -57,33 +57,21 @@ public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == Typ
     alias CodedIndexValueType = TypeDefOrRefValue;
 }
 
-template CodedIndexMDTableType(CodedIndexType, CodedIndexType m) if (is(CodedIndexType == TypeDefOrRef))
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == TypeDefOrRef)) 
 {
-    static if (m == TypeDefOrRef.typeDef)
+    final switch (codedIndex.type())
     {
-        alias CodedIndexMDTableType = MDTableType.typeDef;
-    }
-    else static if (m == TypeDefOrRef.typeRef)
-    {
-        alias CodedIndexMDTableType = MDTableType.typeRef;
-    }
-    else static if (m == TypeDefOrRef.typeSpec)
-    {
-        alias CodedIndexMDTableType = MDTableType.typeSpec;
-    }
-    else
-    {
-        static assert(false, "invalid coded index membder");
+        case TypeDefOrRef.typeDef: return TypeDefOrRefValue(db.getCollection!(MDTableType.typeDef)[codedIndex.index()]);
+        case TypeDefOrRef.typeRef: return TypeDefOrRefValue(db.getCollection!(MDTableType.typeRef)[codedIndex.index()]);
+        case TypeDefOrRef.typeSpec: return TypeDefOrRefValue(db.getCollection!(MDTableType.typeSpec)[codedIndex.index()]);
     }
 }
 
 unittest
 {
     static assert (is(CodedIndexValueType!(TypeDefOrRef) == TypeDefOrRefValue));
-
-    static assert(CodedIndexMDTableType!(TypeDefOrRef, TypeDefOrRef.typeDef) == MDTableType.typeDef);
-    static assert(CodedIndexMDTableType!(TypeDefOrRef, TypeDefOrRef.typeRef) == MDTableType.typeRef);
-    static assert(CodedIndexMDTableType!(TypeDefOrRef, TypeDefOrRef.typeSpec) == MDTableType.typeSpec);
 }
 
 //=============================================================================
@@ -104,33 +92,21 @@ public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == Has
     alias CodedIndexValueType = HasConstantValue;
 }
 
-template CodedIndexMDTableType(CodedIndexType, CodedIndexType m) if (is(CodedIndexType == HasConstant))
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == HasConstant)) 
 {
-    static if (m == HasConstant.field)
+    final switch (codedIndex.type())
     {
-        alias CodedIndexMDTableType = MDTableType.field;
-    }
-    else static if (m == HasConstant.param)
-    {
-        alias CodedIndexMDTableType = MDTableType.param;
-    }
-    else static if (m == HasConstant.property)
-    {
-        alias CodedIndexMDTableType = MDTableType.property;
-    }
-    else
-    {
-        static assert(false, "invalid coded index membder");
+        case HasConstant.field: return HasConstantValue(db.getCollection!(MDTableType.field)[codedIndex.index()]);
+        case HasConstant.param: return HasConstantValue(db.getCollection!(MDTableType.param)[codedIndex.index()]);
+        case HasConstant.property: return HasConstantValue(db.getCollection!(MDTableType.property)[codedIndex.index()]);
     }
 }
 
 unittest
 {
     static assert (is(CodedIndexValueType!(HasConstant) == HasConstantValue));
-
-    static assert(CodedIndexMDTableType!(HasConstant, HasConstant.field) == MDTableType.field);
-    static assert(CodedIndexMDTableType!(HasConstant, HasConstant.param) == MDTableType.param);
-    static assert(CodedIndexMDTableType!(HasConstant, HasConstant.property) == MDTableType.property);
 }
 
 //=============================================================================
@@ -174,33 +150,40 @@ public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == Has
     alias CodedIndexValueType = HasCustomAttributeValue;
 }
 
-template CodedIndexMDTableType(CodedIndexType, CodedIndexType m) if (is(CodedIndexType == HasCustomAttribute))
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == HasCustomAttribute)) 
 {
-    static if (m == HasCustomAttribute.methodDef)
+    final switch (codedIndex.type())
     {
-        alias CodedIndexMDTableType = MDTableType.methodDef;
-    }
-    else static if (m == HasCustomAttribute.field)
-    {
-        alias CodedIndexMDTableType = MDTableType.field;
-    }
-    else static if (m == HasCustomAttribute.typeRef)
-    {
-        alias CodedIndexMDTableType = MDTableType.typeRef;
-    }
-    else
-    {
-        static assert(false, "invalid coded index membder");
+        case HasCustomAttribute.methodDef: return HasCustomAttributeValue(db.getCollection!(MDTableType.methodDef)[codedIndex.index()]);
+        case HasCustomAttribute.field: return HasCustomAttributeValue(db.getCollection!(MDTableType.field)[codedIndex.index()]);
+        case HasCustomAttribute.typeRef: return HasCustomAttributeValue(db.getCollection!(MDTableType.typeRef)[codedIndex.index()]);
+        case HasCustomAttribute.typeDef: return HasCustomAttributeValue(db.getCollection!(MDTableType.typeDef)[codedIndex.index()]);
+        case HasCustomAttribute.param: return HasCustomAttributeValue(db.getCollection!(MDTableType.param)[codedIndex.index()]);
+        case HasCustomAttribute.interfaceImpl: return HasCustomAttributeValue(db.getCollection!(MDTableType.interfaceImpl)[codedIndex.index()]);
+        case HasCustomAttribute.memberRef: return HasCustomAttributeValue(db.getCollection!(MDTableType.memberRef)[codedIndex.index()]);
+        case HasCustomAttribute.module_: return HasCustomAttributeValue(db.getCollection!(MDTableType.module_)[codedIndex.index()]);
+        case HasCustomAttribute.permission: return HasCustomAttributeValue(db.getCollection!(MDTableType.declSecurity)[codedIndex.index()]);
+        case HasCustomAttribute.property: return HasCustomAttributeValue(db.getCollection!(MDTableType.property)[codedIndex.index()]);
+        case HasCustomAttribute.event: return HasCustomAttributeValue(db.getCollection!(MDTableType.event)[codedIndex.index()]);
+        case HasCustomAttribute.standAloneSig: return HasCustomAttributeValue(db.getCollection!(MDTableType.standAloneSig)[codedIndex.index()]);
+        case HasCustomAttribute.moduleRef: return HasCustomAttributeValue(db.getCollection!(MDTableType.moduleRef)[codedIndex.index()]);
+        case HasCustomAttribute.typeSpec: return HasCustomAttributeValue(db.getCollection!(MDTableType.typeSpec)[codedIndex.index()]);
+        case HasCustomAttribute.assembly: return HasCustomAttributeValue(db.getCollection!(MDTableType.assembly)[codedIndex.index()]);
+        case HasCustomAttribute.assemblyRef: return HasCustomAttributeValue(db.getCollection!(MDTableType.assemblyRef)[codedIndex.index()]);
+        case HasCustomAttribute.file: return HasCustomAttributeValue(db.getCollection!(MDTableType.file)[codedIndex.index()]);
+        case HasCustomAttribute.exportedType: return HasCustomAttributeValue(db.getCollection!(MDTableType.exportedType)[codedIndex.index()]);
+        case HasCustomAttribute.manifestResource: return HasCustomAttributeValue(db.getCollection!(MDTableType.manifestResource)[codedIndex.index()]);
+        case HasCustomAttribute.genericParam: return HasCustomAttributeValue(db.getCollection!(MDTableType.genericParam)[codedIndex.index()]);
+        case HasCustomAttribute.genericParamConstraint: return HasCustomAttributeValue(db.getCollection!(MDTableType.genericParamConstraint)[codedIndex.index()]);
+        case HasCustomAttribute.methodSpec: return HasCustomAttributeValue(db.getCollection!(MDTableType.methodSpec)[codedIndex.index()]);
     }
 }
 
 unittest
 {
     static assert (is(CodedIndexValueType!(HasCustomAttribute) == HasCustomAttributeValue));
-
-    static assert(CodedIndexMDTableType!(HasCustomAttribute, HasCustomAttribute.methodDef) == MDTableType.methodDef);
-    static assert(CodedIndexMDTableType!(HasCustomAttribute, HasCustomAttribute.field) == MDTableType.field);
-    static assert(CodedIndexMDTableType!(HasCustomAttribute, HasCustomAttribute.typeRef) == MDTableType.typeRef);
 }
 
 //=============================================================================
@@ -215,6 +198,30 @@ enum HasFieldMarshal
 
 public alias HasFieldMarshalValue = Algebraic!(Field, Param);
 
+public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == HasFieldMarshal))
+{
+    alias CodedIndexValueType = HasFieldMarshalValue;
+}
+
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == HasFieldMarshal)) 
+{
+    final switch (codedIndex.type())
+    {
+        case HasFieldMarshal.field: return HasFieldMarshalValue(db.getCollection!(MDTableType.field)[codedIndex.index()]);
+        case HasFieldMarshal.param: return HasFieldMarshalValue(db.getCollection!(MDTableType.param)[codedIndex.index()]);
+    }
+}
+
+unittest
+{
+    static assert (is(CodedIndexValueType!(HasFieldMarshal) == HasFieldMarshalValue));
+}
+
+//=============================================================================
+// HasDeclSecurity coded index
+
 @Bits(2)
 enum HasDeclSecurity
 {
@@ -224,6 +231,31 @@ enum HasDeclSecurity
 }
 
 public alias HasDeclSecurityValue = Algebraic!(TypeDef, MethodDef, Assembly);
+
+public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == HasDeclSecurity))
+{
+    alias CodedIndexValueType = HasDeclSecurityValue;
+}
+
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == HasDeclSecurity)) 
+{
+    final switch (codedIndex.type())
+    {
+        case HasDeclSecurity.typeDef: return HasDeclSecurityValue(db.getCollection!(MDTableType.typeDef)[codedIndex.index()]);
+        case HasDeclSecurity.methodDef: return HasDeclSecurityValue(db.getCollection!(MDTableType.methodDef)[codedIndex.index()]);
+        case HasDeclSecurity.assembly: return HasDeclSecurityValue(db.getCollection!(MDTableType.assembly)[codedIndex.index()]);
+    }
+}
+
+unittest
+{
+    static assert (is(CodedIndexValueType!(HasDeclSecurity) == HasDeclSecurityValue));
+}
+
+//=============================================================================
+// MemberRefParent coded index
 
 @Bits(3)
 enum MemberRefParent
@@ -237,6 +269,33 @@ enum MemberRefParent
 
 public alias MemberRefParentValue = Algebraic!(TypeDef, TypeRef, ModuleRef, MethodDef, TypeSpec);
 
+public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == MemberRefParent))
+{
+    alias CodedIndexValueType = MemberRefParentValue;
+}
+
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == MemberRefParent)) 
+{
+    final switch (codedIndex.type())
+    {
+        case MemberRefParent.typeDef: return MemberRefParentValue(db.getCollection!(MDTableType.typeDef)[codedIndex.index()]);
+        case MemberRefParent.typeRef: return MemberRefParentValue(db.getCollection!(MDTableType.typeRef)[codedIndex.index()]);
+        case MemberRefParent.moduleRef: return MemberRefParentValue(db.getCollection!(MDTableType.moduleRef)[codedIndex.index()]);
+        case MemberRefParent.methodDef: return MemberRefParentValue(db.getCollection!(MDTableType.methodDef)[codedIndex.index()]);
+        case MemberRefParent.typeSpec: return MemberRefParentValue(db.getCollection!(MDTableType.typeSpec)[codedIndex.index()]);
+    }
+}
+
+unittest
+{
+    static assert (is(CodedIndexValueType!(MemberRefParent) == MemberRefParentValue));
+}
+
+//=============================================================================
+// HasSemantics coded index
+
 @Bits(1)
 enum HasSemantics
 {
@@ -245,6 +304,30 @@ enum HasSemantics
 }
 
 public alias HasSemanticsValue = Algebraic!(Event, Property);
+
+public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == HasSemantics))
+{
+    alias CodedIndexValueType = HasSemanticsValue;
+}
+
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == HasSemantics)) 
+{
+    final switch (codedIndex.type())
+    {
+        case HasSemantics.event: return HasSemanticsValue(db.getCollection!(MDTableType.event)[codedIndex.index()]);
+        case HasSemantics.property: return HasSemanticsValue(db.getCollection!(MDTableType.property)[codedIndex.index()]);
+    }
+}
+
+unittest
+{
+    static assert (is(CodedIndexValueType!(HasSemantics) == HasSemanticsValue));
+}
+
+//=============================================================================
+// MethodDefOrRef coded index
 
 @Bits(1)
 enum MethodDefOrRef
@@ -255,6 +338,30 @@ enum MethodDefOrRef
 
 public alias MethodDefOrRefValue = Algebraic!(MethodDef, MemberRef);
 
+public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == MethodDefOrRef))
+{
+    alias CodedIndexValueType = MethodDefOrRefValue;
+}
+
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == MethodDefOrRef)) 
+{
+    final switch (codedIndex.type())
+    {
+        case MethodDefOrRef.methodDef: return MethodDefOrRefValue(db.getCollection!(MDTableType.methodDef)[codedIndex.index()]);
+        case MethodDefOrRef.memberRef: return MethodDefOrRefValue(db.getCollection!(MDTableType.memberRef)[codedIndex.index()]);
+    }
+}
+
+unittest
+{
+    static assert (is(CodedIndexValueType!(MethodDefOrRef) == MethodDefOrRefValue));
+}
+
+//=============================================================================
+// MemberForwarded coded index
+
 @Bits(1)
 enum MemberForwarded
 {
@@ -263,6 +370,30 @@ enum MemberForwarded
 }
 
 public alias MemberForwardedValue = Algebraic!(Field, MethodDef);
+
+public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == MemberForwarded))
+{
+    alias CodedIndexValueType = MemberForwardedValue;
+}
+
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == MemberForwarded)) 
+{
+    final switch (codedIndex.type())
+    {
+        case MemberForwarded.field: return MemberForwardedValue(db.getCollection!(MDTableType.field)[codedIndex.index()]);
+        case MemberForwarded.methodDef: return MemberForwardedValue(db.getCollection!(MDTableType.methodDef)[codedIndex.index()]);
+    }
+}
+
+unittest
+{
+    static assert (is(CodedIndexValueType!(MemberForwarded) == MemberForwardedValue));
+}
+
+//=============================================================================
+// Implementation coded index
 
 @Bits(2)
 enum Implementation
@@ -273,6 +404,31 @@ enum Implementation
 }
 
 public alias ImplementationValue = Algebraic!(File, AssemblyRef, ExportedType);
+
+public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == Implementation))
+{
+    alias CodedIndexValueType = ImplementationValue;
+}
+
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == Implementation)) 
+{
+    final switch (codedIndex.type())
+    {
+        case Implementation.file: return ImplementationValue(db.getCollection!(MDTableType.file)[codedIndex.index()]);
+        case Implementation.assemblyRef: return ImplementationValue(db.getCollection!(MDTableType.assemblyRef)[codedIndex.index()]);
+        case Implementation.exportedType: return ImplementationValue(db.getCollection!(MDTableType.exportedType)[codedIndex.index()]);
+    }
+}
+
+unittest
+{
+    static assert (is(CodedIndexValueType!(Implementation) == ImplementationValue));
+}
+
+//=============================================================================
+// CustomAttributeType coded index
 
 @Bits(3)
 enum CustomAttributeType
@@ -285,6 +441,29 @@ enum CustomAttributeType
 }
 
 public alias CustomAttributeTypeValue = Algebraic!(MethodDef, MemberRef);
+
+public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == CustomAttributeType))
+{
+    alias CodedIndexValueType = CustomAttributeTypeValue;
+}
+
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == CustomAttributeType)) 
+{
+    final switch (codedIndex.type())
+    {
+        case CustomAttributeType.methodDef: return CustomAttributeTypeValue(db.getCollection!(MDTableType.methodDef)[codedIndex.index()]);
+        case CustomAttributeType.memberRef: return CustomAttributeTypeValue(db.getCollection!(MDTableType.memberRef)[codedIndex.index()]);
+        case CustomAttributeType.__notUsed1, CustomAttributeType.__notUsed2, CustomAttributeType.__notUsed3:
+            assert(false, "invalid member of CustomAttributeType coded index");
+    }
+}
+
+unittest
+{
+    static assert (is(CodedIndexValueType!(CustomAttributeType) == CustomAttributeTypeValue));
+}
 
 //=============================================================================
 // ResolutionScope coded index
@@ -309,14 +488,12 @@ public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(c
     in CompositeIndex!(CodedIndexType) codedIndex) 
 if (is(CodedIndexType == ResolutionScope)) 
 {
-    switch (codedIndex.type())
+    final switch (codedIndex.type())
     {
         case ResolutionScope.module_: return ResolutionScopeValue(db.getCollection!(MDTableType.module_)[codedIndex.index()]);
-        case ResolutionScope.moduleRef:  return ResolutionScopeValue(db.getCollection!(MDTableType.moduleRef)[codedIndex.index()]);
+        case ResolutionScope.moduleRef: return ResolutionScopeValue(db.getCollection!(MDTableType.moduleRef)[codedIndex.index()]);
         case ResolutionScope.assemblyRef: return ResolutionScopeValue(db.getCollection!(MDTableType.assemblyRef)[codedIndex.index()]);
         case ResolutionScope.typeRef: return ResolutionScopeValue(db.getCollection!(MDTableType.typeRef)[codedIndex.index()]);
-        default:
-            assert(false, "invalid ResolutionScope coded index membder");
     }
 }
 
@@ -336,3 +513,24 @@ enum TypeOrMethodDef
 }
 
 public alias TypeOrMethodDefValue = Algebraic!(TypeDef, MethodDef);
+
+public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == TypeOrMethodDef))
+{
+    alias CodedIndexValueType = TypeOrMethodDefValue;
+}
+
+public CodedIndexValueType!(CodedIndexType) getCodedIndexValue(CodedIndexType)(const Database* db, 
+    in CompositeIndex!(CodedIndexType) codedIndex) 
+if (is(CodedIndexType == TypeOrMethodDef)) 
+{
+    final switch (codedIndex.type())
+    {
+        case TypeOrMethodDef.typeDef: return TypeOrMethodDefValue(db.getCollection!(MDTableType.typeDef)[codedIndex.index()]);
+        case TypeOrMethodDef.methodDef: return TypeOrMethodDefValue(db.getCollection!(MDTableType.methodDef)[codedIndex.index()]);
+    }
+}
+
+unittest
+{
+    static assert (is(CodedIndexValueType!(TypeOrMethodDef) == TypeOrMethodDefValue));
+}
