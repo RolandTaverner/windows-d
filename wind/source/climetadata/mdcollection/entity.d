@@ -604,19 +604,16 @@ private mixin template DeclCodedIndexFieldGetter(alias md, string Name, CodedInd
         decl ~= "{\n";
         decl ~= "  const auto columnValue = entity.row.get" ~ Name ~ "();\n";
         decl ~= "  const auto codedIndex = CompositeIndex!(" ~ CodedIndexType.stringof ~ ")(columnValue);\n";
-        decl ~= "  return codedIndex.index() == 0;\n";
+        decl ~= "  return codedIndex.index() == 0;\n"; // TODO: also check > table.rowCount
         decl ~= "}\n";
-
-        // decl ~= extractorTypeAlias ~ " e;\n";
 
         decl ~= "public " ~ codedIndexValueType ~ " get" ~ Name ~ "(in " ~ entityType ~ " entity)\n";
         decl ~= "{\n";
         decl ~= "  alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
         decl ~= "  static assert(" ~ columnValueTypeAlias ~ ".Kind == ValueKind.CodedIndex);\n";
-        // decl ~= "  alias " ~ codedIndexValueTypeAlias ~ " = " ~ codedIndexValueType ~ ";\n";
-        // decl ~= "  alias " ~ extractorTypeAlias ~ " = " ~ extractorType ~ ";\n";
         decl ~= "  const auto columnValue = entity.row.get" ~ Name ~ "();\n";
         decl ~= "  const auto codedIndex = CompositeIndex!(" ~ CodedIndexType.stringof ~ ")(columnValue);\n";
+        decl ~= "  assert(!null" ~ Name ~ "(entity), \"access to null coded index table " ~ tableType ~ " field " ~ Name ~ "\");\n";
         decl ~= "  return getCodedIndexValue!(" ~ CodedIndexType.stringof ~ ")(entity.db, codedIndex);\n";
         decl ~= "}\n";
 
