@@ -4,10 +4,10 @@ public import std.uuid : UUID;
 
 import climetadata.mdtable.heaps : Heaps;
 import climetadata.mdtable.row : Row;
-import climetadata.mdtable.table : emptyList, getNextRow, isLastRow;
+import climetadata.mdtable.table : emptyList, getNextRow, isLastRow, TableRangeEnumerator;
 import climetadata.mdtable.type;
 import climetadata.mdtable.value;
-import climetadata.mdcollection.collection : CollectionListEnumerator;
+import climetadata.mdcollection.collection : CollectionListEnumerator, CollectionRangeEnumerator;
 import climetadata.mdcollection.compositeindex;
 import climetadata.mdcollection.database : Database;
 
@@ -174,6 +174,30 @@ public struct Entity(MDTableType md)
         mixin genericParamConstraintFieldGetters!();
     }
 
+    @safe pure nothrow
+    public bool opEquals()(auto ref const Entity!md other) const
+    {
+        return this.row == other.row;
+    }
+
+    @safe pure nothrow
+    public int opCmp(ref const Entity!md other) const
+    {
+        if (this.row > other.row)
+            return 1;
+        if (this.row < other.row)
+            return -1;
+        return 0;
+    }
+
+    @safe pure nothrow
+    public size_t toHash() const
+    {
+        return row.toHash();
+    }
+
+    public alias TableType = md;
+
     // public ref const(Row!md) getRow() const
     // {
     //     return row;
@@ -217,6 +241,8 @@ private mixin template typeDefFieldGetters()
     mixin DeclSimpleField!(MDTableType.typeDef, "TypeNamespace");
     mixin DeclListIndexField!(MDTableType.typeDef, "FieldList", MDTableType.field);
     mixin DeclListIndexField!(MDTableType.typeDef, "MethodList", MDTableType.methodDef);
+
+    mixin DeclRangeProp!(MDTableType.typeDef, "Interfaces", MDTableType.interfaceImpl, "Class");
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.typeDef, "Extends", TypeDefOrRef);
@@ -583,6 +609,42 @@ private mixin template genericParamConstraintFieldGetters()
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.genericParamConstraint, "Constraint", TypeDefOrRef);
 
+//=============================================================================
+//=============================================================================
+// Helpers
+//=============================================================================
+//=============================================================================
+
+private mixin template DeclRangeProp(alias md, string PropName, alias mdTarget, string TargetColumnName)
+{
+    enum injectRangePropGetter = ()
+    {
+        immutable string tableType = "MDTableType." ~ md.stringof;
+
+        immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
+        immutable string targetColumnValueType = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "ValueType";
+
+        immutable string targetColumnEntityType = "Entity!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "EntityType";
+        immutable string targetColumn = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "Column";
+
+        immutable string rangeEnumeratorType = "CollectionRangeEnumerator!(" ~ targetTableType ~ ")";
+
+        string decl = "";
+        decl ~= "static assert(" ~ targetColumnValueType ~ ".Kind == ValueKind.Index);\n";         // target column is index
+        decl ~= "static assert(" ~ targetColumnEntityType ~ ".TableType == " ~ tableType ~ ");\n"; // and that index references this (md) entity
+
+        decl ~= "public " ~ rangeEnumeratorType ~ " get" ~ PropName ~ "() const\n";
+        decl ~= "{\n";
+        decl ~= "  auto tableEnumerator = db.getTable!(" ~ targetTableType ~ ")().range(row.getRowID(), " ~ targetColumn ~ ");\n";
+        decl ~= "  return " ~ rangeEnumeratorType ~ "(tableEnumerator, db);\n";
+        decl ~= "}\n";
+
+        return decl;
+    };
+
+    mixin(injectRangePropGetter());   
+}
+
 // Declares free function (coded index field value getter)
 // CodedIndexValueType!CodedIndexType get##Name() const { ... }
 // bool null##Name() const { ... }
@@ -652,10 +714,13 @@ private mixin template DeclListIndexField(alias md, string Name, alias mdTarget)
         immutable string columnValueTypeAlias = Name ~ "ColumnValueType";
 
         immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
+        immutable string targetEntityType = "Entity!(" ~ targetTableType ~ ")";
+        immutable string targetEntityTypeAlias = Name ~ "EntityType";
 
         string decl = "";
         decl ~= "public alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
         decl ~= "static assert(" ~ columnValueTypeAlias ~ ".Kind == ValueKind.Index);\n";
+        decl ~= "public alias " ~ targetEntityTypeAlias ~ " = " ~ targetEntityType ~ ";\n";
 
         decl ~= "public bool null" ~ Name ~ "() const\n";
         decl ~= "{\n";
@@ -694,12 +759,16 @@ private mixin template DeclIndexField(alias md, string Name, alias mdTarget)
 
         immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
 
+        immutable string targetEntityType = "Entity!(" ~ targetTableType ~ ")";
+        immutable string targetEntityTypeAlias = Name ~ "EntityType";
+
         immutable string extractorType = "IndexFieldValueExtractor!(" ~ columnValueType ~ ", " ~ targetTableType ~ ")";
         immutable string extractorTypeAlias = Name ~ "FieldValueExtractorType";
 
         string decl = "";
         decl ~= "public alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
         decl ~= "static assert(" ~ columnValueTypeAlias ~ ".Kind == ValueKind.Index);\n";
+        decl ~= "public alias " ~ targetEntityTypeAlias ~ " = " ~ targetEntityType ~ ";\n";
         decl ~= "public alias " ~ extractorTypeAlias ~ " = " ~ extractorType ~ ";\n";
 
         decl ~= "public auto get" ~ Name ~ "() const\n";

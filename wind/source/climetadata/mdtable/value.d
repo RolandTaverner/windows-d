@@ -1,8 +1,10 @@
 module climetadata.mdtable.value;
 
+import std.traits : isIntegral;
+
 public import climetadata.mdtable.valuekind;
 
-public struct Value(T, ValueKind K)
+public struct Value(T, ValueKind K) if (isIntegral!T)
 {
     public alias Kind = K;
     public alias Type = T;
@@ -10,11 +12,6 @@ public struct Value(T, ValueKind K)
     public this(in T value)
     {
         this.value = value;
-    }
-
-    public ValueKind kind() const
-    {
-        return Kind;
     }
 
     alias value this;

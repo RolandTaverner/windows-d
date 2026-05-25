@@ -1,7 +1,7 @@
 module climetadata.mdcollection.collection;
 
 public import climetadata.mdtable.type;
-import climetadata.mdtable.table : Table, TableListEnumerator;
+import climetadata.mdtable.table : Table, TableListEnumerator, TableRangeEnumerator;
 import climetadata.mdcollection.database : Database;
 import climetadata.mdcollection.entity : Entity;
 
@@ -53,25 +53,59 @@ public struct CollectionListEnumerator(MDTableType md)
         this.db = db;
     }
 
-    pragma(inline, true);
+    pragma(inline, true)
     public bool empty() const
     {
         return tableEnumerator.empty();
     }
 
-    pragma(inline, true);
+    pragma(inline, true)
     public void popFront()
     {
         tableEnumerator.popFront();
     }
 
-    pragma(inline, true);
+    pragma(inline, true)
     public Entity!md front() const
     {
         return Entity!md(tableEnumerator.front(), db);
     }
-    
+
 private:
     TableListEnumerator!md tableEnumerator;
+    const Database* db;
+}
+
+// Wraps TableRangeEnumerator
+public struct CollectionRangeEnumerator(MDTableType md)
+{
+    @disable this();
+    
+    public this(const TableRangeEnumerator!md tableEnumerator, const Database* db)
+    {
+        this.tableEnumerator = tableEnumerator;
+        this.db = db;
+    }
+
+    pragma(inline, true)
+    public bool empty() const
+    {
+        return tableEnumerator.empty();
+    }
+
+    pragma(inline, true)
+    public void popFront()
+    {
+        tableEnumerator.popFront();
+    }
+
+    pragma(inline, true)
+    public Entity!md front() const
+    {
+        return Entity!md(tableEnumerator.front(), db);
+    }
+
+private:
+    TableRangeEnumerator!md tableEnumerator;
     const Database* db;
 }

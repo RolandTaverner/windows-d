@@ -108,25 +108,25 @@ struct Storage
     {
     }
 
-    pragma(inline, true);
+    pragma(inline, true)
     ref const(const(ubyte)[]) strings() const
     {
         return stringsHeap;
     }
 
-    pragma(inline, true);
+    pragma(inline, true)
     ref const(const(ubyte)[]) blobs() const
     {
         return blobsHeap;
     }
 
-    pragma(inline, true);
+    pragma(inline, true)
     ref const(const(ubyte)[]) guids() const
     {
         return guidsHeap;
     }
 
-    pragma(inline, true);
+    pragma(inline, true)
     ref const(const(ubyte)[]) tables() const
     {
         return tablesHeap;

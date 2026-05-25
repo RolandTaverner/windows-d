@@ -188,6 +188,28 @@ public struct Row(MDTableType md)
         return table;
     }
 
+    @safe pure nothrow
+    public bool opEquals()(auto ref const Row!md other) const
+    {
+        return this.rowID == other.rowID;
+    }
+
+    @safe pure nothrow
+    public int opCmp(ref const Row!md other) const
+    {
+        if (this.rowID > other.rowID)
+            return 1;
+        if (this.rowID < other.rowID)
+            return -1;
+        return 0;
+    }
+
+    @safe pure nothrow
+    public size_t toHash() const
+    {
+        return rowID;
+    }
+
 private:
     const(Table!md*) table;
     const uint rowID; // Row ID is 1-based
@@ -481,6 +503,8 @@ private mixin template DeclColumn(alias md, uint column, alias T, alias K, strin
         
         decl ~= "public " ~ valueTypeAlias ~ " get" ~ fieldSpec.Name ~ "() const\n";
         decl ~= "{ return " ~ extractorTypeAlias ~ "().getValue(table, rowID);" ~ " }\n";
+
+        decl ~= "public enum " ~ fieldSpec.Name ~ "Column = column;\n";
 
         return decl;
     };

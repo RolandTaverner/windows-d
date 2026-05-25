@@ -105,6 +105,13 @@ public struct Table(MDTableType md)
         return TableListEnumerator!md(&this, startRowID, endRowID);
     }
 
+    public TableRangeEnumerator!md range(uint referenceRowID, uint referenceColumn) const
+    {
+        assert(referenceRowID, "start referenceRowID can't be 0");
+        assert(referenceColumn < columns.length, "referenceColumn out of range");
+        return TableRangeEnumerator!md(&this, referenceRowID, referenceColumn);
+    }
+
     private const uint rowSize;
     public const uint rowCount;
     public const(ColumnDesc[]) columns;
@@ -167,25 +174,25 @@ public struct TableListEnumerator(MDTableType md)
     
     public this(const(Table!md*) table, uint startRowID, uint endRowID)
     {
-        this.table = table;        
+        this.table = table;
         currentRowID = startRowID;
         this.endRowID = endRowID ? endRowID : (table.rowCount + 1);
     }
 
-    pragma(inline, true);
+    pragma(inline, true)
     public bool empty() const
     {
         return currentRowID >= endRowID;
     }
 
-    pragma(inline, true);
+    pragma(inline, true)
     public void popFront()
     {
         assert(currentRowID < endRowID, "end of the reached");
         ++currentRowID;
     }
 
-    pragma(inline, true);
+    pragma(inline, true)
     public Row!md front() const
     {
         assert(currentRowID < endRowID, "can't get value from list");
@@ -201,4 +208,50 @@ private:
 public TableListEnumerator!md emptyList(MDTableType md)(const(Table!md*) table)
 {
     return TableListEnumerator!md(table, table.rowCount + 1, table.rowCount + 1);
+}
+
+// Returns contiguos range of rows referencing the given referenceRowID in another table
+public struct TableRangeEnumerator(MDTableType md)
+{
+    @disable this();
+
+    public this(const(Table!md*) table, uint referenceRowID, uint referenceColumn)
+    {
+        this.table = table;
+        this.referenceRowID = referenceRowID;
+        this.referenceColumn = referenceColumn;
+        rowID = 1;
+
+        while (rowID <= table.rowCount)
+        {
+            auto referenceColumnValue = table.getValue!(uint, ValueKind.Index)(rowID - 1, referenceColumn);
+            if (referenceColumnValue == referenceRowID)
+                break;
+            ++rowID;
+        }
+    }
+
+    pragma(inline, true)
+    bool empty() const
+    {
+        return rowID > table.rowCount || table.getValue!(uint, ValueKind.Index)(rowID - 1, referenceColumn) != referenceRowID;
+    }
+
+    pragma(inline, true)
+    void popFront()
+    {
+        ++rowID;
+    }
+
+    pragma(inline, true)
+    public Row!md front() const
+    {
+        return (*table)[rowID];
+    }
+
+private:
+    const Table!md* table;
+    const uint referenceRowID;
+    const uint referenceColumn;
+    uint rowID;
 }
