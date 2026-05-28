@@ -47,11 +47,6 @@ enum TypeDefOrRef
 
 public alias TypeDefOrRefValue = Algebraic!(TypeDefEntity, TypeRefEntity, TypeSpecEntity);
 
-// private template isCodedIndexType(CodedIndexType) if (is(CodedIndexType == TypeDefOrRef))
-// {
-//     alias isCodedIndexType = true;
-// }
-
 public template CodedIndexValueType(CodedIndexType) if (is(CodedIndexType == TypeDefOrRef))
 {
     alias CodedIndexValueType = TypeDefOrRefValue;
@@ -67,6 +62,14 @@ if (is(CodedIndexType == TypeDefOrRef))
         case TypeDefOrRef.typeRef: return TypeDefOrRefValue(db.getCollection!(MDTableType.typeRef)[codedIndex.index()]);
         case TypeDefOrRef.typeSpec: return TypeDefOrRefValue(db.getCollection!(MDTableType.typeSpec)[codedIndex.index()]);
     }
+}
+
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == TypeDefOrRef)) 
+{
+    static if (md == MDTableType.typeDef) alias getCodedIndexMember = TypeDefOrRef.typeDef;
+    else static if (md == MDTableType.typeRef) alias getCodedIndexMember = TypeDefOrRef.typeRef;
+    else static if (md == MDTableType.typeSpec) alias getCodedIndexMember = TypeDefOrRef.typeSpec;
+    else static assert(false, "Invalid MDTableType");
 }
 
 unittest
@@ -102,6 +105,14 @@ if (is(CodedIndexType == HasConstant))
         case HasConstant.param: return HasConstantValue(db.getCollection!(MDTableType.param)[codedIndex.index()]);
         case HasConstant.property: return HasConstantValue(db.getCollection!(MDTableType.property)[codedIndex.index()]);
     }
+}
+
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == HasConstant)) 
+{
+    static if (md == MDTableType.field) alias getCodedIndexMember = HasConstant.field;
+    else static if (md == MDTableType.param) alias getCodedIndexMember = HasConstant.param;
+    else static if (md == MDTableType.property) alias getCodedIndexMember = HasConstant.property;
+    else static assert(false, "Invalid MDTableType");
 }
 
 unittest
@@ -181,6 +192,31 @@ if (is(CodedIndexType == HasCustomAttribute))
     }
 }
 
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == HasCustomAttribute)) 
+{
+    static if (md == MDTableType.methodDef) alias getCodedIndexMember = HasCustomAttribute.methodDef;
+    else static if (md == MDTableType.field) alias getCodedIndexMember = HasCustomAttribute.field;
+    else static if (md == MDTableType.typeRef) alias getCodedIndexMember = HasCustomAttribute.typeRef;
+    else static if (md == MDTableType.typeDef) alias getCodedIndexMember = HasCustomAttribute.typeDef;
+    else static if (md == MDTableType.param) alias getCodedIndexMember = HasCustomAttribute.param;
+    else static if (md == MDTableType.interfaceImpl) alias getCodedIndexMember = HasCustomAttribute.interfaceImpl;
+    else static if (md == MDTableType.memberRef) alias getCodedIndexMember = HasCustomAttribute.memberRef;
+    else static if (md == MDTableType.module_) alias getCodedIndexMember = HasCustomAttribute.module_;
+    else static if (md == MDTableType.declSecurity) alias getCodedIndexMember = HasCustomAttribute.permission;
+    else static if (md == MDTableType.property) alias getCodedIndexMember = HasCustomAttribute.property;
+    else static if (md == MDTableType.standAloneSig) alias getCodedIndexMember = HasCustomAttribute.standAloneSig;
+    else static if (md == MDTableType.moduleRef) alias getCodedIndexMember = HasCustomAttribute.moduleRef;
+    else static if (md == MDTableType.typeSpec) alias getCodedIndexMember = HasCustomAttribute.typeSpec;
+    else static if (md == MDTableType.assembly) alias getCodedIndexMember = HasCustomAttribute.assembly;
+    else static if (md == MDTableType.assemblyRef) alias getCodedIndexMember = HasCustomAttribute.assemblyRef;
+    else static if (md == MDTableType.exportedType) alias getCodedIndexMember = HasCustomAttribute.exportedType;
+    else static if (md == MDTableType.manifestResource) alias getCodedIndexMember = HasCustomAttribute.manifestResource;
+    else static if (md == MDTableType.genericParam) alias getCodedIndexMember = HasCustomAttribute.genericParam;
+    else static if (md == MDTableType.genericParamConstraint) alias getCodedIndexMember = HasCustomAttribute.genericParamConstraint;
+    else static if (md == MDTableType.methodSpec) alias getCodedIndexMember = HasCustomAttribute.methodSpec;
+    else static assert(false, "Invalid MDTableType");
+}
+
 unittest
 {
     static assert (is(CodedIndexValueType!(HasCustomAttribute) == HasCustomAttributeValue));
@@ -212,6 +248,13 @@ if (is(CodedIndexType == HasFieldMarshal))
         case HasFieldMarshal.field: return HasFieldMarshalValue(db.getCollection!(MDTableType.field)[codedIndex.index()]);
         case HasFieldMarshal.param: return HasFieldMarshalValue(db.getCollection!(MDTableType.param)[codedIndex.index()]);
     }
+}
+
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == HasFieldMarshal)) 
+{
+    static if (md == MDTableType.field) alias getCodedIndexMember = HasFieldMarshal.field;
+    else static if (md == MDTableType.param) alias getCodedIndexMember = HasFieldMarshal.param;
+    else static assert(false, "Invalid MDTableType");
 }
 
 unittest
@@ -247,6 +290,14 @@ if (is(CodedIndexType == HasDeclSecurity))
         case HasDeclSecurity.methodDef: return HasDeclSecurityValue(db.getCollection!(MDTableType.methodDef)[codedIndex.index()]);
         case HasDeclSecurity.assembly: return HasDeclSecurityValue(db.getCollection!(MDTableType.assembly)[codedIndex.index()]);
     }
+}
+
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == HasFieldMarshal)) 
+{
+    static if (md == MDTableType.typeDef) alias getCodedIndexMember = HasDeclSecurity.typeDef;
+    else static if (md == MDTableType.methodDef) alias getCodedIndexMember = HasDeclSecurity.methodDef;
+    else static if (md == MDTableType.assembly) alias getCodedIndexMember = HasDeclSecurity.assembly;
+    else static assert(false, "Invalid MDTableType");
 }
 
 unittest
@@ -288,6 +339,16 @@ if (is(CodedIndexType == MemberRefParent))
     }
 }
 
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == MemberRefParent)) 
+{
+    static if (md == MDTableType.typeDef) alias getCodedIndexMember = MemberRefParent.typeDef;
+    else static if (md == MDTableType.typeRef) alias getCodedIndexMember = MemberRefParent.typeRef;
+    else static if (md == MDTableType.moduleRef) alias getCodedIndexMember = MemberRefParent.moduleRef;
+    else static if (md == MDTableType.methodDef) alias getCodedIndexMember = MemberRefParent.methodDef;
+    else static if (md == MDTableType.typeSpec) alias getCodedIndexMember = MemberRefParent.typeSpec;
+    else static assert(false, "Invalid MDTableType");
+}
+
 unittest
 {
     static assert (is(CodedIndexValueType!(MemberRefParent) == MemberRefParentValue));
@@ -319,6 +380,13 @@ if (is(CodedIndexType == HasSemantics))
         case HasSemantics.event: return HasSemanticsValue(db.getCollection!(MDTableType.event)[codedIndex.index()]);
         case HasSemantics.property: return HasSemanticsValue(db.getCollection!(MDTableType.property)[codedIndex.index()]);
     }
+}
+
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == HasSemantics)) 
+{
+    static if (md == MDTableType.event) alias getCodedIndexMember = HasSemantics.event;
+    else static if (md == MDTableType.property) alias getCodedIndexMember = HasSemantics.property;
+    else static assert(false, "Invalid MDTableType");
 }
 
 unittest
@@ -354,6 +422,13 @@ if (is(CodedIndexType == MethodDefOrRef))
     }
 }
 
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == MethodDefOrRef)) 
+{
+    static if (md == MDTableType.methodDef) alias getCodedIndexMember = MethodDefOrRef.methodDef;
+    else static if (md == MDTableType.memberRef) alias getCodedIndexMember = MethodDefOrRef.memberRef;
+    else static assert(false, "Invalid MDTableType");
+}
+
 unittest
 {
     static assert (is(CodedIndexValueType!(MethodDefOrRef) == MethodDefOrRefValue));
@@ -385,6 +460,13 @@ if (is(CodedIndexType == MemberForwarded))
         case MemberForwarded.field: return MemberForwardedValue(db.getCollection!(MDTableType.field)[codedIndex.index()]);
         case MemberForwarded.methodDef: return MemberForwardedValue(db.getCollection!(MDTableType.methodDef)[codedIndex.index()]);
     }
+}
+
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == MemberForwarded)) 
+{
+    static if (md == MDTableType.field) alias getCodedIndexMember = MemberForwarded.field;
+    else static if (md == MDTableType.methodDef) alias getCodedIndexMember = MemberForwarded.methodDef;
+    else static assert(false, "Invalid MDTableType");
 }
 
 unittest
@@ -420,6 +502,14 @@ if (is(CodedIndexType == Implementation))
         case Implementation.assemblyRef: return ImplementationValue(db.getCollection!(MDTableType.assemblyRef)[codedIndex.index()]);
         case Implementation.exportedType: return ImplementationValue(db.getCollection!(MDTableType.exportedType)[codedIndex.index()]);
     }
+}
+
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == Implementation)) 
+{
+    static if (md == MDTableType.file) alias getCodedIndexMember = Implementation.file;
+    else static if (md == MDTableType.assemblyRef) alias getCodedIndexMember = Implementation.assemblyRef;
+    else static if (md == MDTableType.exportedType) alias getCodedIndexMember = Implementation.exportedType;
+    else static assert(false, "Invalid MDTableType");
 }
 
 unittest
@@ -460,6 +550,13 @@ if (is(CodedIndexType == CustomAttributeType))
     }
 }
 
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == CustomAttributeType)) 
+{
+    static if (md == MDTableType.methodDef) alias getCodedIndexMember = CustomAttributeType.methodDef;
+    else static if (md == MDTableType.memberRef) alias getCodedIndexMember = CustomAttributeType.memberRef;
+    else static assert(false, "Invalid MDTableType");
+}
+
 unittest
 {
     static assert (is(CodedIndexValueType!(CustomAttributeType) == CustomAttributeTypeValue));
@@ -497,6 +594,15 @@ if (is(CodedIndexType == ResolutionScope))
     }
 }
 
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == ResolutionScope)) 
+{
+    static if (md == MDTableType.module_) alias getCodedIndexMember = ResolutionScope.module_;
+    else static if (md == MDTableType.moduleRef) alias getCodedIndexMember = ResolutionScope.moduleRef;
+    else static if (md == MDTableType.assemblyRef) alias getCodedIndexMember = ResolutionScope.assemblyRef;
+    else static if (md == MDTableType.typeRef) alias getCodedIndexMember = ResolutionScope.typeRef;
+    else static assert(false, "Invalid MDTableType");
+}
+
 unittest
 {
     static assert (is(CodedIndexValueType!(ResolutionScope) == ResolutionScopeValue));
@@ -528,6 +634,13 @@ if (is(CodedIndexType == TypeOrMethodDef))
         case TypeOrMethodDef.typeDef: return TypeOrMethodDefValue(db.getCollection!(MDTableType.typeDef)[codedIndex.index()]);
         case TypeOrMethodDef.methodDef: return TypeOrMethodDefValue(db.getCollection!(MDTableType.methodDef)[codedIndex.index()]);
     }
+}
+
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == TypeOrMethodDef)) 
+{
+    static if (md == MDTableType.typeDef) alias getCodedIndexMember = TypeOrMethodDef.typeDef;
+    else static if (md == MDTableType.methodDef) alias getCodedIndexMember = TypeOrMethodDef.methodDef;
+    else static assert(false, "Invalid MDTableType");
 }
 
 unittest

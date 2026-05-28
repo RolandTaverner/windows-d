@@ -5,10 +5,10 @@ public import std.uuid : UUID;
 
 import climetadata.mdtable.heaps : Heaps;
 import climetadata.mdtable.row : Row;
-import climetadata.mdtable.table : emptyList, getNextRow, isLastRow, TableRangeEnumerator;
+import climetadata.mdtable.table : emptyList, getNextRow, isLastRow, TableRangeEnumerator, TableCodedIndexRangeEnumerator;
 import climetadata.mdtable.type;
 import climetadata.mdtable.value;
-import climetadata.mdcollection.collection : CollectionListEnumerator, CollectionRangeEnumerator;
+import climetadata.mdcollection.collection : CollectionListEnumerator, CollectionRangeEnumerator, CollectionCodedIndexRangeEnumerator;
 import climetadata.mdcollection.compositeindex;
 import climetadata.mdcollection.database : Database;
 
@@ -246,6 +246,7 @@ private mixin template typeDefFieldGetters()
     // Extra computable props
 
     mixin DeclRangeProp!(MDTableType.typeDef, "Interfaces", MDTableType.interfaceImpl, "Class");
+
     mixin DeclFindFirstProp!(MDTableType.typeDef, "NestedClassByNested", MDTableType.nestedClass, "NestedClass");
 
     public const(Nullable!(Entity!(MDTableType.typeDef))) enclosing() const
@@ -261,6 +262,8 @@ private mixin template typeDefFieldGetters()
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.typeDef, "Extends", TypeDefOrRef);
+
+mixin DeclCodedIndexRangeProp!(MDTableType.typeDef, "Attributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
 // field entity getters
@@ -630,6 +633,47 @@ mixin DeclCodedIndexFieldGetter!(MDTableType.genericParamConstraint, "Constraint
 //=============================================================================
 //=============================================================================
 
+// Declares free function (coded index field range getter)
+// CollectionCodedIndexRangeEnumerator!mdTarget get##PropName(in Entity!(md) entity) { ... }
+private mixin template DeclCodedIndexRangeProp(alias md, string PropName, alias mdTarget, string TargetColumnName)
+{
+    enum injectRangePropGetter = ()
+    {
+        immutable string tableType = "MDTableType." ~ md.stringof;
+        immutable string entityType = "Entity!(" ~ tableType ~ ")";
+
+        immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
+        immutable string targetColumnValueType = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "ValueType";
+
+        //immutable string targetEntityColumnType = "Entity!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "EntityType";
+        immutable string targetColumn = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "Column";
+
+        immutable string targetEntityColumnCodedIndexType = TargetColumnName ~ "CodedIndexType!(" ~ targetTableType ~ ")";
+
+        immutable string rangeEnumeratorType = "CollectionCodedIndexRangeEnumerator!(" ~ targetTableType ~ ")";
+        
+        immutable string codedIndexMember = "getCodedIndexMember!(" ~ targetEntityColumnCodedIndexType ~ ", " ~ tableType ~ ")";
+
+        string decl = "";
+
+        decl ~= "static assert(" ~ targetColumnValueType ~ ".Kind == ValueKind.CodedIndex);\n";                        // target column is coded index
+        decl ~= "static assert( is(typeof(" ~ codedIndexMember ~ ") == " ~ targetEntityColumnCodedIndexType ~ "));\n"; // and that coded index can point to this (md) entity
+
+        decl ~= "public " ~ rangeEnumeratorType ~ " get" ~ PropName ~ "(in " ~ entityType ~ " entity)\n";
+        decl ~= "{\n";
+        decl ~= "  const auto ci = CompositeIndex!(" ~ targetEntityColumnCodedIndexType ~ ")(entity.row.getRowID(), " ~ codedIndexMember ~ ");\n";
+
+        decl ~= "  auto codedIndexValue = Value!(uint, ValueKind.CodedIndex)(ci.codedIndex);";
+        decl ~= "  auto tableEnumerator = entity.db.getTable!(" ~ targetTableType ~ ")().codedIndexRange!(uint)(codedIndexValue, " ~ targetColumn ~ ");\n";
+        decl ~= "  return " ~ rangeEnumeratorType ~ "(tableEnumerator, entity.db);\n";
+        decl ~= "}\n";
+
+        return decl;
+    };
+
+    mixin(injectRangePropGetter());   
+}
+
 private mixin template DeclFindFirstProp(alias md, string PropName, alias mdTarget, string TargetColumnName)
 {
     enum injectFindFirstPropGetter = ()
@@ -651,7 +695,7 @@ private mixin template DeclFindFirstProp(alias md, string PropName, alias mdTarg
 
         decl ~= "public " ~ returnType ~ " get" ~ PropName ~ "() const\n";
         decl ~= "{\n";
-        decl ~= "  auto found = db.getTable!(" ~ targetTableType ~ ")().findFirst(row.getRowID(), " ~ targetColumn ~ ");\n";
+        decl ~= "  auto found = db.getTable!(" ~ targetTableType ~ ")().findFirst!(uint)(Value!(uint, ValueKind.Index)(row.getRowID()), " ~ targetColumn ~ ");\n";
         decl ~= "  return found.isNull ? " ~ returnType ~ ".init : " ~ returnType ~ "(" ~ targetEntityType ~"(found.get, db));\n";
         decl ~= "}\n";
 
@@ -661,6 +705,8 @@ private mixin template DeclFindFirstProp(alias md, string PropName, alias mdTarg
     mixin(injectFindFirstPropGetter());   
 }
 
+// Declares member function (list index field value getter)
+// CollectionRangeEnumerator!mdTarget get##PropName() const { ... }
 private mixin template DeclRangeProp(alias md, string PropName, alias mdTarget, string TargetColumnName)
 {
     enum injectRangePropGetter = ()
@@ -681,7 +727,7 @@ private mixin template DeclRangeProp(alias md, string PropName, alias mdTarget, 
 
         decl ~= "public " ~ rangeEnumeratorType ~ " get" ~ PropName ~ "() const\n";
         decl ~= "{\n";
-        decl ~= "  auto tableEnumerator = db.getTable!(" ~ targetTableType ~ ")().range(row.getRowID(), " ~ targetColumn ~ ");\n";
+        decl ~= "  auto tableEnumerator = db.getTable!(" ~ targetTableType ~ ")().range!(uint)(Value!(uint, ValueKind.Index)(row.getRowID()), " ~ targetColumn ~ ");\n";
         decl ~= "  return " ~ rangeEnumeratorType ~ "(tableEnumerator, db);\n";
         decl ~= "}\n";
 
@@ -694,6 +740,7 @@ private mixin template DeclRangeProp(alias md, string PropName, alias mdTarget, 
 // Declares free function (coded index field value getter)
 // CodedIndexValueType!CodedIndexType get##Name() const { ... }
 // bool null##Name() const { ... }
+// alias Name##CodedIndexType = CodedIndexType
 private mixin template DeclCodedIndexFieldGetter(alias md, string Name, CodedIndexType)
 {
     enum injectCodedIndexFieldGetter = ()
@@ -704,9 +751,14 @@ private mixin template DeclCodedIndexFieldGetter(alias md, string Name, CodedInd
         immutable string columnValueType = "Row!(" ~ tableType ~ ")." ~ Name ~ "ValueType";
         immutable string columnValueTypeAlias = Name ~ "ColumnValueType";
 
+        immutable string columnCodedIndexTypeAlias = Name ~ "CodedIndexType";
+
         immutable string codedIndexValueType = "CodedIndexValueType!(" ~ CodedIndexType.stringof ~ ")";
 
         string decl = "";
+
+        decl ~= "public template " ~ columnCodedIndexTypeAlias ~ "(MDTableType md) if (md == " ~ tableType ~")\n";
+        decl ~= "{ alias " ~ columnCodedIndexTypeAlias ~ " = " ~ CodedIndexType.stringof ~ "; }\n";
 
         decl ~= "public bool null" ~ Name ~ "(in " ~ entityType ~ " entity)\n";
         decl ~= "{\n";

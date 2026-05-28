@@ -108,18 +108,31 @@ public struct Table(MDTableType md)
         return TableListEnumerator!md(&this, startRowID, endRowID);
     }
 
-    public TableRangeEnumerator!md range(uint referenceRowID, uint referenceColumn) const
+    public TableRangeEnumerator!md range(T)(in Value!(T, ValueKind.Index) referenceRowID, uint referenceColumn) const
     {
-        assert(referenceRowID, "start referenceRowID can't be 0");
+        assert(referenceRowID != 0, "start referenceRowID can't be 0");
         assert(referenceColumn < columns.length, "referenceColumn out of range");
+        assert(columns[referenceColumn].kind == ValueKind.Index, "referenceColumn is not index column");
+        assert(columns[referenceColumn].size <= T.sizeof);
+
         return TableRangeEnumerator!md(&this, referenceRowID, referenceColumn);
+    }
+
+    public TableCodedIndexRangeEnumerator!md codedIndexRange(T)(in Value!(T, ValueKind.CodedIndex) referenceCodedIndex, uint referenceColumn) const
+    {
+        assert(referenceCodedIndex != 0, "start referenceCodedIndex can't be 0");
+        assert(referenceColumn < columns.length, "referenceColumn out of range");
+        assert(columns[referenceColumn].kind == ValueKind.CodedIndex, "referenceColumn is not index column");
+        assert(columns[referenceColumn].size <= T.sizeof);
+
+        return TableCodedIndexRangeEnumerator!md(&this, referenceCodedIndex, referenceColumn);
     }
 
     public alias NullableRow = Nullable!(Row!md);
     
-    public NullableRow findFirst(uint referenceRowID, uint referenceColumn) const
+    public NullableRow findFirst(T)(in Value!(T, ValueKind.Index) referenceRowID, uint referenceColumn) const
     {
-        auto findFirstRange = range(referenceRowID, referenceColumn);
+        auto findFirstRange = range!(T)(referenceRowID, referenceColumn);
         if (findFirstRange.empty())
         {
             return NullableRow.init;
@@ -164,9 +177,9 @@ public struct ColumnDesc
         this.kind = kind;
     }
 
-    const ushort offset; // bytes
-    const ushort size; // bytes
-    const ValueKind kind;
+    public const ushort offset; // bytes
+    public const ushort size; // bytes
+    public const ValueKind kind;
 }
 
 bool isLastRow(MDTableType md)(scope ref const Row!md row)
@@ -187,7 +200,7 @@ public struct TableListEnumerator(MDTableType md)
 {
     @disable this();
     
-    public this(const(Table!md*) table, uint startRowID, uint endRowID)
+    private this(const(Table!md*) table, uint startRowID, uint endRowID)
     {
         this.table = table;
         currentRowID = startRowID;
@@ -230,11 +243,16 @@ public struct TableRangeEnumerator(MDTableType md)
 {
     @disable this();
 
-    public this(const(Table!md*) table, uint referenceRowID, uint referenceColumn)
+    private this(const(Table!md*) table, uint referenceRowID, uint referenceColumn)
     {
+        assert(referenceColumn < table.columns.length, "referenceColumn out of range");
+        assert(table.columns[referenceColumn].kind == ValueKind.Index, "referenceColumn is not index column");
+
         this.table = table;
         this.referenceRowID = referenceRowID;
         this.referenceColumn = referenceColumn;
+
+
         rowID = 1;
 
         while (rowID <= table.rowCount)
@@ -267,6 +285,55 @@ public struct TableRangeEnumerator(MDTableType md)
 private:
     const Table!md* table;
     const uint referenceRowID;
+    const uint referenceColumn;
+    uint rowID;
+}
+
+// Returns contiguos range of rows referencing the given referenceCodedIndex in another table
+public struct TableCodedIndexRangeEnumerator(MDTableType md)
+{
+    @disable this();
+
+    private this(const(Table!md*) table, uint referenceCodedIndex, uint referenceColumn)
+    {
+        assert(referenceColumn < table.columns.length, "referenceColumn out of range");
+        assert(table.columns[referenceColumn].kind == ValueKind.CodedIndex, "referenceColumn is not coded index column");
+
+        this.table = table;
+        this.referenceCodedIndex = referenceCodedIndex;
+        this.referenceColumn = referenceColumn;
+        rowID = 1;
+
+        while (rowID <= table.rowCount)
+        {
+            auto referenceColumnValue = table.getValue!(uint, ValueKind.CodedIndex)(rowID - 1, referenceColumn);
+            if (referenceColumnValue == referenceCodedIndex)
+                break;
+            ++rowID;
+        }
+    }
+
+    pragma(inline, true)
+    bool empty() const
+    {
+        return rowID > table.rowCount || table.getValue!(uint, ValueKind.CodedIndex)(rowID - 1, referenceColumn) != referenceCodedIndex;
+    }
+
+    pragma(inline, true)
+    void popFront()
+    {
+        ++rowID;
+    }
+
+    pragma(inline, true)
+    public Row!md front() const
+    {
+        return (*table)[rowID];
+    }
+
+private:
+    const Table!md* table;
+    const uint referenceCodedIndex;
     const uint referenceColumn;
     uint rowID;
 }

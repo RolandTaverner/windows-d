@@ -1,7 +1,7 @@
 module climetadata.mdcollection.collection;
 
 public import climetadata.mdtable.type;
-import climetadata.mdtable.table : Table, TableListEnumerator, TableRangeEnumerator;
+import climetadata.mdtable.table : Table, TableListEnumerator, TableRangeEnumerator, TableCodedIndexRangeEnumerator;
 import climetadata.mdcollection.database : Database;
 import climetadata.mdcollection.entity : Entity;
 
@@ -109,5 +109,39 @@ public struct CollectionRangeEnumerator(MDTableType md)
 
 private:
     TableRangeEnumerator!md tableEnumerator;
+    const Database* db;
+}
+
+// Wraps TableCodedIndexRangeEnumerator
+public struct CollectionCodedIndexRangeEnumerator(MDTableType md)
+{
+    @disable this();
+    
+    public this(const TableCodedIndexRangeEnumerator!md tableEnumerator, const Database* db)
+    {
+        this.tableEnumerator = tableEnumerator;
+        this.db = db;
+    }
+
+    pragma(inline, true)
+    public bool empty() const
+    {
+        return tableEnumerator.empty();
+    }
+
+    pragma(inline, true)
+    public void popFront()
+    {
+        tableEnumerator.popFront();
+    }
+
+    pragma(inline, true)
+    public Entity!md front() const
+    {
+        return Entity!md(tableEnumerator.front(), db);
+    }
+
+private:
+    TableCodedIndexRangeEnumerator!md tableEnumerator;
     const Database* db;
 }
