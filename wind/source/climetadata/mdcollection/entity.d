@@ -11,6 +11,7 @@ import climetadata.mdtable.value;
 import climetadata.mdcollection.collection : CollectionListEnumerator, CollectionRangeEnumerator, CollectionCodedIndexRangeEnumerator;
 import climetadata.mdcollection.compositeindex;
 import climetadata.mdcollection.database : Database;
+import climetadata.mdcollection.attributes;
 
 public struct Entity(MDTableType md)
 {
@@ -237,13 +238,13 @@ mixin DeclCodedIndexFieldGetter!(MDTableType.typeRef, "ResolutionScope", Resolut
 
 private mixin template typeDefFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.typeDef, "Flags");
+    mixin DeclSimpleFieldAsType!(MDTableType.typeDef, "Flags", TypeAttributes);
     mixin DeclSimpleField!(MDTableType.typeDef, "TypeName");
     mixin DeclSimpleField!(MDTableType.typeDef, "TypeNamespace");
     mixin DeclListIndexField!(MDTableType.typeDef, "FieldList", MDTableType.field);
     mixin DeclListIndexField!(MDTableType.typeDef, "MethodList", MDTableType.methodDef);
 
-    // Extra computable props
+    // Extra props
 
     mixin DeclRangeProp!(MDTableType.typeDef, "Interfaces", MDTableType.interfaceImpl, "Class");
 
@@ -263,6 +264,8 @@ private mixin template typeDefFieldGetters()
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.typeDef, "Extends", TypeDefOrRef);
 
+// Extra props
+
 mixin DeclCodedIndexRangeProp!(MDTableType.typeDef, "Attributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
@@ -270,7 +273,7 @@ mixin DeclCodedIndexRangeProp!(MDTableType.typeDef, "Attributes", MDTableType.cu
 
 private mixin template fieldFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.field, "Flags");
+    mixin DeclSimpleFieldAsType!(MDTableType.field, "Flags", FieldAttributes);
     mixin DeclSimpleField!(MDTableType.field, "Name");
     mixin DeclSimpleField!(MDTableType.field, "Signature");
 }
@@ -281,8 +284,8 @@ private mixin template fieldFieldGetters()
 private mixin template methodDefFieldGetters()
 {
     mixin DeclSimpleField!(MDTableType.methodDef, "RVA");
-    mixin DeclSimpleField!(MDTableType.methodDef, "ImplFlags");
-    mixin DeclSimpleField!(MDTableType.methodDef, "Flags");
+    mixin DeclSimpleFieldAsType!(MDTableType.methodDef, "ImplFlags", MethodImplAttributes);
+    mixin DeclSimpleFieldAsType!(MDTableType.methodDef, "Flags", MethodAttributes);
     mixin DeclSimpleField!(MDTableType.methodDef, "Name");
     mixin DeclSimpleField!(MDTableType.methodDef, "Signature");
     mixin DeclListIndexField!(MDTableType.methodDef, "ParamList", MDTableType.param);
@@ -293,7 +296,7 @@ private mixin template methodDefFieldGetters()
 
 private mixin template paramFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.param, "Flags");
+    mixin DeclSimpleFieldAsType!(MDTableType.param, "Flags", ParamAttributes);
     mixin DeclSimpleField!(MDTableType.param, "Sequence");
     mixin DeclSimpleField!(MDTableType.param, "Name");
 }
@@ -403,7 +406,7 @@ private mixin template eventMapFieldGetters()
 
 private mixin template eventFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.event, "EventFlags");
+    mixin DeclSimpleFieldAsType!(MDTableType.event, "EventFlags", EventAttributes);
     mixin DeclSimpleField!(MDTableType.event, "Name");
 }
 
@@ -423,7 +426,7 @@ private mixin template propertyMapFieldGetters()
 
 private mixin template propertyFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.property, "Flags");
+    mixin DeclSimpleFieldAsType!(MDTableType.property, "Flags", PropertyAttributes);
     mixin DeclSimpleField!(MDTableType.property, "Name");
     mixin DeclSimpleField!(MDTableType.property, "Type");
 }
@@ -433,7 +436,7 @@ private mixin template propertyFieldGetters()
 
 private mixin template methodSemanticsFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.methodSemantics, "Semantics");
+    mixin DeclSimpleFieldAsType!(MDTableType.methodSemantics, "Semantics", SemanticsAttributes);
     mixin DeclIndexField!(MDTableType.methodSemantics, "Method", MDTableType.methodDef);
 }
 
@@ -471,7 +474,7 @@ private mixin template typeSpecFieldGetters()
 
 private mixin template implMapFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.implMap, "MappingFlags");
+    mixin DeclSimpleFieldAsType!(MDTableType.implMap, "MappingFlags", PInvokeAttributes);
     mixin DeclSimpleField!(MDTableType.implMap, "ImportName");
     mixin DeclIndexField!(MDTableType.implMap, "ImportScope", MDTableType.moduleRef);
 }
@@ -494,7 +497,7 @@ private mixin template assemblyFieldGetters()
 {
     mixin DeclSimpleField!(MDTableType.assembly, "HashAlgId");
     mixin DeclSimpleField!(MDTableType.assembly, "Version");
-    mixin DeclSimpleField!(MDTableType.assembly, "Flags");
+    mixin DeclSimpleFieldAsType!(MDTableType.assembly, "Flags", AssemblyAttributes);
     mixin DeclSimpleField!(MDTableType.assembly, "PublicKey");
     mixin DeclSimpleField!(MDTableType.assembly, "Name");
     mixin DeclSimpleField!(MDTableType.assembly, "Culture");
@@ -566,7 +569,7 @@ private mixin template fileFieldGetters()
 
 private mixin template exportedTypeFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.exportedType, "Flags");
+    mixin DeclSimpleFieldAsType!(MDTableType.exportedType, "Flags", TypeAttributes);
     mixin DeclSimpleField!(MDTableType.exportedType, "TypeDefId");
     mixin DeclSimpleField!(MDTableType.exportedType, "TypeName");
     mixin DeclSimpleField!(MDTableType.exportedType, "TypeNamespace");
@@ -601,7 +604,7 @@ private mixin template nestedClassFieldGetters()
 private mixin template genericParamFieldGetters()
 {
     mixin DeclSimpleField!(MDTableType.genericParam, "Number");
-    mixin DeclSimpleField!(MDTableType.genericParam, "Flags");
+    mixin DeclSimpleFieldAsType!(MDTableType.genericParam, "Flags", GenericAttributes);
     mixin DeclSimpleField!(MDTableType.genericParam, "Name");
 }
 
@@ -908,6 +911,34 @@ struct IndexFieldValueExtractor(value, MDTableType mdTarget) if (value.Kind == V
 
     private:
         const Database* db;
+}
+
+private mixin template DeclSimpleFieldAsType(alias md, string Name, T)
+{
+    enum injectFieldGetter = ()
+    {
+        immutable string tableType = "MDTableType." ~ md.stringof;
+
+        immutable string columnValueType = "Row!(" ~ tableType ~ ")." ~ Name ~ "ValueType";
+        immutable string columnValueTypeAlias = Name ~ "ColumnValueType";
+
+        immutable string extractorType = "FieldValueExtractor!(" ~ columnValueTypeAlias ~ ")";
+        immutable string extractorTypeAlias = Name ~ "FieldValueExtractorType";
+
+        string decl = "";
+        decl ~= "public alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
+        decl ~= "public alias " ~ extractorTypeAlias ~ " = " ~ extractorType ~ ";\n";
+        
+        decl ~= "public T get" ~ Name ~ "() const\n";
+        decl ~= "{\n";
+        decl ~= "  static assert(" ~ columnValueType ~ ".Kind == ValueKind.Integral || " ~ columnValueType ~ ".Kind == ValueKind.Blob);\n";
+        decl ~= "  return T(" ~ extractorTypeAlias ~ "(db.heaps()).getValue(row.get" ~ Name ~ "()));\n";
+        decl ~= "}\n";
+
+        return decl;
+    };
+
+    mixin(injectFieldGetter());
 }
 
 // Declares member function (field value getter)
