@@ -1,7 +1,10 @@
 module climetadata.mdcollection.collection;
 
+import std.algorithm : endsWith, startsWith;
+import std.typecons : Nullable;
+
 public import climetadata.mdtable.type;
-import climetadata.mdtable.table : Table, TableListEnumerator, TableRangeEnumerator, TableCodedIndexRangeEnumerator;
+import climetadata.mdtable.table : Table, TableListEnumerator, TableRangeEnumerator, TableAllEnumerator, TableCodedIndexRangeEnumerator;
 import climetadata.mdcollection.database : Database;
 import climetadata.mdcollection.entity : Entity;
 
@@ -35,6 +38,37 @@ struct Collection(MDTableType md)
     {
         assert(startRowID);
         return CollectionListEnumerator!md(table.list(startRowID, endRowID), db);
+    }
+
+    static if (md == MDTableType.typeDef) 
+    {
+        public Nullable!(Entity!(md)) findByName(string typeName) const
+        {
+            foreach(e; items())
+            {
+                auto name = e.getTypeName();
+                auto namespace = e.getTypeNamespace();
+                if (typeName.length == name.length + namespace.length + 1 && typeName.startsWith(namespace) && typeName.endsWith(name))
+                {
+                    return Nullable!(Entity!(md))(e);
+                }
+            }
+            return Nullable!(Entity!(md)).init;
+        }
+
+        public Nullable!(Entity!(md)) findByName(string typeNamespace, string typeName) const
+        {
+            foreach(e; items())
+            {
+                auto name = e.getTypeName();
+                auto namespace = e.getTypeNamespace();
+                if (typeNamespace == namespace && typeName == name)
+                {
+                    return Nullable!(Entity!(md))(e);
+                }
+            }
+            return Nullable!(Entity!(md)).init;
+        }
     }
 
     //public alias NullableEntity = Nullable!(Entity!md);
@@ -109,6 +143,40 @@ public struct CollectionRangeEnumerator(MDTableType md)
 
 private:
     TableRangeEnumerator!md tableEnumerator;
+    const Database* db;
+}
+
+// Wraps CollectionAllEnumerator
+public struct CollectionAllEnumerator(MDTableType md)
+{
+    @disable this();
+    
+    public this(const TableAllEnumerator!md tableEnumerator, const Database* db)
+    {
+        this.tableEnumerator = tableEnumerator;
+        this.db = db;
+    }
+
+    pragma(inline, true)
+    public bool empty() const
+    {
+        return tableEnumerator.empty();
+    }
+
+    pragma(inline, true)
+    public void popFront()
+    {
+        tableEnumerator.popFront();
+    }
+
+    pragma(inline, true)
+    public Entity!md front() const
+    {
+        return Entity!md(tableEnumerator.front(), db);
+    }
+
+private:
+    TableAllEnumerator!md tableEnumerator;
     const Database* db;
 }
 

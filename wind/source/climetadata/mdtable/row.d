@@ -183,6 +183,12 @@ public struct Row(MDTableType md)
     }
 
     pragma(inline, true)
+    public bool isNull() const
+    {
+        return rowID == 0 || rowID > table.rowCount;
+    }
+
+    pragma(inline, true)
     public const(Table!md*) getTable() const 
     {
         return table;

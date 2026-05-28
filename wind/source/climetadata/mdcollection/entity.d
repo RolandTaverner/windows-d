@@ -1,17 +1,19 @@
 module climetadata.mdcollection.entity;
 
+import std.exception : enforce;
 import std.typecons : Nullable;
 public import std.uuid : UUID;
 
-import climetadata.mdtable.heaps : Heaps;
-import climetadata.mdtable.row : Row;
-import climetadata.mdtable.table : emptyList, getNextRow, isLastRow, TableRangeEnumerator, TableCodedIndexRangeEnumerator;
-import climetadata.mdtable.type;
-import climetadata.mdtable.value;
-import climetadata.mdcollection.collection : CollectionListEnumerator, CollectionRangeEnumerator, CollectionCodedIndexRangeEnumerator;
+import climetadata.mdcollection.attributes;
+import climetadata.mdcollection.collection : CollectionListEnumerator, CollectionRangeEnumerator, CollectionAllEnumerator, CollectionCodedIndexRangeEnumerator;
 import climetadata.mdcollection.compositeindex;
 import climetadata.mdcollection.database : Database;
-import climetadata.mdcollection.attributes;
+import climetadata.mdcollection.sigtnature;
+import climetadata.mdtable.heaps : Heaps;
+import climetadata.mdtable.row : Row;
+import climetadata.mdtable.table : emptyList, getNextRow, isLastRow, TableRangeEnumerator, TableAllEnumerator, TableCodedIndexRangeEnumerator;
+import climetadata.mdtable.type;
+import climetadata.mdtable.value;
 
 public struct Entity(MDTableType md)
 {
@@ -26,14 +28,17 @@ public struct Entity(MDTableType md)
     static if (md == MDTableType.module_)
     {
         mixin moduleFieldGetters!();
+        mixin moduleFieldGettersExtra!();
     } 
     else static if (md == MDTableType.typeRef)
     {
         mixin typeRefFieldGetters!();
+        mixin typeRefFieldGettersExtra!();
     }
     else static if (md == MDTableType.typeDef)
     {
         mixin typeDefFieldGetters!();
+        mixin typeDefFieldGettersExtra!();
     }
     else static if (md == MDTableType.field)
     {
@@ -176,6 +181,12 @@ public struct Entity(MDTableType md)
         mixin genericParamConstraintFieldGetters!();
     }
 
+    pragma(inline, true)
+    public bool isNull() const
+    {
+        return row.isNull();
+    }
+
     @safe pure nothrow
     public bool opEquals()(auto ref const Entity!md other) const
     {
@@ -222,6 +233,14 @@ private mixin template moduleFieldGetters()
     mixin DeclSimpleField!(MDTableType.module_, "EncBaseId");
 }
 
+// Extra props
+
+private mixin template moduleFieldGettersExtra()
+{
+}
+
+mixin DeclCodedIndexRangeProp!(MDTableType.module_, "Attributes", MDTableType.customAttribute, "Parent");
+
 //=============================================================================
 // typeRef entity getters
 
@@ -231,7 +250,41 @@ private mixin template typeRefFieldGetters()
     mixin DeclSimpleField!(MDTableType.typeRef, "TypeNamespace");
 }
 
-mixin DeclCodedIndexFieldGetter!(MDTableType.typeRef, "ResolutionScope", ResolutionScope);
+mixin DeclCodedIndexFieldGetter!(MDTableType.typeRef, "ResolutionScope", ResolutionScope); // ModuleEntity, ModuleRefEntity, AssemblyRefEntity, TypeRefEntity
+
+// Extra props
+
+private mixin template typeRefFieldGettersExtra()
+{
+    Nullable!TypeDefEntity resolve() const
+    {
+        auto resolutionScope = getResolutionScope(this);
+        if (auto m = resolutionScope.peek!ModuleEntity)
+        {
+            return db.typeDefCollection.findByName(getTypeNamespace(), getTypeName());
+        }
+        else if (auto tr = resolutionScope.peek!TypeRefEntity)
+        {
+            auto parent = tr.resolve();
+            if (parent.isNull)
+            {
+                return parent;
+            }
+            
+            foreach(n; parent.get.getAllNestedClassByNested())
+            {
+                if (n.getNestedClass().getTypeName() == this.getTypeName())
+                {
+                    return Nullable!TypeDefEntity(n.getNestedClass());
+                }
+            }
+        }
+
+        return (Nullable!TypeDefEntity).init;
+    }
+}
+
+mixin DeclCodedIndexRangeProp!(MDTableType.typeRef, "Attributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
 // typeDef entity getters
@@ -243,16 +296,25 @@ private mixin template typeDefFieldGetters()
     mixin DeclSimpleField!(MDTableType.typeDef, "TypeNamespace");
     mixin DeclListIndexField!(MDTableType.typeDef, "FieldList", MDTableType.field);
     mixin DeclListIndexField!(MDTableType.typeDef, "MethodList", MDTableType.methodDef);
+}
 
-    // Extra props
+mixin DeclCodedIndexFieldGetter!(MDTableType.typeDef, "Extends", TypeDefOrRef);
 
+// Extra props
+
+private mixin template typeDefFieldGettersExtra()
+{
     mixin DeclRangeProp!(MDTableType.typeDef, "Interfaces", MDTableType.interfaceImpl, "Class");
 
-    mixin DeclFindFirstProp!(MDTableType.typeDef, "NestedClassByNested", MDTableType.nestedClass, "NestedClass");
+    // First nestedClass entity referencing typeDef in NestedClass column
+    mixin DeclFindFirstProp!(MDTableType.typeDef, "FirstNestedClassByNested", MDTableType.nestedClass, "NestedClass");
+    
+    // All nestedClass entities referencing typeDef NestedClass column
+    mixin DeclAllProp!(MDTableType.typeDef, "AllNestedClassByNested", MDTableType.nestedClass, "NestedClass"); 
 
     public const(Nullable!(Entity!(MDTableType.typeDef))) enclosing() const
     {
-        auto nestedClassEntity = getNestedClassByNested();
+        auto nestedClassEntity = getFirstNestedClassByNested();
         if (nestedClassEntity.isNull)
         {
             return Nullable!(Entity!(MDTableType.typeDef)).init;
@@ -260,11 +322,98 @@ private mixin template typeDefFieldGetters()
         
         return Nullable!(Entity!(MDTableType.typeDef))(nestedClassEntity.get.getEnclosingClass());
     }
+
+    public Nullable!TypeDefOrRefValue extends() const
+    {        
+        alias V = Nullable!TypeDefOrRefValue;
+        if (nullExtends(this))
+        {
+            return V.init;
+        }
+        auto r = getExtends(this);
+        if (auto td = r.peek!TypeDefEntity)
+            return !td.isNull() > 0 ? V(r) : V.init;
+        return V(r);
+    }
+
+
+    public bool isEnum() const
+    {
+        auto row = extends();
+        if (row.isNull)
+            return false;
+        if (row.get.peek!TypeRefEntity)
+        {
+            auto td = row.get.get!TypeRefEntity;
+            return td.getTypeName() == "Enum" && td.getTypeNamespace() == "System";
+        }
+        else if (row.get.peek!TypeDefEntity)
+        {
+            auto td = row.get.get!TypeDefEntity;
+            return td.getTypeName() == "Enum" && td.getTypeNamespace() == "System";
+        }
+        return false;            
+    }
+
+        // public bool isDelegate() const
+        // {
+        //     auto row = extends();
+        //     if (row.isNull)
+        //         return false;
+        //     if (row.get.peek!TypeRef)
+        //     {
+        //         auto td = row.get.get!TypeRef;
+        //         return td.name == "MulticastDelegate" && td.namespace == "System";
+        //     }
+        //     else if (row.get.peek!TypeDef)
+        //     {
+        //         auto td = row.get.get!TypeDef;
+        //         return td.name == "MulticastDelegate" && td.namespace == "System";
+        //     }
+        //     return false;            
+        // }
+
+        // public bool isValueType() const
+        // {
+        //     auto row = extends();
+        //     if (row.isNull)
+        //         return false;
+        //     if (row.get.peek!TypeRef)
+        //     {
+        //         auto td = row.get.get!TypeRef;
+        //         return td.name == "ValueType" && td.namespace == "System";
+        //     }
+        //     else if (row.get.peek!TypeDef)
+        //     {
+        //         auto td = row.get.get!TypeDef;
+        //         return td.name == "ValueType" && td.namespace == "System";
+        //     }
+        //     return false;            
+        // }
+
+        public bool isInterface() const
+        {
+            return getFlags().semantics == TypeSemantics.interface_;
+        }
+
+    public ElementType underlyingEnumType() const
+        {
+            ElementType result;
+            foreach(field; getFieldList())
+            {
+                if (!field.getFlags().isLiteral && !field.getFlags().isStatic)
+                {
+                    // TODO
+                //     result = field.getSignature().typeSig.type.get!ElementType;
+                //     break;
+                }
+            }
+
+            enforce(result >= ElementType.boolean && result <= ElementType.u8, "Invalid enum underlying type");
+            return result;
+        }
+
 }
-
-mixin DeclCodedIndexFieldGetter!(MDTableType.typeDef, "Extends", TypeDefOrRef);
-
-// Extra props
 
 mixin DeclCodedIndexRangeProp!(MDTableType.typeDef, "Attributes", MDTableType.customAttribute, "Parent");
 
@@ -275,6 +424,7 @@ private mixin template fieldFieldGetters()
 {
     mixin DeclSimpleFieldAsType!(MDTableType.field, "Flags", FieldAttributes);
     mixin DeclSimpleField!(MDTableType.field, "Name");
+    //mixin DeclSignatureField!(MDTableType.field, "Signature", );
     mixin DeclSimpleField!(MDTableType.field, "Signature");
 }
 
@@ -708,7 +858,7 @@ private mixin template DeclFindFirstProp(alias md, string PropName, alias mdTarg
     mixin(injectFindFirstPropGetter());   
 }
 
-// Declares member function (list index field value getter)
+// Declares member function (range of rows in mdTarget table referencing this row)
 // CollectionRangeEnumerator!mdTarget get##PropName() const { ... }
 private mixin template DeclRangeProp(alias md, string PropName, alias mdTarget, string TargetColumnName)
 {
@@ -738,6 +888,38 @@ private mixin template DeclRangeProp(alias md, string PropName, alias mdTarget, 
     };
 
     mixin(injectRangePropGetter());   
+}
+
+// Declares member function (all rows in mdTarget table referencing this row)
+// CollectionAllEnumerator!mdTarget get##PropName() const { ... }
+private mixin template DeclAllProp(alias md, string PropName, alias mdTarget, string TargetColumnName)
+{
+    enum injectAllPropGetter = ()
+    {
+        immutable string tableType = "MDTableType." ~ md.stringof;
+
+        immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
+        immutable string targetColumnValueType = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "ValueType";
+
+        immutable string targetEntityColumnType = "Entity!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "EntityType";
+        immutable string targetColumn = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "Column";
+
+        immutable string rangeEnumeratorType = "CollectionAllEnumerator!(" ~ targetTableType ~ ")";
+
+        string decl = "";
+        decl ~= "static assert(" ~ targetColumnValueType ~ ".Kind == ValueKind.Index);\n";         // target column is index
+        decl ~= "static assert(" ~ targetEntityColumnType ~ ".TableType == " ~ tableType ~ ");\n"; // and that index references this (md) entity
+
+        decl ~= "public " ~ rangeEnumeratorType ~ " get" ~ PropName ~ "() const\n";
+        decl ~= "{\n";
+        decl ~= "  auto tableEnumerator = db.getTable!(" ~ targetTableType ~ ")().all!(uint)(Value!(uint, ValueKind.Index)(row.getRowID()), " ~ targetColumn ~ ");\n";
+        decl ~= "  return " ~ rangeEnumeratorType ~ "(tableEnumerator, db);\n";
+        decl ~= "}\n";
+
+        return decl;
+    };
+
+    mixin(injectAllPropGetter());   
 }
 
 // Declares free function (coded index field value getter)
@@ -913,7 +1095,7 @@ struct IndexFieldValueExtractor(value, MDTableType mdTarget) if (value.Kind == V
         const Database* db;
 }
 
-private mixin template DeclSimpleFieldAsType(alias md, string Name, T)
+private mixin template DeclSignatureField(alias md, string Name, T)
 {
     enum injectFieldGetter = ()
     {
@@ -931,8 +1113,8 @@ private mixin template DeclSimpleFieldAsType(alias md, string Name, T)
         
         decl ~= "public T get" ~ Name ~ "() const\n";
         decl ~= "{\n";
-        decl ~= "  static assert(" ~ columnValueType ~ ".Kind == ValueKind.Integral || " ~ columnValueType ~ ".Kind == ValueKind.Blob);\n";
-        decl ~= "  return T(" ~ extractorTypeAlias ~ "(db.heaps()).getValue(row.get" ~ Name ~ "()));\n";
+        decl ~= "  static assert(" ~ columnValueType ~ ".Kind == ValueKind.Blob);\n";
+        decl ~= "  return T(db, " ~ extractorTypeAlias ~ "(db.heaps()).getValue(row.get" ~ Name ~ "()));\n";
         decl ~= "}\n";
 
         return decl;
@@ -986,6 +1168,35 @@ unittest
     static assert(is(GetSimpleFieldValueType!(ModuleEntity.MvidColumnValueType) == UUID));
     static assert(is(GetSimpleFieldValueType!(ModuleEntity.EncIdColumnValueType) == UUID));
     static assert(is(GetSimpleFieldValueType!(ModuleEntity.EncBaseIdColumnValueType) == UUID));
+}
+
+// Same as DeclSimpleField but returns T. Only for Integral columns.
+private mixin template DeclSimpleFieldAsType(alias md, string Name, T)
+{
+    enum injectFieldGetter = ()
+    {
+        immutable string tableType = "MDTableType." ~ md.stringof;
+
+        immutable string columnValueType = "Row!(" ~ tableType ~ ")." ~ Name ~ "ValueType";
+        immutable string columnValueTypeAlias = Name ~ "ColumnValueType";
+
+        immutable string extractorType = "FieldValueExtractor!(" ~ columnValueTypeAlias ~ ")";
+        immutable string extractorTypeAlias = Name ~ "FieldValueExtractorType";
+
+        string decl = "";
+        decl ~= "public alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
+        decl ~= "public alias " ~ extractorTypeAlias ~ " = " ~ extractorType ~ ";\n";
+        
+        decl ~= "public T get" ~ Name ~ "() const\n";
+        decl ~= "{\n";
+        decl ~= "  static assert(" ~ columnValueType ~ ".Kind == ValueKind.Integral);\n";
+        decl ~= "  return T(" ~ extractorTypeAlias ~ "(db.heaps()).getValue(row.get" ~ Name ~ "()));\n";
+        decl ~= "}\n";
+
+        return decl;
+    };
+
+    mixin(injectFieldGetter());
 }
 
 // value is Value<T, K>

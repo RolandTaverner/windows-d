@@ -118,6 +118,16 @@ public struct Table(MDTableType md)
         return TableRangeEnumerator!md(&this, referenceRowID, referenceColumn);
     }
 
+    public TableAllEnumerator!md all(T)(in Value!(T, ValueKind.Index) referenceRowID, uint referenceColumn) const
+    {
+        assert(referenceRowID != 0, "start referenceRowID can't be 0");
+        assert(referenceColumn < columns.length, "referenceColumn out of range");
+        assert(columns[referenceColumn].kind == ValueKind.Index, "referenceColumn is not index column");
+        assert(columns[referenceColumn].size <= T.sizeof);
+
+        return TableAllEnumerator!md(&this, referenceRowID, referenceColumn);
+    }
+
     public TableCodedIndexRangeEnumerator!md codedIndexRange(T)(in Value!(T, ValueKind.CodedIndex) referenceCodedIndex, uint referenceColumn) const
     {
         assert(referenceCodedIndex != 0, "start referenceCodedIndex can't be 0");
@@ -252,9 +262,7 @@ public struct TableRangeEnumerator(MDTableType md)
         this.referenceRowID = referenceRowID;
         this.referenceColumn = referenceColumn;
 
-
         rowID = 1;
-
         while (rowID <= table.rowCount)
         {
             auto referenceColumnValue = table.getValue!(uint, ValueKind.Index)(rowID - 1, referenceColumn);
@@ -274,6 +282,61 @@ public struct TableRangeEnumerator(MDTableType md)
     void popFront()
     {
         ++rowID;
+    }
+
+    pragma(inline, true)
+    public Row!md front() const
+    {
+        return (*table)[rowID];
+    }
+
+private:
+    const Table!md* table;
+    const uint referenceRowID;
+    const uint referenceColumn;
+    uint rowID;
+}
+
+public struct TableAllEnumerator(MDTableType md)
+{
+    @disable this();
+
+    private this(const(Table!md*) table, uint referenceRowID, uint referenceColumn)
+    {
+        assert(referenceColumn < table.columns.length, "referenceColumn out of range");
+        assert(table.columns[referenceColumn].kind == ValueKind.Index, "referenceColumn is not index column");
+
+        this.table = table;
+        this.referenceRowID = referenceRowID;
+        this.referenceColumn = referenceColumn;
+
+        rowID = 1;
+        while (rowID <= table.rowCount)
+        {
+            auto referenceColumnValue = table.getValue!(uint, ValueKind.Index)(rowID - 1, referenceColumn);
+            if (referenceColumnValue == referenceRowID)
+                break;
+            ++rowID;
+        }
+    }
+
+    pragma(inline, true)
+    bool empty() const
+    {        
+        return rowID > table.rowCount;
+    }
+
+    pragma(inline, true)
+    void popFront()
+    {
+        ++rowID; 
+        while (rowID <= table.rowCount)
+        {
+            auto referenceColumnValue = table.getValue!(uint, ValueKind.Index)(rowID - 1, referenceColumn);
+            if (referenceColumnValue == referenceRowID)
+                break;
+            ++rowID;
+        }
     }
 
     pragma(inline, true)
