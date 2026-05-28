@@ -1,5 +1,6 @@
 module climetadata.mdcollection.entity;
 
+import std.typecons : Nullable;
 public import std.uuid : UUID;
 
 import climetadata.mdtable.heaps : Heaps;
@@ -242,7 +243,21 @@ private mixin template typeDefFieldGetters()
     mixin DeclListIndexField!(MDTableType.typeDef, "FieldList", MDTableType.field);
     mixin DeclListIndexField!(MDTableType.typeDef, "MethodList", MDTableType.methodDef);
 
+    // Extra computable props
+
     mixin DeclRangeProp!(MDTableType.typeDef, "Interfaces", MDTableType.interfaceImpl, "Class");
+    mixin DeclFindFirstProp!(MDTableType.typeDef, "NestedClassByNested", MDTableType.nestedClass, "NestedClass");
+
+    public const(Nullable!(Entity!(MDTableType.typeDef))) enclosing() const
+    {
+        auto nestedClassEntity = getNestedClassByNested();
+        if (nestedClassEntity.isNull)
+        {
+            return Nullable!(Entity!(MDTableType.typeDef)).init;
+        }
+        
+        return Nullable!(Entity!(MDTableType.typeDef))(nestedClassEntity.get.getEnclosingClass());
+    }
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.typeDef, "Extends", TypeDefOrRef);
@@ -285,7 +300,7 @@ private mixin template paramFieldGetters()
 
 private mixin template interfaceImplFieldGetters()
 {
-    mixin DeclIndexField!(MDTableType.interfaceImpl, "Class", MDTableType.typeDef);
+    mixin DeclIndexField!(MDTableType.interfaceImpl, "Class", MDTableType.typeDef); // Primary key
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.interfaceImpl, "Interface", TypeDefOrRef);
@@ -310,7 +325,7 @@ private mixin template constantFieldGetters()
     mixin DeclSimpleField!(MDTableType.constant, "Value");
 }
 
-mixin DeclCodedIndexFieldGetter!(MDTableType.constant, "Parent", HasConstant);
+mixin DeclCodedIndexFieldGetter!(MDTableType.constant, "Parent", HasConstant);  // Primary key
 
 //=============================================================================
 // customAttribute entity getters
@@ -320,7 +335,7 @@ private mixin template customAttributeFieldGetters()
     mixin DeclSimpleField!(MDTableType.customAttribute, "Value");
 }
 
-mixin DeclCodedIndexFieldGetter!(MDTableType.customAttribute, "Parent", HasCustomAttribute);
+mixin DeclCodedIndexFieldGetter!(MDTableType.customAttribute, "Parent", HasCustomAttribute); // Primary key
 mixin DeclCodedIndexFieldGetter!(MDTableType.customAttribute, "Type", CustomAttributeType);
 
 //=============================================================================
@@ -331,7 +346,7 @@ private mixin template fieldMarshalFieldGetters()
     mixin DeclSimpleField!(MDTableType.fieldMarshal, "NativeType");
 }
 
-mixin DeclCodedIndexFieldGetter!(MDTableType.fieldMarshal, "Parent", HasFieldMarshal);
+mixin DeclCodedIndexFieldGetter!(MDTableType.fieldMarshal, "Parent", HasFieldMarshal); // Primary key
 
 //=============================================================================
 // declSecurity entity getters
@@ -342,7 +357,7 @@ private mixin template declSecurityFieldGetters()
     mixin DeclSimpleField!(MDTableType.declSecurity, "PermissionSet");
 }
 
-mixin DeclCodedIndexFieldGetter!(MDTableType.declSecurity, "Parent", HasDeclSecurity);
+mixin DeclCodedIndexFieldGetter!(MDTableType.declSecurity, "Parent", HasDeclSecurity); // Primary key
 
 //=============================================================================
 // classLayout entity getters
@@ -351,7 +366,7 @@ private mixin template classLayoutFieldGetters()
 {
     mixin DeclSimpleField!(MDTableType.classLayout, "PackingSize");
     mixin DeclSimpleField!(MDTableType.classLayout, "ClassSize");
-    mixin DeclIndexField!(MDTableType.classLayout, "Parent", MDTableType.typeDef);
+    mixin DeclIndexField!(MDTableType.classLayout, "Parent", MDTableType.typeDef); // Primary key
 }
 
 //=============================================================================
@@ -360,7 +375,7 @@ private mixin template classLayoutFieldGetters()
 private mixin template fieldLayoutFieldGetters()
 {
     mixin DeclSimpleField!(MDTableType.fieldLayout, "Offset");
-    mixin DeclIndexField!(MDTableType.fieldLayout, "Field", MDTableType.field);
+    mixin DeclIndexField!(MDTableType.fieldLayout, "Field", MDTableType.field); // Primary key
 }
 
 //=============================================================================
@@ -419,14 +434,14 @@ private mixin template methodSemanticsFieldGetters()
     mixin DeclIndexField!(MDTableType.methodSemantics, "Method", MDTableType.methodDef);
 }
 
-mixin DeclCodedIndexFieldGetter!(MDTableType.methodSemantics, "Association", HasSemantics);
+mixin DeclCodedIndexFieldGetter!(MDTableType.methodSemantics, "Association", HasSemantics); // Primary key
 
 //=============================================================================
 // methodImpl entity getters
 
 private mixin template methodImplFieldGetters()
 {
-    mixin DeclIndexField!(MDTableType.methodImpl, "Class", MDTableType.typeDef);
+    mixin DeclIndexField!(MDTableType.methodImpl, "Class", MDTableType.typeDef); // Primary key
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.methodImpl, "MethodBody", MethodDefOrRef);
@@ -458,7 +473,7 @@ private mixin template implMapFieldGetters()
     mixin DeclIndexField!(MDTableType.implMap, "ImportScope", MDTableType.moduleRef);
 }
 
-mixin DeclCodedIndexFieldGetter!(MDTableType.implMap, "MemberForwarded", MemberForwarded);
+mixin DeclCodedIndexFieldGetter!(MDTableType.implMap, "MemberForwarded", MemberForwarded); // Primary key
 
 //=============================================================================
 // fieldRVA entity getters
@@ -466,7 +481,7 @@ mixin DeclCodedIndexFieldGetter!(MDTableType.implMap, "MemberForwarded", MemberF
 private mixin template fieldRVAFieldGetters()
 {
     mixin DeclSimpleField!(MDTableType.fieldRVA, "RVA");
-    mixin DeclIndexField!(MDTableType.fieldRVA, "Field", MDTableType.field);
+    mixin DeclIndexField!(MDTableType.fieldRVA, "Field", MDTableType.field); // Primary key
 }
 
 //=============================================================================
@@ -573,7 +588,7 @@ mixin DeclCodedIndexFieldGetter!(MDTableType.manifestResource, "Implementation",
 
 private mixin template nestedClassFieldGetters()
 {
-    mixin DeclIndexField!(MDTableType.nestedClass, "NestedClass", MDTableType.typeDef);
+    mixin DeclIndexField!(MDTableType.nestedClass, "NestedClass", MDTableType.typeDef); // Primary key
     mixin DeclIndexField!(MDTableType.nestedClass, "EnclosingClass", MDTableType.typeDef);
 }
 
@@ -587,7 +602,7 @@ private mixin template genericParamFieldGetters()
     mixin DeclSimpleField!(MDTableType.genericParam, "Name");
 }
 
-mixin DeclCodedIndexFieldGetter!(MDTableType.genericParam, "Owner", TypeOrMethodDef);
+mixin DeclCodedIndexFieldGetter!(MDTableType.genericParam, "Owner", TypeOrMethodDef); // Primary key
 
 //=============================================================================
 // methodSpec entity getters
@@ -604,7 +619,7 @@ mixin DeclCodedIndexFieldGetter!(MDTableType.methodSpec, "Method", MethodDefOrRe
 
 private mixin template genericParamConstraintFieldGetters()
 {
-    mixin DeclIndexField!(MDTableType.genericParamConstraint, "Owner", MDTableType.genericParam);
+    mixin DeclIndexField!(MDTableType.genericParamConstraint, "Owner", MDTableType.genericParam); // Primary key
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.genericParamConstraint, "Constraint", TypeDefOrRef);
@@ -615,6 +630,37 @@ mixin DeclCodedIndexFieldGetter!(MDTableType.genericParamConstraint, "Constraint
 //=============================================================================
 //=============================================================================
 
+private mixin template DeclFindFirstProp(alias md, string PropName, alias mdTarget, string TargetColumnName)
+{
+    enum injectFindFirstPropGetter = ()
+    {
+        immutable string tableType = "MDTableType." ~ md.stringof;
+
+        immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
+        immutable string targetColumnValueType = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "ValueType";
+
+        immutable string targetEntityType = "Entity!(" ~ targetTableType ~ ")";
+        immutable string targetEntityColumnType = targetEntityType ~ "." ~ TargetColumnName ~ "EntityType";
+        immutable string targetColumn = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "Column";
+
+        immutable string returnType = "Nullable!(" ~ targetEntityType ~ ")";
+
+        string decl = "";
+        decl ~= "static assert(" ~ targetColumnValueType ~ ".Kind == ValueKind.Index);\n";         // target column is index
+        decl ~= "static assert(" ~ targetEntityColumnType ~ ".TableType == " ~ tableType ~ ");\n"; // and that index references this (md) entity
+
+        decl ~= "public " ~ returnType ~ " get" ~ PropName ~ "() const\n";
+        decl ~= "{\n";
+        decl ~= "  auto found = db.getTable!(" ~ targetTableType ~ ")().findFirst(row.getRowID(), " ~ targetColumn ~ ");\n";
+        decl ~= "  return found.isNull ? " ~ returnType ~ ".init : " ~ returnType ~ "(" ~ targetEntityType ~"(found.get, db));\n";
+        decl ~= "}\n";
+
+        return decl;
+    };
+
+    mixin(injectFindFirstPropGetter());   
+}
+
 private mixin template DeclRangeProp(alias md, string PropName, alias mdTarget, string TargetColumnName)
 {
     enum injectRangePropGetter = ()
@@ -624,14 +670,14 @@ private mixin template DeclRangeProp(alias md, string PropName, alias mdTarget, 
         immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
         immutable string targetColumnValueType = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "ValueType";
 
-        immutable string targetColumnEntityType = "Entity!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "EntityType";
+        immutable string targetEntityColumnType = "Entity!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "EntityType";
         immutable string targetColumn = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "Column";
 
         immutable string rangeEnumeratorType = "CollectionRangeEnumerator!(" ~ targetTableType ~ ")";
 
         string decl = "";
         decl ~= "static assert(" ~ targetColumnValueType ~ ".Kind == ValueKind.Index);\n";         // target column is index
-        decl ~= "static assert(" ~ targetColumnEntityType ~ ".TableType == " ~ tableType ~ ");\n"; // and that index references this (md) entity
+        decl ~= "static assert(" ~ targetEntityColumnType ~ ".TableType == " ~ tableType ~ ");\n"; // and that index references this (md) entity
 
         decl ~= "public " ~ rangeEnumeratorType ~ " get" ~ PropName ~ "() const\n";
         decl ~= "{\n";

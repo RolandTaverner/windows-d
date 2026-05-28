@@ -37,6 +37,8 @@ struct Collection(MDTableType md)
         return CollectionListEnumerator!md(table.list(startRowID, endRowID), db);
     }
 
+    //public alias NullableEntity = Nullable!(Entity!md);
+
 private:
     const Table!md* table;
     const Database* db;

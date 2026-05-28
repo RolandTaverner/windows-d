@@ -3,7 +3,7 @@ module climetadata.mdtable.table;
 import std.exception : enforce;
 import std.format : format;
 import std.traits : isIntegral;
-import std.typecons : Tuple;
+import std.typecons : Nullable, Tuple;
 
 public import climetadata.mdtable.type;
 public import climetadata.mdtable.row : Row;
@@ -88,6 +88,9 @@ public struct Table(MDTableType md)
     {
         static if (md == MDTableType.typeDef)
         {
+            // In CLI metadata, the TypeDef table's first row is a mandatory dummy entry (Flags == 0x200000) representing a "null" type.
+            // This entry is empty, serving as a placeholder to ensure that any TypeDef token value has a valid, non-zero entry,
+            // acting as a null reference in the table.
             const uint startRowID = 2;
         }
         else
@@ -110,6 +113,18 @@ public struct Table(MDTableType md)
         assert(referenceRowID, "start referenceRowID can't be 0");
         assert(referenceColumn < columns.length, "referenceColumn out of range");
         return TableRangeEnumerator!md(&this, referenceRowID, referenceColumn);
+    }
+
+    public alias NullableRow = Nullable!(Row!md);
+    
+    public NullableRow findFirst(uint referenceRowID, uint referenceColumn) const
+    {
+        auto findFirstRange = range(referenceRowID, referenceColumn);
+        if (findFirstRange.empty())
+        {
+            return NullableRow.init;
+        }
+        return NullableRow(findFirstRange.front());
     }
 
     private const uint rowSize;
