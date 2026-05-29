@@ -43,6 +43,7 @@ public struct Entity(MDTableType md)
     else static if (md == MDTableType.field)
     {
         mixin fieldFieldGetters!();
+        mixin fieldFieldGettersExtra!();
     }
     else static if (md == MDTableType.methodDef)
     {
@@ -421,7 +422,7 @@ private mixin template typeDefFieldGettersExtra()
     // First propertyMap entity referencing typeDef in Parent column
     mixin DeclFindFirstProp!(MDTableType.typeDef, "PropertyMap", MDTableType.propertyMap, "Parent");
 
-    public auto properties()
+    public auto properties() const
     {
         auto propMap = getPropertyMap();
         if (propMap.isNull)
@@ -435,7 +436,7 @@ private mixin template typeDefFieldGettersExtra()
     // First propertyMap entity referencing typeDef in Parent column
     mixin DeclFindFirstProp!(MDTableType.typeDef, "EventMap", MDTableType.eventMap, "Parent");
 
-    public auto events()
+    public auto events() const
     {
         auto eventMap = getEventMap();
         if (eventMap.isNull)
@@ -466,6 +467,18 @@ private mixin template fieldFieldGetters()
     mixin DeclSimpleField!(MDTableType.field, "Name");
     mixin DeclSignatureField!(MDTableType.field, "Signature", FieldSig);
 }
+
+// Extra props
+
+private mixin template fieldFieldGettersExtra()
+{
+    mixin DeclFindParentProp!(MDTableType.field, "Parent", MDTableType.typeDef, "FieldList");
+}
+
+mixin DeclFindFirstCodedIndexProp!(MDTableType.field, "Constant", MDTableType.constant, "Parent");
+mixin DeclFindFirstCodedIndexProp!(MDTableType.field, "Marshal", MDTableType.fieldMarshal, "Parent");
+
+mixin DeclCodedIndexRangeProp!(MDTableType.field, "CustomAttributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
 // methodDef entity getters
@@ -825,6 +838,44 @@ mixin DeclCodedIndexFieldGetter!(MDTableType.genericParamConstraint, "Constraint
 //=============================================================================
 //=============================================================================
 
+// Declares free function (find first for coded index field)
+// Nullable!(Entity!mdTarget) get##PropName(in Entity!(md) entity) { ... }
+private mixin template DeclFindFirstCodedIndexProp(alias md, string PropName, alias mdTarget, string TargetColumnName)
+{
+    enum injectRangePropGetter = ()
+    {
+        immutable string tableType = "MDTableType." ~ md.stringof;
+        immutable string entityType = "Entity!(" ~ tableType ~ ")";
+
+        immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
+        immutable string targetColumnValueType = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "ValueType";
+        immutable string targetColumn = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "Column";
+        immutable string targetEntityType = "Entity!(" ~ targetTableType ~ ")";
+
+        immutable string targetEntityColumnCodedIndexType = TargetColumnName ~ "CodedIndexType!(" ~ targetTableType ~ ")";
+        immutable string codedIndexMember = "getCodedIndexMember!(" ~ targetEntityColumnCodedIndexType ~ ", " ~ tableType ~ ")";
+
+        immutable string returnType = "Nullable!(" ~ targetEntityType ~ ")";
+
+        string decl = "";
+
+        decl ~= "static assert(" ~ targetColumnValueType ~ ".Kind == ValueKind.CodedIndex);\n";                        // target column is coded index
+        decl ~= "static assert( is(typeof(" ~ codedIndexMember ~ ") == " ~ targetEntityColumnCodedIndexType ~ "));\n"; // and that coded index can point to this (md) entity
+
+        decl ~= "public " ~ returnType ~ " get" ~ PropName ~ "(in " ~ entityType ~ " entity)\n";
+        decl ~= "{\n";
+        decl ~= "  const auto ci = CompositeIndex!(" ~ targetEntityColumnCodedIndexType ~ ")(entity.row.getRowID(), " ~ codedIndexMember ~ ");\n";
+        decl ~= "  auto codedIndexValue = Value!(uint, ValueKind.CodedIndex)(ci.codedIndex);";
+        decl ~= "  auto found = entity.db.getTable!(" ~ targetTableType ~ ")().findFirstCodedIndex!(uint)(codedIndexValue, " ~ targetColumn ~ ");\n";
+        decl ~= "  return found.isNull ? " ~ returnType ~ ".init : " ~ returnType ~ "(" ~ targetEntityType ~"(found.get, entity.db));\n";
+        decl ~= "}\n";
+
+        return decl;
+    };
+
+    mixin(injectRangePropGetter());   
+}
+
 // Declares free function (coded index field range getter)
 // CollectionCodedIndexRangeEnumerator!mdTarget get##PropName(in Entity!(md) entity) { ... }
 private mixin template DeclCodedIndexRangeProp(alias md, string PropName, alias mdTarget, string TargetColumnName)
@@ -837,9 +888,7 @@ private mixin template DeclCodedIndexRangeProp(alias md, string PropName, alias 
         immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
         immutable string targetColumnValueType = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "ValueType";
 
-        //immutable string targetEntityColumnType = "Entity!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "EntityType";
         immutable string targetColumn = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "Column";
-
         immutable string targetEntityColumnCodedIndexType = TargetColumnName ~ "CodedIndexType!(" ~ targetTableType ~ ")";
 
         immutable string rangeEnumeratorType = "CollectionCodedIndexRangeEnumerator!(" ~ targetTableType ~ ")";
@@ -864,6 +913,37 @@ private mixin template DeclCodedIndexRangeProp(alias md, string PropName, alias 
     };
 
     mixin(injectRangePropGetter());   
+}
+
+private mixin template DeclFindParentProp(alias md, string PropName, alias mdTarget, string TargetColumnName)
+{
+    enum injectFindParentPropGetter = ()
+    {
+        immutable string tableType = "MDTableType." ~ md.stringof;
+
+        immutable string targetTableType = "MDTableType." ~ mdTarget.stringof;
+        immutable string targetColumnValueType = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "ValueType";
+
+        immutable string targetEntityType = "Entity!(" ~ targetTableType ~ ")";
+        immutable string targetEntityColumnType = targetEntityType ~ "." ~ TargetColumnName ~ "EntityType";
+        immutable string targetColumn = "Row!(" ~ targetTableType ~ ")." ~ TargetColumnName ~ "Column";
+
+        immutable string returnType = targetEntityType;
+
+        string decl = "";
+        decl ~= "static assert(" ~ targetColumnValueType ~ ".Kind == ValueKind.Index);\n";         // target column is index
+        decl ~= "static assert(" ~ targetEntityColumnType ~ ".TableType == " ~ tableType ~ ");\n"; // and that index references this (md) entity
+
+        decl ~= "public " ~ targetEntityType ~ " get" ~ PropName ~ "() const\n";
+        decl ~= "{\n";
+        decl ~= "  auto found = db.getTable!(" ~ targetTableType ~ ")().findParentFor!(uint)(Value!(uint, ValueKind.Index)(row.getRowID()), " ~ targetColumn ~ ");\n";
+        decl ~= "  return " ~ targetEntityType ~"(found, db);\n";
+        decl ~= "}\n";
+
+        return decl;
+    };
+
+    mixin(injectFindParentPropGetter());   
 }
 
 private mixin template DeclFindFirstProp(alias md, string PropName, alias mdTarget, string TargetColumnName)

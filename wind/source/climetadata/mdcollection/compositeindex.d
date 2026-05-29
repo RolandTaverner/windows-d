@@ -292,7 +292,7 @@ if (is(CodedIndexType == HasDeclSecurity))
     }
 }
 
-public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == HasFieldMarshal)) 
+public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(CodedIndexType == HasDeclSecurity)) 
 {
     static if (md == MDTableType.typeDef) alias getCodedIndexMember = HasDeclSecurity.typeDef;
     else static if (md == MDTableType.methodDef) alias getCodedIndexMember = HasDeclSecurity.methodDef;

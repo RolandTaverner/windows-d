@@ -113,6 +113,28 @@ public struct Table(MDTableType md)
         return .emptyList!md(&this);
     }
 
+    public Row!md findParentFor(T)(in Value!(T, ValueKind.Index) referenceRowID, uint referenceColumn) const
+    {
+        assert(referenceRowID, "referenceRowID can't be 0");
+        assert(referenceColumn < columns.length, "referenceColumn out of range");
+        assert(columns[referenceColumn].kind == ValueKind.Index, "referenceColumn is not index column");
+
+        enforce(rowCount != 0, format("Table %s is empty", md.stringof));
+
+        uint rowID = 1;
+        uint referenceValue = getValue!(uint, ValueKind.Index)(rowID - 1, referenceColumn);
+        while (referenceValue < referenceRowID && rowID <= rowCount)
+        {
+            ++rowID;
+            referenceValue = getValue!(uint, ValueKind.Index)(rowID - 1, referenceColumn);
+        }
+
+        enforce(referenceValue == referenceRowID,
+            format("Missing parent reference to child (%s - %d)", md.stringof, referenceRowID));
+        
+        return this[rowID];
+    }
+
     public TableRangeEnumerator!md range(T)(in Value!(T, ValueKind.Index) referenceRowID, uint referenceColumn) const
     {
         assert(referenceRowID != 0, "start referenceRowID can't be 0");
@@ -148,6 +170,16 @@ public struct Table(MDTableType md)
     public NullableRow findFirst(T)(in Value!(T, ValueKind.Index) referenceRowID, uint referenceColumn) const
     {
         auto findFirstRange = range!(T)(referenceRowID, referenceColumn);
+        if (findFirstRange.empty())
+        {
+            return NullableRow.init;
+        }
+        return NullableRow(findFirstRange.front());
+    }
+
+    public NullableRow findFirstCodedIndex(T)(in Value!(T, ValueKind.CodedIndex) referenceCodedIndex, uint referenceColumn) const
+    {
+        auto findFirstRange = codedIndexRange!(T)(referenceCodedIndex, referenceColumn);
         if (findFirstRange.empty())
         {
             return NullableRow.init;
