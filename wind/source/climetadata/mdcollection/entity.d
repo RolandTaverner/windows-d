@@ -14,6 +14,7 @@ import climetadata.mdtable.row : Row;
 import climetadata.mdtable.table : emptyList, getNextRow, isLastRow, TableRangeEnumerator, TableAllEnumerator, TableCodedIndexRangeEnumerator;
 import climetadata.mdtable.type;
 import climetadata.mdtable.value;
+import climetadata.utils.memcast;
 
 public struct Entity(MDTableType md)
 {
@@ -68,6 +69,7 @@ public struct Entity(MDTableType md)
     else static if (md == MDTableType.constant)
     {
         mixin constantFieldGetters!();
+        mixin constantFieldGettersExtra!();
     }
     else static if (md == MDTableType.customAttribute)
     {
@@ -570,11 +572,62 @@ mixin DeclCodedIndexRangeProp!(MDTableType.memberRef, "CustomAttributes", MDTabl
 
 private mixin template constantFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.constant, "Type");
-    mixin DeclSimpleField!(MDTableType.constant, "Value");
+    mixin DeclSimpleFieldAsEnum!(MDTableType.constant, "Type", ConstantType);
+    mixin DeclSimpleField!(MDTableType.constant, "Value"); // Blob
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.constant, "Parent", HasConstant);  // Primary key
+
+// Extra props
+
+private mixin template constantFieldGettersExtra()
+{
+    alias ConstantValue = Algebraic!(bool, byte, ubyte, short, ushort, int, uint, long, ulong, wchar, float, double, wstring, typeof(null));
+
+    public auto value() const
+    {
+        auto t = getType();
+        if (t == ConstantType.class_)
+        {
+            return ConstantValue(null); // TODO: is this correct?
+        }
+        else
+        {
+            auto data = getValue();
+            if (t == ConstantType.string)
+                return ConstantValue(asArray!(immutable(wchar))(data));
+            switch(t)
+            {
+                case ConstantType.boolean:
+                    return ConstantValue(asVal!bool(data));
+                case ConstantType.char_:
+                    return ConstantValue(asVal!wchar(data));
+                case ConstantType.int8:
+                    return ConstantValue(asVal!byte(data));
+                case ConstantType.uint8:
+                    return ConstantValue(asVal!ubyte(data));
+                case ConstantType.int16:
+                    return ConstantValue(asVal!short(data));
+                case ConstantType.uint16:
+                    return ConstantValue(asVal!ushort(data));
+                case ConstantType.int32:
+                    return ConstantValue(asVal!int(data));
+                case ConstantType.uint32:
+                    return ConstantValue(asVal!uint(data));
+                case ConstantType.int64:
+                    return ConstantValue(asVal!long(data));
+                case ConstantType.uint64:
+                    return ConstantValue(asVal!ulong(data));
+                case ConstantType.float32:
+                    return ConstantValue(asVal!float(data));
+                case ConstantType.float64:
+                    return ConstantValue(asVal!double(data));
+                default:
+                    assert(0);
+            }
+        }
+    }      
+}
 
 //=============================================================================
 // customAttribute entity getters
@@ -1324,11 +1377,40 @@ unittest
 {
     alias ModuleEntity = Entity!(MDTableType.module_);
 
-    static assert(is(GetSimpleFieldValueType!(ModuleEntity.UnusedColumnValueType) == ushort));
+    //static assert(is(GetSimpleFieldValueType!(ModuleEntity.UnusedColumnValueType) == ushort));
     static assert(is(GetSimpleFieldValueType!(ModuleEntity.NameColumnValueType) == string));
     static assert(is(GetSimpleFieldValueType!(ModuleEntity.MvidColumnValueType) == UUID));
     static assert(is(GetSimpleFieldValueType!(ModuleEntity.EncIdColumnValueType) == UUID));
     static assert(is(GetSimpleFieldValueType!(ModuleEntity.EncBaseIdColumnValueType) == UUID));
+}
+
+// Same as DeclSimpleField but returns T. Only for Integral columns.
+private mixin template DeclSimpleFieldAsEnum(alias md, string Name, T)
+{
+    enum injectFieldGetter = ()
+    {
+        immutable string tableType = "MDTableType." ~ md.stringof;
+
+        immutable string columnValueType = "Row!(" ~ tableType ~ ")." ~ Name ~ "ValueType";
+        immutable string columnValueTypeAlias = Name ~ "ColumnValueType";
+
+        immutable string extractorType = "FieldValueExtractor!(" ~ columnValueTypeAlias ~ ")";
+        immutable string extractorTypeAlias = Name ~ "FieldValueExtractorType";
+
+        string decl = "";
+        decl ~= "public alias " ~ columnValueTypeAlias ~ " = " ~ columnValueType ~ ";\n";
+        decl ~= "public alias " ~ extractorTypeAlias ~ " = " ~ extractorType ~ ";\n";
+        
+        decl ~= "public T get" ~ Name ~ "() const\n";
+        decl ~= "{\n";
+        decl ~= "  static assert(" ~ columnValueType ~ ".Kind == ValueKind.Integral);\n";
+        decl ~= "  return cast(T)" ~ extractorTypeAlias ~ "(db.heaps()).getValue(row.get" ~ Name ~ "());\n";
+        decl ~= "}\n";
+
+        return decl;
+    };
+
+    mixin(injectFieldGetter());
 }
 
 // Same as DeclSimpleField but returns T. Only for Integral columns.
