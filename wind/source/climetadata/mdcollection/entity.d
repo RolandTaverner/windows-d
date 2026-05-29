@@ -58,6 +58,7 @@ public struct Entity(MDTableType md)
     else static if (md == MDTableType.interfaceImpl)
     {
         mixin interfaceImplFieldGetters!();
+        mixin interfaceImplFieldGettersExtra!();
     }
     else static if (md == MDTableType.memberRef)
     {
@@ -535,6 +536,14 @@ private mixin template interfaceImplFieldGetters()
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.interfaceImpl, "Interface", TypeDefOrRef);
+
+// Extra props
+
+private mixin template interfaceImplFieldGettersExtra()
+{
+}
+
+mixin DeclCodedIndexRangeProp!(MDTableType.interfaceImpl, "CustomAttributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
 // memberRef entity getters
