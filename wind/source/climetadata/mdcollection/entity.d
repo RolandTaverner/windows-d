@@ -63,6 +63,7 @@ public struct Entity(MDTableType md)
     else static if (md == MDTableType.memberRef)
     {
         mixin memberRefFieldGetters!();
+        mixin memberRefFieldGettersExtra!();
     }
     else static if (md == MDTableType.constant)
     {
@@ -551,10 +552,18 @@ mixin DeclCodedIndexRangeProp!(MDTableType.interfaceImpl, "CustomAttributes", MD
 private mixin template memberRefFieldGetters()
 {
     mixin DeclSimpleField!(MDTableType.memberRef, "Name");
-    mixin DeclSimpleField!(MDTableType.memberRef, "Signature");
+    mixin DeclSignatureField!(MDTableType.memberRef, "Signature", MethodDefSig);
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.memberRef, "Class", MemberRefParent);
+
+// Extra props
+
+private mixin template memberRefFieldGettersExtra()
+{
+}
+
+mixin DeclCodedIndexRangeProp!(MDTableType.memberRef, "CustomAttributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
 // constant entity getters

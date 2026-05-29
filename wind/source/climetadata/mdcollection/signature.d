@@ -167,7 +167,7 @@ public struct RetTypeSig
 
 public struct MethodDefSig
 {
-    this(const(Database*) db, ref const(ubyte)[] data)
+    public this(const Database* db, ref const(ubyte)[] data)
     {
         callingConvention = readCompressed!CallingConvention(data);
         if (callingConvention == CallingConvention.generic)
