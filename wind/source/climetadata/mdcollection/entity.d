@@ -48,6 +48,7 @@ public struct Entity(MDTableType md)
     else static if (md == MDTableType.methodDef)
     {
         mixin methodDefFieldGetters!();
+        mixin methodDefFieldGettersExtra!();
     }
     else static if (md == MDTableType.param)
     {
@@ -492,6 +493,17 @@ private mixin template methodDefFieldGetters()
     mixin DeclSimpleField!(MDTableType.methodDef, "Signature");
     mixin DeclListIndexField!(MDTableType.methodDef, "ParamList", MDTableType.param);
 }
+
+// Extra props
+
+private mixin template methodDefFieldGettersExtra()
+{
+    mixin DeclFindParentProp!(MDTableType.methodDef, "Parent", MDTableType.typeDef, "MethodList");
+}
+
+mixin DeclCodedIndexRangeProp!(MDTableType.methodDef, "GenericParameters", MDTableType.genericParam, "Owner");
+mixin DeclFindFirstCodedIndexProp!(MDTableType.methodDef, "Implementation", MDTableType.implMap, "MemberForwarded");
+mixin DeclFindFirstCodedIndexProp!(MDTableType.methodDef, "Attributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
 // param entity getters
