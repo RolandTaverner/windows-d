@@ -40,6 +40,11 @@ struct Collection(MDTableType md)
         return CollectionListEnumerator!md(table.list(startRowID, endRowID), db);
     }
 
+    public CollectionListEnumerator!md emptyList() const
+    {
+        return CollectionListEnumerator!(md)(table.emptyList(), db);
+    }
+
     static if (md == MDTableType.typeDef) 
     {
         public Nullable!(Entity!(md)) findByName(string typeName) const

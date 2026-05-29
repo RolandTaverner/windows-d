@@ -108,6 +108,11 @@ public struct Table(MDTableType md)
         return TableListEnumerator!md(&this, startRowID, endRowID);
     }
 
+    public TableListEnumerator!md emptyList() const
+    {
+        return .emptyList!md(&this);
+    }
+
     public TableRangeEnumerator!md range(T)(in Value!(T, ValueKind.Index) referenceRowID, uint referenceColumn) const
     {
         assert(referenceRowID != 0, "start referenceRowID can't be 0");
@@ -245,7 +250,7 @@ private:
 
 public TableListEnumerator!md emptyList(MDTableType md)(const(Table!md*) table)
 {
-    return TableListEnumerator!md(table, table.rowCount + 1, table.rowCount + 1);
+    return TableListEnumerator!md(table, table.rowCount + 2, table.rowCount + 1);
 }
 
 // Returns contiguos range of rows referencing the given referenceRowID in another table

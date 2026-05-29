@@ -187,7 +187,7 @@ public struct MethodDefSig
 
 public struct FieldSig
 {
-    this(const(Database)* db, ref const(ubyte)[] data)
+    public this(const Database* db, ref const(ubyte)[] data)
     {
         callingConvention = read!CallingConvention(data);
         enforce((callingConvention & CallingConvention.field) == CallingConvention.field, "Invalid field signature");

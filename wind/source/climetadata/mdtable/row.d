@@ -223,7 +223,7 @@ private:
 
 private mixin template moduleGetters()
 {
-    mixin DeclColumn!(MDTableType.module_, 0, ushort, ValueKind.Integral, "Unused");
+    //mixin DeclColumn!(MDTableType.module_, 0, ushort, ValueKind.Unused, "Unused");
     mixin DeclColumn!(MDTableType.module_, 1, uint, ValueKind.String, "Name");
     mixin DeclColumn!(MDTableType.module_, 2, uint, ValueKind.Guid, "Mvid");
     mixin DeclColumn!(MDTableType.module_, 3, uint, ValueKind.Guid, "EncId");

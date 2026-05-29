@@ -226,7 +226,7 @@ private:
 
 private mixin template moduleFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.module_, "Unused");
+    //mixin DeclSimpleField!(MDTableType.module_, "Unused");
     mixin DeclSimpleField!(MDTableType.module_, "Name");
     mixin DeclSimpleField!(MDTableType.module_, "Mvid");
     mixin DeclSimpleField!(MDTableType.module_, "EncId");
@@ -298,7 +298,7 @@ private mixin template typeDefFieldGetters()
     mixin DeclListIndexField!(MDTableType.typeDef, "MethodList", MDTableType.methodDef);
 }
 
-mixin DeclCodedIndexFieldGetter!(MDTableType.typeDef, "Extends", TypeDefOrRef);
+mixin DeclCodedIndexFieldGetter!(MDTableType.typeDef, "Extends", TypeDefOrRef); // TypeDefEntity, TypeRefEntity, TypeSpecEntity
 
 // Extra props
 
@@ -311,6 +311,11 @@ private mixin template typeDefFieldGettersExtra()
     
     // All nestedClass entities referencing typeDef NestedClass column
     mixin DeclAllProp!(MDTableType.typeDef, "AllNestedClassByNested", MDTableType.nestedClass, "NestedClass"); 
+
+    // First classLayout entity referencing typeDef in NestedClass column
+    mixin DeclFindFirstProp!(MDTableType.typeDef, "Layout", MDTableType.classLayout, "Parent");
+
+    mixin DeclRangeProp!(MDTableType.typeDef, "MethodImplementations", MDTableType.methodImpl, "Class");
 
     public const(Nullable!(Entity!(MDTableType.typeDef))) enclosing() const
     {
@@ -326,16 +331,17 @@ private mixin template typeDefFieldGettersExtra()
     public Nullable!TypeDefOrRefValue extends() const
     {        
         alias V = Nullable!TypeDefOrRefValue;
-        if (nullExtends(this))
+        if (this.nullExtends())
         {
             return V.init;
         }
-        auto r = getExtends(this);
+        auto r = this.getExtends();
         if (auto td = r.peek!TypeDefEntity)
-            return !td.isNull() > 0 ? V(r) : V.init;
+        {
+            return !td.isNull() ? V(r) : V.init;
+        }
         return V(r);
     }
-
 
     public bool isEnum() const
     {
@@ -355,67 +361,101 @@ private mixin template typeDefFieldGettersExtra()
         return false;            
     }
 
-        // public bool isDelegate() const
-        // {
-        //     auto row = extends();
-        //     if (row.isNull)
-        //         return false;
-        //     if (row.get.peek!TypeRef)
-        //     {
-        //         auto td = row.get.get!TypeRef;
-        //         return td.name == "MulticastDelegate" && td.namespace == "System";
-        //     }
-        //     else if (row.get.peek!TypeDef)
-        //     {
-        //         auto td = row.get.get!TypeDef;
-        //         return td.name == "MulticastDelegate" && td.namespace == "System";
-        //     }
-        //     return false;            
-        // }
-
-        // public bool isValueType() const
-        // {
-        //     auto row = extends();
-        //     if (row.isNull)
-        //         return false;
-        //     if (row.get.peek!TypeRef)
-        //     {
-        //         auto td = row.get.get!TypeRef;
-        //         return td.name == "ValueType" && td.namespace == "System";
-        //     }
-        //     else if (row.get.peek!TypeDef)
-        //     {
-        //         auto td = row.get.get!TypeDef;
-        //         return td.name == "ValueType" && td.namespace == "System";
-        //     }
-        //     return false;            
-        // }
-
-        public bool isInterface() const
+    public bool isDelegate() const
+    {
+        auto row = extends();
+        if (row.isNull)
+            return false;
+        if (row.get.peek!TypeRefEntity)
         {
-            return getFlags().semantics == TypeSemantics.interface_;
+            auto td = row.get.get!TypeRefEntity;
+            return td.getTypeName() == "MulticastDelegate" && td.getTypeNamespace() == "System";
         }
+        else if (row.get.peek!TypeDefEntity)
+        {
+            auto td = row.get.get!TypeDefEntity;
+            return td.getTypeName() == "MulticastDelegate" && td.getTypeNamespace() == "System";
+        }
+        return false;            
+    }
+
+    public bool isValueType() const
+    {
+        auto row = extends();
+        if (row.isNull)
+            return false;
+        if (row.get.peek!TypeRefEntity)
+        {
+            auto td = row.get.get!TypeRefEntity;
+            return td.getTypeName() == "ValueType" && td.getTypeNamespace() == "System";
+        }
+        else if (row.get.peek!TypeDefEntity)
+        {
+            auto td = row.get.get!TypeDefEntity;
+            return td.getTypeName() == "ValueType" && td.getTypeNamespace() == "System";
+        }
+        return false;            
+    }
+
+    public bool isInterface() const
+    {
+        return getFlags().semantics == TypeSemantics.interface_;
+    }
 
     public ElementType underlyingEnumType() const
+    {
+        ElementType result;
+        foreach(field; getFieldList())
         {
-            ElementType result;
-            foreach(field; getFieldList())
+            if (!field.getFlags().isLiteral && !field.getFlags().isStatic)
             {
-                if (!field.getFlags().isLiteral && !field.getFlags().isStatic)
-                {
-                    // TODO
-                //     result = field.getSignature().typeSig.type.get!ElementType;
-                //     break;
-                }
+                result = field.getSignature().typeSig.type.get!ElementType;
+                break;
             }
-
-            enforce(result >= ElementType.boolean && result <= ElementType.u8, "Invalid enum underlying type");
-            return result;
         }
 
+        enforce(result >= ElementType.boolean && result <= ElementType.u8, "Invalid enum underlying type");
+        return result;
+    }
+
+    // First propertyMap entity referencing typeDef in Parent column
+    mixin DeclFindFirstProp!(MDTableType.typeDef, "PropertyMap", MDTableType.propertyMap, "Parent");
+
+    public auto properties()
+    {
+        auto propMap = getPropertyMap();
+        if (propMap.isNull)
+        {
+            return db.propertyCollection.emptyList();
+        }
+
+        return propMap.get.getPropertyList();
+    }
+
+    // First propertyMap entity referencing typeDef in Parent column
+    mixin DeclFindFirstProp!(MDTableType.typeDef, "EventMap", MDTableType.eventMap, "Parent");
+
+    public auto events()
+    {
+        auto eventMap = getEventMap();
+        if (eventMap.isNull)
+        {
+            return db.eventCollection.emptyList();
+        }
+
+        return eventMap.get.getEventList();
+    }
+
+    public bool isNested() const
+    {
+        auto nc = getFirstNestedClassByNested();
+        return !nc.isNull;
+    }
 }
 
 mixin DeclCodedIndexRangeProp!(MDTableType.typeDef, "Attributes", MDTableType.customAttribute, "Parent");
+
+mixin DeclCodedIndexRangeProp!(MDTableType.typeDef, "GenericParameters", MDTableType.genericParam, "Owner");
 
 //=============================================================================
 // field entity getters
@@ -424,8 +464,7 @@ private mixin template fieldFieldGetters()
 {
     mixin DeclSimpleFieldAsType!(MDTableType.field, "Flags", FieldAttributes);
     mixin DeclSimpleField!(MDTableType.field, "Name");
-    //mixin DeclSignatureField!(MDTableType.field, "Signature", );
-    mixin DeclSimpleField!(MDTableType.field, "Signature");
+    mixin DeclSignatureField!(MDTableType.field, "Signature", FieldSig);
 }
 
 //=============================================================================
@@ -548,7 +587,7 @@ private mixin template standAloneSigFieldGetters()
 private mixin template eventMapFieldGetters()
 {
     mixin DeclIndexField!(MDTableType.eventMap, "Parent", MDTableType.typeDef);
-    mixin DeclIndexField!(MDTableType.eventMap, "EventList", MDTableType.event);
+    mixin DeclListIndexField!(MDTableType.eventMap, "EventList", MDTableType.event);
 }
 
 //=============================================================================
@@ -568,7 +607,7 @@ mixin DeclCodedIndexFieldGetter!(MDTableType.event, "EventType", TypeDefOrRef);
 private mixin template propertyMapFieldGetters()
 {
     mixin DeclIndexField!(MDTableType.propertyMap, "Parent", MDTableType.typeDef);
-    mixin DeclIndexField!(MDTableType.propertyMap, "PropertyList", MDTableType.property);
+    mixin DeclListIndexField!(MDTableType.propertyMap, "PropertyList", MDTableType.property);
 }
 
 //=============================================================================
@@ -1114,7 +1153,8 @@ private mixin template DeclSignatureField(alias md, string Name, T)
         decl ~= "public T get" ~ Name ~ "() const\n";
         decl ~= "{\n";
         decl ~= "  static assert(" ~ columnValueType ~ ".Kind == ValueKind.Blob);\n";
-        decl ~= "  return T(db, " ~ extractorTypeAlias ~ "(db.heaps()).getValue(row.get" ~ Name ~ "()));\n";
+        decl ~= "  auto data = " ~ extractorTypeAlias ~ "(db.heaps()).getValue(row.get" ~ Name ~ "());\n";
+        decl ~= "  return T(db, data);\n";
         decl ~= "}\n";
 
         return decl;
