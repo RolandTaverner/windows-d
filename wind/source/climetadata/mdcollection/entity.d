@@ -53,6 +53,7 @@ public struct Entity(MDTableType md)
     else static if (md == MDTableType.param)
     {
         mixin paramFieldGetters!();
+        mixin paramFieldGettersExtra!();
     }
     else static if (md == MDTableType.interfaceImpl)
     {
@@ -514,6 +515,16 @@ private mixin template paramFieldGetters()
     mixin DeclSimpleField!(MDTableType.param, "Sequence");
     mixin DeclSimpleField!(MDTableType.param, "Name");
 }
+
+// Extra props
+
+private mixin template paramFieldGettersExtra()
+{
+}
+
+mixin DeclFindFirstCodedIndexProp!(MDTableType.param, "Constant", MDTableType.constant, "Parent");
+mixin DeclFindFirstCodedIndexProp!(MDTableType.param, "Marshal", MDTableType.fieldMarshal, "Parent");
+mixin DeclCodedIndexRangeProp!(MDTableType.param, "CustomAttributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
 // interfaceImpl entity getters
