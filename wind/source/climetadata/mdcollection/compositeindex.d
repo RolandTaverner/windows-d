@@ -210,6 +210,7 @@ public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(Coded
     else static if (md == MDTableType.typeSpec) alias getCodedIndexMember = HasCustomAttribute.typeSpec;
     else static if (md == MDTableType.assembly) alias getCodedIndexMember = HasCustomAttribute.assembly;
     else static if (md == MDTableType.assemblyRef) alias getCodedIndexMember = HasCustomAttribute.assemblyRef;
+    else static if (md == MDTableType.file) alias getCodedIndexMember = HasCustomAttribute.file;
     else static if (md == MDTableType.exportedType) alias getCodedIndexMember = HasCustomAttribute.exportedType;
     else static if (md == MDTableType.manifestResource) alias getCodedIndexMember = HasCustomAttribute.manifestResource;
     else static if (md == MDTableType.genericParam) alias getCodedIndexMember = HasCustomAttribute.genericParam;

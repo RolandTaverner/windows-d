@@ -169,6 +169,7 @@ public struct Entity(MDTableType md)
     else static if (md == MDTableType.exportedType)
     {
         mixin exportedTypeFieldGetters!();
+        mixin exportedTypeFieldGettersExtra!();
     }
     else static if (md == MDTableType.manifestResource)
     {
@@ -835,13 +836,21 @@ private mixin template moduleRefFieldGetters()
     mixin DeclSimpleField!(MDTableType.moduleRef, "Name");
 }
 
+// Extra props
+
+mixin DeclCodedIndexRangeProp!(MDTableType.moduleRef, "CustomAttributes", MDTableType.customAttribute, "Parent");
+
 //=============================================================================
 // typeSpec entity getters
 
 private mixin template typeSpecFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.typeSpec, "Signature");
+    mixin DeclSignatureField!(MDTableType.typeSpec, "Signature", TypeSpecSig);
 }
+
+// Extra props
+
+mixin DeclCodedIndexRangeProp!(MDTableType.typeSpec, "CustomAttributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
 // implMap entity getters
@@ -869,20 +878,24 @@ private mixin template fieldRVAFieldGetters()
 
 private mixin template assemblyFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.assembly, "HashAlgId");
-    mixin DeclSimpleField!(MDTableType.assembly, "Version");
+    mixin DeclSimpleFieldAsEnum!(MDTableType.assembly, "HashAlgId", AssemblyHashAlgorithm);
+    mixin DeclSimpleField!(MDTableType.assembly, "Version"); // TODO:  as AssemblyVersion
     mixin DeclSimpleFieldAsType!(MDTableType.assembly, "Flags", AssemblyAttributes);
     mixin DeclSimpleField!(MDTableType.assembly, "PublicKey");
     mixin DeclSimpleField!(MDTableType.assembly, "Name");
     mixin DeclSimpleField!(MDTableType.assembly, "Culture");
 }
 
+// Extra props
+
+mixin DeclCodedIndexRangeProp!(MDTableType.assembly, "CustomAttributes", MDTableType.customAttribute, "Parent");
+
 //=============================================================================
 // assemblyProcessor entity getters
 
 private mixin template assemblyProcessorFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.assemblyProcessor, "Processor");
+    mixin DeclSimpleFieldAsEnum!(MDTableType.assemblyProcessor, "Processor", AssemblyArch);
 }
 
 //=============================================================================
@@ -900,20 +913,24 @@ private mixin template assemblyOSFieldGetters()
 
 private mixin template assemblyRefFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.assemblyRef, "Version");
-    mixin DeclSimpleField!(MDTableType.assemblyRef, "Flags");
+    mixin DeclSimpleField!(MDTableType.assemblyRef, "Version"); // TODO: as AssemblyVersion
+    mixin DeclSimpleFieldAsType!(MDTableType.assemblyRef, "Flags", AssemblyAttributes);
     mixin DeclSimpleField!(MDTableType.assemblyRef, "PublicKeyOrToken");
     mixin DeclSimpleField!(MDTableType.assemblyRef, "Name");
     mixin DeclSimpleField!(MDTableType.assemblyRef, "Culture");
     mixin DeclSimpleField!(MDTableType.assemblyRef, "HashValue");
 }
 
+// Extra props
+
+mixin DeclCodedIndexRangeProp!(MDTableType.assemblyRef, "CustomAttributes", MDTableType.customAttribute, "Parent");
+
 //=============================================================================
 // assemblyRefProcessor entity getters
 
 private mixin template assemblyRefProcessorFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.assemblyRefProcessor, "Processor");
+    mixin DeclSimpleFieldAsEnum!(MDTableType.assemblyRefProcessor, "Processor", AssemblyArch);
     mixin DeclIndexField!(MDTableType.assemblyRefProcessor, "AssemblyRef", MDTableType.assemblyRef);
 }
 
@@ -938,6 +955,10 @@ private mixin template fileFieldGetters()
     mixin DeclSimpleField!(MDTableType.file, "HashValue");
 }
 
+// Extra props
+
+mixin DeclCodedIndexRangeProp!(MDTableType.file, "CustomAttributes", MDTableType.customAttribute, "Parent");
+
 //=============================================================================
 // exportedType entity getters
 
@@ -951,17 +972,55 @@ private mixin template exportedTypeFieldGetters()
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.exportedType, "Implementation", Implementation);
 
+// Extra props
+
+private mixin template exportedTypeFieldGettersExtra()
+{
+    // public Nullable!TypeDefEntity hint() const
+    // {
+    //     // TypeDefId (a 4-byte index into a TypeDef table of another module in this Assembly).
+    //     // This column is used as a hint only. If the entry in the target TypeDef table matches the TypeName and TypeNamespace entries in this table,
+    //     // resolution has succeeded. But if there is a mismatch, the CLI shall fall back to a search of the target TypeDef table.
+    //     // Ignored and should be zero if Flags has IsTypeForwarder set.
+
+    //     if (getFlags().isTypeForwarder())
+    //     {
+    //         return (Nullable!TypeDefEntity).init;
+    //     }
+
+    //     auto hintIndex = getTypeDefId();
+    //     if (hintIndex == 0)
+    //     {
+    //         return (Nullable!TypeDefEntity).init;
+    //     }
+
+    //     if (table.db.typeDefTable.rowCount <= hintIndex)
+    //     {
+    //         auto td = table.db.typeDefTable[hintIndex];
+    //         if (td.name == name && td.namespace == td.namespace)
+    //             return Nullable!TypeDef(td);
+    //     }
+    //     return (Nullable!TypeDef).init;
+    // }
+}
+
+mixin DeclCodedIndexRangeProp!(MDTableType.exportedType, "CustomAttributes", MDTableType.customAttribute, "Parent");
+
 //=============================================================================
 // manifestResource entity getters
 
 private mixin template manifestResourceFieldGetters()
 {
     mixin DeclSimpleField!(MDTableType.manifestResource, "Offset");
-    mixin DeclSimpleField!(MDTableType.manifestResource, "Flags");
+    mixin DeclSimpleFieldAsEnum!(MDTableType.manifestResource, "Flags", ManifestVisibility);
     mixin DeclSimpleField!(MDTableType.manifestResource, "Name");
 }
 
-mixin DeclCodedIndexFieldGetter!(MDTableType.manifestResource, "Implementation", Implementation);
+mixin DeclCodedIndexFieldGetter!(MDTableType.manifestResource, "Implementation", Implementation); // Can be null
+
+// Extra props
+
+mixin DeclCodedIndexRangeProp!(MDTableType.manifestResource, "CustomAttributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
 // nestedClass entity getters
@@ -984,6 +1043,10 @@ private mixin template genericParamFieldGetters()
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.genericParam, "Owner", TypeOrMethodDef); // Primary key
 
+// Extra props
+
+mixin DeclCodedIndexRangeProp!(MDTableType.genericParam, "CustomAttributes", MDTableType.customAttribute, "Parent");
+
 //=============================================================================
 // methodSpec entity getters
 
@@ -1003,6 +1066,10 @@ private mixin template genericParamConstraintFieldGetters()
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.genericParamConstraint, "Constraint", TypeDefOrRef);
+
+// Extra props
+
+mixin DeclCodedIndexRangeProp!(MDTableType.genericParamConstraint, "CustomAttributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
 //=============================================================================
