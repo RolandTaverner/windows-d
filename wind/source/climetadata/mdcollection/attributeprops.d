@@ -1,7 +1,7 @@
 module climetadata.mdcollection.attributeprops;
 
 // sig
-enum UnmanagedType
+public enum UnmanagedType
 {
     bool_ = 2,
     i1 = 3,
@@ -43,7 +43,7 @@ enum UnmanagedType
     lpUTF8Str = 48,
 }
 
-enum MemberAccess : ushort
+public enum MemberAccess : ushort
 {
     CompilerControlled = 0x0000,
     Private = 0x0001,
@@ -54,7 +54,7 @@ enum MemberAccess : ushort
     Public = 0x0006,
 }
 
-enum TypeVisibility
+public enum TypeVisibility
 {
     NotPublic = 0x00000000,
     Public = 0x00000001,
@@ -66,27 +66,27 @@ enum TypeVisibility
     NestedFamORAssem = 0x00000007,
 }
 
-enum ManifestVisibility : uint
+public enum ManifestVisibility : uint
 {
     none = 0x0000,
     public_ = 0x0001,
     private_ = 0x0002,
 }
 
-enum TypeLayout
+public enum TypeLayout
 {
     autoLayout = 0x00000000,
     sequentialLayout = 0x00000008,
     explicitLayout = 0x00000010,
 }
 
-enum TypeSemantics
+public enum TypeSemantics
 {
     class_ = 0x00000000,
     interface_ = 0x00000020,
 }
 
-enum StringFormat
+public enum StringFormat
 {
     AnsiClass = 0x00000000,
     UnicodeClass = 0x00010000,
@@ -95,7 +95,7 @@ enum StringFormat
     CustomFormatMask = 0x00C00000,
 }
 
-enum PInvokeStringFormat : ushort
+public enum PInvokeStringFormat : ushort
 {
     notSpecified = 0x0000,
     ansi = 0x0002,
@@ -103,21 +103,21 @@ enum PInvokeStringFormat : ushort
     auto_ = 0x0006,
 }
 
-enum BestFit : ushort
+public enum BestFit : ushort
 {
     useAssembly = 0x0000,
     enabled = 0x0010,
     disabled = 0x0020,
 }
 
-enum ThrowOnInvalidChar : ushort
+public enum ThrowOnInvalidChar : ushort
 {
     useAssembly = 0x0000,
     enabled = 0x1000,
     disabled = 0x2000,
 }
 
-enum CallConv : ushort
+public enum CallConv : ushort
 {
     winapi = 0x0100,
     cdecl = 0x0200,
@@ -126,7 +126,7 @@ enum CallConv : ushort
     fastcall = 0x0500,
 }
 
-enum CodeType : ushort
+public enum CodeType : ushort
 {
     IL = 0x0000,
     Native = 0x0001,
@@ -134,33 +134,33 @@ enum CodeType : ushort
     Runtime = 0x0003,
 }
 
-enum Managed : ushort
+public enum Managed : ushort
 {
     Unmanaged = 0x0004,
     Managed = 0x0000,
 }
 
-enum TableLayout : ushort
+public enum TableLayout : ushort
 {
     ReuseSlot = 0x0000,
     NewSlot = 0x0100,
 }
 
-enum GenericParamVariance : ushort
+public enum GenericParamVariance : ushort
 {
     None = 0x0000,
     Covariant = 0x0001,
     ContraVariant = 0x0002,
 }
 
-enum GenericParamSpecialConstraint : ushort
+public enum GenericParamSpecialConstraint : ushort
 {
     ReferenceTypeConstraint = 0x0004,
     NotNullableValueTypeConstraint = 0x0008,
     DefaultConstructorConstraint = 0x0010,
 }
 
-enum ConstantType : ushort
+public enum ConstantType : ushort
 {
     boolean = 0x02,
     char_ = 0x03,
@@ -178,14 +178,14 @@ enum ConstantType : ushort
     class_ = 0x12
 }
 
-enum AssemblyHashAlgorithm
+public enum AssemblyHashAlgorithm
 {
     None = 0x0000,
     Reserved_MD5 = 0x8003,
     SHA1 = 0x8004,
 }
 
-enum AssemblyArch : uint
+public enum AssemblyArch : uint
 {
     none = 0x0000,
     msil = 0x0010,
@@ -194,7 +194,7 @@ enum AssemblyArch : uint
     amd64 = 0x0040,
 }
 
-enum SecurityAction : ushort
+public enum SecurityAction : ushort
 {
     demand = 0x0002,
     assert_ = 0x0003,
@@ -207,7 +207,7 @@ enum SecurityAction : ushort
     requestRefuse = 0x0010,
 }
 
-struct AssemblyVersion
+public struct AssemblyVersion
 {
     ushort majorVersion;
     ushort minorVersion;
@@ -215,14 +215,14 @@ struct AssemblyVersion
     ushort revisionNumber;
 }
 
-enum Variance : ushort
+public enum Variance : ushort
 {
     nonVariant = 0x0000,
     coVariant = 0x0001,
     contraVariant = 0x0002,
 }
 
-enum Constraint : ushort
+public enum Constraint : ushort
 {
     special = 0x0000,
     reference = 0x0004,

@@ -94,6 +94,7 @@ public struct Entity(MDTableType md)
     else static if (md == MDTableType.standAloneSig)
     {
         mixin standAloneSigFieldGetters!();
+        mixin standAloneSigFieldGettersExtra!();
     }
     else static if (md == MDTableType.eventMap)
     {
@@ -634,18 +635,64 @@ private mixin template constantFieldGettersExtra()
 
 private mixin template customAttributeFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.customAttribute, "Value");
+    mixin DeclSimpleField!(MDTableType.customAttribute, "Value"); // Blob
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.customAttribute, "Parent", HasCustomAttribute); // Primary key
 mixin DeclCodedIndexFieldGetter!(MDTableType.customAttribute, "Type", CustomAttributeType);
+
+// Extra props
+
+private mixin template customAttributeFieldGettersExtra()
+{
+    public TypeDefOrRefValue type() const
+    {
+        auto ctor = this.getType();
+        if (ctor.peek!MethodDefEntity)
+        {
+            auto meth = ctor.get!MethodDefEntity;
+            return TypeDefOrRefValue(meth.parent);
+        }
+
+        auto mr = ctor.get!MemberRefEntity;
+        auto parent = mr.getClass();
+        if (parent.peek!TypeDefEntity)
+        {
+            return TypeDefOrRefValue(parent.get!TypeDefEntity);
+        }
+        return TypeDefOrRefValue(parent.get!TypeRefEntity);
+    }
+
+    public auto name() const
+    {
+        auto t = type();
+        if (auto td = t.peek!TypeDefEntity)
+        {
+            return td.getTypeName();
+        }
+    
+        return t.get!TypeRefEntity.getTypeName();
+    }
+
+    public auto value() const
+    {
+        auto view = getValue();
+        auto ctor = this.getType();
+        if (auto mdef = ctor.peek!MethodDef)
+        {
+            return CustomAttributeSig(table.db, view, mdef.signature);
+        }
+
+        return CustomAttributeSig(table.db, view, ctor.get!MemberRef.signature);
+    }
+}
 
 //=============================================================================
 // fieldMarshal entity getters
 
 private mixin template fieldMarshalFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.fieldMarshal, "NativeType");
+    mixin DeclSignatureField!(MDTableType.fieldMarshal, "NativeType", FieldMarshalSig);
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.fieldMarshal, "Parent", HasFieldMarshal); // Primary key
@@ -655,8 +702,8 @@ mixin DeclCodedIndexFieldGetter!(MDTableType.fieldMarshal, "Parent", HasFieldMar
 
 private mixin template declSecurityFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.declSecurity, "Action");
-    mixin DeclSimpleField!(MDTableType.declSecurity, "PermissionSet");
+    mixin DeclSimpleFieldAsEnum!(MDTableType.declSecurity, "Action", SecurityAction);
+    mixin DeclSignatureField!(MDTableType.declSecurity, "PermissionSet", PermissionSig);
 }
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.declSecurity, "Parent", HasDeclSecurity); // Primary key
@@ -685,8 +732,16 @@ private mixin template fieldLayoutFieldGetters()
 
 private mixin template standAloneSigFieldGetters()
 {
-    mixin DeclSimpleField!(MDTableType.standAloneSig, "Signature");
+    mixin DeclSignatureField!(MDTableType.standAloneSig, "Signature", MethodDefSig);
 }
+
+// Extra props
+
+private mixin template standAloneSigFieldGettersExtra()
+{
+}
+
+mixin DeclCodedIndexRangeProp!(MDTableType.standAloneSig, "CustomAttributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
 // eventMap entity getters

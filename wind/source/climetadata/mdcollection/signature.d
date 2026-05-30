@@ -13,6 +13,7 @@ import climetadata.utils.memcast;
 public struct CustomModSig
 {
     @disable this();
+
     this(ref const(ubyte)[] data)
     {
         elementType = readCompressed!ElementType(data);
@@ -20,8 +21,8 @@ public struct CustomModSig
         typeIndex = CompositeIndex!TypeDefOrRef(readCompressed!uint(data));        
     }
 
-    ElementType elementType;
-    CompositeIndex!TypeDefOrRef typeIndex;
+    const ElementType elementType;
+    const CompositeIndex!TypeDefOrRef typeIndex;
 }
 
 CustomModSig[] readCustomMods(ref const(ubyte)[] data)
@@ -317,7 +318,6 @@ public struct ElementSig
             throw new Exception("Type specs do not provide enough information to read enum values");
     }
 
-
     private Value readPrimitiveValue(ElementType e, ref const(ubyte)[] data)
     {
         switch (e)
@@ -485,7 +485,7 @@ public struct NamedArgSig
 
 public struct CustomAttributeSig
 {
-    this(const(Database)* db, ref const(ubyte)[] data, MethodDefSig ctor)
+    public this(const Database* db, ref const(ubyte)[] data, MethodDefSig ctor)
     {     
         enforce(asVal!ushort(data) == 0x0001, "Invalid prolog for custom attribute");
         data = data[2 .. $];    
@@ -495,7 +495,7 @@ public struct CustomAttributeSig
         named.length = read!ushort(data);
         for(size_t i = 0; i < named.length; ++i)
             named[i] = NamedArgSig(db, data);
-    }    
+    }
 
     FixedArgSig[] fixed;
     NamedArgSig[] named;
@@ -503,8 +503,8 @@ public struct CustomAttributeSig
 
 public struct FieldMarshalSig
 {
-    this(ref const(ubyte)[] data)
-    {     
+    public this(const Database* db, ref const(ubyte)[] data)
+    {
         isArray = readCompressedCond!NativeType(data, NativeType.array);
         elementType = readCompressed!NativeType(data);
         if (data.length)
@@ -513,17 +513,17 @@ public struct FieldMarshalSig
             arrayRank = readCompressed!uint(data);
     }
 
-    bool isArray;
-    uint paramNum;
-    uint arrayRank;
-    NativeType elementType;
+    const bool isArray;
+    const uint paramNum;
+    const uint arrayRank;
+    const NativeType elementType;
     GenericTypeInstSig genSig;
     MethodDefSig methodSig;
 }
 
 public struct PermissionSig
 {
-    this(const(Database)* db, ref const(ubyte)[] data)
+    public this(const(Database)* db, ref const(ubyte)[] data)
     {     
         enforce(read!char(data) == '.', "Invalid permission signature");
         permissions.length = readCompressed!uint(data);
@@ -542,13 +542,13 @@ public struct PermissionSetSig
         arguments.length = read!ushort(data);
         for(size_t i = 0; i < arguments.length; ++i)
             arguments[i] = NamedArgSig(db, data);
-    }    
+    }
 
     string name;
     NamedArgSig[] arguments;
 }
 
-enum ElementType : ubyte
+public enum ElementType : ubyte
 {
     end = 0x00,
     void_ = 0x01,
@@ -592,7 +592,7 @@ enum ElementType : ubyte
     enum_ = 0x55,
 }
 
-enum CallingConvention : ubyte
+public enum CallingConvention : ubyte
 {
     default_ = 0x00,
     varArg = 0x05,
@@ -606,7 +606,7 @@ enum CallingConvention : ubyte
     generic = 0x10,
 }
 
-enum NativeType : ubyte
+public enum NativeType : ubyte
 {
     boolean = 0x02,
     i1 = 0x03,
