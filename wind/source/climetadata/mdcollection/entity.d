@@ -103,6 +103,7 @@ public struct Entity(MDTableType md)
     else static if (md == MDTableType.event)
     {
         mixin eventFieldGetters!();
+        mixin eventFieldGettersExtra!();
     }
     else static if (md == MDTableType.propertyMap)
     {
@@ -763,6 +764,16 @@ private mixin template eventFieldGetters()
 
 mixin DeclCodedIndexFieldGetter!(MDTableType.event, "EventType", TypeDefOrRef);
 
+// Extra props
+
+private mixin template eventFieldGettersExtra()
+{
+    mixin DeclFindParentProp!(MDTableType.event, "Parent", MDTableType.eventMap, "EventList");
+}
+
+mixin DeclCodedIndexRangeProp!(MDTableType.event, "CustomAttributes", MDTableType.customAttribute, "Parent");
+mixin DeclCodedIndexRangeProp!(MDTableType.event, "Semantics", MDTableType.methodSemantics, "Association");
+
 //=============================================================================
 // propertyMap entity getters
 
@@ -781,6 +792,14 @@ private mixin template propertyFieldGetters()
     mixin DeclSimpleField!(MDTableType.property, "Name");
     mixin DeclSimpleField!(MDTableType.property, "Type");
 }
+
+// Extra props
+
+private mixin template propertyFieldGettersExtra()
+{
+}
+
+mixin DeclCodedIndexRangeProp!(MDTableType.property, "CustomAttributes", MDTableType.customAttribute, "Parent");
 
 //=============================================================================
 // methodSemantics entity getters

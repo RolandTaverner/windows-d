@@ -204,6 +204,7 @@ public template getCodedIndexMember(CodedIndexType, MDTableType md) if (is(Coded
     else static if (md == MDTableType.module_) alias getCodedIndexMember = HasCustomAttribute.module_;
     else static if (md == MDTableType.declSecurity) alias getCodedIndexMember = HasCustomAttribute.permission;
     else static if (md == MDTableType.property) alias getCodedIndexMember = HasCustomAttribute.property;
+    else static if (md == MDTableType.event) alias getCodedIndexMember = HasCustomAttribute.event;
     else static if (md == MDTableType.standAloneSig) alias getCodedIndexMember = HasCustomAttribute.standAloneSig;
     else static if (md == MDTableType.moduleRef) alias getCodedIndexMember = HasCustomAttribute.moduleRef;
     else static if (md == MDTableType.typeSpec) alias getCodedIndexMember = HasCustomAttribute.typeSpec;
