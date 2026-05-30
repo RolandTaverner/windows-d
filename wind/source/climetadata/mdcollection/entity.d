@@ -74,6 +74,7 @@ public struct Entity(MDTableType md)
     else static if (md == MDTableType.customAttribute)
     {
         mixin customAttributeFieldGetters!();
+        mixin customAttributeFieldGettersExtra!();
     }
     else static if (md == MDTableType.fieldMarshal)
     {
@@ -499,7 +500,7 @@ private mixin template methodDefFieldGetters()
     mixin DeclSimpleFieldAsType!(MDTableType.methodDef, "ImplFlags", MethodImplAttributes);
     mixin DeclSimpleFieldAsType!(MDTableType.methodDef, "Flags", MethodAttributes);
     mixin DeclSimpleField!(MDTableType.methodDef, "Name");
-    mixin DeclSimpleField!(MDTableType.methodDef, "Signature");
+    mixin DeclSignatureField!(MDTableType.methodDef, "Signature", MethodDefSig);
     mixin DeclListIndexField!(MDTableType.methodDef, "ParamList", MDTableType.param);
 }
 
@@ -654,7 +655,7 @@ private mixin template customAttributeFieldGettersExtra()
         if (ctor.peek!MethodDefEntity)
         {
             auto meth = ctor.get!MethodDefEntity;
-            return TypeDefOrRefValue(meth.parent);
+            return TypeDefOrRefValue(meth.getParent());
         }
 
         auto mr = ctor.get!MemberRefEntity;
@@ -681,12 +682,12 @@ private mixin template customAttributeFieldGettersExtra()
     {
         auto view = getValue();
         auto ctor = this.getType();
-        if (auto mdef = ctor.peek!MethodDef)
+        if (auto mdef = ctor.peek!MethodDefEntity)
         {
-            return CustomAttributeSig(table.db, view, mdef.signature);
+            return CustomAttributeSig(db, view, mdef.getSignature());
         }
 
-        return CustomAttributeSig(table.db, view, ctor.get!MemberRef.signature);
+        return CustomAttributeSig(db, view, ctor.get!MemberRefEntity.getSignature());
     }
 }
 
