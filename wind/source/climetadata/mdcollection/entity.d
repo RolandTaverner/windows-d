@@ -587,7 +587,7 @@ mixin DeclCodedIndexFieldGetter!(MDTableType.constant, "Parent", HasConstant);  
 
 private mixin template constantFieldGettersExtra()
 {
-    alias ConstantValue = Algebraic!(bool, byte, ubyte, short, ushort, int, uint, long, ulong, wchar, float, double, wstring, typeof(null));
+    public alias ConstantValue = Algebraic!(bool, byte, ubyte, short, ushort, int, uint, long, ulong, wchar, float, double, wstring, typeof(null));
 
     public auto value() const
     {
