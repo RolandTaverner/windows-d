@@ -112,6 +112,7 @@ public struct Entity(MDTableType md)
     else static if (md == MDTableType.property)
     {
         mixin propertyFieldGetters!();
+        mixin propertyFieldGettersExtra!();
     }
     else static if (md == MDTableType.methodSemantics)
     {
@@ -790,16 +791,19 @@ private mixin template propertyFieldGetters()
 {
     mixin DeclSimpleFieldAsType!(MDTableType.property, "Flags", PropertyAttributes);
     mixin DeclSimpleField!(MDTableType.property, "Name");
-    mixin DeclSimpleField!(MDTableType.property, "Type");
+    mixin DeclSignatureField!(MDTableType.property, "Type", PropertySig);
 }
 
 // Extra props
 
 private mixin template propertyFieldGettersExtra()
 {
+    mixin DeclFindParentProp!(MDTableType.property, "Parent", MDTableType.propertyMap, "PropertyList");
 }
 
 mixin DeclCodedIndexRangeProp!(MDTableType.property, "CustomAttributes", MDTableType.customAttribute, "Parent");
+mixin DeclCodedIndexRangeProp!(MDTableType.property, "Semantics", MDTableType.methodSemantics, "Association");
+mixin DeclFindFirstCodedIndexProp!(MDTableType.property, "Constant", MDTableType.constant, "Parent");
 
 //=============================================================================
 // methodSemantics entity getters
