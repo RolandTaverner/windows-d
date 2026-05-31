@@ -12,10 +12,10 @@ import row : Row;
 public struct Table(MD md)
 {
     public const(Metadata)* db;
-    private uint rowSize;
+    public uint rowSize;
     public uint rowCount;
     private Column[6] columns;
-    private const(ubyte)[] data;
+    public const(ubyte)[] data;
 
     @disable this();
 

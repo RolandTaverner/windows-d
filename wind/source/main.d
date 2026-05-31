@@ -21,6 +21,10 @@ import std.regex;
 import climetadata.pe.storage : Storage;
 import climetadata.mdtable.tables;
 import climetadata.mdtable.heaps;
+import climetadata.mdcollection.database;
+import climetadata.mdcollection.entitytypes;
+import climetadata.mdcollection.entity;
+import codegen.generator : Generator;
 
 enum maxLineWidth = 120;
 enum maxReturnTypeAlignment = 8;
@@ -1748,144 +1752,141 @@ int main(string[] args)
     }
 
     
-    auto s = Storage(mdFileName);
+    auto storage = Storage(mdFileName);
     writeln("Storage OK");
-    auto tables = Tables(&s);
-    auto heaps = Heaps(s.strings(), s.blobs(), s.guids());
+    auto tables = Tables(&storage);
+    auto heaps = Heaps(storage.strings(), storage.guids(), storage.blobs());
+    Database db = Database(&tables, &heaps);
 
-    auto moduleTable = tables.getTable!(MDTableType.module_);
-    auto m = moduleTable[1];
-    writeln(heaps.getString(m.getName()));
+    Generator codeGen = Generator(&db, cfgIgnoredNamespaces, configNamespace, cfgCoreFileName, safeWords, skipInterfaces, skipMethods, outDirectory);
+
+    codeGen.generate();
+    writeln("generate() done");
+    return 0;
+
+    // auto metadata = Metadata(mdFileName);
+
+    // auto namespaces = getNamespaces(metadata, cfgIgnoredNamespaces);
 
 
-    //return 0;
-    auto metadata = Metadata(mdFileName);
-    auto namespaces = getNamespaces(metadata, cfgIgnoredNamespaces);
 
+    // writeln("Building dependency graph...");
 
+    // foreach(nestedRecord; metadata.nestedClassTable.items)
+    // {
+    //     auto child = nestedRecord.nested;
+    //     auto parent = nestedRecord.enclosing;
+    //     if (auto aa = parent in nestedMap)
+    //         (*aa)[child] = true;
+    //     else
+    //     {
+    //         auto aa = [child : true];            
+    //         nestedMap[parent] = aa;
+    //     }
+    // }
+    // nestedMap.rehash();
 
-    writeln("Building dependency graph...");
+    // foreach(namespace; namespaces)
+    // {
+    //     auto rb = new RedBlackTree!string();
+    //     dependencies[namespace] = rb;
 
-    foreach(nestedRecord; metadata.nestedClassTable.items)
-    {
-        auto child = nestedRecord.nested;
-        auto parent = nestedRecord.enclosing;
-        if (auto aa = parent in nestedMap)
-            (*aa)[child] = true;
-        else
-        {
-            auto aa = [child : true];            
-            nestedMap[parent] = aa;
-        }
-    }
-    nestedMap.rehash();
-
-    foreach(namespace; namespaces)
-    {
-        auto rb = new RedBlackTree!string();
-        dependencies[namespace] = rb;
-
-        foreach(type; getTypeDefs(metadata, namespace))
-        {            
-            buildDependencies(&metadata, type, namespace, rb);
-        }
-    }
+    //     foreach(type; getTypeDefs(metadata, namespace))
+    //     {            
+    //         buildDependencies(&metadata, type, namespace, rb);
+    //     }
+    // }
 
     
 
 
     
     
-    if (exists(outDirectory) && isDir(outDirectory))
-    {
-        try
-        {
-           rmdirRecurse(outDirectory);
-        }
-        catch(FileException)
-        {
-            writefln("Warning, cannot delete %s", buildNormalizedPath(absolutePath(outDirectory)));
-        }
-    }
+    // if (exists(outDirectory) && isDir(outDirectory))
+    // {
+    //     try
+    //     {
+    //        rmdirRecurse(outDirectory);
+    //     }
+    //     catch(FileException)
+    //     {
+    //         writefln("Warning, cannot delete %s", buildNormalizedPath(absolutePath(outDirectory)));
+    //     }
+    // }
     
-    bool mustCopyCore = true;
-    foreach(namespace; namespaces)
-    {
-        string path = makePath(outDirectory, namespace, configNamespace) ~ ".d";
-        string modName = makeModuleName(namespace, configNamespace);        
-        mkdirRecurse(dirName(path));        
-        if (mustCopyCore)
-        {
-            copy(cfgCoreFileName, buildPath(dirName(path), "core.d"));
-            mustCopyCore = false;
-        }
-        auto f = std.stdio.File(path, "w");
-        f.writeln("// Written in the D programming language.");
-        f.writeln();
-        f.writefln("module %s;", modName);
-        f.writeln;
-        writefln("Processing %s", namespace);
-        f.writeln("public import windows.core;");
+    // bool mustCopyCore = true;
+    // foreach(namespace; namespaces)
+    // {
+    //     string path = makePath(outDirectory, namespace, configNamespace) ~ ".d";
+    //     string modName = makeModuleName(namespace, configNamespace);        
+    //     mkdirRecurse(dirName(path));        
+    //     if (mustCopyCore)
+    //     {
+    //         copy(cfgCoreFileName, buildPath(dirName(path), "core.d"));
+    //         mustCopyCore = false;
+    //     }
+    //     auto f = std.stdio.File(path, "w");
+    //     f.writeln("// Written in the D programming language.");
+    //     f.writeln();
+    //     f.writefln("module %s;", modName);
+    //     f.writeln;
+    //     writefln("Processing %s", namespace);
+    //     f.writeln("public import windows.core;");
 
-        auto imports = dependencies[namespace].array.filter!(a => !cfgIgnoredNamespaces.canFind(getns(a))).array.sort;
+    //     auto imports = dependencies[namespace].array.filter!(a => !cfgIgnoredNamespaces.canFind(getns(a))).array.sort;
 
-        string lastNamespace;
-        bool atLeastOne;
-        ptrdiff_t w, v;
-        foreach(i; imports)
-        {
-            atLeastOne = true;
-            auto n = getns(i);
-            if (n != lastNamespace)
-            {
-                if (lastNamespace.length)
-                    f.writeln(";");
-                auto moduleName = makeModuleName(n, configNamespace);
-                auto importName = getname(i);
-                f.writef("public import %s : %s", moduleName, importName);
-                lastNamespace = n;
-                w = 17 + moduleName.length + importName.length;
-                v = w - importName.length;
-            }
-            else
-            {
-                auto importName = getname(i);
-                if (importName.length + w > maxLineWidth - 3)
-                {
-                    f.writeln(",");                    
-                    f.write("".padLeft(' ', v));
-                    w = v;
-                }
-                else
-                    f.write(", ");
-                f.write(importName);
-                w += importName.length + 2;
-                w += importName.length + 2;
-            }
-        }
-        if (atLeastOne)
-            f.writeln(";");
+    //     string lastNamespace;
+    //     bool atLeastOne;
+    //     ptrdiff_t w, v;
+    //     foreach(i; imports)
+    //     {
+    //         atLeastOne = true;
+    //         auto n = getns(i);
+    //         if (n != lastNamespace)
+    //         {
+    //             if (lastNamespace.length)
+    //                 f.writeln(";");
+    //             auto moduleName = makeModuleName(n, configNamespace);
+    //             auto importName = getname(i);
+    //             f.writef("public import %s : %s", moduleName, importName);
+    //             lastNamespace = n;
+    //             w = 17 + moduleName.length + importName.length;
+    //             v = w - importName.length;
+    //         }
+    //         else
+    //         {
+    //             auto importName = getname(i);
+    //             if (importName.length + w > maxLineWidth - 3)
+    //             {
+    //                 f.writeln(",");                    
+    //                 f.write("".padLeft(' ', v));
+    //                 w = v;
+    //             }
+    //             else
+    //                 f.write(", ");
+    //             f.write(importName);
+    //             w += importName.length + 2;
+    //             w += importName.length + 2;
+    //         }
+    //     }
+    //     if (atLeastOne)
+    //         f.writeln(";");
 
-        f.writeln;
-        f.writeln("extern(Windows) @nogc nothrow:");
-        f.writeln;
+    //     f.writeln;
+    //     f.writeln("extern(Windows) @nogc nothrow:");
+    //     f.writeln;
                 
-        dumpEnums(f, metadata, namespace, docsDirectory.length > 0);    
-        dumpApisConstants(f, metadata, namespace);
-        dumpDelegates(f, metadata, namespace,docsDirectory.length > 0);
-        dumpStructs(f, metadata, namespace,docsDirectory.length > 0);
-        dumpApis(f, metadata, namespace,docsDirectory.length > 0);
-        dumpInterfaces(f, metadata, namespace,docsDirectory.length > 0);
-    }
+    //     dumpEnums(f, metadata, namespace, docsDirectory.length > 0);    
+    //     dumpApisConstants(f, metadata, namespace);
+    //     dumpDelegates(f, metadata, namespace,docsDirectory.length > 0);
+    //     dumpStructs(f, metadata, namespace,docsDirectory.length > 0);
+    //     dumpApis(f, metadata, namespace,docsDirectory.length > 0);
+    //     dumpInterfaces(f, metadata, namespace,docsDirectory.length > 0);
+    // }
 
-
-
-    writeln;
-
-    writeln("Press any key to continue.");
-    
-
-    getchar();
+    // writeln;
+    // writeln("Press any key to continue.");
+    // getchar();
 
     return 0;
 }

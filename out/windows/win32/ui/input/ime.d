@@ -1,0 +1,2514 @@
+// Written in the D programming language.
+
+module windows.win32.ui.input.ime;
+
+public import windows.core;
+public import system : Guid;
+public import windows.win32.foundation : BOOL, BSTR, CHAR, HRESULT, HWND, LPARAM,
+                                         LRESULT, POINT, PSTR, PWSTR, RECT, WPARAM;
+public import windows.win32.graphics.gdi : HBITMAP, LOGFONTA, LOGFONTW;
+public import windows.win32.system.com : IClassFactory, IUnknown, SAFEARRAY;
+public import windows.win32.ui.input.keyboardandmouse : HKL;
+public import windows.win32.ui.windowsandmessaging : HICON, MSG;
+
+extern(Windows) @nogc nothrow:
+
+
+// Enums
+
+alias SET_COMPOSITION_STRING_TYPE = uint;
+enum : uint
+{
+    SCS_SETSTR               = 0x00000009,
+    SCS_CHANGEATTR           = 0x00000012,
+    SCS_CHANGECLAUSE         = 0x00000024,
+    SCS_SETRECONVERTSTRING   = 0x00010000,
+    SCS_QUERYRECONVERTSTRING = 0x00020000,
+}
+alias GET_GUIDE_LINE_TYPE = uint;
+enum : uint
+{
+    GGL_LEVEL   = 0x00000001,
+    GGL_INDEX   = 0x00000002,
+    GGL_STRING  = 0x00000003,
+    GGL_PRIVATE = 0x00000004,
+}
+alias NOTIFY_IME_INDEX = uint;
+enum : uint
+{
+    CPS_CANCEL   = 0x00000004,
+    CPS_COMPLETE = 0x00000001,
+    CPS_CONVERT  = 0x00000002,
+    CPS_REVERT   = 0x00000003,
+}
+alias NOTIFY_IME_ACTION = uint;
+enum : uint
+{
+    NI_CHANGECANDIDATELIST    = 0x00000013,
+    NI_CLOSECANDIDATE         = 0x00000011,
+    NI_COMPOSITIONSTR         = 0x00000015,
+    NI_IMEMENUSELECTED        = 0x00000018,
+    NI_OPENCANDIDATE          = 0x00000010,
+    NI_SELECTCANDIDATESTR     = 0x00000012,
+    NI_SETCANDIDATE_PAGESIZE  = 0x00000017,
+    NI_SETCANDIDATE_PAGESTART = 0x00000016,
+}
+alias GET_CONVERSION_LIST_FLAG = uint;
+enum : uint
+{
+    GCL_CONVERSION        = 0x00000001,
+    GCL_REVERSECONVERSION = 0x00000002,
+    GCL_REVERSE_LENGTH    = 0x00000003,
+}
+alias IME_PAD_REQUEST_FLAGS = uint;
+enum : uint
+{
+    IMEPADREQ_INSERTSTRING             = 0x00001001,
+    IMEPADREQ_SENDCONTROL              = 0x00001004,
+    IMEPADREQ_SETAPPLETSIZE            = 0x00001008,
+    IMEPADREQ_GETCOMPOSITIONSTRING     = 0x00001006,
+    IMEPADREQ_GETCOMPOSITIONSTRINGINFO = 0x0000100c,
+    IMEPADREQ_DELETESTRING             = 0x00001010,
+    IMEPADREQ_CHANGESTRING             = 0x00001011,
+    IMEPADREQ_GETAPPLHWND              = 0x00001014,
+    IMEPADREQ_FORCEIMEPADWINDOWSHOW    = 0x00001015,
+    IMEPADREQ_POSTMODALNOTIFY          = 0x00001016,
+    IMEPADREQ_GETDEFAULTUILANGID       = 0x00001017,
+    IMEPADREQ_GETAPPLETUISTYLE         = 0x00001019,
+    IMEPADREQ_SETAPPLETUISTYLE         = 0x0000101a,
+    IMEPADREQ_ISAPPLETACTIVE           = 0x0000101b,
+    IMEPADREQ_ISIMEPADWINDOWVISIBLE    = 0x0000101c,
+    IMEPADREQ_SETAPPLETMINMAXSIZE      = 0x0000101d,
+    IMEPADREQ_GETCONVERSIONSTATUS      = 0x0000101e,
+    IMEPADREQ_GETVERSION               = 0x0000101f,
+    IMEPADREQ_GETCURRENTIMEINFO        = 0x00001020,
+}
+alias IME_CONVERSION_MODE = uint;
+enum : uint
+{
+    IME_CMODE_ALPHANUMERIC = 0x00000000,
+    IME_CMODE_NATIVE       = 0x00000001,
+    IME_CMODE_CHINESE      = 0x00000001,
+    IME_CMODE_HANGUL       = 0x00000001,
+    IME_CMODE_JAPANESE     = 0x00000001,
+    IME_CMODE_KATAKANA     = 0x00000002,
+    IME_CMODE_LANGUAGE     = 0x00000003,
+    IME_CMODE_FULLSHAPE    = 0x00000008,
+    IME_CMODE_ROMAN        = 0x00000010,
+    IME_CMODE_CHARCODE     = 0x00000020,
+    IME_CMODE_HANJACONVERT = 0x00000040,
+    IME_CMODE_NATIVESYMBOL = 0x00000080,
+    IME_CMODE_HANGEUL      = 0x00000001,
+    IME_CMODE_SOFTKBD      = 0x00000080,
+    IME_CMODE_NOCONVERSION = 0x00000100,
+    IME_CMODE_EUDC         = 0x00000200,
+    IME_CMODE_SYMBOL       = 0x00000400,
+    IME_CMODE_FIXED        = 0x00000800,
+    IME_CMODE_RESERVED     = 0xf0000000,
+}
+alias IME_SENTENCE_MODE = uint;
+enum : uint
+{
+    IME_SMODE_NONE          = 0x00000000,
+    IME_SMODE_PLAURALCLAUSE = 0x00000001,
+    IME_SMODE_SINGLECONVERT = 0x00000002,
+    IME_SMODE_AUTOMATIC     = 0x00000004,
+    IME_SMODE_PHRASEPREDICT = 0x00000008,
+    IME_SMODE_CONVERSATION  = 0x00000010,
+    IME_SMODE_RESERVED      = 0x0000f000,
+}
+alias IME_COMPOSITION_STRING = uint;
+enum : uint
+{
+    GCS_COMPREADSTR      = 0x00000001,
+    GCS_COMPREADATTR     = 0x00000002,
+    GCS_COMPREADCLAUSE   = 0x00000004,
+    GCS_COMPSTR          = 0x00000008,
+    GCS_COMPATTR         = 0x00000010,
+    GCS_COMPCLAUSE       = 0x00000020,
+    GCS_CURSORPOS        = 0x00000080,
+    GCS_DELTASTART       = 0x00000100,
+    GCS_RESULTREADSTR    = 0x00000200,
+    GCS_RESULTREADCLAUSE = 0x00000400,
+    GCS_RESULTSTR        = 0x00000800,
+    GCS_RESULTCLAUSE     = 0x00001000,
+}
+alias IME_ESCAPE = uint;
+enum : uint
+{
+    IME_ESC_QUERY_SUPPORT        = 0x00000003,
+    IME_ESC_RESERVED_FIRST       = 0x00000004,
+    IME_ESC_RESERVED_LAST        = 0x000007ff,
+    IME_ESC_PRIVATE_FIRST        = 0x00000800,
+    IME_ESC_PRIVATE_LAST         = 0x00000fff,
+    IME_ESC_SEQUENCE_TO_INTERNAL = 0x00001001,
+    IME_ESC_GET_EUDC_DICTIONARY  = 0x00001003,
+    IME_ESC_SET_EUDC_DICTIONARY  = 0x00001004,
+    IME_ESC_MAX_KEY              = 0x00001005,
+    IME_ESC_IME_NAME             = 0x00001006,
+    IME_ESC_SYNC_HOTKEY          = 0x00001007,
+    IME_ESC_HANJA_MODE           = 0x00001008,
+    IME_ESC_AUTOMATA             = 0x00001009,
+    IME_ESC_PRIVATE_HOTKEY       = 0x0000100a,
+    IME_ESC_GETHELPFILENAME      = 0x0000100b,
+}
+alias IME_HOTKEY_IDENTIFIER = uint;
+enum : uint
+{
+    IME_CHOTKEY_IME_NONIME_TOGGLE     = 0x00000010,
+    IME_CHOTKEY_SHAPE_TOGGLE          = 0x00000011,
+    IME_CHOTKEY_SYMBOL_TOGGLE         = 0x00000012,
+    IME_JHOTKEY_CLOSE_OPEN            = 0x00000030,
+    IME_KHOTKEY_SHAPE_TOGGLE          = 0x00000050,
+    IME_KHOTKEY_HANJACONVERT          = 0x00000051,
+    IME_KHOTKEY_ENGLISH               = 0x00000052,
+    IME_THOTKEY_IME_NONIME_TOGGLE     = 0x00000070,
+    IME_THOTKEY_SHAPE_TOGGLE          = 0x00000071,
+    IME_THOTKEY_SYMBOL_TOGGLE         = 0x00000072,
+    IME_ITHOTKEY_RESEND_RESULTSTR     = 0x00000200,
+    IME_ITHOTKEY_PREVIOUS_COMPOSITION = 0x00000201,
+    IME_ITHOTKEY_UISTYLE_TOGGLE       = 0x00000202,
+    IME_ITHOTKEY_RECONVERTSTRING      = 0x00000203,
+}
+alias IMEREG = int;
+enum : int
+{
+    IFED_REG_HEAD = 0x00000000,
+    IFED_REG_TAIL = 0x00000001,
+    IFED_REG_DEL  = 0x00000002,
+}
+alias IMEFMT = int;
+enum : int
+{
+    IFED_UNKNOWN                   = 0x00000000,
+    IFED_MSIME2_BIN_SYSTEM         = 0x00000001,
+    IFED_MSIME2_BIN_USER           = 0x00000002,
+    IFED_MSIME2_TEXT_USER          = 0x00000003,
+    IFED_MSIME95_BIN_SYSTEM        = 0x00000004,
+    IFED_MSIME95_BIN_USER          = 0x00000005,
+    IFED_MSIME95_TEXT_USER         = 0x00000006,
+    IFED_MSIME97_BIN_SYSTEM        = 0x00000007,
+    IFED_MSIME97_BIN_USER          = 0x00000008,
+    IFED_MSIME97_TEXT_USER         = 0x00000009,
+    IFED_MSIME98_BIN_SYSTEM        = 0x0000000a,
+    IFED_MSIME98_BIN_USER          = 0x0000000b,
+    IFED_MSIME98_TEXT_USER         = 0x0000000c,
+    IFED_ACTIVE_DICT               = 0x0000000d,
+    IFED_ATOK9                     = 0x0000000e,
+    IFED_ATOK10                    = 0x0000000f,
+    IFED_NEC_AI_                   = 0x00000010,
+    IFED_WX_II                     = 0x00000011,
+    IFED_WX_III                    = 0x00000012,
+    IFED_VJE_20                    = 0x00000013,
+    IFED_MSIME98_SYSTEM_CE         = 0x00000014,
+    IFED_MSIME_BIN_SYSTEM          = 0x00000015,
+    IFED_MSIME_BIN_USER            = 0x00000016,
+    IFED_MSIME_TEXT_USER           = 0x00000017,
+    IFED_PIME2_BIN_USER            = 0x00000018,
+    IFED_PIME2_BIN_SYSTEM          = 0x00000019,
+    IFED_PIME2_BIN_STANDARD_SYSTEM = 0x0000001a,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/ne-msime-imeuct))], [])
+alias IMEUCT = int;
+enum : int
+{
+    IFED_UCT_NONE           = 0x00000000,
+    IFED_UCT_STRING_SJIS    = 0x00000001,
+    IFED_UCT_STRING_UNICODE = 0x00000002,
+    IFED_UCT_USER_DEFINED   = 0x00000003,
+    IFED_UCT_MAX            = 0x00000004,
+}
+alias IMEREL = int;
+enum : int
+{
+    IFED_REL_NONE               = 0x00000000,
+    IFED_REL_NO                 = 0x00000001,
+    IFED_REL_GA                 = 0x00000002,
+    IFED_REL_WO                 = 0x00000003,
+    IFED_REL_NI                 = 0x00000004,
+    IFED_REL_DE                 = 0x00000005,
+    IFED_REL_YORI               = 0x00000006,
+    IFED_REL_KARA               = 0x00000007,
+    IFED_REL_MADE               = 0x00000008,
+    IFED_REL_HE                 = 0x00000009,
+    IFED_REL_TO                 = 0x0000000a,
+    IFED_REL_IDEOM              = 0x0000000b,
+    IFED_REL_FUKU_YOUGEN        = 0x0000000c,
+    IFED_REL_KEIYOU_YOUGEN      = 0x0000000d,
+    IFED_REL_KEIDOU1_YOUGEN     = 0x0000000e,
+    IFED_REL_KEIDOU2_YOUGEN     = 0x0000000f,
+    IFED_REL_TAIGEN             = 0x00000010,
+    IFED_REL_YOUGEN             = 0x00000011,
+    IFED_REL_RENTAI_MEI         = 0x00000012,
+    IFED_REL_RENSOU             = 0x00000013,
+    IFED_REL_KEIYOU_TO_YOUGEN   = 0x00000014,
+    IFED_REL_KEIYOU_TARU_YOUGEN = 0x00000015,
+    IFED_REL_UNKNOWN1           = 0x00000016,
+    IFED_REL_UNKNOWN2           = 0x00000017,
+    IFED_REL_ALL                = 0x00000018,
+}
+
+// Constants
+
+
+enum : GUID
+{
+    CATID_MSIME_IImePadApplet_VER7  = GUID("4a0f8e31-c3ee-11d1-afef-00805f0c8b6d"),
+    CATID_MSIME_IImePadApplet_VER80 = GUID("56f7a792-fef1-11d3-8463-00c04f7a06e5"),
+    CATID_MSIME_IImePadApplet_VER81 = GUID("656520b0-bb88-11d4-84c0-00c04f7a06e5"),
+    CATID_MSIME_IImePadApplet900    = GUID("faae51bf-5e5b-4a1d-8de1-17c1d9e1728d"),
+    CATID_MSIME_IImePadApplet1000   = GUID("e081e1d6-2389-43cb-b66f-609f823d9f9c"),
+    CATID_MSIME_IImePadApplet1200   = GUID("a47fb5fc-7d15-4223-a789-b781bf9ae667"),
+    CATID_MSIME_IImePadApplet       = GUID("7566cad1-4ec9-4478-9fe9-8ed766619edf"),
+}
+
+enum : uint
+{
+    FEID_NONE                = 0x00000000,
+    FEID_CHINESE_TRADITIONAL = 0x00000001,
+    FEID_CHINESE_SIMPLIFIED  = 0x00000002,
+    FEID_CHINESE_HONGKONG    = 0x00000003,
+    FEID_CHINESE_SINGAPORE   = 0x00000004,
+}
+
+enum uint FEID_JAPANESE = 0x00000005;
+
+enum : uint
+{
+    FEID_KOREAN       = 0x00000006,
+    FEID_KOREAN_JOHAB = 0x00000007,
+}
+
+enum : uint
+{
+    INFOMASK_NONE          = 0x00000000,
+    INFOMASK_QUERY_CAND    = 0x00000001,
+    INFOMASK_APPLY_CAND    = 0x00000002,
+    INFOMASK_APPLY_CAND_EX = 0x00000004,
+    INFOMASK_STRING_FIX    = 0x00010000,
+    INFOMASK_HIDE_CAND     = 0x00020000,
+    INFOMASK_BLOCK_CAND    = 0x00040000,
+}
+
+enum : uint
+{
+    IMEFAREASTINFO_TYPE_DEFAULT  = 0x00000000,
+    IMEFAREASTINFO_TYPE_READING  = 0x00000001,
+    IMEFAREASTINFO_TYPE_COMMENT  = 0x00000002,
+    IMEFAREASTINFO_TYPE_COSTTIME = 0x00000003,
+}
+
+enum : uint
+{
+    CHARINFO_APPLETID_MASK = 0xff000000,
+    CHARINFO_FEID_MASK     = 0x00f00000,
+    CHARINFO_CHARID_MASK   = 0x0000ffff,
+}
+
+enum uint MAX_APPLETTITLE = 0x00000040;
+enum uint MAX_FONTFACE = 0x00000020;
+
+enum : int
+{
+    IPACFG_NONE          = 0x00000000,
+    IPACFG_PROPERTY      = 0x00000001,
+    IPACFG_HELP          = 0x00000002,
+    IPACFG_TITLE         = 0x00010000,
+    IPACFG_TITLEFONTFACE = 0x00020000,
+}
+
+enum : int
+{
+    IPACFG_CATEGORY = 0x00040000,
+    IPACFG_LANG     = 0x00000010,
+}
+
+enum : uint
+{
+    IPACID_NONE        = 0x00000000,
+    IPACID_SOFTKEY     = 0x00000001,
+    IPACID_HANDWRITING = 0x00000002,
+}
+
+enum uint IPACID_STROKESEARCH = 0x00000003;
+enum uint IPACID_RADICALSEARCH = 0x00000004;
+enum uint IPACID_SYMBOLSEARCH = 0x00000005;
+
+enum : uint
+{
+    IPACID_VOICE    = 0x00000006,
+    IPACID_EPWING   = 0x00000007,
+    IPACID_OCR      = 0x00000008,
+    IPACID_CHARLIST = 0x00000009,
+    IPACID_USER     = 0x00000100,
+}
+
+enum : uint
+{
+    IMEPADREQ_FIRST                 = 0x00001000,
+    IMEPADREQ_INSERTSTRINGCANDIDATE = 0x00001002,
+    IMEPADREQ_INSERTITEMCANDIDATE   = 0x00001003,
+}
+
+enum : uint
+{
+    IMEPADREQ_SENDKEYCONTROL    = 0x00001005,
+    IMEPADREQ_GETSELECTEDSTRING = 0x00001007,
+}
+
+enum : uint
+{
+    IMEPADREQ_SETAPPLETDATA          = 0x00001009,
+    IMEPADREQ_GETAPPLETDATA          = 0x0000100a,
+    IMEPADREQ_SETTITLEFONT           = 0x0000100b,
+    IMEPADREQ_GETCOMPOSITIONSTRINGID = 0x0000100d,
+}
+
+enum uint IMEPADREQ_INSERTSTRINGCANDIDATEINFO = 0x0000100e;
+enum uint IMEPADREQ_CHANGESTRINGCANDIDATEINFO = 0x0000100f;
+enum uint IMEPADREQ_INSERTSTRINGINFO = 0x00001012;
+enum uint IMEPADREQ_CHANGESTRINGINFO = 0x00001013;
+enum uint IMEPADREQ_GETCURRENTUILANGID = 0x00001018;
+
+enum : uint
+{
+    IMEPADCTRL_CONVERTALL        = 0x00000001,
+    IMEPADCTRL_DETERMINALL       = 0x00000002,
+    IMEPADCTRL_DETERMINCHAR      = 0x00000003,
+    IMEPADCTRL_CLEARALL          = 0x00000004,
+    IMEPADCTRL_CARETSET          = 0x00000005,
+    IMEPADCTRL_CARETLEFT         = 0x00000006,
+    IMEPADCTRL_CARETRIGHT        = 0x00000007,
+    IMEPADCTRL_CARETTOP          = 0x00000008,
+    IMEPADCTRL_CARETBOTTOM       = 0x00000009,
+    IMEPADCTRL_CARETBACKSPACE    = 0x0000000a,
+    IMEPADCTRL_CARETDELETE       = 0x0000000b,
+    IMEPADCTRL_PHRASEDELETE      = 0x0000000c,
+    IMEPADCTRL_INSERTSPACE       = 0x0000000d,
+    IMEPADCTRL_INSERTFULLSPACE   = 0x0000000e,
+    IMEPADCTRL_INSERTHALFSPACE   = 0x0000000f,
+    IMEPADCTRL_ONIME             = 0x00000010,
+    IMEPADCTRL_OFFIME            = 0x00000011,
+    IMEPADCTRL_ONPRECONVERSION   = 0x00000012,
+    IMEPADCTRL_OFFPRECONVERSION  = 0x00000013,
+    IMEPADCTRL_PHONETICCANDIDATE = 0x00000014,
+}
+
+enum : uint
+{
+    IMEKEYCTRLMASK_ALT   = 0x00000001,
+    IMEKEYCTRLMASK_CTRL  = 0x00000002,
+    IMEKEYCTRLMASK_SHIFT = 0x00000004,
+    IMEKEYCTRL_UP        = 0x00000001,
+    IMEKEYCTRL_DOWN      = 0x00000000,
+}
+
+enum : uint
+{
+    IMEPN_FIRST      = 0x00000100,
+    IMEPN_ACTIVATE   = 0x00000101,
+    IMEPN_INACTIVATE = 0x00000102,
+}
+
+enum : uint
+{
+    IMEPN_SHOW         = 0x00000104,
+    IMEPN_HIDE         = 0x00000105,
+    IMEPN_SIZECHANGING = 0x00000106,
+    IMEPN_SIZECHANGED  = 0x00000107,
+}
+
+enum : uint
+{
+    IMEPN_CONFIG    = 0x00000108,
+    IMEPN_HELP      = 0x00000109,
+    IMEPN_QUERYCAND = 0x0000010a,
+}
+
+enum : uint
+{
+    IMEPN_APPLYCAND   = 0x0000010b,
+    IMEPN_APPLYCANDEX = 0x0000010c,
+}
+
+enum uint IMEPN_SETTINGCHANGED = 0x0000010d;
+enum uint IMEPN_USER = 0x00000164;
+
+enum : int
+{
+    IPAWS_ENABLED      = 0x00000001,
+    IPAWS_SIZINGNOTIFY = 0x00000004,
+}
+
+enum int IPAWS_VERTICALFIXED = 0x00000100;
+enum int IPAWS_HORIZONTALFIXED = 0x00000200;
+enum int IPAWS_SIZEFIXED = 0x00000300;
+
+enum : int
+{
+    IPAWS_MAXWIDTHFIXED  = 0x00001000,
+    IPAWS_MAXHEIGHTFIXED = 0x00002000,
+    IPAWS_MAXSIZEFIXED   = 0x00003000,
+}
+
+enum : int
+{
+    IPAWS_MINWIDTHFIXED  = 0x00010000,
+    IPAWS_MINHEIGHTFIXED = 0x00020000,
+    IPAWS_MINSIZEFIXED   = 0x00030000,
+}
+
+enum uint STYLE_DESCRIPTION_SIZE = 0x00000020;
+enum uint IMEMENUITEM_STRING_SIZE = 0x00000050;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getcandidatepos))], [])*/uint IMC_GETCANDIDATEPOS = 0x00000007;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setcandidatepos))], [])*/uint IMC_SETCANDIDATEPOS = 0x00000008;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getcompositionfont))], [])*/uint IMC_GETCOMPOSITIONFONT = 0x00000009;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setcompositionfont))], [])*/uint IMC_SETCOMPOSITIONFONT = 0x0000000a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getcompositionwindow))], [])*/uint IMC_GETCOMPOSITIONWINDOW = 0x0000000b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setcompositionwindow))], [])*/uint IMC_SETCOMPOSITIONWINDOW = 0x0000000c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getstatuswindowpos))], [])*/uint IMC_GETSTATUSWINDOWPOS = 0x0000000f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setstatuswindowpos))], [])*/uint IMC_SETSTATUSWINDOWPOS = 0x00000010;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-closestatuswindow))], [])*/uint IMC_CLOSESTATUSWINDOW = 0x00000021;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-openstatuswindow))], [])*/uint IMC_OPENSTATUSWINDOW = 0x00000022;
+enum uint NI_FINALIZECONVERSIONRESULT = 0x00000014;
+
+enum : uint
+{
+    ISC_SHOWUICANDIDATEWINDOW   = 0x00000001,
+    ISC_SHOWUICOMPOSITIONWINDOW = 0x80000000,
+}
+
+enum : uint
+{
+    ISC_SHOWUIGUIDELINE          = 0x40000000,
+    ISC_SHOWUIALLCANDIDATEWINDOW = 0x0000000f,
+    ISC_SHOWUIALL                = 0xc000000f,
+}
+
+enum : uint
+{
+    MOD_LEFT     = 0x00008000,
+    MOD_RIGHT    = 0x00004000,
+    MOD_ON_KEYUP = 0x00000800,
+}
+
+enum uint MOD_IGNORE_ALL_MODIFIER = 0x00000400;
+
+enum : uint
+{
+    IME_HOTKEY_DSWITCH_FIRST = 0x00000100,
+    IME_HOTKEY_DSWITCH_LAST  = 0x0000011f,
+    IME_HOTKEY_PRIVATE_FIRST = 0x00000200,
+    IME_HOTKEY_PRIVATE_LAST  = 0x0000021f,
+}
+
+enum uint CS_INSERTCHAR = 0x00002000;
+enum uint CS_NOMOVECARET = 0x00004000;
+
+enum : uint
+{
+    IMEVER_0310 = 0x0003000a,
+    IMEVER_0400 = 0x00040000,
+}
+
+enum : uint
+{
+    IME_PROP_AT_CARET              = 0x00010000,
+    IME_PROP_SPECIAL_UI            = 0x00020000,
+    IME_PROP_CANDLIST_START_FROM_1 = 0x00040000,
+}
+
+enum : uint
+{
+    IME_PROP_UNICODE              = 0x00080000,
+    IME_PROP_COMPLETE_ON_UNSELECT = 0x00100000,
+}
+
+enum : uint
+{
+    UI_CAP_2700   = 0x00000001,
+    UI_CAP_ROT90  = 0x00000002,
+    UI_CAP_ROTANY = 0x00000004,
+}
+
+enum : uint
+{
+    SCS_CAP_COMPSTR            = 0x00000001,
+    SCS_CAP_MAKEREAD           = 0x00000002,
+    SCS_CAP_SETRECONVERTSTRING = 0x00000004,
+}
+
+enum : uint
+{
+    SELECT_CAP_CONVERSION = 0x00000001,
+    SELECT_CAP_SENTENCE   = 0x00000002,
+}
+
+enum : uint
+{
+    GL_LEVEL_NOGUIDELINE = 0x00000000,
+    GL_LEVEL_FATAL       = 0x00000001,
+    GL_LEVEL_ERROR       = 0x00000002,
+    GL_LEVEL_WARNING     = 0x00000003,
+    GL_LEVEL_INFORMATION = 0x00000004,
+}
+
+enum : uint
+{
+    GL_ID_UNKNOWN      = 0x00000000,
+    GL_ID_NOMODULE     = 0x00000001,
+    GL_ID_NODICTIONARY = 0x00000010,
+}
+
+enum uint GL_ID_CANNOTSAVE = 0x00000011;
+enum uint GL_ID_NOCONVERT = 0x00000020;
+
+enum : uint
+{
+    GL_ID_TYPINGERROR   = 0x00000021,
+    GL_ID_TOOMANYSTROKE = 0x00000022,
+}
+
+enum uint GL_ID_READINGCONFLICT = 0x00000023;
+
+enum : uint
+{
+    GL_ID_INPUTREADING = 0x00000024,
+    GL_ID_INPUTRADICAL = 0x00000025,
+    GL_ID_INPUTCODE    = 0x00000026,
+    GL_ID_INPUTSYMBOL  = 0x00000027,
+}
+
+enum uint GL_ID_CHOOSECANDIDATE = 0x00000028;
+enum uint GL_ID_REVERSECONVERSION = 0x00000029;
+
+enum : uint
+{
+    GL_ID_PRIVATE_FIRST = 0x00008000,
+    GL_ID_PRIVATE_LAST  = 0x0000ffff,
+}
+
+enum : uint
+{
+    ATTR_INPUT            = 0x00000000,
+    ATTR_TARGET_CONVERTED = 0x00000001,
+}
+
+enum uint ATTR_CONVERTED = 0x00000002;
+enum uint ATTR_TARGET_NOTCONVERTED = 0x00000003;
+enum uint ATTR_INPUT_ERROR = 0x00000004;
+enum uint ATTR_FIXEDCONVERTED = 0x00000005;
+enum uint CFS_DEFAULT = 0x00000000;
+
+enum : uint
+{
+    CFS_RECT           = 0x00000001,
+    CFS_POINT          = 0x00000002,
+    CFS_FORCE_POSITION = 0x00000020,
+}
+
+enum uint CFS_CANDIDATEPOS = 0x00000040;
+enum uint CFS_EXCLUDE = 0x00000080;
+
+enum : uint
+{
+    IME_CAND_UNKNOWN = 0x00000000,
+    IME_CAND_READ    = 0x00000001,
+    IME_CAND_CODE    = 0x00000002,
+    IME_CAND_MEANING = 0x00000003,
+    IME_CAND_RADICAL = 0x00000004,
+    IME_CAND_STROKE  = 0x00000005,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-closestatuswindow))], [])*/uint IMN_CLOSESTATUSWINDOW = 0x00000001;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-openstatuswindow))], [])*/uint IMN_OPENSTATUSWINDOW = 0x00000002;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-changecandidate))], [])*/uint IMN_CHANGECANDIDATE = 0x00000003;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-closecandidate))], [])*/uint IMN_CLOSECANDIDATE = 0x00000004;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-opencandidate))], [])*/uint IMN_OPENCANDIDATE = 0x00000005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setconversionmode))], [])*/uint IMN_SETCONVERSIONMODE = 0x00000006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setsentencemode))], [])*/uint IMN_SETSENTENCEMODE = 0x00000007;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setopenstatus))], [])*/uint
+{
+    IMN_SETOPENSTATUS        = 0x00000008,
+    IMN_SETCANDIDATEPOS      = 0x00000009,
+    IMN_SETCOMPOSITIONFONT   = 0x0000000a,
+    IMN_SETCOMPOSITIONWINDOW = 0x0000000b,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setstatuswindowpos))], [])*/uint IMN_SETSTATUSWINDOWPOS = 0x0000000c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-guideline))], [])*/uint IMN_GUIDELINE = 0x0000000d;
+enum uint IMN_PRIVATE = 0x0000000e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-compositionwindow))], [])*/uint IMR_COMPOSITIONWINDOW = 0x00000001;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-candidatewindow))], [])*/uint IMR_CANDIDATEWINDOW = 0x00000002;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-compositionfont))], [])*/uint IMR_COMPOSITIONFONT = 0x00000003;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-reconvertstring))], [])*/uint IMR_RECONVERTSTRING = 0x00000004;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-confirmreconvertstring))], [])*/uint IMR_CONFIRMRECONVERTSTRING = 0x00000005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-querycharposition))], [])*/uint IMR_QUERYCHARPOSITION = 0x00000006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-documentfeed))], [])*/uint IMR_DOCUMENTFEED = 0x00000007;
+
+enum : int
+{
+    IMM_ERROR_NODATA  = 0xffffffff,
+    IMM_ERROR_GENERAL = 0xfffffffe,
+}
+
+enum : uint
+{
+    IME_CONFIG_GENERAL          = 0x00000001,
+    IME_CONFIG_REGISTERWORD     = 0x00000002,
+    IME_CONFIG_SELECTDICTIONARY = 0x00000003,
+}
+
+enum : uint
+{
+    IME_REGWORD_STYLE_EUDC       = 0x00000001,
+    IME_REGWORD_STYLE_USER_FIRST = 0x80000000,
+    IME_REGWORD_STYLE_USER_LAST  = 0xffffffff,
+}
+
+enum uint IACE_CHILDREN = 0x00000001;
+
+enum : uint
+{
+    IACE_DEFAULT         = 0x00000010,
+    IACE_IGNORENOCONTEXT = 0x00000020,
+}
+
+enum uint IGIMIF_RIGHTMENU = 0x00000001;
+
+enum : uint
+{
+    IGIMII_CMODE      = 0x00000001,
+    IGIMII_SMODE      = 0x00000002,
+    IGIMII_CONFIGURE  = 0x00000004,
+    IGIMII_TOOLS      = 0x00000008,
+    IGIMII_HELP       = 0x00000010,
+    IGIMII_OTHER      = 0x00000020,
+    IGIMII_INPUTTOOLS = 0x00000040,
+}
+
+enum uint IMFT_RADIOCHECK = 0x00000001;
+
+enum : uint
+{
+    IMFT_SEPARATOR = 0x00000002,
+    IMFT_SUBMENU   = 0x00000004,
+}
+
+enum : uint
+{
+    SOFTKEYBOARD_TYPE_T1 = 0x00000001,
+    SOFTKEYBOARD_TYPE_C1 = 0x00000002,
+}
+
+enum : uint
+{
+    IMMGWL_IMC  = 0x00000000,
+    IMMGWLP_IMC = 0x00000000,
+}
+
+enum uint IMC_SETCONVERSIONMODE = 0x00000002;
+enum uint IMC_SETSENTENCEMODE = 0x00000004;
+enum uint IMC_SETOPENSTATUS = 0x00000006;
+enum uint IMC_GETSOFTKBDFONT = 0x00000011;
+enum uint IMC_SETSOFTKBDFONT = 0x00000012;
+enum uint IMC_GETSOFTKBDPOS = 0x00000013;
+enum uint IMC_SETSOFTKBDPOS = 0x00000014;
+enum uint IMC_GETSOFTKBDSUBTYPE = 0x00000015;
+
+enum : uint
+{
+    IMC_SETSOFTKBDSUBTYPE = 0x00000016,
+    IMC_SETSOFTKBDDATA    = 0x00000018,
+}
+
+enum uint NI_CONTEXTUPDATED = 0x00000003;
+enum uint IME_SYSINFO_WINLOGON = 0x00000001;
+enum uint INIT_STATUSWNDPOS = 0x00000001;
+enum uint INIT_CONVERSION = 0x00000002;
+enum uint INIT_SENTENCE = 0x00000004;
+
+enum : uint
+{
+    INIT_LOGFONT  = 0x00000008,
+    INIT_COMPFORM = 0x00000010,
+}
+
+enum uint INIT_SOFTKBDPOS = 0x00000020;
+
+enum : uint
+{
+    IME_PROP_END_UNLOAD     = 0x00000001,
+    IME_PROP_KBD_CHAR_FIRST = 0x00000002,
+}
+
+enum : uint
+{
+    IME_PROP_IGNORE_UPKEYS    = 0x00000004,
+    IME_PROP_NEED_ALTKEY      = 0x00000008,
+    IME_PROP_NO_KEYS_ON_CLOSE = 0x00000010,
+}
+
+enum uint IME_PROP_ACCEPT_WIDE_VKEY = 0x00000020;
+enum uint UI_CAP_SOFTKBD = 0x00010000;
+enum uint IMN_SOFTKBDDESTROYED = 0x00000011;
+enum uint IME_UI_CLASS_NAME_SIZE = 0x00000010;
+enum uint IME_ESC_STRING_BUFFER_SIZE = 0x00000050;
+
+enum : const(wchar)*
+{
+    szImeJapan  = "MSIME.Japan",
+    szImeKorea  = "MSIME.Korea",
+    szImeChina  = "MSIME.China",
+    szImeTaiwan = "MSIME.Taiwan",
+}
+
+enum GUID CLSID_VERSION_DEPENDENT_MSIME_JAPANESE = GUID("6a91029e-aa49-471b-aee7-7d332785660d");
+enum HRESULT IFEC_S_ALREADY_DEFAULT = HRESULT(0x00047400);
+
+enum : uint
+{
+    FELANG_REQ_CONV              = 0x00010000,
+    FELANG_REQ_RECONV            = 0x00020000,
+    FELANG_REQ_REV               = 0x00030000,
+    FELANG_CMODE_MONORUBY        = 0x00000002,
+    FELANG_CMODE_NOPRUNING       = 0x00000004,
+    FELANG_CMODE_KATAKANAOUT     = 0x00000008,
+    FELANG_CMODE_HIRAGANAOUT     = 0x00000000,
+    FELANG_CMODE_HALFWIDTHOUT    = 0x00000010,
+    FELANG_CMODE_FULLWIDTHOUT    = 0x00000020,
+    FELANG_CMODE_BOPOMOFO        = 0x00000040,
+    FELANG_CMODE_HANGUL          = 0x00000080,
+    FELANG_CMODE_PINYIN          = 0x00000100,
+    FELANG_CMODE_PRECONV         = 0x00000200,
+    FELANG_CMODE_RADICAL         = 0x00000400,
+    FELANG_CMODE_UNKNOWNREADING  = 0x00000800,
+    FELANG_CMODE_MERGECAND       = 0x00001000,
+    FELANG_CMODE_ROMAN           = 0x00002000,
+    FELANG_CMODE_BESTFIRST       = 0x00004000,
+    FELANG_CMODE_USENOREVWORDS   = 0x00008000,
+    FELANG_CMODE_NONE            = 0x01000000,
+    FELANG_CMODE_PLAURALCLAUSE   = 0x02000000,
+    FELANG_CMODE_SINGLECONVERT   = 0x04000000,
+    FELANG_CMODE_AUTOMATIC       = 0x08000000,
+    FELANG_CMODE_PHRASEPREDICT   = 0x10000000,
+    FELANG_CMODE_CONVERSATION    = 0x20000000,
+    FELANG_CMODE_NAME            = 0x10000000,
+    FELANG_CMODE_NOINVISIBLECHAR = 0x40000000,
+}
+
+enum : uint
+{
+    E_NOCAND           = 0x00000030,
+    E_NOTENOUGH_BUFFER = 0x00000031,
+    E_NOTENOUGH_WDD    = 0x00000032,
+}
+
+enum uint E_LARGEINPUT = 0x00000033;
+
+enum : uint
+{
+    FELANG_CLMN_WBREAK   = 0x00000001,
+    FELANG_CLMN_NOWBREAK = 0x00000002,
+    FELANG_CLMN_PBREAK   = 0x00000004,
+    FELANG_CLMN_NOPBREAK = 0x00000008,
+    FELANG_CLMN_FIXR     = 0x00000010,
+    FELANG_CLMN_FIXD     = 0x00000020,
+    FELANG_INVALD_PO     = 0x0000ffff,
+}
+
+enum : uint
+{
+    IFED_POS_NONE               = 0x00000000,
+    IFED_POS_NOUN               = 0x00000001,
+    IFED_POS_VERB               = 0x00000002,
+    IFED_POS_ADJECTIVE          = 0x00000004,
+    IFED_POS_ADJECTIVE_VERB     = 0x00000008,
+    IFED_POS_ADVERB             = 0x00000010,
+    IFED_POS_ADNOUN             = 0x00000020,
+    IFED_POS_CONJUNCTION        = 0x00000040,
+    IFED_POS_INTERJECTION       = 0x00000080,
+    IFED_POS_INDEPENDENT        = 0x000000ff,
+    IFED_POS_INFLECTIONALSUFFIX = 0x00000100,
+}
+
+enum : uint
+{
+    IFED_POS_PREFIX         = 0x00000200,
+    IFED_POS_SUFFIX         = 0x00000400,
+    IFED_POS_AFFIX          = 0x00000600,
+    IFED_POS_TANKANJI       = 0x00000800,
+    IFED_POS_IDIOMS         = 0x00001000,
+    IFED_POS_SYMBOLS        = 0x00002000,
+    IFED_POS_PARTICLE       = 0x00004000,
+    IFED_POS_AUXILIARY_VERB = 0x00008000,
+}
+
+enum : uint
+{
+    IFED_POS_SUB_VERB   = 0x00010000,
+    IFED_POS_DEPENDENT  = 0x0001c000,
+    IFED_POS_ALL        = 0x0001ffff,
+    IFED_SELECT_NONE    = 0x00000000,
+    IFED_SELECT_READING = 0x00000001,
+    IFED_SELECT_DISPLAY = 0x00000002,
+    IFED_SELECT_POS     = 0x00000004,
+    IFED_SELECT_COMMENT = 0x00000008,
+    IFED_SELECT_ALL     = 0x0000000f,
+}
+
+enum : uint
+{
+    IFED_REG_NONE       = 0x00000000,
+    IFED_REG_USER       = 0x00000001,
+    IFED_REG_AUTO       = 0x00000002,
+    IFED_REG_GRAMMAR    = 0x00000004,
+    IFED_REG_ALL        = 0x00000007,
+    IFED_TYPE_NONE      = 0x00000000,
+    IFED_TYPE_GENERAL   = 0x00000001,
+    IFED_TYPE_NAMEPLACE = 0x00000002,
+    IFED_TYPE_SPEECH    = 0x00000004,
+    IFED_TYPE_REVERSE   = 0x00000008,
+    IFED_TYPE_ENGLISH   = 0x00000010,
+    IFED_TYPE_ALL       = 0x0000001f,
+}
+
+enum HRESULT IFED_S_MORE_ENTRIES = HRESULT(0x00047200);
+enum HRESULT IFED_S_EMPTY_DICTIONARY = HRESULT(0x00047201);
+enum HRESULT IFED_S_WORD_EXISTS = HRESULT(0x00047202);
+enum HRESULT IFED_S_COMMENT_CHANGED = HRESULT(0x00047203);
+
+enum : HRESULT
+{
+    IFED_E_NOT_FOUND      = HRESULT(0x80047300),
+    IFED_E_INVALID_FORMAT = HRESULT(0x80047301),
+}
+
+enum HRESULT IFED_E_OPEN_FAILED = HRESULT(0x80047302);
+enum HRESULT IFED_E_WRITE_FAILED = HRESULT(0x80047303);
+
+enum : HRESULT
+{
+    IFED_E_NO_ENTRY        = HRESULT(0x80047304),
+    IFED_E_REGISTER_FAILED = HRESULT(0x80047305),
+}
+
+enum : HRESULT
+{
+    IFED_E_NOT_USER_DIC  = HRESULT(0x80047306),
+    IFED_E_NOT_SUPPORTED = HRESULT(0x80047307),
+}
+
+enum HRESULT IFED_E_USER_COMMENT = HRESULT(0x80047308);
+
+enum : HRESULT
+{
+    IFED_E_REGISTER_ILLEGAL_POS   = HRESULT(0x80047309),
+    IFED_E_REGISTER_IMPROPER_WORD = HRESULT(0x8004730a),
+    IFED_E_REGISTER_DISCONNECTED  = HRESULT(0x8004730b),
+}
+
+enum uint cbCommentMax = 0x00000100;
+enum uint wchPrivate1 = 0x0000e000;
+enum uint POS_UNDEFINED = 0x00000000;
+enum uint JPOS_UNDEFINED = 0x00000000;
+
+enum : uint
+{
+    JPOS_MEISHI_FUTSU        = 0x00000064,
+    JPOS_MEISHI_SAHEN        = 0x00000065,
+    JPOS_MEISHI_ZAHEN        = 0x00000066,
+    JPOS_MEISHI_KEIYOUDOUSHI = 0x00000067,
+}
+
+enum uint JPOS_HUKUSIMEISHI = 0x00000068;
+enum uint JPOS_MEISA_KEIDOU = 0x00000069;
+
+enum : uint
+{
+    JPOS_JINMEI     = 0x0000006a,
+    JPOS_JINMEI_SEI = 0x0000006b,
+    JPOS_JINMEI_MEI = 0x0000006c,
+}
+
+enum : uint
+{
+    JPOS_CHIMEI       = 0x0000006d,
+    JPOS_CHIMEI_KUNI  = 0x0000006e,
+    JPOS_CHIMEI_KEN   = 0x0000006f,
+    JPOS_CHIMEI_GUN   = 0x00000070,
+    JPOS_CHIMEI_KU    = 0x00000071,
+    JPOS_CHIMEI_SHI   = 0x00000072,
+    JPOS_CHIMEI_MACHI = 0x00000073,
+    JPOS_CHIMEI_MURA  = 0x00000074,
+    JPOS_CHIMEI_EKI   = 0x00000075,
+}
+
+enum : uint
+{
+    JPOS_SONOTA   = 0x00000076,
+    JPOS_SHAMEI   = 0x00000077,
+    JPOS_SOSHIKI  = 0x00000078,
+    JPOS_KENCHIKU = 0x00000079,
+}
+
+enum : uint
+{
+    JPOS_BUPPIN            = 0x0000007a,
+    JPOS_DAIMEISHI         = 0x0000007b,
+    JPOS_DAIMEISHI_NINSHOU = 0x0000007c,
+    JPOS_DAIMEISHI_SHIJI   = 0x0000007d,
+}
+
+enum : uint
+{
+    JPOS_KAZU        = 0x0000007e,
+    JPOS_KAZU_SURYOU = 0x0000007f,
+    JPOS_KAZU_SUSHI  = 0x00000080,
+}
+
+enum : uint
+{
+    JPOS_5DAN_AWA      = 0x000000c8,
+    JPOS_5DAN_KA       = 0x000000c9,
+    JPOS_5DAN_GA       = 0x000000ca,
+    JPOS_5DAN_SA       = 0x000000cb,
+    JPOS_5DAN_TA       = 0x000000cc,
+    JPOS_5DAN_NA       = 0x000000cd,
+    JPOS_5DAN_BA       = 0x000000ce,
+    JPOS_5DAN_MA       = 0x000000cf,
+    JPOS_5DAN_RA       = 0x000000d0,
+    JPOS_5DAN_AWAUON   = 0x000000d1,
+    JPOS_5DAN_KASOKUON = 0x000000d2,
+    JPOS_5DAN_RAHEN    = 0x000000d3,
+}
+
+enum : uint
+{
+    JPOS_4DAN_HA           = 0x000000d4,
+    JPOS_1DAN              = 0x000000d5,
+    JPOS_TOKUSHU_KAHEN     = 0x000000d6,
+    JPOS_TOKUSHU_SAHENSURU = 0x000000d7,
+    JPOS_TOKUSHU_SAHEN     = 0x000000d8,
+    JPOS_TOKUSHU_ZAHEN     = 0x000000d9,
+    JPOS_TOKUSHU_NAHEN     = 0x000000da,
+}
+
+enum : uint
+{
+    JPOS_KURU_KI      = 0x000000db,
+    JPOS_KURU_KITA    = 0x000000dc,
+    JPOS_KURU_KITARA  = 0x000000dd,
+    JPOS_KURU_KITARI  = 0x000000de,
+    JPOS_KURU_KITAROU = 0x000000df,
+    JPOS_KURU_KITE    = 0x000000e0,
+    JPOS_KURU_KUREBA  = 0x000000e1,
+    JPOS_KURU_KO      = 0x000000e2,
+    JPOS_KURU_KOI     = 0x000000e3,
+    JPOS_KURU_KOYOU   = 0x000000e4,
+}
+
+enum : uint
+{
+    JPOS_SURU_SA      = 0x000000e5,
+    JPOS_SURU_SI      = 0x000000e6,
+    JPOS_SURU_SITA    = 0x000000e7,
+    JPOS_SURU_SITARA  = 0x000000e8,
+    JPOS_SURU_SIATRI  = 0x000000e9,
+    JPOS_SURU_SITAROU = 0x000000ea,
+    JPOS_SURU_SITE    = 0x000000eb,
+    JPOS_SURU_SIYOU   = 0x000000ec,
+    JPOS_SURU_SUREBA  = 0x000000ed,
+    JPOS_SURU_SE      = 0x000000ee,
+    JPOS_SURU_SEYO    = 0x000000ef,
+}
+
+enum : uint
+{
+    JPOS_KEIYOU      = 0x0000012c,
+    JPOS_KEIYOU_GARU = 0x0000012d,
+    JPOS_KEIYOU_GE   = 0x0000012e,
+    JPOS_KEIYOU_ME   = 0x0000012f,
+    JPOS_KEIYOU_YUU  = 0x00000130,
+    JPOS_KEIYOU_U    = 0x00000131,
+    JPOS_KEIDOU      = 0x00000190,
+    JPOS_KEIDOU_NO   = 0x00000191,
+    JPOS_KEIDOU_TARU = 0x00000192,
+    JPOS_KEIDOU_GARU = 0x00000193,
+}
+
+enum : uint
+{
+    JPOS_FUKUSHI        = 0x000001f4,
+    JPOS_FUKUSHI_SAHEN  = 0x000001f5,
+    JPOS_FUKUSHI_NI     = 0x000001f6,
+    JPOS_FUKUSHI_NANO   = 0x000001f7,
+    JPOS_FUKUSHI_DA     = 0x000001f8,
+    JPOS_FUKUSHI_TO     = 0x000001f9,
+    JPOS_FUKUSHI_TOSURU = 0x000001fa,
+}
+
+enum : uint
+{
+    JPOS_RENTAISHI       = 0x00000258,
+    JPOS_RENTAISHI_SHIJI = 0x00000259,
+}
+
+enum uint JPOS_SETSUZOKUSHI = 0x0000028a;
+enum uint JPOS_KANDOUSHI = 0x0000029e;
+
+enum : uint
+{
+    JPOS_SETTOU           = 0x000002bc,
+    JPOS_SETTOU_KAKU      = 0x000002bd,
+    JPOS_SETTOU_SAI       = 0x000002be,
+    JPOS_SETTOU_FUKU      = 0x000002bf,
+    JPOS_SETTOU_MI        = 0x000002c0,
+    JPOS_SETTOU_DAISHOU   = 0x000002c1,
+    JPOS_SETTOU_KOUTEI    = 0x000002c2,
+    JPOS_SETTOU_CHOUTAN   = 0x000002c3,
+    JPOS_SETTOU_SHINKYU   = 0x000002c4,
+    JPOS_SETTOU_JINMEI    = 0x000002c5,
+    JPOS_SETTOU_CHIMEI    = 0x000002c6,
+    JPOS_SETTOU_SONOTA    = 0x000002c7,
+    JPOS_SETTOU_JOSUSHI   = 0x000002c8,
+    JPOS_SETTOU_TEINEI_O  = 0x000002c9,
+    JPOS_SETTOU_TEINEI_GO = 0x000002ca,
+    JPOS_SETTOU_TEINEI_ON = 0x000002cb,
+}
+
+enum : uint
+{
+    JPOS_SETSUBI               = 0x00000320,
+    JPOS_SETSUBI_TEKI          = 0x00000321,
+    JPOS_SETSUBI_SEI           = 0x00000322,
+    JPOS_SETSUBI_KA            = 0x00000323,
+    JPOS_SETSUBI_CHU           = 0x00000324,
+    JPOS_SETSUBI_FU            = 0x00000325,
+    JPOS_SETSUBI_RYU           = 0x00000326,
+    JPOS_SETSUBI_YOU           = 0x00000327,
+    JPOS_SETSUBI_KATA          = 0x00000328,
+    JPOS_SETSUBI_MEISHIRENDAKU = 0x00000329,
+    JPOS_SETSUBI_JINMEI        = 0x0000032a,
+    JPOS_SETSUBI_CHIMEI        = 0x0000032b,
+    JPOS_SETSUBI_KUNI          = 0x0000032c,
+    JPOS_SETSUBI_KEN           = 0x0000032d,
+    JPOS_SETSUBI_GUN           = 0x0000032e,
+    JPOS_SETSUBI_KU            = 0x0000032f,
+    JPOS_SETSUBI_SHI           = 0x00000330,
+    JPOS_SETSUBI_MACHI         = 0x00000331,
+    JPOS_SETSUBI_CHOU          = 0x00000332,
+    JPOS_SETSUBI_MURA          = 0x00000333,
+    JPOS_SETSUBI_SON           = 0x00000334,
+    JPOS_SETSUBI_EKI           = 0x00000335,
+    JPOS_SETSUBI_SONOTA        = 0x00000336,
+    JPOS_SETSUBI_SHAMEI        = 0x00000337,
+    JPOS_SETSUBI_SOSHIKI       = 0x00000338,
+    JPOS_SETSUBI_KENCHIKU      = 0x00000339,
+}
+
+enum uint JPOS_RENYOU_SETSUBI = 0x0000033a;
+
+enum : uint
+{
+    JPOS_SETSUBI_JOSUSHI     = 0x0000033b,
+    JPOS_SETSUBI_JOSUSHIPLUS = 0x0000033c,
+    JPOS_SETSUBI_JIKAN       = 0x0000033d,
+    JPOS_SETSUBI_JIKANPLUS   = 0x0000033e,
+    JPOS_SETSUBI_TEINEI      = 0x0000033f,
+    JPOS_SETSUBI_SAN         = 0x00000340,
+    JPOS_SETSUBI_KUN         = 0x00000341,
+    JPOS_SETSUBI_SAMA        = 0x00000342,
+    JPOS_SETSUBI_DONO        = 0x00000343,
+    JPOS_SETSUBI_FUKUSU      = 0x00000344,
+    JPOS_SETSUBI_TACHI       = 0x00000345,
+    JPOS_SETSUBI_RA          = 0x00000346,
+}
+
+enum : uint
+{
+    JPOS_TANKANJI     = 0x00000384,
+    JPOS_TANKANJI_KAO = 0x00000385,
+}
+
+enum uint JPOS_KANYOUKU = 0x00000386;
+enum uint JPOS_DOKURITSUGO = 0x00000387;
+
+enum : uint
+{
+    JPOS_FUTEIGO   = 0x00000388,
+    JPOS_KIGOU     = 0x00000389,
+    JPOS_EIJI      = 0x0000038a,
+    JPOS_KUTEN     = 0x0000038b,
+    JPOS_TOUTEN    = 0x0000038c,
+    JPOS_KANJI     = 0x0000038d,
+    JPOS_OPENBRACE = 0x0000038e,
+}
+
+enum uint JPOS_CLOSEBRACE = 0x0000038f;
+
+enum : uint
+{
+    JPOS_YOKUSEI  = 0x00000390,
+    JPOS_TANSHUKU = 0x00000391,
+}
+
+enum : uint
+{
+    VERSION_ID_JAPANESE            = 0x01000000,
+    VERSION_ID_KOREAN              = 0x02000000,
+    VERSION_ID_CHINESE_TRADITIONAL = 0x04000000,
+    VERSION_ID_CHINESE_SIMPLIFIED  = 0x08000000,
+}
+
+enum const(wchar)* RWM_SERVICE = "MSIMEService";
+enum uint FID_MSIME_VERSION = 0x00000000;
+enum const(wchar)* RWM_UIREADY = "MSIMEUIReady";
+enum const(wchar)* RWM_MOUSE = "MSIMEMouseOperation";
+enum uint VERSION_MOUSE_OPERATION = 0x00000001;
+enum int IMEMOUSERET_NOTHANDLED = 0xffffffff;
+
+enum : uint
+{
+    IMEMOUSE_VERSION = 0x000000ff,
+    IMEMOUSE_NONE    = 0x00000000,
+    IMEMOUSE_LDOWN   = 0x00000001,
+    IMEMOUSE_RDOWN   = 0x00000002,
+    IMEMOUSE_MDOWN   = 0x00000004,
+    IMEMOUSE_WUP     = 0x00000010,
+    IMEMOUSE_WDOWN   = 0x00000020,
+}
+
+enum const(wchar)* RWM_RECONVERT = "MSIMEReconvert";
+enum uint FID_RECONVERT_VERSION = 0x10000000;
+enum uint VERSION_RECONVERSION = 0x00000001;
+enum const(wchar)* RWM_RECONVERTREQUEST = "MSIMEReconvertRequest";
+enum uint VERSION_DOCUMENTFEED = 0x00000001;
+enum const(wchar)* RWM_DOCUMENTFEED = "MSIMEDocumentFeed";
+enum uint VERSION_QUERYPOSITION = 0x00000001;
+enum const(wchar)* RWM_QUERYPOSITION = "MSIMEQueryPosition";
+enum const(wchar)* RWM_MODEBIAS = "MSIMEModeBias";
+enum uint VERSION_MODEBIAS = 0x00000001;
+
+enum : uint
+{
+    MODEBIAS_GETVERSION   = 0x00000000,
+    MODEBIAS_SETVALUE     = 0x00000001,
+    MODEBIAS_GETVALUE     = 0x00000002,
+    MODEBIASMODE_DEFAULT  = 0x00000000,
+    MODEBIASMODE_FILENAME = 0x00000001,
+    MODEBIASMODE_READING  = 0x00000002,
+    MODEBIASMODE_DIGIT    = 0x00000004,
+}
+
+enum const(wchar)* RWM_SHOWIMEPAD = "MSIMEShowImePad";
+
+enum : uint
+{
+    SHOWIMEPAD_DEFAULT  = 0x00000000,
+    SHOWIMEPAD_CATEGORY = 0x00000001,
+    SHOWIMEPAD_GUID     = 0x00000002,
+}
+
+enum const(wchar)* RWM_KEYMAP = "MSIMEKeyMap";
+enum const(wchar)* RWM_CHGKEYMAP = "MSIMEChangeKeyMap";
+enum const(wchar)* RWM_NTFYKEYMAP = "MSIMENotifyKeyMap";
+
+enum : uint
+{
+    FID_MSIME_KMS_VERSION        = 0x00000001,
+    FID_MSIME_KMS_INIT           = 0x00000002,
+    FID_MSIME_KMS_TERM           = 0x00000003,
+    FID_MSIME_KMS_DEL_KEYLIST    = 0x00000004,
+    FID_MSIME_KMS_NOTIFY         = 0x00000005,
+    FID_MSIME_KMS_GETMAP         = 0x00000006,
+    FID_MSIME_KMS_INVOKE         = 0x00000007,
+    FID_MSIME_KMS_SETMAP         = 0x00000008,
+    FID_MSIME_KMS_FUNCDESC       = 0x00000009,
+    FID_MSIME_KMS_GETMAPSEAMLESS = 0x0000000a,
+    FID_MSIME_KMS_GETMAPFAST     = 0x0000000b,
+}
+
+enum uint IMEKMS_NOCOMPOSITION = 0x00000000;
+enum uint IMEKMS_COMPOSITION = 0x00000001;
+
+enum : uint
+{
+    IMEKMS_SELECTION = 0x00000002,
+    IMEKMS_IMEOFF    = 0x00000003,
+    IMEKMS_2NDLEVEL  = 0x00000004,
+    IMEKMS_INPTGL    = 0x00000005,
+    IMEKMS_CANDIDATE = 0x00000006,
+    IMEKMS_TYPECAND  = 0x00000007,
+}
+
+enum const(wchar)* RWM_RECONVERTOPTIONS = "MSIMEReconvertOptions";
+
+enum : uint
+{
+    RECONVOPT_NONE            = 0x00000000,
+    RECONVOPT_USECANCELNOTIFY = 0x00000001,
+}
+
+enum uint GCSEX_CANCELRECONVERT = 0x10000000;
+
+enum : GUID
+{
+    CLSID_ImePlugInDictDictionaryList_CHS = GUID("7bf0129b-5bef-4de4-9b0b-5edb66ac2fa6"),
+    CLSID_ImePlugInDictDictionaryList_JPN = GUID("4fe2776b-b0f9-4396-b5fc-e9d4cf1ec195"),
+}
+
+// Callbacks
+
+alias IMCENUMPROC = BOOL function(HIMC param0, LPARAM param1);
+//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
+alias REGISTERWORDENUMPROCA = int function(const(PSTR) lpszReading, uint param1, const(PSTR) lpszString, 
+                                           void* param3);
+//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+alias REGISTERWORDENUMPROCW = int function(const(PWSTR) lpszReading, uint param1, const(PWSTR) lpszString, 
+                                           void* param3);
+alias PFNLOG = BOOL function(IMEDP* param0, HRESULT param1);
+alias fpCreateIFECommonInstanceType = HRESULT function(void** ppvObj);
+alias fpCreateIFELanguageInstanceType = HRESULT function(const(GUID)* clsid, void** ppvObj);
+alias fpCreateIFEDictionaryInstanceType = HRESULT function(void** ppvObj);
+
+// Structs
+
+
+@RAIIFree!ImmDestroyContext
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HIMC
+{
+    void* Value;
+}
+
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HIMCC
+{
+    void* Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-compositionform))], [])
+struct COMPOSITIONFORM
+{
+    uint  dwStyle;
+    POINT ptCurrentPos;
+    RECT  rcArea;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-candidateform))], [])
+struct CANDIDATEFORM
+{
+    uint  dwIndex;
+    uint  dwStyle;
+    POINT ptCurrentPos;
+    RECT  rcArea;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-candidatelist))], [])
+struct CANDIDATELIST
+{
+    uint dwSize;
+    uint dwStyle;
+    uint dwCount;
+    uint dwSelection;
+    uint dwPageStart;
+    uint dwPageSize;
+    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] dwOffset;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-registerworda))], [])
+struct REGISTERWORDA
+{
+    PSTR lpReading;
+    PSTR lpWord;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-registerwordw))], [])
+struct REGISTERWORDW
+{
+    PWSTR lpReading;
+    PWSTR lpWord;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-reconvertstring))], [])
+struct RECONVERTSTRING
+{
+    uint dwSize;
+    uint dwVersion;
+    uint dwStrLen;
+    uint dwStrOffset;
+    uint dwCompStrLen;
+    uint dwCompStrOffset;
+    uint dwTargetStrLen;
+    uint dwTargetStrOffset;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-stylebufa))], [])
+struct STYLEBUFA
+{
+    uint     dwStyle;
+    CHAR[32] szDescription;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-stylebufw))], [])
+struct STYLEBUFW
+{
+    uint      dwStyle;
+    wchar[32] szDescription;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-imemenuiteminfoa))], [])
+struct IMEMENUITEMINFOA
+{
+    uint     cbSize;
+    uint     fType;
+    uint     fState;
+    uint     wID;
+    HBITMAP  hbmpChecked;
+    HBITMAP  hbmpUnchecked;
+    uint     dwItemData;
+    CHAR[80] szString;
+    HBITMAP  hbmpItem;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-imemenuiteminfow))], [])
+struct IMEMENUITEMINFOW
+{
+    uint      cbSize;
+    uint      fType;
+    uint      fState;
+    uint      wID;
+    HBITMAP   hbmpChecked;
+    HBITMAP   hbmpUnchecked;
+    uint      dwItemData;
+    wchar[80] szString;
+    HBITMAP   hbmpItem;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-imecharposition))], [])
+struct IMECHARPOSITION
+{
+    uint  dwSize;
+    uint  dwCharPos;
+    POINT pt;
+    uint  cLineHeight;
+    RECT  rcDocument;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/ns-msime-imedlg))], [])
+struct IMEDLG
+{
+align (1):
+    int   cbIMEDLG;
+    HWND  hwnd;
+    PWSTR lpwstrWord;
+    int   nTabId;
+}
+
+struct WDD
+{
+align (1):
+    ushort               wDispPos;
+    _Anonymous1_e__Union Anonymous1;
+    ushort               cchDisp;
+    _Anonymous2_e__Union Anonymous2;
+    uint                 WDD_nReserve1;
+    ushort               nPos;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Anonymous3)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(10))], [])*/ushort _bitfield150;
+    void*                pReserved;
+}
+
+struct MORRSLT
+{
+align (1):
+    uint                 dwSize;
+    PWSTR                pwchOutput;
+    ushort               cchOutput;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    ushort*              pchInputPos;
+    ushort*              pchOutputIdxWDD;
+    _Anonymous3_e__Union Anonymous3;
+    ushort*              paMonoRubyPos;
+    WDD*                 pWDD;
+    int                  cWDD;
+    void*                pPrivate;
+    wchar[1]             BLKBuff;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/ns-msime-imewrd))], [])
+struct IMEWRD
+{
+align (1):
+    PWSTR               pwchReading;
+    PWSTR               pwchDisplay;
+    _Anonymous_e__Union Anonymous;
+    uint[2]             rgulAttrs;
+    int                 cbComment;
+    IMEUCT              uct;
+    void*               pvComment;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/ns-msime-imeshf))], [])
+struct IMESHF
+{
+align (1):
+    ushort    cbShf;
+    ushort    verDic;
+    CHAR[48]  szTitle;
+    CHAR[256] szDescription;
+    CHAR[128] szCopyright;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/ns-msime-postbl))], [])
+struct POSTBL
+{
+align (1):
+    ushort nPos;
+    ubyte* szName;
+}
+
+struct IMEDP
+{
+align (1):
+    IMEWRD wrdModifier;
+    IMEWRD wrdModifiee;
+    IMEREL relID;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+struct IMEKMSINIT
+{
+align (1):
+    int  cbSize;
+    HWND hWnd;
+}
+
+struct IMEKMSKEY
+{
+align (1):
+    uint                 dwStatus;
+    uint                 dwCompStatus;
+    uint                 dwVKEY;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+struct IMEKMS
+{
+align (1):
+    int        cbSize;
+    HIMC       hIMC;
+    uint       cKeyList;
+    IMEKMSKEY* pKeyList;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+struct IMEKMSNTFY
+{
+align (1):
+    int  cbSize;
+    HIMC hIMC;
+    BOOL fSelect;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+struct IMEKMSKMP
+{
+align (1):
+    int        cbSize;
+    HIMC       hIMC;
+    ushort     idLang;
+    ushort     wVKStart;
+    ushort     wVKEnd;
+    int        cKeyList;
+    IMEKMSKEY* pKeyList;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+struct IMEKMSINVK
+{
+align (1):
+    int  cbSize;
+    HIMC hIMC;
+    uint dwControl;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+struct IMEKMSFUNCDESC
+{
+align (1):
+    int        cbSize;
+    ushort     idLang;
+    uint       dwControl;
+    wchar[128] pwszDescription;
+}
+
+struct COMPOSITIONSTRING
+{
+    uint dwSize;
+    uint dwCompReadAttrLen;
+    uint dwCompReadAttrOffset;
+    uint dwCompReadClauseLen;
+    uint dwCompReadClauseOffset;
+    uint dwCompReadStrLen;
+    uint dwCompReadStrOffset;
+    uint dwCompAttrLen;
+    uint dwCompAttrOffset;
+    uint dwCompClauseLen;
+    uint dwCompClauseOffset;
+    uint dwCompStrLen;
+    uint dwCompStrOffset;
+    uint dwCursorPos;
+    uint dwDeltaStart;
+    uint dwResultReadClauseLen;
+    uint dwResultReadClauseOffset;
+    uint dwResultReadStrLen;
+    uint dwResultReadStrOffset;
+    uint dwResultClauseLen;
+    uint dwResultClauseOffset;
+    uint dwResultStrLen;
+    uint dwResultStrOffset;
+    uint dwPrivateSize;
+    uint dwPrivateOffset;
+}
+
+struct GUIDELINE
+{
+    uint dwSize;
+    uint dwLevel;
+    uint dwIndex;
+    uint dwStrLen;
+    uint dwStrOffset;
+    uint dwPrivateSize;
+    uint dwPrivateOffset;
+}
+
+struct TRANSMSG
+{
+    uint   message;
+    WPARAM wParam;
+    LPARAM lParam;
+}
+
+struct TRANSMSGLIST
+{
+    uint uMsgCount;
+    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/TRANSMSG[1] TransMsg;
+}
+
+struct CANDIDATEINFO
+{
+    uint     dwSize;
+    uint     dwCount;
+    uint[32] dwOffset;
+    uint     dwPrivateSize;
+    uint     dwPrivateOffset;
+}
+
+struct INPUTCONTEXT
+{
+    HWND             hWnd;
+    BOOL             fOpen;
+    POINT            ptStatusWndPos;
+    POINT            ptSoftKbdPos;
+    uint             fdwConversion;
+    uint             fdwSentence;
+    _lfFont_e__Union lfFont;
+    COMPOSITIONFORM  cfCompForm;
+    CANDIDATEFORM[4] cfCandForm;
+    HIMCC            hCompStr;
+    HIMCC            hCandInfo;
+    HIMCC            hGuideLine;
+    HIMCC            hPrivate;
+    uint             dwNumMsgBuf;
+    HIMCC            hMsgBuf;
+    uint             fdwInit;
+    uint[3]          dwReserve;
+}
+
+struct IMEINFO
+{
+    uint dwPrivateDataSize;
+    uint fdwProperty;
+    uint fdwConversionCaps;
+    uint fdwSentenceCaps;
+    uint fdwUICaps;
+    uint fdwSCSCaps;
+    uint fdwSelectCaps;
+}
+
+struct SOFTKBDDATA
+{
+    uint        uCount;
+    ushort[256] wCode;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-appletidlist))], [])
+struct APPLETIDLIST
+{
+    int   count;
+    GUID* pIIDList;
+}
+
+struct IMESTRINGCANDIDATE
+{
+    uint uCount;
+    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PWSTR[1] lpwstr;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+struct IMEITEM
+{
+    int   cbSize;
+    int   iType;
+    void* lpItemData;
+}
+
+struct IMEITEMCANDIDATE
+{
+    uint uCount;
+    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/IMEITEM[1] imeItem;
+}
+
+struct IMESTRINGINFO
+{
+    uint  dwFarEastId;
+    PWSTR lpwstr;
+}
+
+struct IMEFAREASTINFO
+{
+    uint dwSize;
+    uint dwType;
+    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] dwData;
+}
+
+struct IMESTRINGCANDIDATEINFO
+{
+    uint            dwFarEastId;
+    IMEFAREASTINFO* lpFarEastInfo;
+    uint            fInfoMask;
+    int             iSelIndex;
+    uint            uCount;
+    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PWSTR[1] lpwstr;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-imecompositionstringinfo))], [])
+struct IMECOMPOSITIONSTRINGINFO
+{
+    int iCompStrLen;
+    int iCaretPos;
+    int iEditStart;
+    int iEditLen;
+    int iTargetStart;
+    int iTargetLen;
+}
+
+struct IMECHARINFO
+{
+    wchar wch;
+    uint  dwCharInfo;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-imeappletcfg))], [])
+struct IMEAPPLETCFG
+{
+    uint      dwConfig;
+    wchar[64] wchTitle;
+    wchar[32] wchTitleFontFace;
+    uint      dwCharSet;
+    int       iCategory;
+    HICON     hIcon;
+    ushort    langID;
+    ushort    dummy;
+    LPARAM    lReserved1;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-imeappletui))], [])
+struct IMEAPPLETUI
+{
+    HWND   hwnd;
+    uint   dwStyle;
+    int    width;
+    int    height;
+    int    minWidth;
+    int    minHeight;
+    int    maxWidth;
+    int    maxHeight;
+    LPARAM lReserved1;
+    LPARAM lReserved2;
+}
+
+struct APPLYCANDEXPARAM
+{
+    uint  dwSize;
+    PWSTR lpwstrDisplay;
+    PWSTR lpwstrReading;
+    uint  dwReserved;
+}
+
+// Functions
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+HKL ImmInstallIMEA(const(PSTR) lpszIMEFileName, const(PSTR) lpszLayoutText);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+HKL ImmInstallIMEW(const(PWSTR) lpszIMEFileName, const(PWSTR) lpszLayoutText);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+HWND ImmGetDefaultIMEWnd(HWND param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetDescriptionA(HKL param0, PSTR lpszDescription, uint uBufLen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetDescriptionW(HKL param0, PWSTR lpszDescription, uint uBufLen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetIMEFileNameA(HKL param0, PSTR lpszFileName, uint uBufLen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetIMEFileNameW(HKL param0, PWSTR lpszFileName, uint uBufLen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetProperty(HKL param0, uint param1);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmIsIME(HKL param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmSimulateHotKey(HWND param0, IME_HOTKEY_IDENTIFIER param1);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+HIMC ImmCreateContext();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmDestroyContext(HIMC param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+HIMC ImmGetContext(HWND param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmReleaseContext(HWND param0, HIMC param1);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+HIMC ImmAssociateContext(HWND param0, HIMC param1);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmAssociateContextEx(HWND param0, HIMC param1, uint param2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+int ImmGetCompositionStringA(HIMC param0, IME_COMPOSITION_STRING param1, 
+                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuf, 
+                             uint dwBufLen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+int ImmGetCompositionStringW(HIMC param0, IME_COMPOSITION_STRING param1, 
+                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuf, 
+                             uint dwBufLen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmSetCompositionStringA(HIMC param0, SET_COMPOSITION_STRING_TYPE dwIndex, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpComp, 
+                              uint dwCompLen, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* lpRead, 
+                              uint dwReadLen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmSetCompositionStringW(HIMC param0, SET_COMPOSITION_STRING_TYPE dwIndex, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpComp, 
+                              uint dwCompLen, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* lpRead, 
+                              uint dwReadLen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetCandidateListCountA(HIMC param0, uint* lpdwListCount);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetCandidateListCountW(HIMC param0, uint* lpdwListCount);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetCandidateListA(HIMC param0, uint deIndex, 
+                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/CANDIDATELIST* lpCandList, 
+                          uint dwBufLen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetCandidateListW(HIMC param0, uint deIndex, 
+                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/CANDIDATELIST* lpCandList, 
+                          uint dwBufLen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetGuideLineA(HIMC param0, GET_GUIDE_LINE_TYPE dwIndex, 
+                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/PSTR lpBuf, 
+                      uint dwBufLen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetGuideLineW(HIMC param0, GET_GUIDE_LINE_TYPE dwIndex, 
+                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/PWSTR lpBuf, 
+                      uint dwBufLen);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmGetConversionStatus(HIMC param0, IME_CONVERSION_MODE* lpfdwConversion, IME_SENTENCE_MODE* lpfdwSentence);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmSetConversionStatus(HIMC param0, IME_CONVERSION_MODE param1, IME_SENTENCE_MODE param2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmGetOpenStatus(HIMC param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmSetOpenStatus(HIMC param0, BOOL param1);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmGetCompositionFontA(HIMC param0, LOGFONTA* lplf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmGetCompositionFontW(HIMC param0, LOGFONTW* lplf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmSetCompositionFontA(HIMC param0, LOGFONTA* lplf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmSetCompositionFontW(HIMC param0, LOGFONTW* lplf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmConfigureIMEA(HKL param0, HWND param1, uint param2, void* param3);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmConfigureIMEW(HKL param0, HWND param1, uint param2, void* param3);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+LRESULT ImmEscapeA(HKL param0, HIMC param1, IME_ESCAPE param2, void* param3);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+LRESULT ImmEscapeW(HKL param0, HIMC param1, IME_ESCAPE param2, void* param3);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetConversionListA(HKL param0, HIMC param1, const(PSTR) lpSrc, 
+                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/CANDIDATELIST* lpDst, 
+                           uint dwBufLen, GET_CONVERSION_LIST_FLAG uFlag);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetConversionListW(HKL param0, HIMC param1, const(PWSTR) lpSrc, 
+                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/CANDIDATELIST* lpDst, 
+                           uint dwBufLen, GET_CONVERSION_LIST_FLAG uFlag);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmNotifyIME(HIMC param0, NOTIFY_IME_ACTION dwAction, NOTIFY_IME_INDEX dwIndex, uint dwValue);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmGetStatusWindowPos(HIMC param0, POINT* lpptPos);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmSetStatusWindowPos(HIMC param0, POINT* lpptPos);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmGetCompositionWindow(HIMC param0, COMPOSITIONFORM* lpCompForm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmSetCompositionWindow(HIMC param0, COMPOSITIONFORM* lpCompForm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmGetCandidateWindow(HIMC param0, uint param1, CANDIDATEFORM* lpCandidate);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmSetCandidateWindow(HIMC param0, CANDIDATEFORM* lpCandidate);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmIsUIMessageA(HWND param0, uint param1, WPARAM param2, LPARAM param3);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmIsUIMessageW(HWND param0, uint param1, WPARAM param2, LPARAM param3);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetVirtualKey(HWND param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmRegisterWordA(HKL param0, const(PSTR) lpszReading, uint param2, const(PSTR) lpszRegister);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmRegisterWordW(HKL param0, const(PWSTR) lpszReading, uint param2, const(PWSTR) lpszRegister);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmUnregisterWordA(HKL param0, const(PSTR) lpszReading, uint param2, const(PSTR) lpszUnregister);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmUnregisterWordW(HKL param0, const(PWSTR) lpszReading, uint param2, const(PWSTR) lpszUnregister);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetRegisterWordStyleA(HKL param0, uint nItem, STYLEBUFA* lpStyleBuf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetRegisterWordStyleW(HKL param0, uint nItem, STYLEBUFW* lpStyleBuf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmEnumRegisterWordA(HKL param0, REGISTERWORDENUMPROCA param1, const(PSTR) lpszReading, uint param3, 
+                          const(PSTR) lpszRegister, void* param5);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmEnumRegisterWordW(HKL param0, REGISTERWORDENUMPROCW param1, const(PWSTR) lpszReading, uint param3, 
+                          const(PWSTR) lpszRegister, void* param5);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmDisableIME(uint param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmEnumInputContext(uint idThread, IMCENUMPROC lpfn, LPARAM lParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetImeMenuItemsA(HIMC param0, uint param1, uint param2, IMEMENUITEMINFOA* lpImeParentMenu, 
+                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/IMEMENUITEMINFOA* lpImeMenu, 
+                         uint dwSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+uint ImmGetImeMenuItemsW(HIMC param0, uint param1, uint param2, IMEMENUITEMINFOW* lpImeParentMenu, 
+                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/IMEMENUITEMINFOW* lpImeMenu, 
+                         uint dwSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+BOOL ImmDisableTextFrameService(uint idThread);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("IMM32.dll")
+BOOL ImmDisableLegacyIME();
+
+@DllImport("IMM32.dll")
+BOOL ImmGetHotKey(uint param0, uint* lpuModifiers, uint* lpuVKey, HKL* phKL);
+
+@DllImport("IMM32.dll")
+BOOL ImmSetHotKey(uint param0, uint param1, uint param2, HKL param3);
+
+@DllImport("IMM32.dll")
+BOOL ImmGenerateMessage(HIMC param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+LRESULT ImmRequestMessageA(HIMC param0, WPARAM param1, LPARAM param2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
+@DllImport("IMM32.dll")
+LRESULT ImmRequestMessageW(HIMC param0, WPARAM param1, LPARAM param2);
+
+@DllImport("IMM32.dll")
+HWND ImmCreateSoftKeyboard(uint param0, HWND param1, int param2, int param3);
+
+@DllImport("IMM32.dll")
+BOOL ImmDestroySoftKeyboard(HWND param0);
+
+@DllImport("IMM32.dll")
+BOOL ImmShowSoftKeyboard(HWND param0, int param1);
+
+@DllImport("IMM32.dll")
+INPUTCONTEXT* ImmLockIMC(HIMC param0);
+
+@DllImport("IMM32.dll")
+BOOL ImmUnlockIMC(HIMC param0);
+
+@DllImport("IMM32.dll")
+uint ImmGetIMCLockCount(HIMC param0);
+
+@DllImport("IMM32.dll")
+HIMCC ImmCreateIMCC(uint param0);
+
+@DllImport("IMM32.dll")
+HIMCC ImmDestroyIMCC(HIMCC param0);
+
+@DllImport("IMM32.dll")
+void* ImmLockIMCC(HIMCC param0);
+
+@DllImport("IMM32.dll")
+BOOL ImmUnlockIMCC(HIMCC param0);
+
+@DllImport("IMM32.dll")
+uint ImmGetIMCCLockCount(HIMCC param0);
+
+@DllImport("IMM32.dll")
+HIMCC ImmReSizeIMCC(HIMCC param0, uint param1);
+
+@DllImport("IMM32.dll")
+uint ImmGetIMCCSize(HIMCC param0);
+
+
+// Interfaces
+
+@GUID("4955dd33-b159-11d0-8fcf-00aa006bcc59")
+struct CActiveIMM;
+
+interface IFEClassFactory : IClassFactory
+{
+}
+
+@GUID("019f7151-e6db-11d0-83c3-00c04fddb82e")
+//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nn-msime-ifecommon))], [])
+interface IFECommon : IUnknown
+{
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-isdefaultime))], [])
+    HRESULT IsDefaultIME(const(PSTR) szName, int cszName);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-setdefaultime))], [])
+    HRESULT SetDefaultIME();
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-invokewordregdialog))], [])
+    HRESULT InvokeWordRegDialog(IMEDLG* pimedlg);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-invokedicttooldialog))], [])
+    HRESULT InvokeDictToolDialog(IMEDLG* pimedlg);
+}
+
+@GUID("019f7152-e6db-11d0-83c3-00c04fddb82e")
+//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nn-msime-ifelanguage))], [])
+interface IFELanguage : IUnknown
+{
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-open))], [])
+    HRESULT Open();
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-close))], [])
+    HRESULT Close();
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-getjmorphresult))], [])
+    HRESULT GetJMorphResult(uint dwRequest, uint dwCMode, int cwchInput, const(PWSTR) pwchInput, uint* pfCInfo, 
+                            MORRSLT** ppResult);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-getconversionmodecaps))], [])
+    HRESULT GetConversionModeCaps(uint* pdwCaps);
+    HRESULT GetPhonetic(BSTR string, int start, int length, BSTR* phonetic);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-getconversion))], [])
+    HRESULT GetConversion(BSTR string, int start, int length, BSTR* result);
+}
+
+@GUID("019f7153-e6db-11d0-83c3-00c04fddb82e")
+//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nn-msime-ifedictionary))], [])
+interface IFEDictionary : IUnknown
+{
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-open))], [])
+    HRESULT Open(PSTR pchDictPath, IMESHF* pshf);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-close))], [])
+    HRESULT Close();
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-getheader))], [])
+    HRESULT GetHeader(PSTR pchDictPath, IMESHF* pshf, IMEFMT* pjfmt, uint* pulType);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-displayproperty))], [])
+    HRESULT DisplayProperty(HWND hwnd);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-getpostable))], [])
+    HRESULT GetPosTable(POSTBL** prgPosTbl, int* pcPosTbl);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-getwords))], [])
+    HRESULT GetWords(const(PWSTR) pwchFirst, const(PWSTR) pwchLast, const(PWSTR) pwchDisplay, uint ulPos, 
+                     uint ulSelect, uint ulWordSrc, ubyte* pchBuffer, uint cbBuffer, uint* pcWrd);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-nextwords))], [])
+    HRESULT NextWords(ubyte* pchBuffer, uint cbBuffer, uint* pcWrd);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-create))], [])
+    HRESULT Create(const(PSTR) pchDictPath, IMESHF* pshf);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-setheader))], [])
+    HRESULT SetHeader(IMESHF* pshf);
+//METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
+    HRESULT ExistWord(IMEWRD* pwrd);
+    HRESULT ExistDependency(IMEDP* pdp);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-registerword))], [])
+    HRESULT RegisterWord(IMEREG reg, IMEWRD* pwrd);
+    HRESULT RegisterDependency(IMEREG reg, IMEDP* pdp);
+    HRESULT GetDependencies(const(PWSTR) pwchKakariReading, const(PWSTR) pwchKakariDisplay, uint ulKakariPos, 
+                            const(PWSTR) pwchUkeReading, const(PWSTR) pwchUkeDisplay, uint ulUkePos, IMEREL jrel, 
+                            uint ulWordSrc, ubyte* pchBuffer, uint cbBuffer, uint* pcdp);
+    HRESULT NextDependencies(ubyte* pchBuffer, uint cbBuffer, uint* pcDp);
+    HRESULT ConvertFromOldMSIME(const(PSTR) pchDic, PFNLOG pfnLog, IMEREG reg);
+    HRESULT ConvertFromUserToSys();
+}
+
+@GUID("5d8e643c-c3a9-11d1-afef-00805f0c8b6d")
+//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nn-imepad-iimespecifyapplets))], [])
+interface IImeSpecifyApplets : IUnknown
+{
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimespecifyapplets-getappletiidlist))], [])
+    HRESULT GetAppletIIDList(const(GUID)* refiid, APPLETIDLIST* lpIIDList);
+}
+
+@GUID("5d8e643b-c3a9-11d1-afef-00805f0c8b6d")
+//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nn-imepad-iimepadapplet))], [])
+interface IImePadApplet : IUnknown
+{
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-initialize))], [])
+    HRESULT Initialize(IUnknown lpIImePad);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-terminate))], [])
+    HRESULT Terminate();
+    HRESULT GetAppletConfig(IMEAPPLETCFG* lpAppletCfg);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-createui))], [])
+    HRESULT CreateUI(HWND hwndParent, IMEAPPLETUI* lpImeAppletUI);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-notify))], [])
+    HRESULT Notify(IUnknown lpImePad, int notify, WPARAM wParam, LPARAM lParam);
+}
+
+@GUID("5d8e643a-c3a9-11d1-afef-00805f0c8b6d")
+//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nn-imepad-iimepad))], [])
+interface IImePad : IUnknown
+{
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepad-request))], [])
+    HRESULT Request(IImePadApplet pIImePadApplet, 
+                    /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IME_PAD_REQUEST_FLAGS))], [])*/int reqId, 
+                    WPARAM wParam, LPARAM lParam);
+}
+
+@GUID("98752974-b0a6-489b-8f6f-bff3769c8eeb")
+//INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msimeapi/nn-msimeapi-iimeplugindictdictionarylist))], [])
+interface IImePlugInDictDictionaryList : IUnknown
+{
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msimeapi/nf-msimeapi-iimeplugindictdictionarylist-getdictionariesinuse))], [])
+    HRESULT GetDictionariesInUse(SAFEARRAY** prgDictionaryGUID, SAFEARRAY** prgDateCreated, 
+                                 SAFEARRAY** prgfEncrypted);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msimeapi/nf-msimeapi-iimeplugindictdictionarylist-deletedictionary))], [])
+    HRESULT DeleteDictionary(BSTR bstrDictionaryGUID);
+}
+
+@GUID("08c03412-f96b-11d0-a475-00aa006bcc59")
+//INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
+interface IEnumRegisterWordA : IUnknown
+{
+    HRESULT Clone(IEnumRegisterWordA* ppEnum);
+    HRESULT Next(uint ulCount, REGISTERWORDA* rgRegisterWord, uint* pcFetched);
+    HRESULT Reset();
+    HRESULT Skip(uint ulCount);
+}
+
+@GUID("4955dd31-b159-11d0-8fcf-00aa006bcc59")
+//INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+interface IEnumRegisterWordW : IUnknown
+{
+    HRESULT Clone(IEnumRegisterWordW* ppEnum);
+    HRESULT Next(uint ulCount, REGISTERWORDW* rgRegisterWord, uint* pcFetched);
+    HRESULT Reset();
+    HRESULT Skip(uint ulCount);
+}
+
+@GUID("09b5eab0-f997-11d1-93d4-0060b067b86e")
+interface IEnumInputContext : IUnknown
+{
+    HRESULT Clone(IEnumInputContext* ppEnum);
+    HRESULT Next(uint ulCount, HIMC* rgInputContext, uint* pcFetched);
+    HRESULT Reset();
+    HRESULT Skip(uint ulCount);
+}
+
+@GUID("b3458082-bd00-11d1-939b-0060b067b86e")
+interface IActiveIMMRegistrar : IUnknown
+{
+    HRESULT RegisterIME(const(GUID)* rclsid, ushort lgid, const(PWSTR) pszIconFile, const(PWSTR) pszDesc);
+    HRESULT UnregisterIME(const(GUID)* rclsid);
+}
+
+@GUID("b5cf2cfa-8aeb-11d1-9364-0060b067b86e")
+interface IActiveIMMMessagePumpOwner : IUnknown
+{
+    HRESULT Start();
+    HRESULT End();
+    HRESULT OnTranslateMessage(const(MSG)* pMsg);
+    HRESULT Pause(uint* pdwCookie);
+    HRESULT Resume(uint dwCookie);
+}
+
+@GUID("08c0e040-62d1-11d1-9326-0060b067b86e")
+interface IActiveIMMApp : IUnknown
+{
+    HRESULT AssociateContext(HWND hWnd, HIMC hIME, HIMC* phPrev);
+    HRESULT ConfigureIMEA(HKL hKL, HWND hWnd, uint dwMode, REGISTERWORDA* pData);
+    HRESULT ConfigureIMEW(HKL hKL, HWND hWnd, uint dwMode, REGISTERWORDW* pData);
+    HRESULT CreateContext(HIMC* phIMC);
+    HRESULT DestroyContext(HIMC hIME);
+    HRESULT EnumRegisterWordA(HKL hKL, PSTR szReading, uint dwStyle, PSTR szRegister, void* pData, 
+                              IEnumRegisterWordA* pEnum);
+    HRESULT EnumRegisterWordW(HKL hKL, PWSTR szReading, uint dwStyle, PWSTR szRegister, void* pData, 
+                              IEnumRegisterWordW* pEnum);
+    HRESULT EscapeA(HKL hKL, HIMC hIMC, uint uEscape, void* pData, LRESULT* plResult);
+//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    HRESULT EscapeW(HKL hKL, HIMC hIMC, uint uEscape, void* pData, LRESULT* plResult);
+    HRESULT GetCandidateListA(HIMC hIMC, uint dwIndex, uint uBufLen, CANDIDATELIST* pCandList, uint* puCopied);
+    HRESULT GetCandidateListW(HIMC hIMC, uint dwIndex, uint uBufLen, CANDIDATELIST* pCandList, uint* puCopied);
+    HRESULT GetCandidateListCountA(HIMC hIMC, uint* pdwListSize, uint* pdwBufLen);
+    HRESULT GetCandidateListCountW(HIMC hIMC, uint* pdwListSize, uint* pdwBufLen);
+    HRESULT GetCandidateWindow(HIMC hIMC, uint dwIndex, CANDIDATEFORM* pCandidate);
+    HRESULT GetCompositionFontA(HIMC hIMC, LOGFONTA* plf);
+    HRESULT GetCompositionFontW(HIMC hIMC, LOGFONTW* plf);
+    HRESULT GetCompositionStringA(HIMC hIMC, uint dwIndex, uint dwBufLen, int* plCopied, void* pBuf);
+    HRESULT GetCompositionStringW(HIMC hIMC, uint dwIndex, uint dwBufLen, int* plCopied, void* pBuf);
+    HRESULT GetCompositionWindow(HIMC hIMC, COMPOSITIONFORM* pCompForm);
+    HRESULT GetContext(HWND hWnd, HIMC* phIMC);
+    HRESULT GetConversionListA(HKL hKL, HIMC hIMC, PSTR pSrc, uint uBufLen, uint uFlag, CANDIDATELIST* pDst, 
+                               uint* puCopied);
+    HRESULT GetConversionListW(HKL hKL, HIMC hIMC, PWSTR pSrc, uint uBufLen, uint uFlag, CANDIDATELIST* pDst, 
+                               uint* puCopied);
+    HRESULT GetConversionStatus(HIMC hIMC, uint* pfdwConversion, uint* pfdwSentence);
+    HRESULT GetDefaultIMEWnd(HWND hWnd, HWND* phDefWnd);
+    HRESULT GetDescriptionA(HKL hKL, uint uBufLen, PSTR szDescription, uint* puCopied);
+    HRESULT GetDescriptionW(HKL hKL, uint uBufLen, PWSTR szDescription, uint* puCopied);
+    HRESULT GetGuideLineA(HIMC hIMC, uint dwIndex, uint dwBufLen, PSTR pBuf, uint* pdwResult);
+    HRESULT GetGuideLineW(HIMC hIMC, uint dwIndex, uint dwBufLen, PWSTR pBuf, uint* pdwResult);
+    HRESULT GetIMEFileNameA(HKL hKL, uint uBufLen, PSTR szFileName, uint* puCopied);
+    HRESULT GetIMEFileNameW(HKL hKL, uint uBufLen, PWSTR szFileName, uint* puCopied);
+    HRESULT GetOpenStatus(HIMC hIMC);
+    HRESULT GetProperty(HKL hKL, uint fdwIndex, uint* pdwProperty);
+    HRESULT GetRegisterWordStyleA(HKL hKL, uint nItem, STYLEBUFA* pStyleBuf, uint* puCopied);
+    HRESULT GetRegisterWordStyleW(HKL hKL, uint nItem, STYLEBUFW* pStyleBuf, uint* puCopied);
+    HRESULT GetStatusWindowPos(HIMC hIMC, POINT* pptPos);
+    HRESULT GetVirtualKey(HWND hWnd, uint* puVirtualKey);
+    HRESULT InstallIMEA(PSTR szIMEFileName, PSTR szLayoutText, HKL* phKL);
+    HRESULT InstallIMEW(PWSTR szIMEFileName, PWSTR szLayoutText, HKL* phKL);
+    HRESULT IsIME(HKL hKL);
+    HRESULT IsUIMessageA(HWND hWndIME, uint msg, WPARAM wParam, LPARAM lParam);
+    HRESULT IsUIMessageW(HWND hWndIME, uint msg, WPARAM wParam, LPARAM lParam);
+    HRESULT NotifyIME(HIMC hIMC, uint dwAction, uint dwIndex, uint dwValue);
+    HRESULT RegisterWordA(HKL hKL, PSTR szReading, uint dwStyle, PSTR szRegister);
+    HRESULT RegisterWordW(HKL hKL, PWSTR szReading, uint dwStyle, PWSTR szRegister);
+    HRESULT ReleaseContext(HWND hWnd, HIMC hIMC);
+    HRESULT SetCandidateWindow(HIMC hIMC, CANDIDATEFORM* pCandidate);
+    HRESULT SetCompositionFontA(HIMC hIMC, LOGFONTA* plf);
+    HRESULT SetCompositionFontW(HIMC hIMC, LOGFONTW* plf);
+    HRESULT SetCompositionStringA(HIMC hIMC, uint dwIndex, void* pComp, uint dwCompLen, void* pRead, 
+                                  uint dwReadLen);
+    HRESULT SetCompositionStringW(HIMC hIMC, uint dwIndex, void* pComp, uint dwCompLen, void* pRead, 
+                                  uint dwReadLen);
+    HRESULT SetCompositionWindow(HIMC hIMC, COMPOSITIONFORM* pCompForm);
+    HRESULT SetConversionStatus(HIMC hIMC, uint fdwConversion, uint fdwSentence);
+    HRESULT SetOpenStatus(HIMC hIMC, BOOL fOpen);
+    HRESULT SetStatusWindowPos(HIMC hIMC, POINT* pptPos);
+    HRESULT SimulateHotKey(HWND hWnd, uint dwHotKeyID);
+    HRESULT UnregisterWordA(HKL hKL, PSTR szReading, uint dwStyle, PSTR szUnregister);
+    HRESULT UnregisterWordW(HKL hKL, PWSTR szReading, uint dwStyle, PWSTR szUnregister);
+    HRESULT Activate(BOOL fRestoreLayout);
+    HRESULT Deactivate();
+    HRESULT OnDefWindowProc(HWND hWnd, uint Msg, WPARAM wParam, LPARAM lParam, LRESULT* plResult);
+    HRESULT FilterClientWindows(ushort* aaClassList, uint uSize);
+    HRESULT GetCodePageA(HKL hKL, uint* uCodePage);
+    HRESULT GetLangId(HKL hKL, ushort* plid);
+    HRESULT AssociateContextEx(HWND hWnd, HIMC hIMC, uint dwFlags);
+    HRESULT DisableIME(uint idThread);
+    HRESULT GetImeMenuItemsA(HIMC hIMC, uint dwFlags, uint dwType, IMEMENUITEMINFOA* pImeParentMenu, 
+                             IMEMENUITEMINFOA* pImeMenu, uint dwSize, uint* pdwResult);
+    HRESULT GetImeMenuItemsW(HIMC hIMC, uint dwFlags, uint dwType, IMEMENUITEMINFOW* pImeParentMenu, 
+                             IMEMENUITEMINFOW* pImeMenu, uint dwSize, uint* pdwResult);
+    HRESULT EnumInputContext(uint idThread, IEnumInputContext* ppEnum);
+}
+
+@GUID("08c03411-f96b-11d0-a475-00aa006bcc59")
+interface IActiveIMMIME : IUnknown
+{
+    HRESULT AssociateContext(HWND hWnd, HIMC hIME, HIMC* phPrev);
+    HRESULT ConfigureIMEA(HKL hKL, HWND hWnd, uint dwMode, REGISTERWORDA* pData);
+    HRESULT ConfigureIMEW(HKL hKL, HWND hWnd, uint dwMode, REGISTERWORDW* pData);
+    HRESULT CreateContext(HIMC* phIMC);
+    HRESULT DestroyContext(HIMC hIME);
+    HRESULT EnumRegisterWordA(HKL hKL, PSTR szReading, uint dwStyle, PSTR szRegister, void* pData, 
+                              IEnumRegisterWordA* pEnum);
+    HRESULT EnumRegisterWordW(HKL hKL, PWSTR szReading, uint dwStyle, PWSTR szRegister, void* pData, 
+                              IEnumRegisterWordW* pEnum);
+    HRESULT EscapeA(HKL hKL, HIMC hIMC, uint uEscape, void* pData, LRESULT* plResult);
+//METH ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    HRESULT EscapeW(HKL hKL, HIMC hIMC, uint uEscape, void* pData, LRESULT* plResult);
+    HRESULT GetCandidateListA(HIMC hIMC, uint dwIndex, uint uBufLen, CANDIDATELIST* pCandList, uint* puCopied);
+    HRESULT GetCandidateListW(HIMC hIMC, uint dwIndex, uint uBufLen, CANDIDATELIST* pCandList, uint* puCopied);
+    HRESULT GetCandidateListCountA(HIMC hIMC, uint* pdwListSize, uint* pdwBufLen);
+    HRESULT GetCandidateListCountW(HIMC hIMC, uint* pdwListSize, uint* pdwBufLen);
+    HRESULT GetCandidateWindow(HIMC hIMC, uint dwIndex, CANDIDATEFORM* pCandidate);
+    HRESULT GetCompositionFontA(HIMC hIMC, LOGFONTA* plf);
+    HRESULT GetCompositionFontW(HIMC hIMC, LOGFONTW* plf);
+    HRESULT GetCompositionStringA(HIMC hIMC, uint dwIndex, uint dwBufLen, int* plCopied, void* pBuf);
+    HRESULT GetCompositionStringW(HIMC hIMC, uint dwIndex, uint dwBufLen, int* plCopied, void* pBuf);
+    HRESULT GetCompositionWindow(HIMC hIMC, COMPOSITIONFORM* pCompForm);
+    HRESULT GetContext(HWND hWnd, HIMC* phIMC);
+    HRESULT GetConversionListA(HKL hKL, HIMC hIMC, PSTR pSrc, uint uBufLen, uint uFlag, CANDIDATELIST* pDst, 
+                               uint* puCopied);
+    HRESULT GetConversionListW(HKL hKL, HIMC hIMC, PWSTR pSrc, uint uBufLen, uint uFlag, CANDIDATELIST* pDst, 
+                               uint* puCopied);
+    HRESULT GetConversionStatus(HIMC hIMC, uint* pfdwConversion, uint* pfdwSentence);
+    HRESULT GetDefaultIMEWnd(HWND hWnd, HWND* phDefWnd);
+    HRESULT GetDescriptionA(HKL hKL, uint uBufLen, PSTR szDescription, uint* puCopied);
+    HRESULT GetDescriptionW(HKL hKL, uint uBufLen, PWSTR szDescription, uint* puCopied);
+    HRESULT GetGuideLineA(HIMC hIMC, uint dwIndex, uint dwBufLen, PSTR pBuf, uint* pdwResult);
+    HRESULT GetGuideLineW(HIMC hIMC, uint dwIndex, uint dwBufLen, PWSTR pBuf, uint* pdwResult);
+    HRESULT GetIMEFileNameA(HKL hKL, uint uBufLen, PSTR szFileName, uint* puCopied);
+    HRESULT GetIMEFileNameW(HKL hKL, uint uBufLen, PWSTR szFileName, uint* puCopied);
+    HRESULT GetOpenStatus(HIMC hIMC);
+    HRESULT GetProperty(HKL hKL, uint fdwIndex, uint* pdwProperty);
+    HRESULT GetRegisterWordStyleA(HKL hKL, uint nItem, STYLEBUFA* pStyleBuf, uint* puCopied);
+    HRESULT GetRegisterWordStyleW(HKL hKL, uint nItem, STYLEBUFW* pStyleBuf, uint* puCopied);
+    HRESULT GetStatusWindowPos(HIMC hIMC, POINT* pptPos);
+    HRESULT GetVirtualKey(HWND hWnd, uint* puVirtualKey);
+    HRESULT InstallIMEA(PSTR szIMEFileName, PSTR szLayoutText, HKL* phKL);
+    HRESULT InstallIMEW(PWSTR szIMEFileName, PWSTR szLayoutText, HKL* phKL);
+    HRESULT IsIME(HKL hKL);
+    HRESULT IsUIMessageA(HWND hWndIME, uint msg, WPARAM wParam, LPARAM lParam);
+    HRESULT IsUIMessageW(HWND hWndIME, uint msg, WPARAM wParam, LPARAM lParam);
+    HRESULT NotifyIME(HIMC hIMC, uint dwAction, uint dwIndex, uint dwValue);
+    HRESULT RegisterWordA(HKL hKL, PSTR szReading, uint dwStyle, PSTR szRegister);
+    HRESULT RegisterWordW(HKL hKL, PWSTR szReading, uint dwStyle, PWSTR szRegister);
+    HRESULT ReleaseContext(HWND hWnd, HIMC hIMC);
+    HRESULT SetCandidateWindow(HIMC hIMC, CANDIDATEFORM* pCandidate);
+    HRESULT SetCompositionFontA(HIMC hIMC, LOGFONTA* plf);
+    HRESULT SetCompositionFontW(HIMC hIMC, LOGFONTW* plf);
+    HRESULT SetCompositionStringA(HIMC hIMC, uint dwIndex, void* pComp, uint dwCompLen, void* pRead, 
+                                  uint dwReadLen);
+    HRESULT SetCompositionStringW(HIMC hIMC, uint dwIndex, void* pComp, uint dwCompLen, void* pRead, 
+                                  uint dwReadLen);
+    HRESULT SetCompositionWindow(HIMC hIMC, COMPOSITIONFORM* pCompForm);
+    HRESULT SetConversionStatus(HIMC hIMC, uint fdwConversion, uint fdwSentence);
+    HRESULT SetOpenStatus(HIMC hIMC, BOOL fOpen);
+    HRESULT SetStatusWindowPos(HIMC hIMC, POINT* pptPos);
+    HRESULT SimulateHotKey(HWND hWnd, uint dwHotKeyID);
+    HRESULT UnregisterWordA(HKL hKL, PSTR szReading, uint dwStyle, PSTR szUnregister);
+    HRESULT UnregisterWordW(HKL hKL, PWSTR szReading, uint dwStyle, PWSTR szUnregister);
+    HRESULT GenerateMessage(HIMC hIMC);
+    HRESULT LockIMC(HIMC hIMC, INPUTCONTEXT** ppIMC);
+    HRESULT UnlockIMC(HIMC hIMC);
+    HRESULT GetIMCLockCount(HIMC hIMC, uint* pdwLockCount);
+    HRESULT CreateIMCC(uint dwSize, HIMCC* phIMCC);
+    HRESULT DestroyIMCC(HIMCC hIMCC);
+    HRESULT LockIMCC(HIMCC hIMCC, void** ppv);
+    HRESULT UnlockIMCC(HIMCC hIMCC);
+    HRESULT ReSizeIMCC(HIMCC hIMCC, uint dwSize, HIMCC* phIMCC);
+    HRESULT GetIMCCSize(HIMCC hIMCC, uint* pdwSize);
+    HRESULT GetIMCCLockCount(HIMCC hIMCC, uint* pdwLockCount);
+    HRESULT GetHotKey(uint dwHotKeyID, uint* puModifiers, uint* puVKey, HKL* phKL);
+    HRESULT SetHotKey(uint dwHotKeyID, uint uModifiers, uint uVKey, HKL hKL);
+    HRESULT CreateSoftKeyboard(uint uType, HWND hOwner, int x, int y, HWND* phSoftKbdWnd);
+    HRESULT DestroySoftKeyboard(HWND hSoftKbdWnd);
+    HRESULT ShowSoftKeyboard(HWND hSoftKbdWnd, int nCmdShow);
+    HRESULT GetCodePageA(HKL hKL, uint* uCodePage);
+    HRESULT GetLangId(HKL hKL, ushort* plid);
+    HRESULT KeybdEvent(ushort lgidIME, ubyte bVk, ubyte bScan, uint dwFlags, uint dwExtraInfo);
+    HRESULT LockModal();
+    HRESULT UnlockModal();
+    HRESULT AssociateContextEx(HWND hWnd, HIMC hIMC, uint dwFlags);
+    HRESULT DisableIME(uint idThread);
+    HRESULT GetImeMenuItemsA(HIMC hIMC, uint dwFlags, uint dwType, IMEMENUITEMINFOA* pImeParentMenu, 
+                             IMEMENUITEMINFOA* pImeMenu, uint dwSize, uint* pdwResult);
+    HRESULT GetImeMenuItemsW(HIMC hIMC, uint dwFlags, uint dwType, IMEMENUITEMINFOW* pImeParentMenu, 
+                             IMEMENUITEMINFOW* pImeMenu, uint dwSize, uint* pdwResult);
+    HRESULT EnumInputContext(uint idThread, IEnumInputContext* ppEnum);
+    HRESULT RequestMessageA(HIMC hIMC, WPARAM wParam, LPARAM lParam, LRESULT* plResult);
+    HRESULT RequestMessageW(HIMC hIMC, WPARAM wParam, LPARAM lParam, LRESULT* plResult);
+    HRESULT SendIMCA(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam, LRESULT* plResult);
+    HRESULT SendIMCW(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam, LRESULT* plResult);
+    HRESULT IsSleeping();
+}
+
+@GUID("6fe20962-d077-11d0-8fe7-00aa006bcc59")
+interface IActiveIME : IUnknown
+{
+    HRESULT Inquire(uint dwSystemInfoFlags, IMEINFO* pIMEInfo, PWSTR szWndClass, uint* pdwPrivate);
+    HRESULT ConversionList(HIMC hIMC, PWSTR szSource, uint uFlag, uint uBufLen, CANDIDATELIST* pDest, 
+                           uint* puCopied);
+    HRESULT Configure(HKL hKL, HWND hWnd, uint dwMode, REGISTERWORDW* pRegisterWord);
+    HRESULT Destroy(uint uReserved);
+    HRESULT Escape(HIMC hIMC, uint uEscape, void* pData, LRESULT* plResult);
+    HRESULT SetActiveContext(HIMC hIMC, BOOL fFlag);
+    HRESULT ProcessKey(HIMC hIMC, uint uVirKey, uint lParam, ubyte* pbKeyState);
+    HRESULT Notify(HIMC hIMC, uint dwAction, uint dwIndex, uint dwValue);
+    HRESULT Select(HIMC hIMC, BOOL fSelect);
+    HRESULT SetCompositionString(HIMC hIMC, uint dwIndex, void* pComp, uint dwCompLen, void* pRead, uint dwReadLen);
+    HRESULT ToAsciiEx(uint uVirKey, uint uScanCode, ubyte* pbKeyState, uint fuState, HIMC hIMC, uint* pdwTransBuf, 
+                      uint* puSize);
+    HRESULT RegisterWord(PWSTR szReading, uint dwStyle, PWSTR szString);
+    HRESULT UnregisterWord(PWSTR szReading, uint dwStyle, PWSTR szString);
+    HRESULT GetRegisterWordStyle(uint nItem, STYLEBUFW* pStyleBuf, uint* puBufSize);
+    HRESULT EnumRegisterWord(PWSTR szReading, uint dwStyle, PWSTR szRegister, void* pData, 
+                             IEnumRegisterWordW* ppEnum);
+    HRESULT GetCodePageA(uint* uCodePage);
+    HRESULT GetLangId(ushort* plid);
+}
+
+@GUID("e1c4bf0e-2d53-11d2-93e1-0060b067b86e")
+interface IActiveIME2 : IActiveIME
+{
+    HRESULT Sleep();
+    HRESULT Unsleep(BOOL fDead);
+}
+
+
+// GUIDs
+
+const GUID CLSID_CActiveIMM = GUIDOF!CActiveIMM;
+
+const GUID IID_IActiveIME                   = GUIDOF!IActiveIME;
+const GUID IID_IActiveIME2                  = GUIDOF!IActiveIME2;
+const GUID IID_IActiveIMMApp                = GUIDOF!IActiveIMMApp;
+const GUID IID_IActiveIMMIME                = GUIDOF!IActiveIMMIME;
+const GUID IID_IActiveIMMMessagePumpOwner   = GUIDOF!IActiveIMMMessagePumpOwner;
+const GUID IID_IActiveIMMRegistrar          = GUIDOF!IActiveIMMRegistrar;
+const GUID IID_IEnumInputContext            = GUIDOF!IEnumInputContext;
+const GUID IID_IEnumRegisterWordA           = GUIDOF!IEnumRegisterWordA;
+const GUID IID_IEnumRegisterWordW           = GUIDOF!IEnumRegisterWordW;
+const GUID IID_IFECommon                    = GUIDOF!IFECommon;
+const GUID IID_IFEDictionary                = GUIDOF!IFEDictionary;
+const GUID IID_IFELanguage                  = GUIDOF!IFELanguage;
+const GUID IID_IImePad                      = GUIDOF!IImePad;
+const GUID IID_IImePadApplet                = GUIDOF!IImePadApplet;
+const GUID IID_IImePlugInDictDictionaryList = GUIDOF!IImePlugInDictDictionaryList;
+const GUID IID_IImeSpecifyApplets           = GUIDOF!IImeSpecifyApplets;

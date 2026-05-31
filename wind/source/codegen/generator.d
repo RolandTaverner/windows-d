@@ -3,7 +3,7 @@ module codegen.generator;
 import std.algorithm.iteration : filter, map, splitter, uniq;
 import std.algorithm.searching : any, canFind, commonPrefix, count, endsWith, find, startsWith;
 import std.algorithm.sorting : sort;
-import std.array : array, join, split;
+import std.array : array, join, replace, split;
 import std.container.rbtree : RedBlackTree;
 import std.conv : to;
 import std.file : copy, mkdirRecurse;
@@ -71,6 +71,14 @@ public struct Generator
             }
         }
         nestedMap.rehash();
+    
+        foreach (parent, children; nestedMap) {
+            writeln(parent.getTypeName());
+            foreach(child, _; children)
+            {
+                writeln("         ", child.getTypeName());
+            }
+        }
 
         foreach(namespace; namespaces)
         {
@@ -134,7 +142,7 @@ public struct Generator
         }
 
         foreach(meth; type.getMethodList())
-        {   
+        {
             auto sig = meth.getSignature();
 
             auto dep = fullnameof(sig.retSig.typeSig.type);
@@ -144,7 +152,7 @@ public struct Generator
             }
 
             foreach(par; sig.params)
-            {                    
+            {
                 dep = fullnameof(par.typeSig.type);
                 if (dep.length && dep[0] != '.' && !dep.startsWith(namespace ~ '.'))
                 {
@@ -359,7 +367,12 @@ public struct Generator
         import std.math.traits : signbit, isInfinity, isNaN;
 
         if (auto s = v.peek!wstring)
-            f.writef("\"%s\"", *s);
+        {
+            auto escaped = (*s).replace("\\", "\\\\");
+            escaped = escaped.replace("\"", "\\\"");
+            escaped = escaped.replace("\0", "\\0");
+            f.writef("\"%s\"", escaped);
+        }
         else if (auto n = v.peek!(typeof(null)))
             f.write("null");
         else if (auto i = v.peek!int)

@@ -1,0 +1,4716 @@
+// Written in the D programming language.
+
+module windows.win32.networking.windowswebservices;
+
+public import windows.core;
+public import system : Guid;
+public import windows.win32.foundation : BOOL, CHAR, DECIMAL, FILETIME, HRESULT,
+                                         PWSTR;
+public import windows.win32.security.authentication.identity : SecPkgContext_IssuerListInfoEx;
+public import windows.win32.security.cryptography : CERT_CONTEXT, NCRYPT_KEY_HANDLE;
+public import windows.win32.system.winrt : IInspectable;
+
+extern(Windows) @nogc nothrow:
+
+
+// Enums
+
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_reader_property_id))], [])
+alias WS_XML_READER_PROPERTY_ID = int;
+enum : int
+{
+    WS_XML_READER_PROPERTY_MAX_DEPTH                          = 0x00000000,
+    WS_XML_READER_PROPERTY_ALLOW_FRAGMENT                     = 0x00000001,
+    WS_XML_READER_PROPERTY_MAX_ATTRIBUTES                     = 0x00000002,
+    WS_XML_READER_PROPERTY_READ_DECLARATION                   = 0x00000003,
+    WS_XML_READER_PROPERTY_CHARSET                            = 0x00000004,
+    WS_XML_READER_PROPERTY_ROW                                = 0x00000005,
+    WS_XML_READER_PROPERTY_COLUMN                             = 0x00000006,
+    WS_XML_READER_PROPERTY_UTF8_TRIM_SIZE                     = 0x00000007,
+    WS_XML_READER_PROPERTY_STREAM_BUFFER_SIZE                 = 0x00000008,
+    WS_XML_READER_PROPERTY_IN_ATTRIBUTE                       = 0x00000009,
+    WS_XML_READER_PROPERTY_STREAM_MAX_ROOT_MIME_PART_SIZE     = 0x0000000a,
+    WS_XML_READER_PROPERTY_STREAM_MAX_MIME_HEADERS_SIZE       = 0x0000000b,
+    WS_XML_READER_PROPERTY_MAX_MIME_PARTS                     = 0x0000000c,
+    WS_XML_READER_PROPERTY_ALLOW_INVALID_CHARACTER_REFERENCES = 0x0000000d,
+    WS_XML_READER_PROPERTY_MAX_NAMESPACES                     = 0x0000000e,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_canonicalization_algorithm))], [])
+alias WS_XML_CANONICALIZATION_ALGORITHM = int;
+enum : int
+{
+    WS_EXCLUSIVE_XML_CANONICALIZATION_ALGORITHM               = 0x00000000,
+    WS_EXCLUSIVE_WITH_COMMENTS_XML_CANONICALIZATION_ALGORITHM = 0x00000001,
+    WS_INCLUSIVE_XML_CANONICALIZATION_ALGORITHM               = 0x00000002,
+    WS_INCLUSIVE_WITH_COMMENTS_XML_CANONICALIZATION_ALGORITHM = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_canonicalization_property_id))], [])
+alias WS_XML_CANONICALIZATION_PROPERTY_ID = int;
+enum : int
+{
+    WS_XML_CANONICALIZATION_PROPERTY_ALGORITHM          = 0x00000000,
+    WS_XML_CANONICALIZATION_PROPERTY_INCLUSIVE_PREFIXES = 0x00000001,
+    WS_XML_CANONICALIZATION_PROPERTY_OMITTED_ELEMENT    = 0x00000002,
+    WS_XML_CANONICALIZATION_PROPERTY_OUTPUT_BUFFER_SIZE = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_writer_property_id))], [])
+alias WS_XML_WRITER_PROPERTY_ID = int;
+enum : int
+{
+    WS_XML_WRITER_PROPERTY_MAX_DEPTH                          = 0x00000000,
+    WS_XML_WRITER_PROPERTY_ALLOW_FRAGMENT                     = 0x00000001,
+    WS_XML_WRITER_PROPERTY_MAX_ATTRIBUTES                     = 0x00000002,
+    WS_XML_WRITER_PROPERTY_WRITE_DECLARATION                  = 0x00000003,
+    WS_XML_WRITER_PROPERTY_INDENT                             = 0x00000004,
+    WS_XML_WRITER_PROPERTY_BUFFER_TRIM_SIZE                   = 0x00000005,
+    WS_XML_WRITER_PROPERTY_CHARSET                            = 0x00000006,
+    WS_XML_WRITER_PROPERTY_BUFFERS                            = 0x00000007,
+    WS_XML_WRITER_PROPERTY_BUFFER_MAX_SIZE                    = 0x00000008,
+    WS_XML_WRITER_PROPERTY_BYTES                              = 0x00000009,
+    WS_XML_WRITER_PROPERTY_IN_ATTRIBUTE                       = 0x0000000a,
+    WS_XML_WRITER_PROPERTY_MAX_MIME_PARTS_BUFFER_SIZE         = 0x0000000b,
+    WS_XML_WRITER_PROPERTY_INITIAL_BUFFER                     = 0x0000000c,
+    WS_XML_WRITER_PROPERTY_ALLOW_INVALID_CHARACTER_REFERENCES = 0x0000000d,
+    WS_XML_WRITER_PROPERTY_MAX_NAMESPACES                     = 0x0000000e,
+    WS_XML_WRITER_PROPERTY_BYTES_WRITTEN                      = 0x0000000f,
+    WS_XML_WRITER_PROPERTY_BYTES_TO_CLOSE                     = 0x00000010,
+    WS_XML_WRITER_PROPERTY_COMPRESS_EMPTY_ELEMENTS            = 0x00000011,
+    WS_XML_WRITER_PROPERTY_EMIT_UNCOMPRESSED_EMPTY_ELEMENTS   = 0x00000012,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_buffer_property_id))], [])
+alias WS_XML_BUFFER_PROPERTY_ID = int;
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_text_type))], [])
+alias WS_XML_TEXT_TYPE = int;
+enum : int
+{
+    WS_XML_TEXT_TYPE_UTF8      = 0x00000001,
+    WS_XML_TEXT_TYPE_UTF16     = 0x00000002,
+    WS_XML_TEXT_TYPE_BASE64    = 0x00000003,
+    WS_XML_TEXT_TYPE_BOOL      = 0x00000004,
+    WS_XML_TEXT_TYPE_INT32     = 0x00000005,
+    WS_XML_TEXT_TYPE_INT64     = 0x00000006,
+    WS_XML_TEXT_TYPE_UINT64    = 0x00000007,
+    WS_XML_TEXT_TYPE_FLOAT     = 0x00000008,
+    WS_XML_TEXT_TYPE_DOUBLE    = 0x00000009,
+    WS_XML_TEXT_TYPE_DECIMAL   = 0x0000000a,
+    WS_XML_TEXT_TYPE_GUID      = 0x0000000b,
+    WS_XML_TEXT_TYPE_UNIQUE_ID = 0x0000000c,
+    WS_XML_TEXT_TYPE_DATETIME  = 0x0000000d,
+    WS_XML_TEXT_TYPE_TIMESPAN  = 0x0000000e,
+    WS_XML_TEXT_TYPE_QNAME     = 0x0000000f,
+    WS_XML_TEXT_TYPE_LIST      = 0x00000010,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_node_type))], [])
+alias WS_XML_NODE_TYPE = int;
+enum : int
+{
+    WS_XML_NODE_TYPE_ELEMENT     = 0x00000001,
+    WS_XML_NODE_TYPE_TEXT        = 0x00000002,
+    WS_XML_NODE_TYPE_END_ELEMENT = 0x00000003,
+    WS_XML_NODE_TYPE_COMMENT     = 0x00000004,
+    WS_XML_NODE_TYPE_CDATA       = 0x00000006,
+    WS_XML_NODE_TYPE_END_CDATA   = 0x00000007,
+    WS_XML_NODE_TYPE_EOF         = 0x00000008,
+    WS_XML_NODE_TYPE_BOF         = 0x00000009,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_move_to))], [])
+alias WS_MOVE_TO = int;
+enum : int
+{
+    WS_MOVE_TO_ROOT_ELEMENT     = 0x00000000,
+    WS_MOVE_TO_NEXT_ELEMENT     = 0x00000001,
+    WS_MOVE_TO_PREVIOUS_ELEMENT = 0x00000002,
+    WS_MOVE_TO_CHILD_ELEMENT    = 0x00000003,
+    WS_MOVE_TO_END_ELEMENT      = 0x00000004,
+    WS_MOVE_TO_PARENT_ELEMENT   = 0x00000005,
+    WS_MOVE_TO_NEXT_NODE        = 0x00000006,
+    WS_MOVE_TO_PREVIOUS_NODE    = 0x00000007,
+    WS_MOVE_TO_FIRST_NODE       = 0x00000008,
+    WS_MOVE_TO_BOF              = 0x00000009,
+    WS_MOVE_TO_EOF              = 0x0000000a,
+    WS_MOVE_TO_CHILD_NODE       = 0x0000000b,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_value_type))], [])
+alias WS_VALUE_TYPE = int;
+enum : int
+{
+    WS_BOOL_VALUE_TYPE     = 0x00000000,
+    WS_INT8_VALUE_TYPE     = 0x00000001,
+    WS_INT16_VALUE_TYPE    = 0x00000002,
+    WS_INT32_VALUE_TYPE    = 0x00000003,
+    WS_INT64_VALUE_TYPE    = 0x00000004,
+    WS_UINT8_VALUE_TYPE    = 0x00000005,
+    WS_UINT16_VALUE_TYPE   = 0x00000006,
+    WS_UINT32_VALUE_TYPE   = 0x00000007,
+    WS_UINT64_VALUE_TYPE   = 0x00000008,
+    WS_FLOAT_VALUE_TYPE    = 0x00000009,
+    WS_DOUBLE_VALUE_TYPE   = 0x0000000a,
+    WS_DECIMAL_VALUE_TYPE  = 0x0000000b,
+    WS_DATETIME_VALUE_TYPE = 0x0000000c,
+    WS_TIMESPAN_VALUE_TYPE = 0x0000000d,
+    WS_GUID_VALUE_TYPE     = 0x0000000e,
+    WS_DURATION_VALUE_TYPE = 0x0000000f,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_reader_input_type))], [])
+alias WS_XML_READER_INPUT_TYPE = int;
+enum : int
+{
+    WS_XML_READER_INPUT_TYPE_BUFFER = 0x00000001,
+    WS_XML_READER_INPUT_TYPE_STREAM = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_reader_encoding_type))], [])
+alias WS_XML_READER_ENCODING_TYPE = int;
+enum : int
+{
+    WS_XML_READER_ENCODING_TYPE_TEXT   = 0x00000001,
+    WS_XML_READER_ENCODING_TYPE_BINARY = 0x00000002,
+    WS_XML_READER_ENCODING_TYPE_MTOM   = 0x00000003,
+    WS_XML_READER_ENCODING_TYPE_RAW    = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_charset))], [])
+alias WS_CHARSET = int;
+enum : int
+{
+    WS_CHARSET_AUTO    = 0x00000000,
+    WS_CHARSET_UTF8    = 0x00000001,
+    WS_CHARSET_UTF16LE = 0x00000002,
+    WS_CHARSET_UTF16BE = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_writer_encoding_type))], [])
+alias WS_XML_WRITER_ENCODING_TYPE = int;
+enum : int
+{
+    WS_XML_WRITER_ENCODING_TYPE_TEXT   = 0x00000001,
+    WS_XML_WRITER_ENCODING_TYPE_BINARY = 0x00000002,
+    WS_XML_WRITER_ENCODING_TYPE_MTOM   = 0x00000003,
+    WS_XML_WRITER_ENCODING_TYPE_RAW    = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_writer_output_type))], [])
+alias WS_XML_WRITER_OUTPUT_TYPE = int;
+enum : int
+{
+    WS_XML_WRITER_OUTPUT_TYPE_BUFFER = 0x00000001,
+    WS_XML_WRITER_OUTPUT_TYPE_STREAM = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_callback_model))], [])
+alias WS_CALLBACK_MODEL = int;
+enum : int
+{
+    WS_SHORT_CALLBACK = 0x00000000,
+    WS_LONG_CALLBACK  = 0x00000001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_encoding))], [])
+alias WS_ENCODING = int;
+enum : int
+{
+    WS_ENCODING_XML_BINARY_1         = 0x00000000,
+    WS_ENCODING_XML_BINARY_SESSION_1 = 0x00000001,
+    WS_ENCODING_XML_MTOM_UTF8        = 0x00000002,
+    WS_ENCODING_XML_MTOM_UTF16BE     = 0x00000003,
+    WS_ENCODING_XML_MTOM_UTF16LE     = 0x00000004,
+    WS_ENCODING_XML_UTF8             = 0x00000005,
+    WS_ENCODING_XML_UTF16BE          = 0x00000006,
+    WS_ENCODING_XML_UTF16LE          = 0x00000007,
+    WS_ENCODING_RAW                  = 0x00000008,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_channel_state))], [])
+alias WS_CHANNEL_STATE = int;
+enum : int
+{
+    WS_CHANNEL_STATE_CREATED   = 0x00000000,
+    WS_CHANNEL_STATE_OPENING   = 0x00000001,
+    WS_CHANNEL_STATE_ACCEPTING = 0x00000002,
+    WS_CHANNEL_STATE_OPEN      = 0x00000003,
+    WS_CHANNEL_STATE_FAULTED   = 0x00000004,
+    WS_CHANNEL_STATE_CLOSING   = 0x00000005,
+    WS_CHANNEL_STATE_CLOSED    = 0x00000006,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_receive_option))], [])
+alias WS_RECEIVE_OPTION = int;
+enum : int
+{
+    WS_RECEIVE_REQUIRED_MESSAGE = 0x00000001,
+    WS_RECEIVE_OPTIONAL_MESSAGE = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_channel_binding))], [])
+alias WS_CHANNEL_BINDING = int;
+enum : int
+{
+    WS_HTTP_CHANNEL_BINDING      = 0x00000000,
+    WS_TCP_CHANNEL_BINDING       = 0x00000001,
+    WS_UDP_CHANNEL_BINDING       = 0x00000002,
+    WS_CUSTOM_CHANNEL_BINDING    = 0x00000003,
+    WS_NAMEDPIPE_CHANNEL_BINDING = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_channel_type))], [])
+alias WS_CHANNEL_TYPE = int;
+enum : int
+{
+    WS_CHANNEL_TYPE_INPUT          = 0x00000001,
+    WS_CHANNEL_TYPE_OUTPUT         = 0x00000002,
+    WS_CHANNEL_TYPE_SESSION        = 0x00000004,
+    WS_CHANNEL_TYPE_INPUT_SESSION  = 0x00000005,
+    WS_CHANNEL_TYPE_OUTPUT_SESSION = 0x00000006,
+    WS_CHANNEL_TYPE_DUPLEX         = 0x00000003,
+    WS_CHANNEL_TYPE_DUPLEX_SESSION = 0x00000007,
+    WS_CHANNEL_TYPE_REQUEST        = 0x00000008,
+    WS_CHANNEL_TYPE_REPLY          = 0x00000010,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_transfer_mode))], [])
+alias WS_TRANSFER_MODE = int;
+enum : int
+{
+    WS_STREAMED_INPUT_TRANSFER_MODE  = 0x00000001,
+    WS_STREAMED_OUTPUT_TRANSFER_MODE = 0x00000002,
+    WS_BUFFERED_TRANSFER_MODE        = 0x00000000,
+    WS_STREAMED_TRANSFER_MODE        = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_http_proxy_setting_mode))], [])
+alias WS_HTTP_PROXY_SETTING_MODE = int;
+enum : int
+{
+    WS_HTTP_PROXY_SETTING_MODE_AUTO   = 0x00000001,
+    WS_HTTP_PROXY_SETTING_MODE_NONE   = 0x00000002,
+    WS_HTTP_PROXY_SETTING_MODE_CUSTOM = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_channel_property_id))], [])
+alias WS_CHANNEL_PROPERTY_ID = int;
+enum : int
+{
+    WS_CHANNEL_PROPERTY_MAX_BUFFERED_MESSAGE_SIZE            = 0x00000000,
+    WS_CHANNEL_PROPERTY_MAX_STREAMED_MESSAGE_SIZE            = 0x00000001,
+    WS_CHANNEL_PROPERTY_MAX_STREAMED_START_SIZE              = 0x00000002,
+    WS_CHANNEL_PROPERTY_MAX_STREAMED_FLUSH_SIZE              = 0x00000003,
+    WS_CHANNEL_PROPERTY_ENCODING                             = 0x00000004,
+    WS_CHANNEL_PROPERTY_ENVELOPE_VERSION                     = 0x00000005,
+    WS_CHANNEL_PROPERTY_ADDRESSING_VERSION                   = 0x00000006,
+    WS_CHANNEL_PROPERTY_MAX_SESSION_DICTIONARY_SIZE          = 0x00000007,
+    WS_CHANNEL_PROPERTY_STATE                                = 0x00000008,
+    WS_CHANNEL_PROPERTY_ASYNC_CALLBACK_MODEL                 = 0x00000009,
+    WS_CHANNEL_PROPERTY_IP_VERSION                           = 0x0000000a,
+    WS_CHANNEL_PROPERTY_RESOLVE_TIMEOUT                      = 0x0000000b,
+    WS_CHANNEL_PROPERTY_CONNECT_TIMEOUT                      = 0x0000000c,
+    WS_CHANNEL_PROPERTY_SEND_TIMEOUT                         = 0x0000000d,
+    WS_CHANNEL_PROPERTY_RECEIVE_RESPONSE_TIMEOUT             = 0x0000000e,
+    WS_CHANNEL_PROPERTY_RECEIVE_TIMEOUT                      = 0x0000000f,
+    WS_CHANNEL_PROPERTY_CLOSE_TIMEOUT                        = 0x00000010,
+    WS_CHANNEL_PROPERTY_ENABLE_TIMEOUTS                      = 0x00000011,
+    WS_CHANNEL_PROPERTY_TRANSFER_MODE                        = 0x00000012,
+    WS_CHANNEL_PROPERTY_MULTICAST_INTERFACE                  = 0x00000013,
+    WS_CHANNEL_PROPERTY_MULTICAST_HOPS                       = 0x00000014,
+    WS_CHANNEL_PROPERTY_REMOTE_ADDRESS                       = 0x00000015,
+    WS_CHANNEL_PROPERTY_REMOTE_IP_ADDRESS                    = 0x00000016,
+    WS_CHANNEL_PROPERTY_HTTP_CONNECTION_ID                   = 0x00000017,
+    WS_CHANNEL_PROPERTY_CUSTOM_CHANNEL_CALLBACKS             = 0x00000018,
+    WS_CHANNEL_PROPERTY_CUSTOM_CHANNEL_PARAMETERS            = 0x00000019,
+    WS_CHANNEL_PROPERTY_CUSTOM_CHANNEL_INSTANCE              = 0x0000001a,
+    WS_CHANNEL_PROPERTY_TRANSPORT_URL                        = 0x0000001b,
+    WS_CHANNEL_PROPERTY_NO_DELAY                             = 0x0000001c,
+    WS_CHANNEL_PROPERTY_SEND_KEEP_ALIVES                     = 0x0000001d,
+    WS_CHANNEL_PROPERTY_KEEP_ALIVE_TIME                      = 0x0000001e,
+    WS_CHANNEL_PROPERTY_KEEP_ALIVE_INTERVAL                  = 0x0000001f,
+    WS_CHANNEL_PROPERTY_MAX_HTTP_SERVER_CONNECTIONS          = 0x00000020,
+    WS_CHANNEL_PROPERTY_IS_SESSION_SHUT_DOWN                 = 0x00000021,
+    WS_CHANNEL_PROPERTY_CHANNEL_TYPE                         = 0x00000022,
+    WS_CHANNEL_PROPERTY_TRIM_BUFFERED_MESSAGE_SIZE           = 0x00000023,
+    WS_CHANNEL_PROPERTY_ENCODER                              = 0x00000024,
+    WS_CHANNEL_PROPERTY_DECODER                              = 0x00000025,
+    WS_CHANNEL_PROPERTY_PROTECTION_LEVEL                     = 0x00000026,
+    WS_CHANNEL_PROPERTY_COOKIE_MODE                          = 0x00000027,
+    WS_CHANNEL_PROPERTY_HTTP_PROXY_SETTING_MODE              = 0x00000028,
+    WS_CHANNEL_PROPERTY_CUSTOM_HTTP_PROXY                    = 0x00000029,
+    WS_CHANNEL_PROPERTY_HTTP_MESSAGE_MAPPING                 = 0x0000002a,
+    WS_CHANNEL_PROPERTY_ENABLE_HTTP_REDIRECT                 = 0x0000002b,
+    WS_CHANNEL_PROPERTY_HTTP_REDIRECT_CALLBACK_CONTEXT       = 0x0000002c,
+    WS_CHANNEL_PROPERTY_FAULTS_AS_ERRORS                     = 0x0000002d,
+    WS_CHANNEL_PROPERTY_ALLOW_UNSECURED_FAULTS               = 0x0000002e,
+    WS_CHANNEL_PROPERTY_HTTP_SERVER_SPN                      = 0x0000002f,
+    WS_CHANNEL_PROPERTY_HTTP_PROXY_SPN                       = 0x00000030,
+    WS_CHANNEL_PROPERTY_MAX_HTTP_REQUEST_HEADERS_BUFFER_SIZE = 0x00000031,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_cookie_mode))], [])
+alias WS_COOKIE_MODE = int;
+enum : int
+{
+    WS_MANUAL_COOKIE_MODE = 0x00000001,
+    WS_AUTO_COOKIE_MODE   = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_operation_context_property_id))], [])
+alias WS_OPERATION_CONTEXT_PROPERTY_ID = int;
+enum : int
+{
+    WS_OPERATION_CONTEXT_PROPERTY_CHANNEL              = 0x00000000,
+    WS_OPERATION_CONTEXT_PROPERTY_CONTRACT_DESCRIPTION = 0x00000001,
+    WS_OPERATION_CONTEXT_PROPERTY_HOST_USER_STATE      = 0x00000002,
+    WS_OPERATION_CONTEXT_PROPERTY_CHANNEL_USER_STATE   = 0x00000003,
+    WS_OPERATION_CONTEXT_PROPERTY_INPUT_MESSAGE        = 0x00000004,
+    WS_OPERATION_CONTEXT_PROPERTY_OUTPUT_MESSAGE       = 0x00000005,
+    WS_OPERATION_CONTEXT_PROPERTY_HEAP                 = 0x00000006,
+    WS_OPERATION_CONTEXT_PROPERTY_LISTENER             = 0x00000007,
+    WS_OPERATION_CONTEXT_PROPERTY_ENDPOINT_ADDRESS     = 0x00000008,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_endpoint_identity_type))], [])
+alias WS_ENDPOINT_IDENTITY_TYPE = int;
+enum : int
+{
+    WS_DNS_ENDPOINT_IDENTITY_TYPE     = 0x00000001,
+    WS_UPN_ENDPOINT_IDENTITY_TYPE     = 0x00000002,
+    WS_SPN_ENDPOINT_IDENTITY_TYPE     = 0x00000003,
+    WS_RSA_ENDPOINT_IDENTITY_TYPE     = 0x00000004,
+    WS_CERT_ENDPOINT_IDENTITY_TYPE    = 0x00000005,
+    WS_UNKNOWN_ENDPOINT_IDENTITY_TYPE = 0x00000006,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_endpoint_address_extension_type))], [])
+alias WS_ENDPOINT_ADDRESS_EXTENSION_TYPE = int;
+enum : int
+{
+    WS_ENDPOINT_ADDRESS_EXTENSION_METADATA_ADDRESS = 0x00000001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_error_property_id))], [])
+alias WS_ERROR_PROPERTY_ID = int;
+enum : int
+{
+    WS_ERROR_PROPERTY_STRING_COUNT        = 0x00000000,
+    WS_ERROR_PROPERTY_ORIGINAL_ERROR_CODE = 0x00000001,
+    WS_ERROR_PROPERTY_LANGID              = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_exception_code))], [])
+alias WS_EXCEPTION_CODE = int;
+enum : int
+{
+    WS_EXCEPTION_CODE_USAGE_FAILURE    = 0xc03d0000,
+    WS_EXCEPTION_CODE_INTERNAL_FAILURE = 0xc03d0001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_fault_error_property_id))], [])
+alias WS_FAULT_ERROR_PROPERTY_ID = int;
+enum : int
+{
+    WS_FAULT_ERROR_PROPERTY_FAULT  = 0x00000000,
+    WS_FAULT_ERROR_PROPERTY_ACTION = 0x00000001,
+    WS_FAULT_ERROR_PROPERTY_HEADER = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_fault_disclosure))], [])
+alias WS_FAULT_DISCLOSURE = int;
+enum : int
+{
+    WS_MINIMAL_FAULT_DISCLOSURE = 0x00000000,
+    WS_FULL_FAULT_DISCLOSURE    = 0x00000001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_heap_property_id))], [])
+alias WS_HEAP_PROPERTY_ID = int;
+enum : int
+{
+    WS_HEAP_PROPERTY_MAX_SIZE       = 0x00000000,
+    WS_HEAP_PROPERTY_TRIM_SIZE      = 0x00000001,
+    WS_HEAP_PROPERTY_REQUESTED_SIZE = 0x00000002,
+    WS_HEAP_PROPERTY_ACTUAL_SIZE    = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_listener_state))], [])
+alias WS_LISTENER_STATE = int;
+enum : int
+{
+    WS_LISTENER_STATE_CREATED = 0x00000000,
+    WS_LISTENER_STATE_OPENING = 0x00000001,
+    WS_LISTENER_STATE_OPEN    = 0x00000002,
+    WS_LISTENER_STATE_FAULTED = 0x00000003,
+    WS_LISTENER_STATE_CLOSING = 0x00000004,
+    WS_LISTENER_STATE_CLOSED  = 0x00000005,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_listener_property_id))], [])
+alias WS_LISTENER_PROPERTY_ID = int;
+enum : int
+{
+    WS_LISTENER_PROPERTY_LISTEN_BACKLOG                 = 0x00000000,
+    WS_LISTENER_PROPERTY_IP_VERSION                     = 0x00000001,
+    WS_LISTENER_PROPERTY_STATE                          = 0x00000002,
+    WS_LISTENER_PROPERTY_ASYNC_CALLBACK_MODEL           = 0x00000003,
+    WS_LISTENER_PROPERTY_CHANNEL_TYPE                   = 0x00000004,
+    WS_LISTENER_PROPERTY_CHANNEL_BINDING                = 0x00000005,
+    WS_LISTENER_PROPERTY_CONNECT_TIMEOUT                = 0x00000006,
+    WS_LISTENER_PROPERTY_IS_MULTICAST                   = 0x00000007,
+    WS_LISTENER_PROPERTY_MULTICAST_INTERFACES           = 0x00000008,
+    WS_LISTENER_PROPERTY_MULTICAST_LOOPBACK             = 0x00000009,
+    WS_LISTENER_PROPERTY_CLOSE_TIMEOUT                  = 0x0000000a,
+    WS_LISTENER_PROPERTY_TO_HEADER_MATCHING_OPTIONS     = 0x0000000b,
+    WS_LISTENER_PROPERTY_TRANSPORT_URL_MATCHING_OPTIONS = 0x0000000c,
+    WS_LISTENER_PROPERTY_CUSTOM_LISTENER_CALLBACKS      = 0x0000000d,
+    WS_LISTENER_PROPERTY_CUSTOM_LISTENER_PARAMETERS     = 0x0000000e,
+    WS_LISTENER_PROPERTY_CUSTOM_LISTENER_INSTANCE       = 0x0000000f,
+    WS_LISTENER_PROPERTY_DISALLOWED_USER_AGENT          = 0x00000010,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_ip_version))], [])
+alias WS_IP_VERSION = int;
+enum : int
+{
+    WS_IP_VERSION_4    = 0x00000001,
+    WS_IP_VERSION_6    = 0x00000002,
+    WS_IP_VERSION_AUTO = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_message_state))], [])
+alias WS_MESSAGE_STATE = int;
+enum : int
+{
+    WS_MESSAGE_STATE_EMPTY       = 0x00000001,
+    WS_MESSAGE_STATE_INITIALIZED = 0x00000002,
+    WS_MESSAGE_STATE_READING     = 0x00000003,
+    WS_MESSAGE_STATE_WRITING     = 0x00000004,
+    WS_MESSAGE_STATE_DONE        = 0x00000005,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_message_initialization))], [])
+alias WS_MESSAGE_INITIALIZATION = int;
+enum : int
+{
+    WS_BLANK_MESSAGE     = 0x00000000,
+    WS_DUPLICATE_MESSAGE = 0x00000001,
+    WS_REQUEST_MESSAGE   = 0x00000002,
+    WS_REPLY_MESSAGE     = 0x00000003,
+    WS_FAULT_MESSAGE     = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_repeating_header_option))], [])
+alias WS_REPEATING_HEADER_OPTION = int;
+enum : int
+{
+    WS_REPEATING_HEADER = 0x00000001,
+    WS_SINGLETON_HEADER = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_header_type))], [])
+alias WS_HEADER_TYPE = int;
+enum : int
+{
+    WS_ACTION_HEADER     = 0x00000001,
+    WS_TO_HEADER         = 0x00000002,
+    WS_MESSAGE_ID_HEADER = 0x00000003,
+    WS_RELATES_TO_HEADER = 0x00000004,
+    WS_FROM_HEADER       = 0x00000005,
+    WS_REPLY_TO_HEADER   = 0x00000006,
+    WS_FAULT_TO_HEADER   = 0x00000007,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_addressing_version))], [])
+alias WS_ADDRESSING_VERSION = int;
+enum : int
+{
+    WS_ADDRESSING_VERSION_0_9       = 0x00000001,
+    WS_ADDRESSING_VERSION_1_0       = 0x00000002,
+    WS_ADDRESSING_VERSION_TRANSPORT = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_envelope_version))], [])
+alias WS_ENVELOPE_VERSION = int;
+enum : int
+{
+    WS_ENVELOPE_VERSION_SOAP_1_1 = 0x00000001,
+    WS_ENVELOPE_VERSION_SOAP_1_2 = 0x00000002,
+    WS_ENVELOPE_VERSION_NONE     = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_message_property_id))], [])
+alias WS_MESSAGE_PROPERTY_ID = int;
+enum : int
+{
+    WS_MESSAGE_PROPERTY_STATE                            = 0x00000000,
+    WS_MESSAGE_PROPERTY_HEAP                             = 0x00000001,
+    WS_MESSAGE_PROPERTY_ENVELOPE_VERSION                 = 0x00000002,
+    WS_MESSAGE_PROPERTY_ADDRESSING_VERSION               = 0x00000003,
+    WS_MESSAGE_PROPERTY_HEADER_BUFFER                    = 0x00000004,
+    WS_MESSAGE_PROPERTY_HEADER_POSITION                  = 0x00000005,
+    WS_MESSAGE_PROPERTY_BODY_READER                      = 0x00000006,
+    WS_MESSAGE_PROPERTY_BODY_WRITER                      = 0x00000007,
+    WS_MESSAGE_PROPERTY_IS_ADDRESSED                     = 0x00000008,
+    WS_MESSAGE_PROPERTY_HEAP_PROPERTIES                  = 0x00000009,
+    WS_MESSAGE_PROPERTY_XML_READER_PROPERTIES            = 0x0000000a,
+    WS_MESSAGE_PROPERTY_XML_WRITER_PROPERTIES            = 0x0000000b,
+    WS_MESSAGE_PROPERTY_IS_FAULT                         = 0x0000000c,
+    WS_MESSAGE_PROPERTY_MAX_PROCESSED_HEADERS            = 0x0000000d,
+    WS_MESSAGE_PROPERTY_USERNAME                         = 0x0000000e,
+    WS_MESSAGE_PROPERTY_ENCODED_CERT                     = 0x0000000f,
+    WS_MESSAGE_PROPERTY_TRANSPORT_SECURITY_WINDOWS_TOKEN = 0x00000010,
+    WS_MESSAGE_PROPERTY_HTTP_HEADER_AUTH_WINDOWS_TOKEN   = 0x00000011,
+    WS_MESSAGE_PROPERTY_MESSAGE_SECURITY_WINDOWS_TOKEN   = 0x00000012,
+    WS_MESSAGE_PROPERTY_SAML_ASSERTION                   = 0x00000013,
+    WS_MESSAGE_PROPERTY_SECURITY_CONTEXT                 = 0x00000014,
+    WS_MESSAGE_PROPERTY_PROTECTION_LEVEL                 = 0x00000015,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_binding_type))], [])
+alias WS_SECURITY_BINDING_TYPE = int;
+enum : int
+{
+    WS_SSL_TRANSPORT_SECURITY_BINDING_TYPE            = 0x00000001,
+    WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING_TYPE       = 0x00000002,
+    WS_HTTP_HEADER_AUTH_SECURITY_BINDING_TYPE         = 0x00000003,
+    WS_USERNAME_MESSAGE_SECURITY_BINDING_TYPE         = 0x00000004,
+    WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_TYPE   = 0x00000005,
+    WS_XML_TOKEN_MESSAGE_SECURITY_BINDING_TYPE        = 0x00000006,
+    WS_SAML_MESSAGE_SECURITY_BINDING_TYPE             = 0x00000007,
+    WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_TYPE = 0x00000008,
+    WS_NAMEDPIPE_SSPI_TRANSPORT_SECURITY_BINDING_TYPE = 0x00000009,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_http_header_auth_target))], [])
+alias WS_HTTP_HEADER_AUTH_TARGET = int;
+enum : int
+{
+    WS_HTTP_HEADER_AUTH_TARGET_SERVICE = 0x00000001,
+    WS_HTTP_HEADER_AUTH_TARGET_PROXY   = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_windows_integrated_auth_package))], [])
+alias WS_WINDOWS_INTEGRATED_AUTH_PACKAGE = int;
+enum : int
+{
+    WS_WINDOWS_INTEGRATED_AUTH_PACKAGE_KERBEROS = 0x00000001,
+    WS_WINDOWS_INTEGRATED_AUTH_PACKAGE_NTLM     = 0x00000002,
+    WS_WINDOWS_INTEGRATED_AUTH_PACKAGE_SPNEGO   = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_header_version))], [])
+alias WS_SECURITY_HEADER_VERSION = int;
+enum : int
+{
+    WS_SECURITY_HEADER_VERSION_1_0 = 0x00000001,
+    WS_SECURITY_HEADER_VERSION_1_1 = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_trust_version))], [])
+alias WS_TRUST_VERSION = int;
+enum : int
+{
+    WS_TRUST_VERSION_FEBRUARY_2005 = 0x00000001,
+    WS_TRUST_VERSION_1_3           = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_request_security_token_action))], [])
+alias WS_REQUEST_SECURITY_TOKEN_ACTION = int;
+enum : int
+{
+    WS_REQUEST_SECURITY_TOKEN_ACTION_ISSUE         = 0x00000001,
+    WS_REQUEST_SECURITY_TOKEN_ACTION_NEW_CONTEXT   = 0x00000002,
+    WS_REQUEST_SECURITY_TOKEN_ACTION_RENEW_CONTEXT = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_secure_conversation_version))], [])
+alias WS_SECURE_CONVERSATION_VERSION = int;
+enum : int
+{
+    WS_SECURE_CONVERSATION_VERSION_FEBRUARY_2005 = 0x00000001,
+    WS_SECURE_CONVERSATION_VERSION_1_3           = 0x00000002,
+}
+alias WS_SECURE_PROTOCOL = int;
+enum : int
+{
+    WS_SECURE_PROTOCOL_SSL2   = 0x00000001,
+    WS_SECURE_PROTOCOL_SSL3   = 0x00000002,
+    WS_SECURE_PROTOCOL_TLS1_0 = 0x00000004,
+    WS_SECURE_PROTOCOL_TLS1_1 = 0x00000008,
+    WS_SECURE_PROTOCOL_TLS1_2 = 0x00000010,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_timestamp_usage))], [])
+alias WS_SECURITY_TIMESTAMP_USAGE = int;
+enum : int
+{
+    WS_SECURITY_TIMESTAMP_USAGE_ALWAYS        = 0x00000001,
+    WS_SECURITY_TIMESTAMP_USAGE_NEVER         = 0x00000002,
+    WS_SECURITY_TIMESTAMP_USAGE_REQUESTS_ONLY = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_header_layout))], [])
+alias WS_SECURITY_HEADER_LAYOUT = int;
+enum : int
+{
+    WS_SECURITY_HEADER_LAYOUT_STRICT                   = 0x00000001,
+    WS_SECURITY_HEADER_LAYOUT_LAX                      = 0x00000002,
+    WS_SECURITY_HEADER_LAYOUT_LAX_WITH_TIMESTAMP_FIRST = 0x00000003,
+    WS_SECURITY_HEADER_LAYOUT_LAX_WITH_TIMESTAMP_LAST  = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_algorithm_property_id))], [])
+alias WS_SECURITY_ALGORITHM_PROPERTY_ID = int;
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_algorithm_id))], [])
+alias WS_SECURITY_ALGORITHM_ID = int;
+enum : int
+{
+    WS_SECURITY_ALGORITHM_DEFAULT                                  = 0x00000000,
+    WS_SECURITY_ALGORITHM_CANONICALIZATION_EXCLUSIVE               = 0x00000001,
+    WS_SECURITY_ALGORITHM_CANONICALIZATION_EXCLUSIVE_WITH_COMMENTS = 0x00000002,
+    WS_SECURITY_ALGORITHM_DIGEST_SHA1                              = 0x00000003,
+    WS_SECURITY_ALGORITHM_DIGEST_SHA_256                           = 0x00000004,
+    WS_SECURITY_ALGORITHM_DIGEST_SHA_384                           = 0x00000005,
+    WS_SECURITY_ALGORITHM_DIGEST_SHA_512                           = 0x00000006,
+    WS_SECURITY_ALGORITHM_SYMMETRIC_SIGNATURE_HMAC_SHA1            = 0x00000007,
+    WS_SECURITY_ALGORITHM_SYMMETRIC_SIGNATURE_HMAC_SHA_256         = 0x00000008,
+    WS_SECURITY_ALGORITHM_SYMMETRIC_SIGNATURE_HMAC_SHA_384         = 0x00000009,
+    WS_SECURITY_ALGORITHM_SYMMETRIC_SIGNATURE_HMAC_SHA_512         = 0x0000000a,
+    WS_SECURITY_ALGORITHM_ASYMMETRIC_SIGNATURE_RSA_SHA1            = 0x0000000b,
+    WS_SECURITY_ALGORITHM_ASYMMETRIC_SIGNATURE_DSA_SHA1            = 0x0000000c,
+    WS_SECURITY_ALGORITHM_ASYMMETRIC_SIGNATURE_RSA_SHA_256         = 0x0000000d,
+    WS_SECURITY_ALGORITHM_ASYMMETRIC_SIGNATURE_RSA_SHA_384         = 0x0000000e,
+    WS_SECURITY_ALGORITHM_ASYMMETRIC_SIGNATURE_RSA_SHA_512         = 0x0000000f,
+    WS_SECURITY_ALGORITHM_ASYMMETRIC_KEYWRAP_RSA_1_5               = 0x00000010,
+    WS_SECURITY_ALGORITHM_ASYMMETRIC_KEYWRAP_RSA_OAEP              = 0x00000011,
+    WS_SECURITY_ALGORITHM_KEY_DERIVATION_P_SHA1                    = 0x00000012,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_protection_level))], [])
+alias WS_PROTECTION_LEVEL = int;
+enum : int
+{
+    WS_PROTECTION_LEVEL_NONE             = 0x00000001,
+    WS_PROTECTION_LEVEL_SIGN             = 0x00000002,
+    WS_PROTECTION_LEVEL_SIGN_AND_ENCRYPT = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_property_id))], [])
+alias WS_SECURITY_PROPERTY_ID = int;
+enum : int
+{
+    WS_SECURITY_PROPERTY_TRANSPORT_PROTECTION_LEVEL   = 0x00000001,
+    WS_SECURITY_PROPERTY_ALGORITHM_SUITE              = 0x00000002,
+    WS_SECURITY_PROPERTY_ALGORITHM_SUITE_NAME         = 0x00000003,
+    WS_SECURITY_PROPERTY_MAX_ALLOWED_LATENCY          = 0x00000004,
+    WS_SECURITY_PROPERTY_TIMESTAMP_VALIDITY_DURATION  = 0x00000005,
+    WS_SECURITY_PROPERTY_MAX_ALLOWED_CLOCK_SKEW       = 0x00000006,
+    WS_SECURITY_PROPERTY_TIMESTAMP_USAGE              = 0x00000007,
+    WS_SECURITY_PROPERTY_SECURITY_HEADER_LAYOUT       = 0x00000008,
+    WS_SECURITY_PROPERTY_SECURITY_HEADER_VERSION      = 0x00000009,
+    WS_SECURITY_PROPERTY_EXTENDED_PROTECTION_POLICY   = 0x0000000a,
+    WS_SECURITY_PROPERTY_EXTENDED_PROTECTION_SCENARIO = 0x0000000b,
+    WS_SECURITY_PROPERTY_SERVICE_IDENTITIES           = 0x0000000c,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_key_type))], [])
+alias WS_SECURITY_KEY_TYPE = int;
+enum : int
+{
+    WS_SECURITY_KEY_TYPE_NONE       = 0x00000001,
+    WS_SECURITY_KEY_TYPE_SYMMETRIC  = 0x00000002,
+    WS_SECURITY_KEY_TYPE_ASYMMETRIC = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_algorithm_suite_name))], [])
+alias WS_SECURITY_ALGORITHM_SUITE_NAME = int;
+enum : int
+{
+    WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC256              = 0x00000001,
+    WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC192              = 0x00000002,
+    WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC128              = 0x00000003,
+    WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC256_RSA15        = 0x00000004,
+    WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC192_RSA15        = 0x00000005,
+    WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC128_RSA15        = 0x00000006,
+    WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC256_SHA256       = 0x00000007,
+    WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC192_SHA256       = 0x00000008,
+    WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC128_SHA256       = 0x00000009,
+    WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC256_SHA256_RSA15 = 0x0000000a,
+    WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC192_SHA256_RSA15 = 0x0000000b,
+    WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC128_SHA256_RSA15 = 0x0000000c,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_token_reference_mode))], [])
+alias WS_SECURITY_TOKEN_REFERENCE_MODE = int;
+enum : int
+{
+    WS_SECURITY_TOKEN_REFERENCE_MODE_LOCAL_ID            = 0x00000001,
+    WS_SECURITY_TOKEN_REFERENCE_MODE_XML_BUFFER          = 0x00000002,
+    WS_SECURITY_TOKEN_REFERENCE_MODE_CERT_THUMBPRINT     = 0x00000003,
+    WS_SECURITY_TOKEN_REFERENCE_MODE_SECURITY_CONTEXT_ID = 0x00000004,
+    WS_SECURITY_TOKEN_REFERENCE_MODE_SAML_ASSERTION_ID   = 0x00000005,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_key_entropy_mode))], [])
+alias WS_SECURITY_KEY_ENTROPY_MODE = int;
+enum : int
+{
+    WS_SECURITY_KEY_ENTROPY_MODE_CLIENT_ONLY = 0x00000001,
+    WS_SECURITY_KEY_ENTROPY_MODE_SERVER_ONLY = 0x00000002,
+    WS_SECURITY_KEY_ENTROPY_MODE_COMBINED    = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_extended_protection_policy))], [])
+alias WS_EXTENDED_PROTECTION_POLICY = int;
+enum : int
+{
+    WS_EXTENDED_PROTECTION_POLICY_NEVER          = 0x00000001,
+    WS_EXTENDED_PROTECTION_POLICY_WHEN_SUPPORTED = 0x00000002,
+    WS_EXTENDED_PROTECTION_POLICY_ALWAYS         = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_extended_protection_scenario))], [])
+alias WS_EXTENDED_PROTECTION_SCENARIO = int;
+enum : int
+{
+    WS_EXTENDED_PROTECTION_SCENARIO_BOUND_SERVER   = 0x00000001,
+    WS_EXTENDED_PROTECTION_SCENARIO_TERMINATED_SSL = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_binding_property_id))], [])
+alias WS_SECURITY_BINDING_PROPERTY_ID = int;
+enum : int
+{
+    WS_SECURITY_BINDING_PROPERTY_REQUIRE_SSL_CLIENT_CERT                 = 0x00000001,
+    WS_SECURITY_BINDING_PROPERTY_WINDOWS_INTEGRATED_AUTH_PACKAGE         = 0x00000002,
+    WS_SECURITY_BINDING_PROPERTY_REQUIRE_SERVER_AUTH                     = 0x00000003,
+    WS_SECURITY_BINDING_PROPERTY_ALLOW_ANONYMOUS_CLIENTS                 = 0x00000004,
+    WS_SECURITY_BINDING_PROPERTY_ALLOWED_IMPERSONATION_LEVEL             = 0x00000005,
+    WS_SECURITY_BINDING_PROPERTY_HTTP_HEADER_AUTH_SCHEME                 = 0x00000006,
+    WS_SECURITY_BINDING_PROPERTY_HTTP_HEADER_AUTH_TARGET                 = 0x00000007,
+    WS_SECURITY_BINDING_PROPERTY_HTTP_HEADER_AUTH_BASIC_REALM            = 0x00000008,
+    WS_SECURITY_BINDING_PROPERTY_HTTP_HEADER_AUTH_DIGEST_REALM           = 0x00000009,
+    WS_SECURITY_BINDING_PROPERTY_HTTP_HEADER_AUTH_DIGEST_DOMAIN          = 0x0000000a,
+    WS_SECURITY_BINDING_PROPERTY_SECURITY_CONTEXT_KEY_SIZE               = 0x0000000b,
+    WS_SECURITY_BINDING_PROPERTY_SECURITY_CONTEXT_KEY_ENTROPY_MODE       = 0x0000000c,
+    WS_SECURITY_BINDING_PROPERTY_MESSAGE_PROPERTIES                      = 0x0000000d,
+    WS_SECURITY_BINDING_PROPERTY_SECURITY_CONTEXT_MAX_PENDING_CONTEXTS   = 0x0000000e,
+    WS_SECURITY_BINDING_PROPERTY_SECURITY_CONTEXT_MAX_ACTIVE_CONTEXTS    = 0x0000000f,
+    WS_SECURITY_BINDING_PROPERTY_SECURE_CONVERSATION_VERSION             = 0x00000010,
+    WS_SECURITY_BINDING_PROPERTY_SECURITY_CONTEXT_SUPPORT_RENEW          = 0x00000011,
+    WS_SECURITY_BINDING_PROPERTY_SECURITY_CONTEXT_RENEWAL_INTERVAL       = 0x00000012,
+    WS_SECURITY_BINDING_PROPERTY_SECURITY_CONTEXT_ROLLOVER_INTERVAL      = 0x00000013,
+    WS_SECURITY_BINDING_PROPERTY_CERT_FAILURES_TO_IGNORE                 = 0x00000014,
+    WS_SECURITY_BINDING_PROPERTY_DISABLE_CERT_REVOCATION_CHECK           = 0x00000015,
+    WS_SECURITY_BINDING_PROPERTY_DISALLOWED_SECURE_PROTOCOLS             = 0x00000016,
+    WS_SECURITY_BINDING_PROPERTY_CERTIFICATE_VALIDATION_CALLBACK_CONTEXT = 0x00000017,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_cert_credential_type))], [])
+alias WS_CERT_CREDENTIAL_TYPE = int;
+enum : int
+{
+    WS_SUBJECT_NAME_CERT_CREDENTIAL_TYPE = 0x00000001,
+    WS_THUMBPRINT_CERT_CREDENTIAL_TYPE   = 0x00000002,
+    WS_CUSTOM_CERT_CREDENTIAL_TYPE       = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_windows_integrated_auth_credential_type))], [])
+alias WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL_TYPE = int;
+enum : int
+{
+    WS_STRING_WINDOWS_INTEGRATED_AUTH_CREDENTIAL_TYPE  = 0x00000001,
+    WS_DEFAULT_WINDOWS_INTEGRATED_AUTH_CREDENTIAL_TYPE = 0x00000002,
+    WS_OPAQUE_WINDOWS_INTEGRATED_AUTH_CREDENTIAL_TYPE  = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_username_credential_type))], [])
+alias WS_USERNAME_CREDENTIAL_TYPE = int;
+enum : int
+{
+    WS_STRING_USERNAME_CREDENTIAL_TYPE = 0x00000001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_token_property_id))], [])
+alias WS_SECURITY_TOKEN_PROPERTY_ID = int;
+enum : int
+{
+    WS_SECURITY_TOKEN_PROPERTY_KEY_TYPE                 = 0x00000001,
+    WS_SECURITY_TOKEN_PROPERTY_VALID_FROM_TIME          = 0x00000002,
+    WS_SECURITY_TOKEN_PROPERTY_VALID_TILL_TIME          = 0x00000003,
+    WS_SECURITY_TOKEN_PROPERTY_SERIALIZED_XML           = 0x00000004,
+    WS_SECURITY_TOKEN_PROPERTY_ATTACHED_REFERENCE_XML   = 0x00000005,
+    WS_SECURITY_TOKEN_PROPERTY_UNATTACHED_REFERENCE_XML = 0x00000006,
+    WS_SECURITY_TOKEN_PROPERTY_SYMMETRIC_KEY            = 0x00000007,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_key_handle_type))], [])
+alias WS_SECURITY_KEY_HANDLE_TYPE = int;
+enum : int
+{
+    WS_RAW_SYMMETRIC_SECURITY_KEY_HANDLE_TYPE     = 0x00000001,
+    WS_NCRYPT_ASYMMETRIC_SECURITY_KEY_HANDLE_TYPE = 0x00000002,
+    WS_CAPI_ASYMMETRIC_SECURITY_KEY_HANDLE_TYPE   = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_message_security_usage))], [])
+alias WS_MESSAGE_SECURITY_USAGE = int;
+enum : int
+{
+    WS_SUPPORTING_MESSAGE_SECURITY_USAGE = 0x00000001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_context_property_id))], [])
+alias WS_SECURITY_CONTEXT_PROPERTY_ID = int;
+enum : int
+{
+    WS_SECURITY_CONTEXT_PROPERTY_IDENTIFIER                     = 0x00000001,
+    WS_SECURITY_CONTEXT_PROPERTY_USERNAME                       = 0x00000002,
+    WS_SECURITY_CONTEXT_PROPERTY_MESSAGE_SECURITY_WINDOWS_TOKEN = 0x00000003,
+    WS_SECURITY_CONTEXT_PROPERTY_SAML_ASSERTION                 = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_security_token_property_id))], [])
+alias WS_XML_SECURITY_TOKEN_PROPERTY_ID = int;
+enum : int
+{
+    WS_XML_SECURITY_TOKEN_PROPERTY_ATTACHED_REFERENCE   = 0x00000001,
+    WS_XML_SECURITY_TOKEN_PROPERTY_UNATTACHED_REFERENCE = 0x00000002,
+    WS_XML_SECURITY_TOKEN_PROPERTY_VALID_FROM_TIME      = 0x00000003,
+    WS_XML_SECURITY_TOKEN_PROPERTY_VALID_TILL_TIME      = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_saml_authenticator_type))], [])
+alias WS_SAML_AUTHENTICATOR_TYPE = int;
+enum : int
+{
+    WS_CERT_SIGNED_SAML_AUTHENTICATOR_TYPE = 0x00000001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_request_security_token_property_id))], [])
+alias WS_REQUEST_SECURITY_TOKEN_PROPERTY_ID = int;
+enum : int
+{
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_APPLIES_TO                  = 0x00000001,
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_TRUST_VERSION               = 0x00000002,
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_SECURE_CONVERSATION_VERSION = 0x00000003,
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_ISSUED_TOKEN_TYPE           = 0x00000004,
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_REQUEST_ACTION              = 0x00000005,
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_EXISTING_TOKEN              = 0x00000006,
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_ISSUED_TOKEN_KEY_TYPE       = 0x00000007,
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_ISSUED_TOKEN_KEY_SIZE       = 0x00000008,
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_ISSUED_TOKEN_KEY_ENTROPY    = 0x00000009,
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_LOCAL_REQUEST_PARAMETERS    = 0x0000000a,
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_SERVICE_REQUEST_PARAMETERS  = 0x0000000b,
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_MESSAGE_PROPERTIES          = 0x0000000c,
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_BEARER_KEY_TYPE_VERSION     = 0x0000000d,
+}
+alias WS_SECURITY_BEARER_KEY_TYPE_VERSION = int;
+enum : int
+{
+    WS_SECURITY_BEARER_KEY_TYPE_VERSION_1_3_ORIGINAL_SPECIFICATION = 0x00000001,
+    WS_SECURITY_BEARER_KEY_TYPE_VERSION_1_3_ORIGINAL_SCHEMA        = 0x00000002,
+    WS_SECURITY_BEARER_KEY_TYPE_VERSION_1_3_ERRATA_01              = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_type))], [])
+alias WS_TYPE = int;
+enum : int
+{
+    WS_BOOL_TYPE             = 0x00000000,
+    WS_INT8_TYPE             = 0x00000001,
+    WS_INT16_TYPE            = 0x00000002,
+    WS_INT32_TYPE            = 0x00000003,
+    WS_INT64_TYPE            = 0x00000004,
+    WS_UINT8_TYPE            = 0x00000005,
+    WS_UINT16_TYPE           = 0x00000006,
+    WS_UINT32_TYPE           = 0x00000007,
+    WS_UINT64_TYPE           = 0x00000008,
+    WS_FLOAT_TYPE            = 0x00000009,
+    WS_DOUBLE_TYPE           = 0x0000000a,
+    WS_DECIMAL_TYPE          = 0x0000000b,
+    WS_DATETIME_TYPE         = 0x0000000c,
+    WS_TIMESPAN_TYPE         = 0x0000000d,
+    WS_GUID_TYPE             = 0x0000000e,
+    WS_UNIQUE_ID_TYPE        = 0x0000000f,
+    WS_STRING_TYPE           = 0x00000010,
+    WS_WSZ_TYPE              = 0x00000011,
+    WS_BYTES_TYPE            = 0x00000012,
+    WS_XML_STRING_TYPE       = 0x00000013,
+    WS_XML_QNAME_TYPE        = 0x00000014,
+    WS_XML_BUFFER_TYPE       = 0x00000015,
+    WS_CHAR_ARRAY_TYPE       = 0x00000016,
+    WS_UTF8_ARRAY_TYPE       = 0x00000017,
+    WS_BYTE_ARRAY_TYPE       = 0x00000018,
+    WS_DESCRIPTION_TYPE      = 0x00000019,
+    WS_STRUCT_TYPE           = 0x0000001a,
+    WS_CUSTOM_TYPE           = 0x0000001b,
+    WS_ENDPOINT_ADDRESS_TYPE = 0x0000001c,
+    WS_FAULT_TYPE            = 0x0000001d,
+    WS_VOID_TYPE             = 0x0000001e,
+    WS_ENUM_TYPE             = 0x0000001f,
+    WS_DURATION_TYPE         = 0x00000020,
+    WS_UNION_TYPE            = 0x00000021,
+    WS_ANY_ATTRIBUTES_TYPE   = 0x00000022,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_field_mapping))], [])
+alias WS_FIELD_MAPPING = int;
+enum : int
+{
+    WS_TYPE_ATTRIBUTE_FIELD_MAPPING           = 0x00000000,
+    WS_ATTRIBUTE_FIELD_MAPPING                = 0x00000001,
+    WS_ELEMENT_FIELD_MAPPING                  = 0x00000002,
+    WS_REPEATING_ELEMENT_FIELD_MAPPING        = 0x00000003,
+    WS_TEXT_FIELD_MAPPING                     = 0x00000004,
+    WS_NO_FIELD_MAPPING                       = 0x00000005,
+    WS_XML_ATTRIBUTE_FIELD_MAPPING            = 0x00000006,
+    WS_ELEMENT_CHOICE_FIELD_MAPPING           = 0x00000007,
+    WS_REPEATING_ELEMENT_CHOICE_FIELD_MAPPING = 0x00000008,
+    WS_ANY_ELEMENT_FIELD_MAPPING              = 0x00000009,
+    WS_REPEATING_ANY_ELEMENT_FIELD_MAPPING    = 0x0000000a,
+    WS_ANY_CONTENT_FIELD_MAPPING              = 0x0000000b,
+    WS_ANY_ATTRIBUTES_FIELD_MAPPING           = 0x0000000c,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_type_mapping))], [])
+alias WS_TYPE_MAPPING = int;
+enum : int
+{
+    WS_ELEMENT_TYPE_MAPPING         = 0x00000001,
+    WS_ATTRIBUTE_TYPE_MAPPING       = 0x00000002,
+    WS_ELEMENT_CONTENT_TYPE_MAPPING = 0x00000003,
+    WS_ANY_ELEMENT_TYPE_MAPPING     = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_read_option))], [])
+alias WS_READ_OPTION = int;
+enum : int
+{
+    WS_READ_REQUIRED_VALUE   = 0x00000001,
+    WS_READ_REQUIRED_POINTER = 0x00000002,
+    WS_READ_OPTIONAL_POINTER = 0x00000003,
+    WS_READ_NILLABLE_POINTER = 0x00000004,
+    WS_READ_NILLABLE_VALUE   = 0x00000005,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_write_option))], [])
+alias WS_WRITE_OPTION = int;
+enum : int
+{
+    WS_WRITE_REQUIRED_VALUE   = 0x00000001,
+    WS_WRITE_REQUIRED_POINTER = 0x00000002,
+    WS_WRITE_NILLABLE_VALUE   = 0x00000003,
+    WS_WRITE_NILLABLE_POINTER = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_cancel_reason))], [])
+alias WS_SERVICE_CANCEL_REASON = int;
+enum : int
+{
+    WS_SERVICE_HOST_ABORT      = 0x00000000,
+    WS_SERVICE_CHANNEL_FAULTED = 0x00000001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_operation_style))], [])
+alias WS_OPERATION_STYLE = int;
+enum : int
+{
+    WS_NON_RPC_LITERAL_OPERATION = 0x00000000,
+    WS_RPC_LITERAL_OPERATION     = 0x00000001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_parameter_type))], [])
+alias WS_PARAMETER_TYPE = int;
+enum : int
+{
+    WS_PARAMETER_TYPE_NORMAL      = 0x00000000,
+    WS_PARAMETER_TYPE_ARRAY       = 0x00000001,
+    WS_PARAMETER_TYPE_ARRAY_COUNT = 0x00000002,
+    WS_PARAMETER_TYPE_MESSAGES    = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_endpoint_property_id))], [])
+alias WS_SERVICE_ENDPOINT_PROPERTY_ID = int;
+enum : int
+{
+    WS_SERVICE_ENDPOINT_PROPERTY_ACCEPT_CHANNEL_CALLBACK      = 0x00000000,
+    WS_SERVICE_ENDPOINT_PROPERTY_CLOSE_CHANNEL_CALLBACK       = 0x00000001,
+    WS_SERVICE_ENDPOINT_PROPERTY_MAX_ACCEPTING_CHANNELS       = 0x00000002,
+    WS_SERVICE_ENDPOINT_PROPERTY_MAX_CONCURRENCY              = 0x00000003,
+    WS_SERVICE_ENDPOINT_PROPERTY_BODY_HEAP_MAX_SIZE           = 0x00000004,
+    WS_SERVICE_ENDPOINT_PROPERTY_BODY_HEAP_TRIM_SIZE          = 0x00000005,
+    WS_SERVICE_ENDPOINT_PROPERTY_MESSAGE_PROPERTIES           = 0x00000006,
+    WS_SERVICE_ENDPOINT_PROPERTY_MAX_CALL_POOL_SIZE           = 0x00000007,
+    WS_SERVICE_ENDPOINT_PROPERTY_MAX_CHANNEL_POOL_SIZE        = 0x00000008,
+    WS_SERVICE_ENDPOINT_PROPERTY_LISTENER_PROPERTIES          = 0x00000009,
+    WS_SERVICE_ENDPOINT_PROPERTY_CHECK_MUST_UNDERSTAND        = 0x0000000a,
+    WS_SERVICE_ENDPOINT_PROPERTY_METADATA_EXCHANGE_TYPE       = 0x0000000b,
+    WS_SERVICE_ENDPOINT_PROPERTY_METADATA                     = 0x0000000c,
+    WS_SERVICE_ENDPOINT_PROPERTY_METADATA_EXCHANGE_URL_SUFFIX = 0x0000000d,
+    WS_SERVICE_ENDPOINT_PROPERTY_MAX_CHANNELS                 = 0x0000000e,
+    WS_SERVICE_ENDPOINT_PROPERTY_MAX_CHANNELS_PER_IP          = 0x0000000f,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_metadata_exchange_type))], [])
+alias WS_METADATA_EXCHANGE_TYPE = int;
+enum : int
+{
+    WS_METADATA_EXCHANGE_TYPE_NONE     = 0x00000000,
+    WS_METADATA_EXCHANGE_TYPE_MEX      = 0x00000001,
+    WS_METADATA_EXCHANGE_TYPE_HTTP_GET = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_property_id))], [])
+alias WS_SERVICE_PROPERTY_ID = int;
+enum : int
+{
+    WS_SERVICE_PROPERTY_HOST_USER_STATE  = 0x00000000,
+    WS_SERVICE_PROPERTY_FAULT_DISCLOSURE = 0x00000001,
+    WS_SERVICE_PROPERTY_FAULT_LANGID     = 0x00000002,
+    WS_SERVICE_PROPERTY_HOST_STATE       = 0x00000003,
+    WS_SERVICE_PROPERTY_METADATA         = 0x00000004,
+    WS_SERVICE_PROPERTY_CLOSE_TIMEOUT    = 0x00000005,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_host_state))], [])
+alias WS_SERVICE_HOST_STATE = int;
+enum : int
+{
+    WS_SERVICE_HOST_STATE_CREATED = 0x00000000,
+    WS_SERVICE_HOST_STATE_OPENING = 0x00000001,
+    WS_SERVICE_HOST_STATE_OPEN    = 0x00000002,
+    WS_SERVICE_HOST_STATE_CLOSING = 0x00000003,
+    WS_SERVICE_HOST_STATE_CLOSED  = 0x00000004,
+    WS_SERVICE_HOST_STATE_FAULTED = 0x00000005,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_proxy_state))], [])
+alias WS_SERVICE_PROXY_STATE = int;
+enum : int
+{
+    WS_SERVICE_PROXY_STATE_CREATED = 0x00000000,
+    WS_SERVICE_PROXY_STATE_OPENING = 0x00000001,
+    WS_SERVICE_PROXY_STATE_OPEN    = 0x00000002,
+    WS_SERVICE_PROXY_STATE_CLOSING = 0x00000003,
+    WS_SERVICE_PROXY_STATE_CLOSED  = 0x00000004,
+    WS_SERVICE_PROXY_STATE_FAULTED = 0x00000005,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_proxy_property_id))], [])
+alias WS_PROXY_PROPERTY_ID = int;
+enum : int
+{
+    WS_PROXY_PROPERTY_CALL_TIMEOUT       = 0x00000000,
+    WS_PROXY_PROPERTY_MESSAGE_PROPERTIES = 0x00000001,
+    WS_PROXY_PROPERTY_MAX_CALL_POOL_SIZE = 0x00000002,
+    WS_PROXY_PROPERTY_STATE              = 0x00000003,
+    WS_PROXY_PROPERTY_MAX_PENDING_CALLS  = 0x00000004,
+    WS_PROXY_PROPERTY_MAX_CLOSE_TIMEOUT  = 0x00000005,
+    WS_PROXY_FAULT_LANG_ID               = 0x00000006,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_call_property_id))], [])
+alias WS_CALL_PROPERTY_ID = int;
+enum : int
+{
+    WS_CALL_PROPERTY_CHECK_MUST_UNDERSTAND   = 0x00000000,
+    WS_CALL_PROPERTY_SEND_MESSAGE_CONTEXT    = 0x00000001,
+    WS_CALL_PROPERTY_RECEIVE_MESSAGE_CONTEXT = 0x00000002,
+    WS_CALL_PROPERTY_CALL_ID                 = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_trace_api))], [])
+alias WS_TRACE_API = int;
+enum : int
+{
+    WS_TRACE_API_NONE                                  = 0xffffffff,
+    WS_TRACE_API_START_READER_CANONICALIZATION         = 0x00000000,
+    WS_TRACE_API_END_READER_CANONICALIZATION           = 0x00000001,
+    WS_TRACE_API_START_WRITER_CANONICALIZATION         = 0x00000002,
+    WS_TRACE_API_END_WRITER_CANONICALIZATION           = 0x00000003,
+    WS_TRACE_API_CREATE_XML_BUFFER                     = 0x00000004,
+    WS_TRACE_API_REMOVE_NODE                           = 0x00000005,
+    WS_TRACE_API_CREATE_READER                         = 0x00000006,
+    WS_TRACE_API_SET_INPUT                             = 0x00000007,
+    WS_TRACE_API_SET_INPUT_TO_BUFFER                   = 0x00000008,
+    WS_TRACE_API_FREE_XML_READER                       = 0x00000009,
+    WS_TRACE_API_GET_READER_PROPERTY                   = 0x0000000a,
+    WS_TRACE_API_GET_READER_NODE                       = 0x0000000b,
+    WS_TRACE_API_FILL_READER                           = 0x0000000c,
+    WS_TRACE_API_READ_START_ELEMENT                    = 0x0000000d,
+    WS_TRACE_API_READ_TO_START_ELEMENT                 = 0x0000000e,
+    WS_TRACE_API_READ_START_ATTRIBUTE                  = 0x0000000f,
+    WS_TRACE_API_READ_END_ATTRIBUTE                    = 0x00000010,
+    WS_TRACE_API_READ_NODE                             = 0x00000011,
+    WS_TRACE_API_SKIP_NODE                             = 0x00000012,
+    WS_TRACE_API_READ_END_ELEMENT                      = 0x00000013,
+    WS_TRACE_API_FIND_ATTRIBUTE                        = 0x00000014,
+    WS_TRACE_API_READ_ELEMENT_VALUE                    = 0x00000015,
+    WS_TRACE_API_READ_CHARS                            = 0x00000016,
+    WS_TRACE_API_READ_CHARS_UTF8                       = 0x00000017,
+    WS_TRACE_API_READ_BYTES                            = 0x00000018,
+    WS_TRACE_API_READ_ARRAY                            = 0x00000019,
+    WS_TRACE_API_GET_READER_POSITION                   = 0x0000001a,
+    WS_TRACE_API_SET_READER_POSITION                   = 0x0000001b,
+    WS_TRACE_API_MOVE_READER                           = 0x0000001c,
+    WS_TRACE_API_CREATE_WRITER                         = 0x0000001d,
+    WS_TRACE_API_FREE_XML_WRITER                       = 0x0000001e,
+    WS_TRACE_API_SET_OUTPUT                            = 0x0000001f,
+    WS_TRACE_API_SET_OUTPUT_TO_BUFFER                  = 0x00000020,
+    WS_TRACE_API_GET_WRITER_PROPERTY                   = 0x00000021,
+    WS_TRACE_API_FLUSH_WRITER                          = 0x00000022,
+    WS_TRACE_API_WRITE_START_ELEMENT                   = 0x00000023,
+    WS_TRACE_API_WRITE_END_START_ELEMENT               = 0x00000024,
+    WS_TRACE_API_WRITE_XMLNS_ATTRIBUTE                 = 0x00000025,
+    WS_TRACE_API_WRITE_START_ATTRIBUTE                 = 0x00000026,
+    WS_TRACE_API_WRITE_END_ATTRIBUTE                   = 0x00000027,
+    WS_TRACE_API_WRITE_VALUE                           = 0x00000028,
+    WS_TRACE_API_WRITE_XML_BUFFER                      = 0x00000029,
+    WS_TRACE_API_READ_XML_BUFFER                       = 0x0000002a,
+    WS_TRACE_API_WRITE_XML_BUFFER_TO_BYTES             = 0x0000002b,
+    WS_TRACE_API_READ_XML_BUFFER_FROM_BYTES            = 0x0000002c,
+    WS_TRACE_API_WRITE_ARRAY                           = 0x0000002d,
+    WS_TRACE_API_WRITE_QUALIFIED_NAME                  = 0x0000002e,
+    WS_TRACE_API_WRITE_CHARS                           = 0x0000002f,
+    WS_TRACE_API_WRITE_CHARS_UTF8                      = 0x00000030,
+    WS_TRACE_API_WRITE_BYTES                           = 0x00000031,
+    WS_TRACE_API_PUSH_BYTES                            = 0x00000032,
+    WS_TRACE_API_PULL_BYTES                            = 0x00000033,
+    WS_TRACE_API_WRITE_END_ELEMENT                     = 0x00000034,
+    WS_TRACE_API_WRITE_TEXT                            = 0x00000035,
+    WS_TRACE_API_WRITE_START_CDATA                     = 0x00000036,
+    WS_TRACE_API_WRITE_END_CDATA                       = 0x00000037,
+    WS_TRACE_API_WRITE_NODE                            = 0x00000038,
+    WS_TRACE_API_PREFIX_FROM_NAMESPACE                 = 0x00000039,
+    WS_TRACE_API_GET_WRITER_POSITION                   = 0x0000003a,
+    WS_TRACE_API_SET_WRITER_POSITION                   = 0x0000003b,
+    WS_TRACE_API_MOVE_WRITER                           = 0x0000003c,
+    WS_TRACE_API_TRIM_XML_WHITESPACE                   = 0x0000003d,
+    WS_TRACE_API_VERIFY_XML_NCNAME                     = 0x0000003e,
+    WS_TRACE_API_XML_STRING_EQUALS                     = 0x0000003f,
+    WS_TRACE_API_NAMESPACE_FROM_PREFIX                 = 0x00000040,
+    WS_TRACE_API_READ_QUALIFIED_NAME                   = 0x00000041,
+    WS_TRACE_API_GET_XML_ATTRIBUTE                     = 0x00000042,
+    WS_TRACE_API_COPY_NODE                             = 0x00000043,
+    WS_TRACE_API_ASYNC_EXECUTE                         = 0x00000044,
+    WS_TRACE_API_CREATE_CHANNEL                        = 0x00000045,
+    WS_TRACE_API_OPEN_CHANNEL                          = 0x00000046,
+    WS_TRACE_API_SEND_MESSAGE                          = 0x00000047,
+    WS_TRACE_API_RECEIVE_MESSAGE                       = 0x00000048,
+    WS_TRACE_API_REQUEST_REPLY                         = 0x00000049,
+    WS_TRACE_API_SEND_REPLY_MESSAGE                    = 0x0000004a,
+    WS_TRACE_API_SEND_FAULT_MESSAGE_FOR_ERROR          = 0x0000004b,
+    WS_TRACE_API_GET_CHANNEL_PROPERTY                  = 0x0000004c,
+    WS_TRACE_API_SET_CHANNEL_PROPERTY                  = 0x0000004d,
+    WS_TRACE_API_WRITE_MESSAGE_START                   = 0x0000004e,
+    WS_TRACE_API_WRITE_MESSAGE_END                     = 0x0000004f,
+    WS_TRACE_API_READ_MESSAGE_START                    = 0x00000050,
+    WS_TRACE_API_READ_MESSAGE_END                      = 0x00000051,
+    WS_TRACE_API_CLOSE_CHANNEL                         = 0x00000052,
+    WS_TRACE_API_ABORT_CHANNEL                         = 0x00000053,
+    WS_TRACE_API_FREE_CHANNEL                          = 0x00000054,
+    WS_TRACE_API_RESET_CHANNEL                         = 0x00000055,
+    WS_TRACE_API_ABANDON_MESSAGE                       = 0x00000056,
+    WS_TRACE_API_SHUTDOWN_SESSION_CHANNEL              = 0x00000057,
+    WS_TRACE_API_GET_CONTEXT_PROPERTY                  = 0x00000058,
+    WS_TRACE_API_GET_DICTIONARY                        = 0x00000059,
+    WS_TRACE_API_READ_ENDPOINT_ADDRESS_EXTENSION       = 0x0000005a,
+    WS_TRACE_API_CREATE_ERROR                          = 0x0000005b,
+    WS_TRACE_API_ADD_ERROR_STRING                      = 0x0000005c,
+    WS_TRACE_API_GET_ERROR_STRING                      = 0x0000005d,
+    WS_TRACE_API_COPY_ERROR                            = 0x0000005e,
+    WS_TRACE_API_GET_ERROR_PROPERTY                    = 0x0000005f,
+    WS_TRACE_API_SET_ERROR_PROPERTY                    = 0x00000060,
+    WS_TRACE_API_RESET_ERROR                           = 0x00000061,
+    WS_TRACE_API_FREE_ERROR                            = 0x00000062,
+    WS_TRACE_API_GET_FAULT_ERROR_PROPERTY              = 0x00000063,
+    WS_TRACE_API_SET_FAULT_ERROR_PROPERTY              = 0x00000064,
+    WS_TRACE_API_CREATE_FAULT_FROM_ERROR               = 0x00000065,
+    WS_TRACE_API_SET_FAULT_ERROR_DETAIL                = 0x00000066,
+    WS_TRACE_API_GET_FAULT_ERROR_DETAIL                = 0x00000067,
+    WS_TRACE_API_CREATE_HEAP                           = 0x00000068,
+    WS_TRACE_API_ALLOC                                 = 0x00000069,
+    WS_TRACE_API_GET_HEAP_PROPERTY                     = 0x0000006a,
+    WS_TRACE_API_RESET_HEAP                            = 0x0000006b,
+    WS_TRACE_API_FREE_HEAP                             = 0x0000006c,
+    WS_TRACE_API_CREATE_LISTENER                       = 0x0000006d,
+    WS_TRACE_API_OPEN_LISTENER                         = 0x0000006e,
+    WS_TRACE_API_ACCEPT_CHANNEL                        = 0x0000006f,
+    WS_TRACE_API_CLOSE_LISTENER                        = 0x00000070,
+    WS_TRACE_API_ABORT_LISTENER                        = 0x00000071,
+    WS_TRACE_API_RESET_LISTENER                        = 0x00000072,
+    WS_TRACE_API_FREE_LISTENER                         = 0x00000073,
+    WS_TRACE_API_GET_LISTENER_PROPERTY                 = 0x00000074,
+    WS_TRACE_API_SET_LISTENER_PROPERTY                 = 0x00000075,
+    WS_TRACE_API_CREATE_CHANNEL_FOR_LISTENER           = 0x00000076,
+    WS_TRACE_API_CREATE_MESSAGE                        = 0x00000077,
+    WS_TRACE_API_CREATE_MESSAGE_FOR_CHANNEL            = 0x00000078,
+    WS_TRACE_API_INITIALIZE_MESSAGE                    = 0x00000079,
+    WS_TRACE_API_RESET_MESSAGE                         = 0x0000007a,
+    WS_TRACE_API_FREE_MESSAGE                          = 0x0000007b,
+    WS_TRACE_API_GET_HEADER_ATTRIBUTES                 = 0x0000007c,
+    WS_TRACE_API_GET_HEADER                            = 0x0000007d,
+    WS_TRACE_API_GET_CUSTOM_HEADER                     = 0x0000007e,
+    WS_TRACE_API_REMOVE_HEADER                         = 0x0000007f,
+    WS_TRACE_API_SET_HEADER                            = 0x00000080,
+    WS_TRACE_API_REMOVE_CUSTOM_HEADER                  = 0x00000081,
+    WS_TRACE_API_ADD_CUSTOM_HEADER                     = 0x00000082,
+    WS_TRACE_API_ADD_MAPPED_HEADER                     = 0x00000083,
+    WS_TRACE_API_REMOVE_MAPPED_HEADER                  = 0x00000084,
+    WS_TRACE_API_GET_MAPPED_HEADER                     = 0x00000085,
+    WS_TRACE_API_WRITE_BODY                            = 0x00000086,
+    WS_TRACE_API_READ_BODY                             = 0x00000087,
+    WS_TRACE_API_WRITE_ENVELOPE_START                  = 0x00000088,
+    WS_TRACE_API_WRITE_ENVELOPE_END                    = 0x00000089,
+    WS_TRACE_API_READ_ENVELOPE_START                   = 0x0000008a,
+    WS_TRACE_API_READ_ENVELOPE_END                     = 0x0000008b,
+    WS_TRACE_API_GET_MESSAGE_PROPERTY                  = 0x0000008c,
+    WS_TRACE_API_SET_MESSAGE_PROPERTY                  = 0x0000008d,
+    WS_TRACE_API_ADDRESS_MESSAGE                       = 0x0000008e,
+    WS_TRACE_API_CHECK_MUST_UNDERSTAND_HEADERS         = 0x0000008f,
+    WS_TRACE_API_MARK_HEADER_AS_UNDERSTOOD             = 0x00000090,
+    WS_TRACE_API_FILL_BODY                             = 0x00000091,
+    WS_TRACE_API_FLUSH_BODY                            = 0x00000092,
+    WS_TRACE_API_REQUEST_SECURITY_TOKEN                = 0x00000093,
+    WS_TRACE_API_GET_SECURITY_TOKEN_PROPERTY           = 0x00000094,
+    WS_TRACE_API_CREATE_XML_SECURITY_TOKEN             = 0x00000095,
+    WS_TRACE_API_FREE_SECURITY_TOKEN                   = 0x00000096,
+    WS_TRACE_API_REVOKE_SECURITY_CONTEXT               = 0x00000097,
+    WS_TRACE_API_GET_SECURITY_CONTEXT_PROPERTY         = 0x00000098,
+    WS_TRACE_API_READ_ELEMENT_TYPE                     = 0x00000099,
+    WS_TRACE_API_READ_ATTRIBUTE_TYPE                   = 0x0000009a,
+    WS_TRACE_API_READ_TYPE                             = 0x0000009b,
+    WS_TRACE_API_WRITE_ELEMENT_TYPE                    = 0x0000009c,
+    WS_TRACE_API_WRITE_ATTRIBUTE_TYPE                  = 0x0000009d,
+    WS_TRACE_API_WRITE_TYPE                            = 0x0000009e,
+    WS_TRACE_API_SERVICE_REGISTER_FOR_CANCEL           = 0x0000009f,
+    WS_TRACE_API_GET_SERVICE_HOST_PROPERTY             = 0x000000a0,
+    WS_TRACE_API_CREATE_SERVICE_HOST                   = 0x000000a1,
+    WS_TRACE_API_OPEN_SERVICE_HOST                     = 0x000000a2,
+    WS_TRACE_API_CLOSE_SERVICE_HOST                    = 0x000000a3,
+    WS_TRACE_API_ABORT_SERVICE_HOST                    = 0x000000a4,
+    WS_TRACE_API_FREE_SERVICE_HOST                     = 0x000000a5,
+    WS_TRACE_API_RESET_SERVICE_HOST                    = 0x000000a6,
+    WS_TRACE_API_GET_SERVICE_PROXY_PROPERTY            = 0x000000a7,
+    WS_TRACE_API_CREATE_SERVICE_PROXY                  = 0x000000a8,
+    WS_TRACE_API_OPEN_SERVICE_PROXY                    = 0x000000a9,
+    WS_TRACE_API_CLOSE_SERVICE_PROXY                   = 0x000000aa,
+    WS_TRACE_API_ABORT_SERVICE_PROXY                   = 0x000000ab,
+    WS_TRACE_API_FREE_SERVICE_PROXY                    = 0x000000ac,
+    WS_TRACE_API_RESET_SERVICE_PROXY                   = 0x000000ad,
+    WS_TRACE_API_ABORT_CALL                            = 0x000000ae,
+    WS_TRACE_API_CALL                                  = 0x000000af,
+    WS_TRACE_API_DECODE_URL                            = 0x000000b0,
+    WS_TRACE_API_ENCODE_URL                            = 0x000000b1,
+    WS_TRACE_API_COMBINE_URL                           = 0x000000b2,
+    WS_TRACE_API_DATETIME_TO_FILETIME                  = 0x000000b3,
+    WS_TRACE_API_FILETIME_TO_DATETIME                  = 0x000000b4,
+    WS_TRACE_API_DUMP_MEMORY                           = 0x000000b5,
+    WS_TRACE_API_SET_AUTOFAIL                          = 0x000000b6,
+    WS_TRACE_API_CREATE_METADATA                       = 0x000000b7,
+    WS_TRACE_API_READ_METADATA                         = 0x000000b8,
+    WS_TRACE_API_FREE_METADATA                         = 0x000000b9,
+    WS_TRACE_API_RESET_METADATA                        = 0x000000ba,
+    WS_TRACE_API_GET_METADATA_PROPERTY                 = 0x000000bb,
+    WS_TRACE_API_GET_MISSING_METADATA_DOCUMENT_ADDRESS = 0x000000bc,
+    WS_TRACE_API_GET_METADATA_ENDPOINTS                = 0x000000bd,
+    WS_TRACE_API_MATCH_POLICY_ALTERNATIVE              = 0x000000be,
+    WS_TRACE_API_GET_POLICY_PROPERTY                   = 0x000000bf,
+    WS_TRACE_API_GET_POLICY_ALTERNATIVE_COUNT          = 0x000000c0,
+    WS_TRACE_API_WS_CREATE_SERVICE_PROXY_FROM_TEMPLATE = 0x000000c1,
+    WS_TRACE_API_WS_CREATE_SERVICE_HOST_FROM_TEMPLATE  = 0x000000c2,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_url_scheme_type))], [])
+alias WS_URL_SCHEME_TYPE = int;
+enum : int
+{
+    WS_URL_HTTP_SCHEME_TYPE    = 0x00000000,
+    WS_URL_HTTPS_SCHEME_TYPE   = 0x00000001,
+    WS_URL_NETTCP_SCHEME_TYPE  = 0x00000002,
+    WS_URL_SOAPUDP_SCHEME_TYPE = 0x00000003,
+    WS_URL_NETPIPE_SCHEME_TYPE = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_datetime_format))], [])
+alias WS_DATETIME_FORMAT = int;
+enum : int
+{
+    WS_DATETIME_FORMAT_UTC   = 0x00000000,
+    WS_DATETIME_FORMAT_LOCAL = 0x00000001,
+    WS_DATETIME_FORMAT_NONE  = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_metadata_state))], [])
+alias WS_METADATA_STATE = int;
+enum : int
+{
+    WS_METADATA_STATE_CREATED  = 0x00000001,
+    WS_METADATA_STATE_RESOLVED = 0x00000002,
+    WS_METADATA_STATE_FAULTED  = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_metadata_property_id))], [])
+alias WS_METADATA_PROPERTY_ID = int;
+enum : int
+{
+    WS_METADATA_PROPERTY_STATE               = 0x00000001,
+    WS_METADATA_PROPERTY_HEAP_PROPERTIES     = 0x00000002,
+    WS_METADATA_PROPERTY_POLICY_PROPERTIES   = 0x00000003,
+    WS_METADATA_PROPERTY_HEAP_REQUESTED_SIZE = 0x00000004,
+    WS_METADATA_PROPERTY_MAX_DOCUMENTS       = 0x00000005,
+    WS_METADATA_PROPERTY_HOST_NAMES          = 0x00000006,
+    WS_METADATA_PROPERTY_VERIFY_HOST_NAMES   = 0x00000007,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_policy_state))], [])
+alias WS_POLICY_STATE = int;
+enum : int
+{
+    WS_POLICY_STATE_CREATED = 0x00000001,
+    WS_POLICY_STATE_FAULTED = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_policy_property_id))], [])
+alias WS_POLICY_PROPERTY_ID = int;
+enum : int
+{
+    WS_POLICY_PROPERTY_STATE            = 0x00000001,
+    WS_POLICY_PROPERTY_MAX_ALTERNATIVES = 0x00000002,
+    WS_POLICY_PROPERTY_MAX_DEPTH        = 0x00000003,
+    WS_POLICY_PROPERTY_MAX_EXTENSIONS   = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_binding_constraint_type))], [])
+alias WS_SECURITY_BINDING_CONSTRAINT_TYPE = int;
+enum : int
+{
+    WS_SSL_TRANSPORT_SECURITY_BINDING_CONSTRAINT_TYPE            = 0x00000001,
+    WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING_CONSTRAINT_TYPE       = 0x00000002,
+    WS_HTTP_HEADER_AUTH_SECURITY_BINDING_CONSTRAINT_TYPE         = 0x00000003,
+    WS_USERNAME_MESSAGE_SECURITY_BINDING_CONSTRAINT_TYPE         = 0x00000004,
+    WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_CONSTRAINT_TYPE   = 0x00000005,
+    WS_ISSUED_TOKEN_MESSAGE_SECURITY_BINDING_CONSTRAINT_TYPE     = 0x00000006,
+    WS_CERT_MESSAGE_SECURITY_BINDING_CONSTRAINT_TYPE             = 0x00000007,
+    WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_CONSTRAINT_TYPE = 0x00000008,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_policy_extension_type))], [])
+alias WS_POLICY_EXTENSION_TYPE = int;
+enum : int
+{
+    WS_ENDPOINT_POLICY_EXTENSION_TYPE = 0x00000001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_binding_template_type))], [])
+alias WS_BINDING_TEMPLATE_TYPE = int;
+enum : int
+{
+    WS_HTTP_BINDING_TEMPLATE_TYPE                                     = 0x00000000,
+    WS_HTTP_SSL_BINDING_TEMPLATE_TYPE                                 = 0x00000001,
+    WS_HTTP_HEADER_AUTH_BINDING_TEMPLATE_TYPE                         = 0x00000002,
+    WS_HTTP_SSL_HEADER_AUTH_BINDING_TEMPLATE_TYPE                     = 0x00000003,
+    WS_HTTP_SSL_USERNAME_BINDING_TEMPLATE_TYPE                        = 0x00000004,
+    WS_HTTP_SSL_KERBEROS_APREQ_BINDING_TEMPLATE_TYPE                  = 0x00000005,
+    WS_TCP_BINDING_TEMPLATE_TYPE                                      = 0x00000006,
+    WS_TCP_SSPI_BINDING_TEMPLATE_TYPE                                 = 0x00000007,
+    WS_TCP_SSPI_USERNAME_BINDING_TEMPLATE_TYPE                        = 0x00000008,
+    WS_TCP_SSPI_KERBEROS_APREQ_BINDING_TEMPLATE_TYPE                  = 0x00000009,
+    WS_HTTP_SSL_USERNAME_SECURITY_CONTEXT_BINDING_TEMPLATE_TYPE       = 0x0000000a,
+    WS_HTTP_SSL_KERBEROS_APREQ_SECURITY_CONTEXT_BINDING_TEMPLATE_TYPE = 0x0000000b,
+    WS_TCP_SSPI_USERNAME_SECURITY_CONTEXT_BINDING_TEMPLATE_TYPE       = 0x0000000c,
+    WS_TCP_SSPI_KERBEROS_APREQ_SECURITY_CONTEXT_BINDING_TEMPLATE_TYPE = 0x0000000d,
+}
+
+// Constants
+
+
+enum : int
+{
+    WS_HTTP_HEADER_MAPPING_COMMA_SEPARATOR     = 0x00000001,
+    WS_HTTP_HEADER_MAPPING_SEMICOLON_SEPARATOR = 0x00000002,
+    WS_HTTP_HEADER_MAPPING_QUOTED_VALUE        = 0x00000004,
+}
+
+enum : int
+{
+    WS_HTTP_RESPONSE_MAPPING_STATUS_CODE = 0x00000001,
+    WS_HTTP_RESPONSE_MAPPING_STATUS_TEXT = 0x00000002,
+}
+
+enum int WS_HTTP_REQUEST_MAPPING_VERB = 0x00000002;
+
+enum : int
+{
+    WS_MATCH_URL_DNS_HOST                 = 0x00000001,
+    WS_MATCH_URL_DNS_FULLY_QUALIFIED_HOST = 0x00000002,
+}
+
+enum : int
+{
+    WS_MATCH_URL_NETBIOS_HOST   = 0x00000004,
+    WS_MATCH_URL_LOCAL_HOST     = 0x00000008,
+    WS_MATCH_URL_HOST_ADDRESSES = 0x00000010,
+    WS_MATCH_URL_THIS_HOST      = 0x0000001f,
+    WS_MATCH_URL_PORT           = 0x00000020,
+    WS_MATCH_URL_EXACT_PATH     = 0x00000040,
+    WS_MATCH_URL_PREFIX_PATH    = 0x00000080,
+    WS_MATCH_URL_NO_QUERY       = 0x00000100,
+}
+
+enum int WS_MUST_UNDERSTAND_HEADER_ATTRIBUTE = 0x00000001;
+enum int WS_RELAY_HEADER_ATTRIBUTE = 0x00000002;
+
+enum : int
+{
+    WS_HTTP_HEADER_AUTH_SCHEME_NONE      = 0x00000001,
+    WS_HTTP_HEADER_AUTH_SCHEME_BASIC     = 0x00000002,
+    WS_HTTP_HEADER_AUTH_SCHEME_DIGEST    = 0x00000004,
+    WS_HTTP_HEADER_AUTH_SCHEME_NTLM      = 0x00000008,
+    WS_HTTP_HEADER_AUTH_SCHEME_NEGOTIATE = 0x00000010,
+    WS_HTTP_HEADER_AUTH_SCHEME_PASSPORT  = 0x00000020,
+}
+
+enum : int
+{
+    WS_CERT_FAILURE_CN_MISMATCH        = 0x00000001,
+    WS_CERT_FAILURE_INVALID_DATE       = 0x00000002,
+    WS_CERT_FAILURE_UNTRUSTED_ROOT     = 0x00000004,
+    WS_CERT_FAILURE_WRONG_USAGE        = 0x00000008,
+    WS_CERT_FAILURE_REVOCATION_OFFLINE = 0x00000010,
+}
+
+enum : int
+{
+    WS_STRUCT_ABSTRACT                        = 0x00000001,
+    WS_STRUCT_IGNORE_TRAILING_ELEMENT_CONTENT = 0x00000002,
+    WS_STRUCT_IGNORE_UNHANDLED_ATTRIBUTES     = 0x00000004,
+}
+
+enum : int
+{
+    WS_FIELD_POINTER         = 0x00000001,
+    WS_FIELD_OPTIONAL        = 0x00000002,
+    WS_FIELD_NILLABLE        = 0x00000004,
+    WS_FIELD_NILLABLE_ITEM   = 0x00000008,
+    WS_FIELD_OTHER_NAMESPACE = 0x00000010,
+}
+
+enum int WS_SERVICE_OPERATION_MESSAGE_NILLABLE_ELEMENT = 0x00000001;
+enum int WS_URL_FLAGS_ALLOW_HOST_WILDCARDS = 0x00000001;
+
+enum : int
+{
+    WS_URL_FLAGS_NO_PATH_COLLAPSE = 0x00000002,
+    WS_URL_FLAGS_ZERO_TERMINATE   = 0x00000004,
+}
+
+// Callbacks
+
+alias WS_READ_CALLBACK = HRESULT function(void* callbackState, 
+                                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* bytes, 
+                                          uint maxSize, uint* actualSize, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                                          WS_ERROR* error);
+alias WS_WRITE_CALLBACK = HRESULT function(void* callbackState, const(WS_BYTES)* buffers, uint count, 
+                                           const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_PUSH_BYTES_CALLBACK = HRESULT function(void* callbackState, WS_WRITE_CALLBACK writeCallback, 
+                                                void* writeCallbackState, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                                                WS_ERROR* error);
+alias WS_PULL_BYTES_CALLBACK = HRESULT function(void* callbackState, 
+                                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* bytes, 
+                                                uint maxSize, uint* actualSize, 
+                                                const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_DYNAMIC_STRING_CALLBACK = HRESULT function(void* callbackState, const(WS_XML_STRING)* string, BOOL* found, 
+                                                    uint* id, WS_ERROR* error);
+alias WS_ASYNC_CALLBACK = void function(HRESULT errorCode, WS_CALLBACK_MODEL callbackModel, void* callbackState);
+alias WS_ASYNC_FUNCTION = HRESULT function(HRESULT hr, WS_CALLBACK_MODEL callbackModel, void* callbackState, 
+                                           WS_ASYNC_OPERATION* next, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                                           WS_ERROR* error);
+alias WS_CREATE_CHANNEL_CALLBACK = HRESULT function(WS_CHANNEL_TYPE channelType, 
+                                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* channelParameters, 
+                                                    uint channelParametersSize, void** channelInstance, 
+                                                    WS_ERROR* error);
+alias WS_FREE_CHANNEL_CALLBACK = void function(void* channelInstance);
+alias WS_RESET_CHANNEL_CALLBACK = HRESULT function(void* channelInstance, WS_ERROR* error);
+alias WS_ABORT_CHANNEL_CALLBACK = HRESULT function(void* channelInstance, WS_ERROR* error);
+alias WS_OPEN_CHANNEL_CALLBACK = HRESULT function(void* channelInstance, 
+                                                  const(WS_ENDPOINT_ADDRESS)* endpointAddress, 
+                                                  const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_CLOSE_CHANNEL_CALLBACK = HRESULT function(void* channelInstance, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                                                   WS_ERROR* error);
+alias WS_SET_CHANNEL_PROPERTY_CALLBACK = HRESULT function(void* channelInstance, WS_CHANNEL_PROPERTY_ID id, 
+                                                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* value, 
+                                                          uint valueSize, WS_ERROR* error);
+alias WS_GET_CHANNEL_PROPERTY_CALLBACK = HRESULT function(void* channelInstance, WS_CHANNEL_PROPERTY_ID id, 
+                                                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                                                          uint valueSize, WS_ERROR* error);
+alias WS_READ_MESSAGE_START_CALLBACK = HRESULT function(void* channelInstance, WS_MESSAGE* message, 
+                                                        const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_READ_MESSAGE_END_CALLBACK = HRESULT function(void* channelInstance, WS_MESSAGE* message, 
+                                                      const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_WRITE_MESSAGE_START_CALLBACK = HRESULT function(void* channelInstance, WS_MESSAGE* message, 
+                                                         const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_WRITE_MESSAGE_END_CALLBACK = HRESULT function(void* channelInstance, WS_MESSAGE* message, 
+                                                       const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_ABANDON_MESSAGE_CALLBACK = HRESULT function(void* channelInstance, WS_MESSAGE* message, WS_ERROR* error);
+alias WS_SHUTDOWN_SESSION_CHANNEL_CALLBACK = HRESULT function(void* channelInstance, 
+                                                              const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_CREATE_ENCODER_CALLBACK = HRESULT function(void* createContext, WS_WRITE_CALLBACK writeCallback, 
+                                                    void* writeContext, void** encoderContext, WS_ERROR* error);
+alias WS_ENCODER_GET_CONTENT_TYPE_CALLBACK = HRESULT function(void* encoderContext, const(WS_STRING)* contentType, 
+                                                              WS_STRING* newContentType, WS_STRING* contentEncoding, 
+                                                              WS_ERROR* error);
+alias WS_ENCODER_START_CALLBACK = HRESULT function(void* encoderContext, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                                                   WS_ERROR* error);
+alias WS_ENCODER_ENCODE_CALLBACK = HRESULT function(void* encoderContext, const(WS_BYTES)* buffers, uint count, 
+                                                    const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_ENCODER_END_CALLBACK = HRESULT function(void* encoderContext, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                                                 WS_ERROR* error);
+alias WS_FREE_ENCODER_CALLBACK = void function(void* encoderContext);
+alias WS_CREATE_DECODER_CALLBACK = HRESULT function(void* createContext, WS_READ_CALLBACK readCallback, 
+                                                    void* readContext, void** decoderContext, WS_ERROR* error);
+alias WS_DECODER_GET_CONTENT_TYPE_CALLBACK = HRESULT function(void* decoderContext, const(WS_STRING)* contentType, 
+                                                              const(WS_STRING)* contentEncoding, 
+                                                              WS_STRING* newContentType, WS_ERROR* error);
+alias WS_DECODER_START_CALLBACK = HRESULT function(void* encoderContext, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                                                   WS_ERROR* error);
+alias WS_DECODER_DECODE_CALLBACK = HRESULT function(void* encoderContext, 
+                                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* buffer, 
+                                                    uint maxLength, uint* length, 
+                                                    const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_DECODER_END_CALLBACK = HRESULT function(void* encoderContext, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                                                 WS_ERROR* error);
+alias WS_FREE_DECODER_CALLBACK = void function(void* decoderContext);
+alias WS_HTTP_REDIRECT_CALLBACK = HRESULT function(void* state, const(WS_STRING)* originalUrl, 
+                                                   const(WS_STRING)* newUrl);
+alias WS_CREATE_LISTENER_CALLBACK = HRESULT function(WS_CHANNEL_TYPE channelType, 
+                                                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* listenerParameters, 
+                                                     uint listenerParametersSize, void** listenerInstance, 
+                                                     WS_ERROR* error);
+alias WS_FREE_LISTENER_CALLBACK = void function(void* listenerInstance);
+alias WS_RESET_LISTENER_CALLBACK = HRESULT function(void* listenerInstance, WS_ERROR* error);
+alias WS_OPEN_LISTENER_CALLBACK = HRESULT function(void* listenerInstance, const(WS_STRING)* url, 
+                                                   const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_CLOSE_LISTENER_CALLBACK = HRESULT function(void* listenerInstance, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                                                    WS_ERROR* error);
+alias WS_GET_LISTENER_PROPERTY_CALLBACK = HRESULT function(void* listenerInstance, WS_LISTENER_PROPERTY_ID id, 
+                                                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                                                           uint valueSize, WS_ERROR* error);
+alias WS_SET_LISTENER_PROPERTY_CALLBACK = HRESULT function(void* listenerInstance, WS_LISTENER_PROPERTY_ID id, 
+                                                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* value, 
+                                                           uint valueSize, WS_ERROR* error);
+alias WS_ACCEPT_CHANNEL_CALLBACK = HRESULT function(void* listenerInstance, void* channelInstance, 
+                                                    const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_ABORT_LISTENER_CALLBACK = HRESULT function(void* listenerInstance, WS_ERROR* error);
+alias WS_CREATE_CHANNEL_FOR_LISTENER_CALLBACK = HRESULT function(void* listenerInstance, 
+                                                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* channelParameters, 
+                                                                 uint channelParametersSize, void** channelInstance, 
+                                                                 WS_ERROR* error);
+alias WS_MESSAGE_DONE_CALLBACK = void function(void* doneCallbackState);
+alias WS_CERTIFICATE_VALIDATION_CALLBACK = HRESULT function(const(CERT_CONTEXT)* certContext, void* state);
+alias WS_GET_CERT_CALLBACK = HRESULT function(void* getCertCallbackState, 
+                                              const(WS_ENDPOINT_ADDRESS)* targetAddress, const(WS_STRING)* viaUri, 
+                                              const(CERT_CONTEXT)** cert, WS_ERROR* error);
+alias WS_CERT_ISSUER_LIST_NOTIFICATION_CALLBACK = HRESULT function(void* certIssuerListNotificationCallbackState, 
+                                                                   const(SecPkgContext_IssuerListInfoEx)* issuerList, 
+                                                                   WS_ERROR* error);
+alias WS_VALIDATE_PASSWORD_CALLBACK = HRESULT function(void* passwordValidatorCallbackState, 
+                                                       const(WS_STRING)* username, const(WS_STRING)* password, 
+                                                       const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_VALIDATE_SAML_CALLBACK = HRESULT function(void* samlValidatorCallbackState, WS_XML_BUFFER* samlAssertion, 
+                                                   WS_ERROR* error);
+alias WS_DURATION_COMPARISON_CALLBACK = HRESULT function(const(WS_DURATION)* duration1, 
+                                                         const(WS_DURATION)* duration2, int* result, WS_ERROR* error);
+alias WS_READ_TYPE_CALLBACK = HRESULT function(WS_XML_READER* reader, WS_TYPE_MAPPING typeMapping, 
+                                               const(void)* descriptionData, WS_HEAP* heap, 
+                                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* value, 
+                                               uint valueSize, WS_ERROR* error);
+alias WS_WRITE_TYPE_CALLBACK = HRESULT function(WS_XML_WRITER* writer, WS_TYPE_MAPPING typeMapping, 
+                                                const(void)* descriptionData, 
+                                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(void)* value, 
+                                                uint valueSize, WS_ERROR* error);
+alias WS_IS_DEFAULT_VALUE_CALLBACK = HRESULT function(const(void)* descriptionData, 
+                                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* value, 
+                                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* defaultValue, 
+                                                      uint valueSize, BOOL* isDefault, WS_ERROR* error);
+alias WS_SERVICE_MESSAGE_RECEIVE_CALLBACK = HRESULT function(const(WS_OPERATION_CONTEXT)* context, 
+                                                             const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_OPERATION_CANCEL_CALLBACK = void function(const(WS_SERVICE_CANCEL_REASON) reason, void* state);
+alias WS_OPERATION_FREE_STATE_CALLBACK = void function(void* state);
+alias WS_SERVICE_STUB_CALLBACK = HRESULT function(const(WS_OPERATION_CONTEXT)* context, void* frame, 
+                                                  const(void)* callback, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                                                  WS_ERROR* error);
+alias WS_SERVICE_ACCEPT_CHANNEL_CALLBACK = HRESULT function(const(WS_OPERATION_CONTEXT)* context, 
+                                                            void** channelState, 
+                                                            const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+alias WS_SERVICE_CLOSE_CHANNEL_CALLBACK = HRESULT function(const(WS_OPERATION_CONTEXT)* context, 
+                                                           const(WS_ASYNC_CONTEXT)* asyncContext);
+alias WS_SERVICE_SECURITY_CALLBACK = HRESULT function(const(WS_OPERATION_CONTEXT)* context, BOOL* authorized, 
+                                                      WS_ERROR* error);
+alias WS_PROXY_MESSAGE_CALLBACK = HRESULT function(WS_MESSAGE* message, WS_HEAP* heap, void* state, 
+                                                   WS_ERROR* error);
+
+// Structs
+
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-channel))], [])
+struct WS_CHANNEL
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-error))], [])
+struct WS_ERROR
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-heap))], [])
+struct WS_HEAP
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-listener))], [])
+struct WS_LISTENER
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-message))], [])
+struct WS_MESSAGE
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-metadata))], [])
+struct WS_METADATA
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-operation-context))], [])
+struct WS_OPERATION_CONTEXT
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-policy))], [])
+struct WS_POLICY
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-security-context))], [])
+struct WS_SECURITY_CONTEXT
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-security-token))], [])
+struct WS_SECURITY_TOKEN
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-service-host))], [])
+struct WS_SERVICE_HOST
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-service-proxy))], [])
+struct WS_SERVICE_PROXY
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-xml-buffer))], [])
+struct WS_XML_BUFFER
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-xml-reader))], [])
+struct WS_XML_READER
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-xml-writer))], [])
+struct WS_XML_WRITER
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_dictionary))], [])
+struct WS_XML_DICTIONARY
+{
+    GUID           guid;
+    WS_XML_STRING* strings;
+    uint           stringCount;
+    BOOL           isConst;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_string))], [])
+struct WS_XML_STRING
+{
+    uint               length;
+    ubyte*             bytes;
+    WS_XML_DICTIONARY* dictionary;
+    uint               id;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_qname))], [])
+struct WS_XML_QNAME
+{
+    WS_XML_STRING localName;
+    WS_XML_STRING ns;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_node_position))], [])
+struct WS_XML_NODE_POSITION
+{
+    WS_XML_BUFFER* buffer;
+    void*          node;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_property))], [])
+struct WS_XML_READER_PROPERTY
+{
+    WS_XML_READER_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_canonicalization_inclusive_prefixes))], [])
+struct WS_XML_CANONICALIZATION_INCLUSIVE_PREFIXES
+{
+    uint           prefixCount;
+    WS_XML_STRING* prefixes;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_canonicalization_property))], [])
+struct WS_XML_CANONICALIZATION_PROPERTY
+{
+    WS_XML_CANONICALIZATION_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_property))], [])
+struct WS_XML_WRITER_PROPERTY
+{
+    WS_XML_WRITER_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_buffer_property))], [])
+struct WS_XML_BUFFER_PROPERTY
+{
+    WS_XML_BUFFER_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_text))], [])
+struct WS_XML_TEXT
+{
+    WS_XML_TEXT_TYPE textType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_utf8_text))], [])
+struct WS_XML_UTF8_TEXT
+{
+    WS_XML_TEXT   text;
+    WS_XML_STRING value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_utf16_text))], [])
+struct WS_XML_UTF16_TEXT
+{
+    WS_XML_TEXT text;
+    ubyte*      bytes;
+    uint        byteCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_base64_text))], [])
+struct WS_XML_BASE64_TEXT
+{
+    WS_XML_TEXT text;
+    ubyte*      bytes;
+    uint        length;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_bool_text))], [])
+struct WS_XML_BOOL_TEXT
+{
+    WS_XML_TEXT text;
+    BOOL        value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_int32_text))], [])
+struct WS_XML_INT32_TEXT
+{
+    WS_XML_TEXT text;
+    int         value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_int64_text))], [])
+struct WS_XML_INT64_TEXT
+{
+    WS_XML_TEXT text;
+    long        value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_uint64_text))], [])
+struct WS_XML_UINT64_TEXT
+{
+    WS_XML_TEXT text;
+    ulong       value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_float_text))], [])
+struct WS_XML_FLOAT_TEXT
+{
+    WS_XML_TEXT text;
+    float       value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_double_text))], [])
+struct WS_XML_DOUBLE_TEXT
+{
+    WS_XML_TEXT text;
+    double      value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_decimal_text))], [])
+struct WS_XML_DECIMAL_TEXT
+{
+    WS_XML_TEXT text;
+    DECIMAL     value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_guid_text))], [])
+struct WS_XML_GUID_TEXT
+{
+    WS_XML_TEXT text;
+    GUID        value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_unique_id_text))], [])
+struct WS_XML_UNIQUE_ID_TEXT
+{
+    WS_XML_TEXT text;
+    GUID        value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_datetime))], [])
+struct WS_DATETIME
+{
+    ulong              ticks;
+    WS_DATETIME_FORMAT format;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_datetime_text))], [])
+struct WS_XML_DATETIME_TEXT
+{
+    WS_XML_TEXT text;
+    WS_DATETIME value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_timespan))], [])
+struct WS_TIMESPAN
+{
+    long ticks;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_timespan_text))], [])
+struct WS_XML_TIMESPAN_TEXT
+{
+    WS_XML_TEXT text;
+    WS_TIMESPAN value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_qname_text))], [])
+struct WS_XML_QNAME_TEXT
+{
+    WS_XML_TEXT    text;
+    WS_XML_STRING* prefix;
+    WS_XML_STRING* localName;
+    WS_XML_STRING* ns;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_list_text))], [])
+struct WS_XML_LIST_TEXT
+{
+    WS_XML_TEXT   text;
+    uint          itemCount;
+    WS_XML_TEXT** items;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_node))], [])
+struct WS_XML_NODE
+{
+    WS_XML_NODE_TYPE nodeType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_attribute))], [])
+struct WS_XML_ATTRIBUTE
+{
+    ubyte          singleQuote;
+    ubyte          isXmlNs;
+    WS_XML_STRING* prefix;
+    WS_XML_STRING* localName;
+    WS_XML_STRING* ns;
+    WS_XML_TEXT*   value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_element_node))], [])
+struct WS_XML_ELEMENT_NODE
+{
+    WS_XML_NODE        node;
+    WS_XML_STRING*     prefix;
+    WS_XML_STRING*     localName;
+    WS_XML_STRING*     ns;
+    uint               attributeCount;
+    WS_XML_ATTRIBUTE** attributes;
+    BOOL               isEmpty;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_text_node))], [])
+struct WS_XML_TEXT_NODE
+{
+    WS_XML_NODE  node;
+    WS_XML_TEXT* text;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_comment_node))], [])
+struct WS_XML_COMMENT_NODE
+{
+    WS_XML_NODE   node;
+    WS_XML_STRING value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_input))], [])
+struct WS_XML_READER_INPUT
+{
+    WS_XML_READER_INPUT_TYPE inputType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_buffer_input))], [])
+struct WS_XML_READER_BUFFER_INPUT
+{
+    WS_XML_READER_INPUT input;
+    void*               encodedData;
+    uint                encodedDataSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_stream_input))], [])
+struct WS_XML_READER_STREAM_INPUT
+{
+    WS_XML_READER_INPUT input;
+    WS_READ_CALLBACK    readCallback;
+    void*               readCallbackState;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_encoding))], [])
+struct WS_XML_READER_ENCODING
+{
+    WS_XML_READER_ENCODING_TYPE encodingType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_text_encoding))], [])
+struct WS_XML_READER_TEXT_ENCODING
+{
+    WS_XML_READER_ENCODING encoding;
+    WS_CHARSET charSet;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_binary_encoding))], [])
+struct WS_XML_READER_BINARY_ENCODING
+{
+    WS_XML_READER_ENCODING encoding;
+    WS_XML_DICTIONARY* staticDictionary;
+    WS_XML_DICTIONARY* dynamicDictionary;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_string))], [])
+struct WS_STRING
+{
+    uint  length;
+    PWSTR chars;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_mtom_encoding))], [])
+struct WS_XML_READER_MTOM_ENCODING
+{
+    WS_XML_READER_ENCODING encoding;
+    WS_XML_READER_ENCODING* textEncoding;
+    BOOL      readMimeHeader;
+    WS_STRING startInfo;
+    WS_STRING boundary;
+    WS_STRING startUri;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_raw_encoding))], [])
+struct WS_XML_READER_RAW_ENCODING
+{
+    WS_XML_READER_ENCODING encoding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_encoding))], [])
+struct WS_XML_WRITER_ENCODING
+{
+    WS_XML_WRITER_ENCODING_TYPE encodingType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_text_encoding))], [])
+struct WS_XML_WRITER_TEXT_ENCODING
+{
+    WS_XML_WRITER_ENCODING encoding;
+    WS_CHARSET charSet;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_binary_encoding))], [])
+struct WS_XML_WRITER_BINARY_ENCODING
+{
+    WS_XML_WRITER_ENCODING encoding;
+    WS_XML_DICTIONARY* staticDictionary;
+    WS_DYNAMIC_STRING_CALLBACK dynamicStringCallback;
+    void*              dynamicStringCallbackState;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_mtom_encoding))], [])
+struct WS_XML_WRITER_MTOM_ENCODING
+{
+    WS_XML_WRITER_ENCODING encoding;
+    WS_XML_WRITER_ENCODING* textEncoding;
+    BOOL      writeMimeHeader;
+    WS_STRING boundary;
+    WS_STRING startInfo;
+    WS_STRING startUri;
+    uint      maxInlineByteCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_raw_encoding))], [])
+struct WS_XML_WRITER_RAW_ENCODING
+{
+    WS_XML_WRITER_ENCODING encoding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_output))], [])
+struct WS_XML_WRITER_OUTPUT
+{
+    WS_XML_WRITER_OUTPUT_TYPE outputType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_buffer_output))], [])
+struct WS_XML_WRITER_BUFFER_OUTPUT
+{
+    WS_XML_WRITER_OUTPUT output;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_stream_output))], [])
+struct WS_XML_WRITER_STREAM_OUTPUT
+{
+    WS_XML_WRITER_OUTPUT output;
+    WS_WRITE_CALLBACK    writeCallback;
+    void*                writeCallbackState;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_properties))], [])
+struct WS_XML_WRITER_PROPERTIES
+{
+    WS_XML_WRITER_PROPERTY* properties;
+    uint propertyCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_properties))], [])
+struct WS_XML_READER_PROPERTIES
+{
+    WS_XML_READER_PROPERTY* properties;
+    uint propertyCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_async_context))], [])
+struct WS_ASYNC_CONTEXT
+{
+    WS_ASYNC_CALLBACK callback;
+    void*             callbackState;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_async_state))], [])
+struct WS_ASYNC_STATE
+{
+    void* internal0;
+    void* internal1;
+    void* internal2;
+    void* internal3;
+    void* internal4;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_async_operation))], [])
+struct WS_ASYNC_OPERATION
+{
+    WS_ASYNC_FUNCTION function_;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_property))], [])
+struct WS_CHANNEL_PROPERTY
+{
+    WS_CHANNEL_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_http_proxy))], [])
+struct WS_CUSTOM_HTTP_PROXY
+{
+    WS_STRING servers;
+    WS_STRING bypass;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_properties))], [])
+struct WS_CHANNEL_PROPERTIES
+{
+    WS_CHANNEL_PROPERTY* properties;
+    uint                 propertyCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_channel_callbacks))], [])
+struct WS_CUSTOM_CHANNEL_CALLBACKS
+{
+    WS_CREATE_CHANNEL_CALLBACK createChannelCallback;
+    WS_FREE_CHANNEL_CALLBACK freeChannelCallback;
+    WS_RESET_CHANNEL_CALLBACK resetChannelCallback;
+    WS_OPEN_CHANNEL_CALLBACK openChannelCallback;
+    WS_CLOSE_CHANNEL_CALLBACK closeChannelCallback;
+    WS_ABORT_CHANNEL_CALLBACK abortChannelCallback;
+    WS_GET_CHANNEL_PROPERTY_CALLBACK getChannelPropertyCallback;
+    WS_SET_CHANNEL_PROPERTY_CALLBACK setChannelPropertyCallback;
+    WS_WRITE_MESSAGE_START_CALLBACK writeMessageStartCallback;
+    WS_WRITE_MESSAGE_END_CALLBACK writeMessageEndCallback;
+    WS_READ_MESSAGE_START_CALLBACK readMessageStartCallback;
+    WS_READ_MESSAGE_END_CALLBACK readMessageEndCallback;
+    WS_ABANDON_MESSAGE_CALLBACK abandonMessageCallback;
+    WS_SHUTDOWN_SESSION_CHANNEL_CALLBACK shutdownSessionChannelCallback;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_mapping))], [])
+struct WS_HTTP_HEADER_MAPPING
+{
+    WS_XML_STRING headerName;
+    uint          headerMappingOptions;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_message_mapping))], [])
+struct WS_HTTP_MESSAGE_MAPPING
+{
+    uint requestMappingOptions;
+    uint responseMappingOptions;
+    WS_HTTP_HEADER_MAPPING** requestHeaderMappings;
+    uint requestHeaderMappingCount;
+    WS_HTTP_HEADER_MAPPING** responseHeaderMappings;
+    uint responseHeaderMappingCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_element_description))], [])
+struct WS_ELEMENT_DESCRIPTION
+{
+    WS_XML_STRING* elementLocalName;
+    WS_XML_STRING* elementNs;
+    WS_TYPE        type;
+    void*          typeDescription;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_message_description))], [])
+struct WS_MESSAGE_DESCRIPTION
+{
+    WS_XML_STRING* action;
+    WS_ELEMENT_DESCRIPTION* bodyElementDescription;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_encoder))], [])
+struct WS_CHANNEL_ENCODER
+{
+    void* createContext;
+    WS_CREATE_ENCODER_CALLBACK createEncoderCallback;
+    WS_ENCODER_GET_CONTENT_TYPE_CALLBACK encoderGetContentTypeCallback;
+    WS_ENCODER_START_CALLBACK encoderStartCallback;
+    WS_ENCODER_ENCODE_CALLBACK encoderEncodeCallback;
+    WS_ENCODER_END_CALLBACK encoderEndCallback;
+    WS_FREE_ENCODER_CALLBACK freeEncoderCallback;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_decoder))], [])
+struct WS_CHANNEL_DECODER
+{
+    void* createContext;
+    WS_CREATE_DECODER_CALLBACK createDecoderCallback;
+    WS_DECODER_GET_CONTENT_TYPE_CALLBACK decoderGetContentTypeCallback;
+    WS_DECODER_START_CALLBACK decoderStartCallback;
+    WS_DECODER_DECODE_CALLBACK decoderDecodeCallback;
+    WS_DECODER_END_CALLBACK decoderEndCallback;
+    WS_FREE_DECODER_CALLBACK freeDecoderCallback;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_redirect_callback_context))], [])
+struct WS_HTTP_REDIRECT_CALLBACK_CONTEXT
+{
+    WS_HTTP_REDIRECT_CALLBACK callback;
+    void* state;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_endpoint_identity))], [])
+struct WS_ENDPOINT_IDENTITY
+{
+    WS_ENDPOINT_IDENTITY_TYPE identityType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_endpoint_address))], [])
+struct WS_ENDPOINT_ADDRESS
+{
+    WS_STRING      url;
+    WS_XML_BUFFER* headers;
+    WS_XML_BUFFER* extensions;
+    WS_ENDPOINT_IDENTITY* identity;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_dns_endpoint_identity))], [])
+struct WS_DNS_ENDPOINT_IDENTITY
+{
+    WS_ENDPOINT_IDENTITY identity;
+    WS_STRING            dns;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_upn_endpoint_identity))], [])
+struct WS_UPN_ENDPOINT_IDENTITY
+{
+    WS_ENDPOINT_IDENTITY identity;
+    WS_STRING            upn;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_spn_endpoint_identity))], [])
+struct WS_SPN_ENDPOINT_IDENTITY
+{
+    WS_ENDPOINT_IDENTITY identity;
+    WS_STRING            spn;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_bytes))], [])
+struct WS_BYTES
+{
+    uint   length;
+    ubyte* bytes;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_rsa_endpoint_identity))], [])
+struct WS_RSA_ENDPOINT_IDENTITY
+{
+    WS_ENDPOINT_IDENTITY identity;
+    WS_BYTES             modulus;
+    WS_BYTES             exponent;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_cert_endpoint_identity))], [])
+struct WS_CERT_ENDPOINT_IDENTITY
+{
+    WS_ENDPOINT_IDENTITY identity;
+    WS_BYTES             rawCertificateData;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_unknown_endpoint_identity))], [])
+struct WS_UNKNOWN_ENDPOINT_IDENTITY
+{
+    WS_ENDPOINT_IDENTITY identity;
+    WS_XML_BUFFER*       element;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_error_property))], [])
+struct WS_ERROR_PROPERTY
+{
+    WS_ERROR_PROPERTY_ID id;
+    void*                value;
+    uint                 valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault_reason))], [])
+struct WS_FAULT_REASON
+{
+    WS_STRING text;
+    WS_STRING lang;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault_code))], [])
+struct WS_FAULT_CODE
+{
+    WS_XML_QNAME   value;
+    WS_FAULT_CODE* subCode;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault))], [])
+struct WS_FAULT
+{
+    WS_FAULT_CODE*   code;
+    WS_FAULT_REASON* reasons;
+    uint             reasonCount;
+    WS_STRING        actor;
+    WS_STRING        node;
+    WS_XML_BUFFER*   detail;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault_detail_description))], [])
+struct WS_FAULT_DETAIL_DESCRIPTION
+{
+    WS_XML_STRING* action;
+    WS_ELEMENT_DESCRIPTION* detailElementDescription;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_heap_property))], [])
+struct WS_HEAP_PROPERTY
+{
+    WS_HEAP_PROPERTY_ID id;
+    void*               value;
+    uint                valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_heap_properties))], [])
+struct WS_HEAP_PROPERTIES
+{
+    WS_HEAP_PROPERTY* properties;
+    uint              propertyCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_listener_property))], [])
+struct WS_LISTENER_PROPERTY
+{
+    WS_LISTENER_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_disallowed_user_agent_substrings))], [])
+struct WS_DISALLOWED_USER_AGENT_SUBSTRINGS
+{
+    uint        subStringCount;
+    WS_STRING** subStrings;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_listener_properties))], [])
+struct WS_LISTENER_PROPERTIES
+{
+    WS_LISTENER_PROPERTY* properties;
+    uint propertyCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_host_names))], [])
+struct WS_HOST_NAMES
+{
+    WS_STRING* hostNames;
+    uint       hostNameCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_listener_callbacks))], [])
+struct WS_CUSTOM_LISTENER_CALLBACKS
+{
+    WS_CREATE_LISTENER_CALLBACK createListenerCallback;
+    WS_FREE_LISTENER_CALLBACK freeListenerCallback;
+    WS_RESET_LISTENER_CALLBACK resetListenerCallback;
+    WS_OPEN_LISTENER_CALLBACK openListenerCallback;
+    WS_CLOSE_LISTENER_CALLBACK closeListenerCallback;
+    WS_ABORT_LISTENER_CALLBACK abortListenerCallback;
+    WS_GET_LISTENER_PROPERTY_CALLBACK getListenerPropertyCallback;
+    WS_SET_LISTENER_PROPERTY_CALLBACK setListenerPropertyCallback;
+    WS_CREATE_CHANNEL_FOR_LISTENER_CALLBACK createChannelForListenerCallback;
+    WS_ACCEPT_CHANNEL_CALLBACK acceptChannelCallback;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_message_property))], [])
+struct WS_MESSAGE_PROPERTY
+{
+    WS_MESSAGE_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_message_properties))], [])
+struct WS_MESSAGE_PROPERTIES
+{
+    WS_MESSAGE_PROPERTY* properties;
+    uint                 propertyCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_algorithm_property))], [])
+struct WS_SECURITY_ALGORITHM_PROPERTY
+{
+    WS_SECURITY_ALGORITHM_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_algorithm_suite))], [])
+struct WS_SECURITY_ALGORITHM_SUITE
+{
+    WS_SECURITY_ALGORITHM_ID canonicalizationAlgorithm;
+    WS_SECURITY_ALGORITHM_ID digestAlgorithm;
+    WS_SECURITY_ALGORITHM_ID symmetricSignatureAlgorithm;
+    WS_SECURITY_ALGORITHM_ID asymmetricSignatureAlgorithm;
+    WS_SECURITY_ALGORITHM_ID encryptionAlgorithm;
+    WS_SECURITY_ALGORITHM_ID keyDerivationAlgorithm;
+    WS_SECURITY_ALGORITHM_ID symmetricKeyWrapAlgorithm;
+    WS_SECURITY_ALGORITHM_ID asymmetricKeyWrapAlgorithm;
+    uint minSymmetricKeyLength;
+    uint maxSymmetricKeyLength;
+    uint minAsymmetricKeyLength;
+    uint maxAsymmetricKeyLength;
+    WS_SECURITY_ALGORITHM_PROPERTY* properties;
+    uint propertyCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_property))], [])
+struct WS_SECURITY_PROPERTY
+{
+    WS_SECURITY_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_properties))], [])
+struct WS_SECURITY_PROPERTIES
+{
+    WS_SECURITY_PROPERTY* properties;
+    uint propertyCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding_property))], [])
+struct WS_SECURITY_BINDING_PROPERTY
+{
+    WS_SECURITY_BINDING_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding_properties))], [])
+struct WS_SECURITY_BINDING_PROPERTIES
+{
+    WS_SECURITY_BINDING_PROPERTY* properties;
+    uint propertyCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_security_identities))], [])
+struct WS_SERVICE_SECURITY_IDENTITIES
+{
+    WS_STRING* serviceIdentities;
+    uint       serviceIdentityCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_certificate_validation_callback_context))], [])
+struct WS_CERTIFICATE_VALIDATION_CALLBACK_CONTEXT
+{
+    WS_CERTIFICATE_VALIDATION_CALLBACK callback;
+    void* state;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_cert_credential))], [])
+struct WS_CERT_CREDENTIAL
+{
+    WS_CERT_CREDENTIAL_TYPE credentialType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_subject_name_cert_credential))], [])
+struct WS_SUBJECT_NAME_CERT_CREDENTIAL
+{
+    WS_CERT_CREDENTIAL credential;
+    uint               storeLocation;
+    WS_STRING          storeName;
+    WS_STRING          subjectName;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_thumbprint_cert_credential))], [])
+struct WS_THUMBPRINT_CERT_CREDENTIAL
+{
+    WS_CERT_CREDENTIAL credential;
+    uint               storeLocation;
+    WS_STRING          storeName;
+    WS_STRING          thumbprint;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_cert_credential))], [])
+struct WS_CUSTOM_CERT_CREDENTIAL
+{
+    WS_CERT_CREDENTIAL   credential;
+    WS_GET_CERT_CALLBACK getCertCallback;
+    void*                getCertCallbackState;
+    WS_CERT_ISSUER_LIST_NOTIFICATION_CALLBACK certIssuerListNotificationCallback;
+    void*                certIssuerListNotificationCallbackState;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_windows_integrated_auth_credential))], [])
+struct WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL
+{
+    WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL_TYPE credentialType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_string_windows_integrated_auth_credential))], [])
+struct WS_STRING_WINDOWS_INTEGRATED_AUTH_CREDENTIAL
+{
+    WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL credential;
+    WS_STRING username;
+    WS_STRING password;
+    WS_STRING domain;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_default_windows_integrated_auth_credential))], [])
+struct WS_DEFAULT_WINDOWS_INTEGRATED_AUTH_CREDENTIAL
+{
+    WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL credential;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_opaque_windows_integrated_auth_credential))], [])
+struct WS_OPAQUE_WINDOWS_INTEGRATED_AUTH_CREDENTIAL
+{
+    WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL credential;
+    void* opaqueAuthIdentity;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_credential))], [])
+struct WS_USERNAME_CREDENTIAL
+{
+    WS_USERNAME_CREDENTIAL_TYPE credentialType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_string_username_credential))], [])
+struct WS_STRING_USERNAME_CREDENTIAL
+{
+    WS_USERNAME_CREDENTIAL credential;
+    WS_STRING username;
+    WS_STRING password;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_key_handle))], [])
+struct WS_SECURITY_KEY_HANDLE
+{
+    WS_SECURITY_KEY_HANDLE_TYPE keyHandleType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_raw_symmetric_security_key_handle))], [])
+struct WS_RAW_SYMMETRIC_SECURITY_KEY_HANDLE
+{
+    WS_SECURITY_KEY_HANDLE keyHandle;
+    WS_BYTES rawKeyBytes;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ncrypt_asymmetric_security_key_handle))], [])
+struct WS_NCRYPT_ASYMMETRIC_SECURITY_KEY_HANDLE
+{
+    WS_SECURITY_KEY_HANDLE keyHandle;
+    NCRYPT_KEY_HANDLE asymmetricKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_capi_asymmetric_security_key_handle))], [])
+struct WS_CAPI_ASYMMETRIC_SECURITY_KEY_HANDLE
+{
+    WS_SECURITY_KEY_HANDLE keyHandle;
+    size_t provider;
+    uint   keySpec;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding))], [])
+struct WS_SECURITY_BINDING
+{
+    WS_SECURITY_BINDING_TYPE bindingType;
+    WS_SECURITY_BINDING_PROPERTY* properties;
+    uint propertyCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ssl_transport_security_binding))], [])
+struct WS_SSL_TRANSPORT_SECURITY_BINDING
+{
+    WS_SECURITY_BINDING binding;
+    WS_CERT_CREDENTIAL* localCertCredential;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_transport_security_binding))], [])
+struct WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING
+{
+    WS_SECURITY_BINDING binding;
+    WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_namedpipe_sspi_transport_security_binding))], [])
+struct WS_NAMEDPIPE_SSPI_TRANSPORT_SECURITY_BINDING
+{
+    WS_SECURITY_BINDING binding;
+    WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_security_binding))], [])
+struct WS_HTTP_HEADER_AUTH_SECURITY_BINDING
+{
+    WS_SECURITY_BINDING binding;
+    WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_kerberos_apreq_message_security_binding))], [])
+struct WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING
+{
+    WS_SECURITY_BINDING binding;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+    WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_message_security_binding))], [])
+struct WS_USERNAME_MESSAGE_SECURITY_BINDING
+{
+    WS_SECURITY_BINDING binding;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+    WS_USERNAME_CREDENTIAL* clientCredential;
+    WS_VALIDATE_PASSWORD_CALLBACK passwordValidator;
+    void*               passwordValidatorCallbackState;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_description))], [])
+struct WS_SECURITY_DESCRIPTION
+{
+    WS_SECURITY_BINDING** securityBindings;
+    uint securityBindingCount;
+    WS_SECURITY_PROPERTY* properties;
+    uint propertyCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_message_security_binding))], [])
+struct WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING
+{
+    WS_SECURITY_BINDING binding;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+    WS_SECURITY_DESCRIPTION* bootstrapSecurityDescription;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_property))], [])
+struct WS_SECURITY_CONTEXT_PROPERTY
+{
+    WS_SECURITY_CONTEXT_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_security_token_property))], [])
+struct WS_XML_SECURITY_TOKEN_PROPERTY
+{
+    WS_XML_SECURITY_TOKEN_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_token_message_security_binding))], [])
+struct WS_XML_TOKEN_MESSAGE_SECURITY_BINDING
+{
+    WS_SECURITY_BINDING binding;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+    WS_SECURITY_TOKEN*  xmlToken;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_saml_authenticator))], [])
+struct WS_SAML_AUTHENTICATOR
+{
+    WS_SAML_AUTHENTICATOR_TYPE authenticatorType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_cert_signed_saml_authenticator))], [])
+struct WS_CERT_SIGNED_SAML_AUTHENTICATOR
+{
+    WS_SAML_AUTHENTICATOR authenticator;
+    const(CERT_CONTEXT)** trustedIssuerCerts;
+    uint                 trustedIssuerCertCount;
+    const(CERT_CONTEXT)* decryptionCert;
+    WS_VALIDATE_SAML_CALLBACK samlValidator;
+    void*                samlValidatorCallbackState;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_saml_message_security_binding))], [])
+struct WS_SAML_MESSAGE_SECURITY_BINDING
+{
+    WS_SECURITY_BINDING binding;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+    WS_SAML_AUTHENTICATOR* authenticator;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_request_security_token_property))], [])
+struct WS_REQUEST_SECURITY_TOKEN_PROPERTY
+{
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_any_attribute))], [])
+struct WS_ANY_ATTRIBUTE
+{
+    WS_XML_STRING localName;
+    WS_XML_STRING ns;
+    WS_XML_TEXT*  value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_any_attributes))], [])
+struct WS_ANY_ATTRIBUTES
+{
+    WS_ANY_ATTRIBUTE* attributes;
+    uint              attributeCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_bool_description))], [])
+struct WS_BOOL_DESCRIPTION
+{
+    BOOL value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_guid_description))], [])
+struct WS_GUID_DESCRIPTION
+{
+    GUID value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_datetime_description))], [])
+struct WS_DATETIME_DESCRIPTION
+{
+    WS_DATETIME minValue;
+    WS_DATETIME maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_duration))], [])
+struct WS_DURATION
+{
+    BOOL negative;
+    uint years;
+    uint months;
+    uint days;
+    uint hours;
+    uint minutes;
+    uint seconds;
+    uint milliseconds;
+    uint ticks;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_duration_description))], [])
+struct WS_DURATION_DESCRIPTION
+{
+    WS_DURATION minValue;
+    WS_DURATION maxValue;
+    WS_DURATION_COMPARISON_CALLBACK comparer;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_timespan_description))], [])
+struct WS_TIMESPAN_DESCRIPTION
+{
+    WS_TIMESPAN minValue;
+    WS_TIMESPAN maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_unique_id_description))], [])
+struct WS_UNIQUE_ID_DESCRIPTION
+{
+    uint minCharCount;
+    uint maxCharCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_string_description))], [])
+struct WS_STRING_DESCRIPTION
+{
+    uint minCharCount;
+    uint maxCharCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_string_description))], [])
+struct WS_XML_STRING_DESCRIPTION
+{
+    uint minByteCount;
+    uint maxByteCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_qname_description))], [])
+struct WS_XML_QNAME_DESCRIPTION
+{
+    uint minLocalNameByteCount;
+    uint maxLocalNameByteCount;
+    uint minNsByteCount;
+    uint maxNsByteCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_char_array_description))], [])
+struct WS_CHAR_ARRAY_DESCRIPTION
+{
+    uint minCharCount;
+    uint maxCharCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_byte_array_description))], [])
+struct WS_BYTE_ARRAY_DESCRIPTION
+{
+    uint minByteCount;
+    uint maxByteCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_utf8_array_description))], [])
+struct WS_UTF8_ARRAY_DESCRIPTION
+{
+    uint minByteCount;
+    uint maxByteCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_wsz_description))], [])
+struct WS_WSZ_DESCRIPTION
+{
+    uint minCharCount;
+    uint maxCharCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_int8_description))], [])
+struct WS_INT8_DESCRIPTION
+{
+    CHAR minValue;
+    CHAR maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_uint8_description))], [])
+struct WS_UINT8_DESCRIPTION
+{
+    ubyte minValue;
+    ubyte maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_int16_description))], [])
+struct WS_INT16_DESCRIPTION
+{
+    short minValue;
+    short maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_uint16_description))], [])
+struct WS_UINT16_DESCRIPTION
+{
+    ushort minValue;
+    ushort maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_int32_description))], [])
+struct WS_INT32_DESCRIPTION
+{
+    int minValue;
+    int maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_uint32_description))], [])
+struct WS_UINT32_DESCRIPTION
+{
+    uint minValue;
+    uint maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_int64_description))], [])
+struct WS_INT64_DESCRIPTION
+{
+    long minValue;
+    long maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_uint64_description))], [])
+struct WS_UINT64_DESCRIPTION
+{
+    ulong minValue;
+    ulong maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_float_description))], [])
+struct WS_FLOAT_DESCRIPTION
+{
+    float minValue;
+    float maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_double_description))], [])
+struct WS_DOUBLE_DESCRIPTION
+{
+    double minValue;
+    double maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_decimal_description))], [])
+struct WS_DECIMAL_DESCRIPTION
+{
+    DECIMAL minValue;
+    DECIMAL maxValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_bytes_description))], [])
+struct WS_BYTES_DESCRIPTION
+{
+    uint minByteCount;
+    uint maxByteCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_enum_value))], [])
+struct WS_ENUM_VALUE
+{
+    int            value;
+    WS_XML_STRING* name;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_enum_description))], [])
+struct WS_ENUM_DESCRIPTION
+{
+    WS_ENUM_VALUE* values;
+    uint           valueCount;
+    uint           maxByteCount;
+    uint*          nameIndices;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_item_range))], [])
+struct WS_ITEM_RANGE
+{
+    uint minItemCount;
+    uint maxItemCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_default_value))], [])
+struct WS_DEFAULT_VALUE
+{
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_field_description))], [])
+struct WS_FIELD_DESCRIPTION
+{
+    WS_FIELD_MAPPING  mapping;
+    WS_XML_STRING*    localName;
+    WS_XML_STRING*    ns;
+    WS_TYPE           type;
+    void*             typeDescription;
+    uint              offset;
+    uint              options;
+    WS_DEFAULT_VALUE* defaultValue;
+    uint              countOffset;
+    WS_XML_STRING*    itemLocalName;
+    WS_XML_STRING*    itemNs;
+    WS_ITEM_RANGE*    itemRange;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_union_field_description))], [])
+struct WS_UNION_FIELD_DESCRIPTION
+{
+    int                  value;
+    WS_FIELD_DESCRIPTION field;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_struct_description))], [])
+struct WS_STRUCT_DESCRIPTION
+{
+    uint           size;
+    uint           alignment;
+    WS_FIELD_DESCRIPTION** fields;
+    uint           fieldCount;
+    WS_XML_STRING* typeLocalName;
+    WS_XML_STRING* typeNs;
+    WS_STRUCT_DESCRIPTION* parentType;
+    WS_STRUCT_DESCRIPTION** subTypes;
+    uint           subTypeCount;
+    uint           structOptions;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_union_description))], [])
+struct WS_UNION_DESCRIPTION
+{
+    uint  size;
+    uint  alignment;
+    WS_UNION_FIELD_DESCRIPTION** fields;
+    uint  fieldCount;
+    uint  enumOffset;
+    int   noneEnumValue;
+    uint* valueIndices;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_endpoint_address_description))], [])
+struct WS_ENDPOINT_ADDRESS_DESCRIPTION
+{
+    WS_ADDRESSING_VERSION addressingVersion;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault_description))], [])
+struct WS_FAULT_DESCRIPTION
+{
+    WS_ENVELOPE_VERSION envelopeVersion;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_void_description))], [])
+struct WS_VOID_DESCRIPTION
+{
+    uint size;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_type_description))], [])
+struct WS_CUSTOM_TYPE_DESCRIPTION
+{
+    uint  size;
+    uint  alignment;
+    WS_READ_TYPE_CALLBACK readCallback;
+    WS_WRITE_TYPE_CALLBACK writeCallback;
+    void* descriptionData;
+    WS_IS_DEFAULT_VALUE_CALLBACK isDefaultValueCallback;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_attribute_description))], [])
+struct WS_ATTRIBUTE_DESCRIPTION
+{
+    WS_XML_STRING* attributeLocalName;
+    WS_XML_STRING* attributeNs;
+    WS_TYPE        type;
+    void*          typeDescription;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_parameter_description))], [])
+struct WS_PARAMETER_DESCRIPTION
+{
+    WS_PARAMETER_TYPE parameterType;
+    ushort            inputMessageIndex;
+    ushort            outputMessageIndex;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_operation_description))], [])
+struct WS_OPERATION_DESCRIPTION
+{
+    uint               versionInfo;
+    WS_MESSAGE_DESCRIPTION* inputMessageDescription;
+    WS_MESSAGE_DESCRIPTION* outputMessageDescription;
+    uint               inputMessageOptions;
+    uint               outputMessageOptions;
+    ushort             parameterCount;
+    WS_PARAMETER_DESCRIPTION* parameterDescription;
+    WS_SERVICE_STUB_CALLBACK stubCallback;
+    WS_OPERATION_STYLE style;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_contract_description))], [])
+struct WS_CONTRACT_DESCRIPTION
+{
+    uint operationCount;
+    WS_OPERATION_DESCRIPTION** operations;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_contract))], [])
+struct WS_SERVICE_CONTRACT
+{
+    const(WS_CONTRACT_DESCRIPTION)* contractDescription;
+    WS_SERVICE_MESSAGE_RECEIVE_CALLBACK defaultMessageHandlerCallback;
+    const(void)* methodTable;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_property))], [])
+struct WS_SERVICE_PROPERTY
+{
+    WS_SERVICE_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_endpoint_property))], [])
+struct WS_SERVICE_ENDPOINT_PROPERTY
+{
+    WS_SERVICE_ENDPOINT_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_property_accept_callback))], [])
+struct WS_SERVICE_PROPERTY_ACCEPT_CALLBACK
+{
+    WS_SERVICE_ACCEPT_CHANNEL_CALLBACK callback;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_metadata_document))], [])
+struct WS_SERVICE_METADATA_DOCUMENT
+{
+    WS_XML_STRING* content;
+    WS_STRING*     name;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_metadata))], [])
+struct WS_SERVICE_METADATA
+{
+    uint           documentCount;
+    WS_SERVICE_METADATA_DOCUMENT** documents;
+    WS_XML_STRING* serviceName;
+    WS_XML_STRING* serviceNs;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_property_close_callback))], [])
+struct WS_SERVICE_PROPERTY_CLOSE_CALLBACK
+{
+    WS_SERVICE_CLOSE_CHANNEL_CALLBACK callback;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_endpoint_metadata))], [])
+struct WS_SERVICE_ENDPOINT_METADATA
+{
+    WS_XML_STRING* portName;
+    WS_XML_STRING* bindingName;
+    WS_XML_STRING* bindingNs;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_endpoint))], [])
+struct WS_SERVICE_ENDPOINT
+{
+    WS_ENDPOINT_ADDRESS address;
+    WS_CHANNEL_BINDING  channelBinding;
+    WS_CHANNEL_TYPE     channelType;
+    const(WS_SECURITY_DESCRIPTION)* securityDescription;
+    const(WS_SERVICE_CONTRACT)* contract;
+    WS_SERVICE_SECURITY_CALLBACK authorizationCallback;
+    const(WS_SERVICE_ENDPOINT_PROPERTY)* properties;
+    uint                propertyCount;
+    WS_CHANNEL_PROPERTIES channelProperties;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_proxy_property))], [])
+struct WS_PROXY_PROPERTY
+{
+    WS_PROXY_PROPERTY_ID id;
+    void*                value;
+    uint                 valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_proxy_message_callback_context))], [])
+struct WS_PROXY_MESSAGE_CALLBACK_CONTEXT
+{
+    WS_PROXY_MESSAGE_CALLBACK callback;
+    void* state;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_call_property))], [])
+struct WS_CALL_PROPERTY
+{
+    WS_CALL_PROPERTY_ID id;
+    void*               value;
+    uint                valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_url))], [])
+struct WS_URL
+{
+    WS_URL_SCHEME_TYPE scheme;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_url))], [])
+struct WS_HTTP_URL
+{
+    WS_URL    url;
+    WS_STRING host;
+    ushort    port;
+    WS_STRING portAsString;
+    WS_STRING path;
+    WS_STRING query;
+    WS_STRING fragment;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_https_url))], [])
+struct WS_HTTPS_URL
+{
+    WS_URL    url;
+    WS_STRING host;
+    ushort    port;
+    WS_STRING portAsString;
+    WS_STRING path;
+    WS_STRING query;
+    WS_STRING fragment;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_nettcp_url))], [])
+struct WS_NETTCP_URL
+{
+    WS_URL    url;
+    WS_STRING host;
+    ushort    port;
+    WS_STRING portAsString;
+    WS_STRING path;
+    WS_STRING query;
+    WS_STRING fragment;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_soapudp_url))], [])
+struct WS_SOAPUDP_URL
+{
+    WS_URL    url;
+    WS_STRING host;
+    ushort    port;
+    WS_STRING portAsString;
+    WS_STRING path;
+    WS_STRING query;
+    WS_STRING fragment;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_netpipe_url))], [])
+struct WS_NETPIPE_URL
+{
+    WS_URL    url;
+    WS_STRING host;
+    ushort    port;
+    WS_STRING portAsString;
+    WS_STRING path;
+    WS_STRING query;
+    WS_STRING fragment;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_unique_id))], [])
+struct WS_UNIQUE_ID
+{
+    WS_STRING uri;
+    GUID      guid;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_buffers))], [])
+struct WS_BUFFERS
+{
+    uint      bufferCount;
+    WS_BYTES* buffers;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_metadata_endpoint))], [])
+struct WS_METADATA_ENDPOINT
+{
+    WS_ENDPOINT_ADDRESS endpointAddress;
+    WS_POLICY*          endpointPolicy;
+    WS_XML_STRING*      portName;
+    WS_XML_STRING*      serviceName;
+    WS_XML_STRING*      serviceNs;
+    WS_XML_STRING*      bindingName;
+    WS_XML_STRING*      bindingNs;
+    WS_XML_STRING*      portTypeName;
+    WS_XML_STRING*      portTypeNs;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_metadata_endpoints))], [])
+struct WS_METADATA_ENDPOINTS
+{
+    WS_METADATA_ENDPOINT* endpoints;
+    uint endpointCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_metadata_property))], [])
+struct WS_METADATA_PROPERTY
+{
+    WS_METADATA_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_policy_property))], [])
+struct WS_POLICY_PROPERTY
+{
+    WS_POLICY_PROPERTY_ID id;
+    void* value;
+    uint  valueSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_policy_properties))], [])
+struct WS_POLICY_PROPERTIES
+{
+    WS_POLICY_PROPERTY* properties;
+    uint                propertyCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding_property_constraint))], [])
+struct WS_SECURITY_BINDING_PROPERTY_CONSTRAINT
+{
+    WS_SECURITY_BINDING_PROPERTY_ID id;
+    void*          allowedValues;
+    uint           allowedValuesSize;
+    _out_e__Struct out_;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding_constraint))], [])
+struct WS_SECURITY_BINDING_CONSTRAINT
+{
+    WS_SECURITY_BINDING_CONSTRAINT_TYPE type;
+    WS_SECURITY_BINDING_PROPERTY_CONSTRAINT* propertyConstraints;
+    uint propertyConstraintCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ssl_transport_security_binding_constraint))], [])
+struct WS_SSL_TRANSPORT_SECURITY_BINDING_CONSTRAINT
+{
+    WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
+    _out_e__Struct out_;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_message_security_binding_constraint))], [])
+struct WS_USERNAME_MESSAGE_SECURITY_BINDING_CONSTRAINT
+{
+    WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_security_binding_constraint))], [])
+struct WS_HTTP_HEADER_AUTH_SECURITY_BINDING_CONSTRAINT
+{
+    WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_transport_security_binding_constraint))], [])
+struct WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING_CONSTRAINT
+{
+    WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_cert_message_security_binding_constraint))], [])
+struct WS_CERT_MESSAGE_SECURITY_BINDING_CONSTRAINT
+{
+    WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_kerberos_apreq_message_security_binding_constraint))], [])
+struct WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_CONSTRAINT
+{
+    WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_request_security_token_property_constraint))], [])
+struct WS_REQUEST_SECURITY_TOKEN_PROPERTY_CONSTRAINT
+{
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_ID id;
+    void*          allowedValues;
+    uint           allowedValuesSize;
+    _out_e__Struct out_;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_issued_token_message_security_binding_constraint))], [])
+struct WS_ISSUED_TOKEN_MESSAGE_SECURITY_BINDING_CONSTRAINT
+{
+    WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+    WS_XML_STRING* claimConstraints;
+    uint           claimConstraintCount;
+    WS_REQUEST_SECURITY_TOKEN_PROPERTY_CONSTRAINT* requestSecurityTokenPropertyConstraints;
+    uint           requestSecurityTokenPropertyConstraintCount;
+    _out_e__Struct out_;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_property_constraint))], [])
+struct WS_SECURITY_PROPERTY_CONSTRAINT
+{
+    WS_SECURITY_PROPERTY_ID id;
+    void*          allowedValues;
+    uint           allowedValuesSize;
+    _out_e__Struct out_;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_constraints))], [])
+struct WS_SECURITY_CONSTRAINTS
+{
+    WS_SECURITY_PROPERTY_CONSTRAINT* securityPropertyConstraints;
+    uint securityPropertyConstraintCount;
+    WS_SECURITY_BINDING_CONSTRAINT** securityBindingConstraints;
+    uint securityBindingConstraintCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_message_security_binding_constraint))], [])
+struct WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_CONSTRAINT
+{
+    WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+    WS_SECURITY_CONSTRAINTS* bootstrapSecurityConstraint;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_property_constraint))], [])
+struct WS_CHANNEL_PROPERTY_CONSTRAINT
+{
+    WS_CHANNEL_PROPERTY_ID id;
+    void*          allowedValues;
+    uint           allowedValuesSize;
+    _out_e__Struct out_;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_policy_extension))], [])
+struct WS_POLICY_EXTENSION
+{
+    WS_POLICY_EXTENSION_TYPE type;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_endpoint_policy_extension))], [])
+struct WS_ENDPOINT_POLICY_EXTENSION
+{
+    WS_POLICY_EXTENSION policyExtension;
+    WS_XML_STRING*      assertionName;
+    WS_XML_STRING*      assertionNs;
+    _out_e__Struct      out_;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_policy_constraints))], [])
+struct WS_POLICY_CONSTRAINTS
+{
+    WS_CHANNEL_BINDING channelBinding;
+    WS_CHANNEL_PROPERTY_CONSTRAINT* channelPropertyConstraints;
+    uint               channelPropertyConstraintCount;
+    WS_SECURITY_CONSTRAINTS* securityConstraints;
+    WS_POLICY_EXTENSION** policyExtensions;
+    uint               policyExtensionCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_policy_description))], [])
+struct WS_HTTP_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ssl_transport_security_binding_policy_description))], [])
+struct WS_SSL_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION
+{
+    WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_policy_description))], [])
+struct WS_HTTP_SSL_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSL_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sslTransportSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_security_binding_policy_description))], [])
+struct WS_HTTP_HEADER_AUTH_SECURITY_BINDING_POLICY_DESCRIPTION
+{
+    WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_policy_description))], [])
+struct WS_HTTP_HEADER_AUTH_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_HTTP_HEADER_AUTH_SECURITY_BINDING_POLICY_DESCRIPTION httpHeaderAuthSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_header_auth_policy_description))], [])
+struct WS_HTTP_SSL_HEADER_AUTH_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSL_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sslTransportSecurityBinding;
+    WS_HTTP_HEADER_AUTH_SECURITY_BINDING_POLICY_DESCRIPTION httpHeaderAuthSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_message_security_binding_policy_description))], [])
+struct WS_USERNAME_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION
+{
+    WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_username_policy_description))], [])
+struct WS_HTTP_SSL_USERNAME_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSL_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sslTransportSecurityBinding;
+    WS_USERNAME_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION usernameMessageSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_kerberos_apreq_message_security_binding_policy_description))], [])
+struct WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION
+{
+    WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_kerberos_apreq_policy_description))], [])
+struct WS_HTTP_SSL_KERBEROS_APREQ_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSL_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sslTransportSecurityBinding;
+    WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION kerberosApreqMessageSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_policy_description))], [])
+struct WS_TCP_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_sspi_transport_security_binding_policy_description))], [])
+struct WS_SSPI_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION
+{
+    WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_policy_description))], [])
+struct WS_TCP_SSPI_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSPI_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sspiTransportSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_username_policy_description))], [])
+struct WS_TCP_SSPI_USERNAME_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSPI_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sspiTransportSecurityBinding;
+    WS_USERNAME_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION usernameMessageSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_kerberos_apreq_policy_description))], [])
+struct WS_TCP_SSPI_KERBEROS_APREQ_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSPI_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sspiTransportSecurityBinding;
+    WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION kerberosApreqMessageSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_message_security_binding_policy_description))], [])
+struct WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION
+{
+    WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
+    WS_MESSAGE_SECURITY_USAGE bindingUsage;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_security_binding_policy_description))], [])
+struct WS_SECURITY_CONTEXT_SECURITY_BINDING_POLICY_DESCRIPTION
+{
+    WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION securityContextMessageSecurityBinding;
+    WS_SECURITY_PROPERTIES securityProperties;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_kerberos_apreq_security_context_policy_description))], [])
+struct WS_TCP_SSPI_KERBEROS_APREQ_SECURITY_CONTEXT_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSPI_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sspiTransportSecurityBinding;
+    WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION kerberosApreqMessageSecurityBinding;
+    WS_SECURITY_CONTEXT_SECURITY_BINDING_POLICY_DESCRIPTION securityContextSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_username_security_context_policy_description))], [])
+struct WS_TCP_SSPI_USERNAME_SECURITY_CONTEXT_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSPI_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sspiTransportSecurityBinding;
+    WS_USERNAME_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION usernameMessageSecurityBinding;
+    WS_SECURITY_CONTEXT_SECURITY_BINDING_POLICY_DESCRIPTION securityContextSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_username_security_context_policy_description))], [])
+struct WS_HTTP_SSL_USERNAME_SECURITY_CONTEXT_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSL_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sslTransportSecurityBinding;
+    WS_USERNAME_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION usernameMessageSecurityBinding;
+    WS_SECURITY_CONTEXT_SECURITY_BINDING_POLICY_DESCRIPTION securityContextSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_kerberos_apreq_security_context_policy_description))], [])
+struct WS_HTTP_SSL_KERBEROS_APREQ_SECURITY_CONTEXT_POLICY_DESCRIPTION
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSL_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sslTransportSecurityBinding;
+    WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION kerberosApreqMessageSecurityBinding;
+    WS_SECURITY_CONTEXT_SECURITY_BINDING_POLICY_DESCRIPTION securityContextSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_binding_template))], [])
+struct WS_HTTP_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_binding_template))], [])
+struct WS_TCP_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ssl_transport_security_binding_template))], [])
+struct WS_SSL_TRANSPORT_SECURITY_BINDING_TEMPLATE
+{
+    WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
+    WS_CERT_CREDENTIAL* localCertCredential;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_binding_template))], [])
+struct WS_HTTP_SSL_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSL_TRANSPORT_SECURITY_BINDING_TEMPLATE sslTransportSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_security_binding_template))], [])
+struct WS_HTTP_HEADER_AUTH_SECURITY_BINDING_TEMPLATE
+{
+    WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
+    WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_binding_template))], [])
+struct WS_HTTP_HEADER_AUTH_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_HTTP_HEADER_AUTH_SECURITY_BINDING_TEMPLATE httpHeaderAuthSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_transport_security_binding_template))], [])
+struct WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING_TEMPLATE
+{
+    WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
+    WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_binding_template))], [])
+struct WS_TCP_SSPI_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING_TEMPLATE sspiTransportSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_header_auth_binding_template))], [])
+struct WS_HTTP_SSL_HEADER_AUTH_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSL_TRANSPORT_SECURITY_BINDING_TEMPLATE sslTransportSecurityBinding;
+    WS_HTTP_HEADER_AUTH_SECURITY_BINDING_TEMPLATE httpHeaderAuthSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_message_security_binding_template))], [])
+struct WS_USERNAME_MESSAGE_SECURITY_BINDING_TEMPLATE
+{
+    WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
+    WS_USERNAME_CREDENTIAL* clientCredential;
+    WS_VALIDATE_PASSWORD_CALLBACK passwordValidator;
+    void* passwordValidatorCallbackState;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_username_binding_template))], [])
+struct WS_HTTP_SSL_USERNAME_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSL_TRANSPORT_SECURITY_BINDING_TEMPLATE sslTransportSecurityBinding;
+    WS_USERNAME_MESSAGE_SECURITY_BINDING_TEMPLATE usernameMessageSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_kerberos_apreq_message_security_binding_template))], [])
+struct WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_TEMPLATE
+{
+    WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
+    WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_kerberos_apreq_binding_template))], [])
+struct WS_HTTP_SSL_KERBEROS_APREQ_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSL_TRANSPORT_SECURITY_BINDING_TEMPLATE sslTransportSecurityBinding;
+    WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_TEMPLATE kerberosApreqMessageSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_username_binding_template))], [])
+struct WS_TCP_SSPI_USERNAME_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING_TEMPLATE sspiTransportSecurityBinding;
+    WS_USERNAME_MESSAGE_SECURITY_BINDING_TEMPLATE usernameMessageSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_kerberos_apreq_binding_template))], [])
+struct WS_TCP_SSPI_KERBEROS_APREQ_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING_TEMPLATE sspiTransportSecurityBinding;
+    WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_TEMPLATE kerberosApreqMessageSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_message_security_binding_template))], [])
+struct WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_TEMPLATE
+{
+    WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_security_binding_template))], [])
+struct WS_SECURITY_CONTEXT_SECURITY_BINDING_TEMPLATE
+{
+    WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_TEMPLATE securityContextMessageSecurityBinding;
+    WS_SECURITY_PROPERTIES securityProperties;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_username_security_context_binding_template))], [])
+struct WS_HTTP_SSL_USERNAME_SECURITY_CONTEXT_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSL_TRANSPORT_SECURITY_BINDING_TEMPLATE sslTransportSecurityBinding;
+    WS_USERNAME_MESSAGE_SECURITY_BINDING_TEMPLATE usernameMessageSecurityBinding;
+    WS_SECURITY_CONTEXT_SECURITY_BINDING_TEMPLATE securityContextSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_kerberos_apreq_security_context_binding_template))], [])
+struct WS_HTTP_SSL_KERBEROS_APREQ_SECURITY_CONTEXT_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_SSL_TRANSPORT_SECURITY_BINDING_TEMPLATE sslTransportSecurityBinding;
+    WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_TEMPLATE kerberosApreqMessageSecurityBinding;
+    WS_SECURITY_CONTEXT_SECURITY_BINDING_TEMPLATE securityContextSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_username_security_context_binding_template))], [])
+struct WS_TCP_SSPI_USERNAME_SECURITY_CONTEXT_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING_TEMPLATE sspiTransportSecurityBinding;
+    WS_USERNAME_MESSAGE_SECURITY_BINDING_TEMPLATE usernameMessageSecurityBinding;
+    WS_SECURITY_CONTEXT_SECURITY_BINDING_TEMPLATE securityContextSecurityBinding;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_kerberos_apreq_security_context_binding_template))], [])
+struct WS_TCP_SSPI_KERBEROS_APREQ_SECURITY_CONTEXT_BINDING_TEMPLATE
+{
+    WS_CHANNEL_PROPERTIES channelProperties;
+    WS_SECURITY_PROPERTIES securityProperties;
+    WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING_TEMPLATE sspiTransportSecurityBinding;
+    WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_TEMPLATE kerberosApreqMessageSecurityBinding;
+    WS_SECURITY_CONTEXT_SECURITY_BINDING_TEMPLATE securityContextSecurityBinding;
+}
+
+// Functions
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsStartReaderCanonicalization(WS_XML_READER* reader, WS_WRITE_CALLBACK writeCallback, 
+                                      void* writeCallbackState, const(WS_XML_CANONICALIZATION_PROPERTY)* properties, 
+                                      uint propertyCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsEndReaderCanonicalization(WS_XML_READER* reader, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsStartWriterCanonicalization(WS_XML_WRITER* writer, WS_WRITE_CALLBACK writeCallback, 
+                                      void* writeCallbackState, const(WS_XML_CANONICALIZATION_PROPERTY)* properties, 
+                                      uint propertyCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsEndWriterCanonicalization(WS_XML_WRITER* writer, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateXmlBuffer(WS_HEAP* heap, const(WS_XML_BUFFER_PROPERTY)* properties, uint propertyCount, 
+                          WS_XML_BUFFER** buffer, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsRemoveNode(const(WS_XML_NODE_POSITION)* nodePosition, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateReader(const(WS_XML_READER_PROPERTY)* properties, uint propertyCount, WS_XML_READER** reader, 
+                       WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetInput(WS_XML_READER* reader, const(WS_XML_READER_ENCODING)* encoding, 
+                   const(WS_XML_READER_INPUT)* input, const(WS_XML_READER_PROPERTY)* properties, uint propertyCount, 
+                   WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetInputToBuffer(WS_XML_READER* reader, WS_XML_BUFFER* buffer, const(WS_XML_READER_PROPERTY)* properties, 
+                           uint propertyCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+void WsFreeReader(WS_XML_READER* reader);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetReaderProperty(WS_XML_READER* reader, WS_XML_READER_PROPERTY_ID id, 
+                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                            uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetReaderNode(WS_XML_READER* xmlReader, const(WS_XML_NODE)** node, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsFillReader(WS_XML_READER* reader, uint minSize, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadStartElement(WS_XML_READER* reader, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadToStartElement(WS_XML_READER* reader, const(WS_XML_STRING)* localName, const(WS_XML_STRING)* ns, 
+                             BOOL* found, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadStartAttribute(WS_XML_READER* reader, uint attributeIndex, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadEndAttribute(WS_XML_READER* reader, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadNode(WS_XML_READER* reader, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSkipNode(WS_XML_READER* reader, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadEndElement(WS_XML_READER* reader, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsFindAttribute(WS_XML_READER* reader, const(WS_XML_STRING)* localName, const(WS_XML_STRING)* ns, 
+                        BOOL required, uint* attributeIndex, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadValue(WS_XML_READER* reader, WS_VALUE_TYPE valueType, 
+                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                    uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadChars(WS_XML_READER* reader, PWSTR chars, uint maxCharCount, uint* actualCharCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadCharsUtf8(WS_XML_READER* reader, ubyte* bytes, uint maxByteCount, uint* actualByteCount, 
+                        WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadBytes(WS_XML_READER* reader, 
+                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* bytes, 
+                    uint maxByteCount, uint* actualByteCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadArray(WS_XML_READER* reader, const(WS_XML_STRING)* localName, const(WS_XML_STRING)* ns, 
+                    WS_VALUE_TYPE valueType, 
+                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* array, 
+                    uint arraySize, uint itemOffset, uint itemCount, uint* actualItemCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetReaderPosition(WS_XML_READER* reader, WS_XML_NODE_POSITION* nodePosition, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetReaderPosition(WS_XML_READER* reader, const(WS_XML_NODE_POSITION)* nodePosition, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsMoveReader(WS_XML_READER* reader, WS_MOVE_TO moveTo, BOOL* found, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateWriter(const(WS_XML_WRITER_PROPERTY)* properties, uint propertyCount, WS_XML_WRITER** writer, 
+                       WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+void WsFreeWriter(WS_XML_WRITER* writer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetOutput(WS_XML_WRITER* writer, const(WS_XML_WRITER_ENCODING)* encoding, 
+                    const(WS_XML_WRITER_OUTPUT)* output, const(WS_XML_WRITER_PROPERTY)* properties, 
+                    uint propertyCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetOutputToBuffer(WS_XML_WRITER* writer, WS_XML_BUFFER* buffer, 
+                            const(WS_XML_WRITER_PROPERTY)* properties, uint propertyCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetWriterProperty(WS_XML_WRITER* writer, WS_XML_WRITER_PROPERTY_ID id, 
+                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                            uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsFlushWriter(WS_XML_WRITER* writer, uint minSize, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteStartElement(WS_XML_WRITER* writer, const(WS_XML_STRING)* prefix, const(WS_XML_STRING)* localName, 
+                            const(WS_XML_STRING)* ns, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteEndStartElement(WS_XML_WRITER* writer, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteXmlnsAttribute(WS_XML_WRITER* writer, const(WS_XML_STRING)* prefix, const(WS_XML_STRING)* ns, 
+                              BOOL singleQuote, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteStartAttribute(WS_XML_WRITER* writer, const(WS_XML_STRING)* prefix, const(WS_XML_STRING)* localName, 
+                              const(WS_XML_STRING)* ns, BOOL singleQuote, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteEndAttribute(WS_XML_WRITER* writer, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteValue(WS_XML_WRITER* writer, WS_VALUE_TYPE valueType, 
+                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* value, 
+                     uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteXmlBuffer(WS_XML_WRITER* writer, WS_XML_BUFFER* xmlBuffer, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadXmlBuffer(WS_XML_READER* reader, WS_HEAP* heap, WS_XML_BUFFER** xmlBuffer, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteXmlBufferToBytes(WS_XML_WRITER* writer, WS_XML_BUFFER* xmlBuffer, 
+                                const(WS_XML_WRITER_ENCODING)* encoding, const(WS_XML_WRITER_PROPERTY)* properties, 
+                                uint propertyCount, WS_HEAP* heap, void** bytes, uint* byteCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadXmlBufferFromBytes(WS_XML_READER* reader, const(WS_XML_READER_ENCODING)* encoding, 
+                                 const(WS_XML_READER_PROPERTY)* properties, uint propertyCount, 
+                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/const(void)* bytes, 
+                                 uint byteCount, WS_HEAP* heap, WS_XML_BUFFER** xmlBuffer, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteArray(WS_XML_WRITER* writer, const(WS_XML_STRING)* localName, const(WS_XML_STRING)* ns, 
+                     WS_VALUE_TYPE valueType, 
+                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/const(void)* array, 
+                     uint arraySize, uint itemOffset, uint itemCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteQualifiedName(WS_XML_WRITER* writer, const(WS_XML_STRING)* prefix, const(WS_XML_STRING)* localName, 
+                             const(WS_XML_STRING)* ns, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteChars(WS_XML_WRITER* writer, const(PWSTR) chars, uint charCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteCharsUtf8(WS_XML_WRITER* writer, const(ubyte)* bytes, uint byteCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteBytes(WS_XML_WRITER* writer, 
+                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* bytes, 
+                     uint byteCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsPushBytes(WS_XML_WRITER* writer, WS_PUSH_BYTES_CALLBACK callback, void* callbackState, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsPullBytes(WS_XML_WRITER* writer, WS_PULL_BYTES_CALLBACK callback, void* callbackState, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteEndElement(WS_XML_WRITER* writer, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteText(WS_XML_WRITER* writer, const(WS_XML_TEXT)* text, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteStartCData(WS_XML_WRITER* writer, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteEndCData(WS_XML_WRITER* writer, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteNode(WS_XML_WRITER* writer, const(WS_XML_NODE)* node, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetPrefixFromNamespace(WS_XML_WRITER* writer, const(WS_XML_STRING)* ns, BOOL required, 
+                                 const(WS_XML_STRING)** prefix, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetWriterPosition(WS_XML_WRITER* writer, WS_XML_NODE_POSITION* nodePosition, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetWriterPosition(WS_XML_WRITER* writer, const(WS_XML_NODE_POSITION)* nodePosition, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsMoveWriter(WS_XML_WRITER* writer, WS_MOVE_TO moveTo, BOOL* found, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsTrimXmlWhitespace(PWSTR chars, uint charCount, ushort** trimmedChars, uint* trimmedCount, 
+                            WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsVerifyXmlNCName(const(PWSTR) ncNameChars, uint ncNameCharCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsXmlStringEquals(const(WS_XML_STRING)* string1, const(WS_XML_STRING)* string2, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetNamespaceFromPrefix(WS_XML_READER* reader, const(WS_XML_STRING)* prefix, BOOL required, 
+                                 const(WS_XML_STRING)** ns, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadQualifiedName(WS_XML_READER* reader, WS_HEAP* heap, WS_XML_STRING* prefix, WS_XML_STRING* localName, 
+                            WS_XML_STRING* ns, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetXmlAttribute(WS_XML_READER* reader, const(WS_XML_STRING)* localName, WS_HEAP* heap, 
+                          ushort** valueChars, uint* valueCharCount, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCopyNode(WS_XML_WRITER* writer, WS_XML_READER* reader, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAsyncExecute(WS_ASYNC_STATE* asyncState, WS_ASYNC_FUNCTION operation, WS_CALLBACK_MODEL callbackModel, 
+                       void* callbackState, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateChannel(WS_CHANNEL_TYPE channelType, WS_CHANNEL_BINDING channelBinding, 
+                        const(WS_CHANNEL_PROPERTY)* properties, uint propertyCount, 
+                        const(WS_SECURITY_DESCRIPTION)* securityDescription, WS_CHANNEL** channel, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsOpenChannel(WS_CHANNEL* channel, const(WS_ENDPOINT_ADDRESS)* endpointAddress, 
+                      const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSendMessage(WS_CHANNEL* channel, WS_MESSAGE* message, const(WS_MESSAGE_DESCRIPTION)* messageDescription, 
+                      WS_WRITE_OPTION writeOption, 
+                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/const(void)* bodyValue, 
+                      uint bodyValueSize, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReceiveMessage(WS_CHANNEL* channel, WS_MESSAGE* message, 
+                         const(WS_MESSAGE_DESCRIPTION)** messageDescriptions, uint messageDescriptionCount, 
+                         WS_RECEIVE_OPTION receiveOption, WS_READ_OPTION readBodyOption, WS_HEAP* heap, 
+                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(8)))])*/void* value, 
+                         uint valueSize, uint* index, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsRequestReply(WS_CHANNEL* channel, WS_MESSAGE* requestMessage, 
+                       const(WS_MESSAGE_DESCRIPTION)* requestMessageDescription, WS_WRITE_OPTION writeOption, 
+                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/const(void)* requestBodyValue, 
+                       uint requestBodyValueSize, WS_MESSAGE* replyMessage, 
+                       const(WS_MESSAGE_DESCRIPTION)* replyMessageDescription, WS_READ_OPTION readOption, 
+                       WS_HEAP* heap, 
+                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(11)))])*/void* value, 
+                       uint valueSize, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSendReplyMessage(WS_CHANNEL* channel, WS_MESSAGE* replyMessage, 
+                           const(WS_MESSAGE_DESCRIPTION)* replyMessageDescription, WS_WRITE_OPTION writeOption, 
+                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/const(void)* replyBodyValue, 
+                           uint replyBodyValueSize, WS_MESSAGE* requestMessage, 
+                           const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSendFaultMessageForError(WS_CHANNEL* channel, WS_MESSAGE* replyMessage, WS_ERROR* faultError, 
+                                   HRESULT faultErrorCode, WS_FAULT_DISCLOSURE faultDisclosure, 
+                                   WS_MESSAGE* requestMessage, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                                   WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetChannelProperty(WS_CHANNEL* channel, WS_CHANNEL_PROPERTY_ID id, 
+                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                             uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetChannelProperty(WS_CHANNEL* channel, WS_CHANNEL_PROPERTY_ID id, 
+                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* value, 
+                             uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteMessageStart(WS_CHANNEL* channel, WS_MESSAGE* message, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                            WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteMessageEnd(WS_CHANNEL* channel, WS_MESSAGE* message, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                          WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadMessageStart(WS_CHANNEL* channel, WS_MESSAGE* message, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                           WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadMessageEnd(WS_CHANNEL* channel, WS_MESSAGE* message, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                         WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCloseChannel(WS_CHANNEL* channel, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAbortChannel(WS_CHANNEL* channel, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+void WsFreeChannel(WS_CHANNEL* channel);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsResetChannel(WS_CHANNEL* channel, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAbandonMessage(WS_CHANNEL* channel, WS_MESSAGE* message, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsShutdownSessionChannel(WS_CHANNEL* channel, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetOperationContextProperty(const(WS_OPERATION_CONTEXT)* context, 
+                                      const(WS_OPERATION_CONTEXT_PROPERTY_ID) id, 
+                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                                      uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetDictionary(WS_ENCODING encoding, WS_XML_DICTIONARY** dictionary, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadEndpointAddressExtension(WS_XML_READER* reader, WS_ENDPOINT_ADDRESS* endpointAddress, 
+                                       WS_ENDPOINT_ADDRESS_EXTENSION_TYPE extensionType, WS_READ_OPTION readOption, 
+                                       WS_HEAP* heap, 
+                                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/void* value, 
+                                       uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateError(const(WS_ERROR_PROPERTY)* properties, uint propertyCount, WS_ERROR** error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAddErrorString(WS_ERROR* error, const(WS_STRING)* string);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetErrorString(WS_ERROR* error, uint index, WS_STRING* string);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCopyError(WS_ERROR* source, WS_ERROR* destination);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetErrorProperty(WS_ERROR* error, WS_ERROR_PROPERTY_ID id, 
+                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* buffer, 
+                           uint bufferSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetErrorProperty(WS_ERROR* error, WS_ERROR_PROPERTY_ID id, 
+                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* value, 
+                           uint valueSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsResetError(WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+void WsFreeError(WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetFaultErrorProperty(WS_ERROR* error, WS_FAULT_ERROR_PROPERTY_ID id, 
+                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* buffer, 
+                                uint bufferSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetFaultErrorProperty(WS_ERROR* error, WS_FAULT_ERROR_PROPERTY_ID id, 
+                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* value, 
+                                uint valueSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateFaultFromError(WS_ERROR* error, HRESULT faultErrorCode, WS_FAULT_DISCLOSURE faultDisclosure, 
+                               WS_HEAP* heap, WS_FAULT* fault);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetFaultErrorDetail(WS_ERROR* error, const(WS_FAULT_DETAIL_DESCRIPTION)* faultDetailDescription, 
+                              WS_WRITE_OPTION writeOption, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(void)* value, 
+                              uint valueSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetFaultErrorDetail(WS_ERROR* error, const(WS_FAULT_DETAIL_DESCRIPTION)* faultDetailDescription, 
+                              WS_READ_OPTION readOption, WS_HEAP* heap, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* value, 
+                              uint valueSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateHeap(size_t maxSize, size_t trimSize, const(WS_HEAP_PROPERTY)* properties, uint propertyCount, 
+                     WS_HEAP** heap, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAlloc(WS_HEAP* heap, size_t size, void** ptr, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetHeapProperty(WS_HEAP* heap, WS_HEAP_PROPERTY_ID id, 
+                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                          uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsResetHeap(WS_HEAP* heap, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+void WsFreeHeap(WS_HEAP* heap);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateListener(WS_CHANNEL_TYPE channelType, WS_CHANNEL_BINDING channelBinding, 
+                         const(WS_LISTENER_PROPERTY)* properties, uint propertyCount, 
+                         const(WS_SECURITY_DESCRIPTION)* securityDescription, WS_LISTENER** listener, 
+                         WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsOpenListener(WS_LISTENER* listener, const(WS_STRING)* url, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                       WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAcceptChannel(WS_LISTENER* listener, WS_CHANNEL* channel, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                        WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCloseListener(WS_LISTENER* listener, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAbortListener(WS_LISTENER* listener, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsResetListener(WS_LISTENER* listener, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+void WsFreeListener(WS_LISTENER* listener);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetListenerProperty(WS_LISTENER* listener, WS_LISTENER_PROPERTY_ID id, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                              uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetListenerProperty(WS_LISTENER* listener, WS_LISTENER_PROPERTY_ID id, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* value, 
+                              uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateChannelForListener(WS_LISTENER* listener, const(WS_CHANNEL_PROPERTY)* properties, 
+                                   uint propertyCount, WS_CHANNEL** channel, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateMessage(WS_ENVELOPE_VERSION envelopeVersion, WS_ADDRESSING_VERSION addressingVersion, 
+                        const(WS_MESSAGE_PROPERTY)* properties, uint propertyCount, WS_MESSAGE** message, 
+                        WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateMessageForChannel(WS_CHANNEL* channel, const(WS_MESSAGE_PROPERTY)* properties, uint propertyCount, 
+                                  WS_MESSAGE** message, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsInitializeMessage(WS_MESSAGE* message, WS_MESSAGE_INITIALIZATION initialization, 
+                            WS_MESSAGE* sourceMessage, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsResetMessage(WS_MESSAGE* message, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+void WsFreeMessage(WS_MESSAGE* message);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetHeaderAttributes(WS_MESSAGE* message, WS_XML_READER* reader, uint* headerAttributes, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetHeader(WS_MESSAGE* message, WS_HEADER_TYPE headerType, WS_TYPE valueType, WS_READ_OPTION readOption, 
+                    WS_HEAP* heap, 
+                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/void* value, 
+                    uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetCustomHeader(WS_MESSAGE* message, const(WS_ELEMENT_DESCRIPTION)* customHeaderDescription, 
+                          WS_REPEATING_HEADER_OPTION repeatingOption, uint headerIndex, WS_READ_OPTION readOption, 
+                          WS_HEAP* heap, 
+                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(7)))])*/void* value, 
+                          uint valueSize, uint* headerAttributes, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsRemoveHeader(WS_MESSAGE* message, WS_HEADER_TYPE headerType, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetHeader(WS_MESSAGE* message, WS_HEADER_TYPE headerType, WS_TYPE valueType, WS_WRITE_OPTION writeOption, 
+                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/const(void)* value, 
+                    uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsRemoveCustomHeader(WS_MESSAGE* message, const(WS_XML_STRING)* headerName, const(WS_XML_STRING)* headerNs, 
+                             WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAddCustomHeader(WS_MESSAGE* message, const(WS_ELEMENT_DESCRIPTION)* headerDescription, 
+                          WS_WRITE_OPTION writeOption, 
+                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(void)* value, 
+                          uint valueSize, uint headerAttributes, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAddMappedHeader(WS_MESSAGE* message, const(WS_XML_STRING)* headerName, WS_TYPE valueType, 
+                          WS_WRITE_OPTION writeOption, 
+                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/const(void)* value, 
+                          uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsRemoveMappedHeader(WS_MESSAGE* message, const(WS_XML_STRING)* headerName, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetMappedHeader(WS_MESSAGE* message, const(WS_XML_STRING)* headerName, 
+                          WS_REPEATING_HEADER_OPTION repeatingOption, uint headerIndex, WS_TYPE valueType, 
+                          WS_READ_OPTION readOption, WS_HEAP* heap, 
+                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(8)))])*/void* value, 
+                          uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteBody(WS_MESSAGE* message, const(WS_ELEMENT_DESCRIPTION)* bodyDescription, 
+                    WS_WRITE_OPTION writeOption, 
+                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(void)* value, 
+                    uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadBody(WS_MESSAGE* message, const(WS_ELEMENT_DESCRIPTION)* bodyDescription, WS_READ_OPTION readOption, 
+                   WS_HEAP* heap, 
+                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* value, 
+                   uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteEnvelopeStart(WS_MESSAGE* message, WS_XML_WRITER* writer, WS_MESSAGE_DONE_CALLBACK doneCallback, 
+                             void* doneCallbackState, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteEnvelopeEnd(WS_MESSAGE* message, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadEnvelopeStart(WS_MESSAGE* message, WS_XML_READER* reader, WS_MESSAGE_DONE_CALLBACK doneCallback, 
+                            void* doneCallbackState, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadEnvelopeEnd(WS_MESSAGE* message, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetMessageProperty(WS_MESSAGE* message, WS_MESSAGE_PROPERTY_ID id, 
+                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                             uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsSetMessageProperty(WS_MESSAGE* message, WS_MESSAGE_PROPERTY_ID id, 
+                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* value, 
+                             uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAddressMessage(WS_MESSAGE* message, const(WS_ENDPOINT_ADDRESS)* address, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCheckMustUnderstandHeaders(WS_MESSAGE* message, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsMarkHeaderAsUnderstood(WS_MESSAGE* message, const(WS_XML_NODE_POSITION)* headerPosition, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsFillBody(WS_MESSAGE* message, uint minSize, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsFlushBody(WS_MESSAGE* message, uint minSize, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsRequestSecurityToken(WS_CHANNEL* channel, const(WS_REQUEST_SECURITY_TOKEN_PROPERTY)* properties, 
+                               uint propertyCount, WS_SECURITY_TOKEN** token, const(WS_ASYNC_CONTEXT)* asyncContext, 
+                               WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetSecurityTokenProperty(WS_SECURITY_TOKEN* securityToken, WS_SECURITY_TOKEN_PROPERTY_ID id, 
+                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                                   uint valueSize, WS_HEAP* heap, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateXmlSecurityToken(WS_XML_BUFFER* tokenXml, WS_SECURITY_KEY_HANDLE* tokenKey, 
+                                 const(WS_XML_SECURITY_TOKEN_PROPERTY)* properties, uint propertyCount, 
+                                 WS_SECURITY_TOKEN** token, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+void WsFreeSecurityToken(WS_SECURITY_TOKEN* token);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsRevokeSecurityContext(WS_SECURITY_CONTEXT* securityContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetSecurityContextProperty(WS_SECURITY_CONTEXT* securityContext, WS_SECURITY_CONTEXT_PROPERTY_ID id, 
+                                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                                     uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadElement(WS_XML_READER* reader, const(WS_ELEMENT_DESCRIPTION)* elementDescription, 
+                      WS_READ_OPTION readOption, WS_HEAP* heap, 
+                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* value, 
+                      uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadAttribute(WS_XML_READER* reader, const(WS_ATTRIBUTE_DESCRIPTION)* attributeDescription, 
+                        WS_READ_OPTION readOption, WS_HEAP* heap, 
+                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* value, 
+                        uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadType(WS_XML_READER* reader, WS_TYPE_MAPPING typeMapping, WS_TYPE type, const(void)* typeDescription, 
+                   WS_READ_OPTION readOption, WS_HEAP* heap, 
+                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(7)))])*/void* value, 
+                   uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteElement(WS_XML_WRITER* writer, const(WS_ELEMENT_DESCRIPTION)* elementDescription, 
+                       WS_WRITE_OPTION writeOption, 
+                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(void)* value, 
+                       uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteAttribute(WS_XML_WRITER* writer, const(WS_ATTRIBUTE_DESCRIPTION)* attributeDescription, 
+                         WS_WRITE_OPTION writeOption, 
+                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(void)* value, 
+                         uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsWriteType(WS_XML_WRITER* writer, WS_TYPE_MAPPING typeMapping, WS_TYPE type, const(void)* typeDescription, 
+                    WS_WRITE_OPTION writeOption, 
+                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/const(void)* value, 
+                    uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsRegisterOperationForCancel(const(WS_OPERATION_CONTEXT)* context, 
+                                     WS_OPERATION_CANCEL_CALLBACK cancelCallback, 
+                                     WS_OPERATION_FREE_STATE_CALLBACK freestateCallback, void* userState, 
+                                     WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetServiceHostProperty(WS_SERVICE_HOST* serviceHost, const(WS_SERVICE_PROPERTY_ID) id, 
+                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                                 uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateServiceHost(const(WS_SERVICE_ENDPOINT)** endpoints, const(ushort) endpointCount, 
+                            const(WS_SERVICE_PROPERTY)* serviceProperties, uint servicePropertyCount, 
+                            WS_SERVICE_HOST** serviceHost, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsOpenServiceHost(WS_SERVICE_HOST* serviceHost, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCloseServiceHost(WS_SERVICE_HOST* serviceHost, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAbortServiceHost(WS_SERVICE_HOST* serviceHost, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+void WsFreeServiceHost(WS_SERVICE_HOST* serviceHost);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsResetServiceHost(WS_SERVICE_HOST* serviceHost, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetServiceProxyProperty(WS_SERVICE_PROXY* serviceProxy, const(WS_PROXY_PROPERTY_ID) id, 
+                                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                                  uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateServiceProxy(const(WS_CHANNEL_TYPE) channelType, const(WS_CHANNEL_BINDING) channelBinding, 
+                             const(WS_SECURITY_DESCRIPTION)* securityDescription, 
+                             const(WS_PROXY_PROPERTY)* properties, const(uint) propertyCount, 
+                             const(WS_CHANNEL_PROPERTY)* channelProperties, const(uint) channelPropertyCount, 
+                             WS_SERVICE_PROXY** serviceProxy, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsOpenServiceProxy(WS_SERVICE_PROXY* serviceProxy, const(WS_ENDPOINT_ADDRESS)* address, 
+                           const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCloseServiceProxy(WS_SERVICE_PROXY* serviceProxy, const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAbortServiceProxy(WS_SERVICE_PROXY* serviceProxy, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+void WsFreeServiceProxy(WS_SERVICE_PROXY* serviceProxy);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsResetServiceProxy(WS_SERVICE_PROXY* serviceProxy, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsAbandonCall(WS_SERVICE_PROXY* serviceProxy, uint callId, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCall(WS_SERVICE_PROXY* serviceProxy, const(WS_OPERATION_DESCRIPTION)* operation, const(void)** arguments, 
+               WS_HEAP* heap, const(WS_CALL_PROPERTY)* callProperties, const(uint) callPropertyCount, 
+               const(WS_ASYNC_CONTEXT)* asyncContext, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsDecodeUrl(const(WS_STRING)* url, uint flags, WS_HEAP* heap, WS_URL** outUrl, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsEncodeUrl(const(WS_URL)* url, uint flags, WS_HEAP* heap, WS_STRING* outUrl, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCombineUrl(const(WS_STRING)* baseUrl, const(WS_STRING)* referenceUrl, uint flags, WS_HEAP* heap, 
+                     WS_STRING* resultUrl, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsDateTimeToFileTime(const(WS_DATETIME)* dateTime, FILETIME* fileTime, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsFileTimeToDateTime(const(FILETIME)* fileTime, WS_DATETIME* dateTime, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateMetadata(const(WS_METADATA_PROPERTY)* properties, uint propertyCount, WS_METADATA** metadata, 
+                         WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsReadMetadata(WS_METADATA* metadata, WS_XML_READER* reader, const(WS_STRING)* url, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+void WsFreeMetadata(WS_METADATA* metadata);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsResetMetadata(WS_METADATA* metadata, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetMetadataProperty(WS_METADATA* metadata, WS_METADATA_PROPERTY_ID id, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                              uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetMissingMetadataDocumentAddress(WS_METADATA* metadata, WS_ENDPOINT_ADDRESS** address, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetMetadataEndpoints(WS_METADATA* metadata, WS_METADATA_ENDPOINTS* endpoints, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsMatchPolicyAlternative(WS_POLICY* policy, uint alternativeIndex, 
+                                 WS_POLICY_CONSTRAINTS* policyConstraints, BOOL matchRequired, WS_HEAP* heap, 
+                                 WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetPolicyProperty(WS_POLICY* policy, WS_POLICY_PROPERTY_ID id, 
+                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* value, 
+                            uint valueSize, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsGetPolicyAlternativeCount(WS_POLICY* policy, uint* count, WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateServiceProxyFromTemplate(WS_CHANNEL_TYPE channelType, const(WS_PROXY_PROPERTY)* properties, 
+                                         const(uint) propertyCount, WS_BINDING_TEMPLATE_TYPE templateType, 
+                                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* templateValue, 
+                                         uint templateSize, const(void)* templateDescription, 
+                                         uint templateDescriptionSize, WS_SERVICE_PROXY** serviceProxy, 
+                                         WS_ERROR* error);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("webservices.dll")
+HRESULT WsCreateServiceEndpointFromTemplate(WS_CHANNEL_TYPE channelType, 
+                                            const(WS_SERVICE_ENDPOINT_PROPERTY)* properties, uint propertyCount, 
+                                            const(WS_STRING)* addressUrl, const(WS_SERVICE_CONTRACT)* contract, 
+                                            WS_SERVICE_SECURITY_CALLBACK authorizationCallback, WS_HEAP* heap, 
+                                            WS_BINDING_TEMPLATE_TYPE templateType, 
+                                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(9)))])*/void* templateValue, 
+                                            uint templateSize, const(void)* templateDescription, 
+                                            uint templateDescriptionSize, WS_SERVICE_ENDPOINT** serviceEndpoint, 
+                                            WS_ERROR* error);
+
+
+// Interfaces
+
+@GUID("1b35a14a-6094-4799-a60e-e474e15d4dc9")
+//INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
+//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontentprefetchertasktrigger/nn-icontentprefetchertasktrigger-icontentprefetchertasktrigger))], [])
+interface IContentPrefetcherTaskTrigger : IInspectable
+{
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontentprefetchertasktrigger/nf-icontentprefetchertasktrigger-icontentprefetchertasktrigger-triggercontentprefetchertask))], [])
+    HRESULT TriggerContentPrefetcherTask(const(PWSTR) packageFullName);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontentprefetchertasktrigger/nf-icontentprefetchertasktrigger-icontentprefetchertasktrigger-isregisteredforcontentprefetch))], [])
+    HRESULT IsRegisteredForContentPrefetch(const(PWSTR) packageFullName, ubyte* isRegistered);
+}
+
+
+// GUIDs
+
+
+const GUID IID_IContentPrefetcherTaskTrigger = GUIDOF!IContentPrefetcherTaskTrigger;

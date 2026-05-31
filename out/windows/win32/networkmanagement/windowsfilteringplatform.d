@@ -1,0 +1,4670 @@
+// Written in the D programming language.
+
+module windows.win32.networkmanagement.windowsfilteringplatform;
+
+public import windows.core;
+public import system : Guid;
+public import windows.win32.foundation : BOOL, FILETIME, HANDLE, PSTR, PWSTR;
+public import windows.win32.security : ACL, PSECURITY_DESCRIPTOR, PSID, SID,
+                                       SID_AND_ATTRIBUTES;
+public import windows.win32.system.rpc : SEC_WINNT_AUTH_IDENTITY_W;
+
+extern(Windows) @nogc nothrow:
+
+
+// Enums
+
+alias IPSEC_SA_BUNDLE_FLAGS = uint;
+enum : uint
+{
+    IPSEC_SA_BUNDLE_FLAG_ND_SECURE                          = 0x00000001,
+    IPSEC_SA_BUNDLE_FLAG_ND_BOUNDARY                        = 0x00000002,
+    IPSEC_SA_BUNDLE_FLAG_ND_PEER_NAT_BOUNDARY               = 0x00000004,
+    IPSEC_SA_BUNDLE_FLAG_GUARANTEE_ENCRYPTION               = 0x00000008,
+    IPSEC_SA_BUNDLE_FLAG_ALLOW_NULL_TARGET_NAME_MATCH       = 0x00000200,
+    IPSEC_SA_BUNDLE_FLAG_CLEAR_DF_ON_TUNNEL                 = 0x00000400,
+    IPSEC_SA_BUNDLE_FLAG_ASSUME_UDP_CONTEXT_OUTBOUND        = 0x00000800,
+    IPSEC_SA_BUNDLE_FLAG_ND_PEER_BOUNDARY                   = 0x00001000,
+    IPSEC_SA_BUNDLE_FLAG_SUPPRESS_DUPLICATE_DELETION        = 0x00002000,
+    IPSEC_SA_BUNDLE_FLAG_PEER_SUPPORTS_GUARANTEE_ENCRYPTION = 0x00004000,
+}
+alias IPSEC_POLICY_FLAG = uint;
+enum : uint
+{
+    IPSEC_POLICY_FLAG_ND_SECURE                               = 0x00000002,
+    IPSEC_POLICY_FLAG_ND_BOUNDARY                             = 0x00000004,
+    IPSEC_POLICY_FLAG_NAT_ENCAP_ALLOW_PEER_BEHIND_NAT         = 0x00000010,
+    IPSEC_POLICY_FLAG_NAT_ENCAP_ALLOW_GENERAL_NAT_TRAVERSAL   = 0x00000020,
+    IPSEC_POLICY_FLAG_DONT_NEGOTIATE_SECOND_LIFETIME          = 0x00000040,
+    IPSEC_POLICY_FLAG_DONT_NEGOTIATE_BYTE_LIFETIME            = 0x00000080,
+    IPSEC_POLICY_FLAG_CLEAR_DF_ON_TUNNEL                      = 0x00000008,
+    IPSEC_POLICY_FLAG_ENABLE_V6_IN_V4_TUNNELING               = 0x00000100,
+    IPSEC_POLICY_FLAG_ENABLE_SERVER_ADDR_ASSIGNMENT           = 0x00000200,
+    IPSEC_POLICY_FLAG_TUNNEL_ALLOW_OUTBOUND_CLEAR_CONNECTION  = 0x00000400,
+    IPSEC_POLICY_FLAG_TUNNEL_BYPASS_ALREADY_SECURE_CONNECTION = 0x00000800,
+    IPSEC_POLICY_FLAG_TUNNEL_BYPASS_ICMPV6                    = 0x00001000,
+    IPSEC_POLICY_FLAG_KEY_MANAGER_ALLOW_DICTATE_KEY           = 0x00002000,
+}
+alias IKEEXT_CERT_AUTH = uint;
+enum : uint
+{
+    IKEEXT_CERT_AUTH_FLAG_SSL_ONE_WAY            = 0x00000001,
+    IKEEXT_CERT_AUTH_ENABLE_CRL_CHECK_STRONG     = 0x00000004,
+    IKEEXT_CERT_AUTH_DISABLE_SSL_CERT_VALIDATION = 0x00000008,
+    IKEEXT_CERT_AUTH_ALLOW_HTTP_CERT_LOOKUP      = 0x00000010,
+    IKEEXT_CERT_AUTH_URL_CONTAINS_BUNDLE         = 0x00000020,
+}
+alias IKEEXT_PRESHARED_KEY_AUTHENTICATION_FLAGS = uint;
+enum : uint
+{
+    IKEEXT_PSK_FLAG_LOCAL_AUTH_ONLY  = 0x00000001,
+    IKEEXT_PSK_FLAG_REMOTE_AUTH_ONLY = 0x00000002,
+}
+alias IKEEXT_POLICY_FLAG = uint;
+enum : uint
+{
+    IKEEXT_POLICY_FLAG_DISABLE_DIAGNOSTICS          = 0x00000001,
+    IKEEXT_POLICY_FLAG_NO_MACHINE_LUID_VERIFY       = 0x00000002,
+    IKEEXT_POLICY_FLAG_NO_IMPERSONATION_LUID_VERIFY = 0x00000004,
+    IKEEXT_POLICY_FLAG_ENABLE_OPTIONAL_DH           = 0x00000008,
+}
+alias FWPM_SUBSCRIPTION_FLAGS = uint;
+enum : uint
+{
+    FWPM_SUBSCRIPTION_FLAG_NOTIFY_ON_ADD    = 0x00000001,
+    FWPM_SUBSCRIPTION_FLAG_NOTIFY_ON_DELETE = 0x00000002,
+}
+alias IKEEXT_CERT_FLAGS = uint;
+enum : uint
+{
+    IKEEXT_CERT_FLAG_ENABLE_ACCOUNT_MAPPING          = 0x00000001,
+    IKEEXT_CERT_FLAG_DISABLE_REQUEST_PAYLOAD         = 0x00000002,
+    IKEEXT_CERT_FLAG_USE_NAP_CERTIFICATE             = 0x00000004,
+    IKEEXT_CERT_FLAG_INTERMEDIATE_CA                 = 0x00000008,
+    IKEEXT_CERT_FLAG_IGNORE_INIT_CERT_MAP_FAILURE    = 0x00000010,
+    IKEEXT_CERT_FLAG_PREFER_NAP_CERTIFICATE_OUTBOUND = 0x00000020,
+    IKEEXT_CERT_FLAG_SELECT_NAP_CERTIFICATE          = 0x00000040,
+    IKEEXT_CERT_FLAG_VERIFY_NAP_CERTIFICATE          = 0x00000080,
+    IKEEXT_CERT_FLAG_FOLLOW_RENEWAL_CERTIFICATE      = 0x00000100,
+}
+alias IPSEC_DOSP_FLAGS = uint;
+enum : uint
+{
+    IPSEC_DOSP_FLAG_ENABLE_IKEV1          = 0x00000001,
+    IPSEC_DOSP_FLAG_ENABLE_IKEV2          = 0x00000002,
+    IPSEC_DOSP_FLAG_DISABLE_AUTHIP        = 0x00000004,
+    IPSEC_DOSP_FLAG_DISABLE_DEFAULT_BLOCK = 0x00000008,
+    IPSEC_DOSP_FLAG_FILTER_BLOCK          = 0x00000010,
+    IPSEC_DOSP_FLAG_FILTER_EXEMPT         = 0x00000020,
+}
+alias IKEEXT_KERBEROS_AUTHENTICATION_FLAGS = uint;
+enum : uint
+{
+    IKEEXT_KERB_AUTH_DISABLE_INITIATOR_TOKEN_GENERATION = 0x00000001,
+    IKEEXT_KERB_AUTH_DONT_ACCEPT_EXPLICIT_CREDENTIALS   = 0x00000002,
+}
+alias IKEEXT_RESERVED_AUTHENTICATION_FLAGS = uint;
+enum : uint
+{
+    IKEEXT_RESERVED_AUTH_DISABLE_INITIATOR_TOKEN_GENERATION = 0x00000001,
+}
+alias IKEEXT_EAP_AUTHENTICATION_FLAGS = uint;
+enum : uint
+{
+    IKEEXT_EAP_FLAG_LOCAL_AUTH_ONLY  = 0x00000001,
+    IKEEXT_EAP_FLAG_REMOTE_AUTH_ONLY = 0x00000002,
+}
+alias FWPM_FILTER_FLAGS = uint;
+enum : uint
+{
+    FWPM_FILTER_FLAG_NONE                           = 0x00000000,
+    FWPM_FILTER_FLAG_PERSISTENT                     = 0x00000001,
+    FWPM_FILTER_FLAG_BOOTTIME                       = 0x00000002,
+    FWPM_FILTER_FLAG_HAS_PROVIDER_CONTEXT           = 0x00000004,
+    FWPM_FILTER_FLAG_CLEAR_ACTION_RIGHT             = 0x00000008,
+    FWPM_FILTER_FLAG_PERMIT_IF_CALLOUT_UNREGISTERED = 0x00000010,
+    FWPM_FILTER_FLAG_DISABLED                       = 0x00000020,
+    FWPM_FILTER_FLAG_INDEXED                        = 0x00000040,
+}
+alias FWP_ACTION_TYPE = uint;
+enum : uint
+{
+    FWP_ACTION_BLOCK               = 0x00001001,
+    FWP_ACTION_PERMIT              = 0x00001002,
+    FWP_ACTION_CALLOUT_TERMINATING = 0x00005003,
+    FWP_ACTION_CALLOUT_INSPECTION  = 0x00006004,
+    FWP_ACTION_CALLOUT_UNKNOWN     = 0x00004005,
+    FWP_ACTION_CONTINUE            = 0x00002006,
+    FWP_ACTION_NONE                = 0x00000007,
+    FWP_ACTION_NONE_NO_MATCH       = 0x00000008,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ne-fwptypes-fwp_direction))], [])
+alias FWP_DIRECTION = int;
+enum : int
+{
+    FWP_DIRECTION_OUTBOUND = 0x00000000,
+    FWP_DIRECTION_INBOUND  = 0x00000001,
+    FWP_DIRECTION_MAX      = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ne-fwptypes-fwp_ip_version))], [])
+alias FWP_IP_VERSION = int;
+enum : int
+{
+    FWP_IP_VERSION_V4   = 0x00000000,
+    FWP_IP_VERSION_V6   = 0x00000001,
+    FWP_IP_VERSION_NONE = 0x00000002,
+    FWP_IP_VERSION_MAX  = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ne-fwptypes-fwp_af))], [])
+alias FWP_AF = int;
+enum : int
+{
+    FWP_AF_INET  = 0x00000000,
+    FWP_AF_INET6 = 0x00000001,
+    FWP_AF_ETHER = 0x00000002,
+    FWP_AF_NONE  = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ne-fwptypes-fwp_ether_encap_method))], [])
+alias FWP_ETHER_ENCAP_METHOD = int;
+enum : int
+{
+    FWP_ETHER_ENCAP_METHOD_ETHER_V2        = 0x00000000,
+    FWP_ETHER_ENCAP_METHOD_SNAP            = 0x00000001,
+    FWP_ETHER_ENCAP_METHOD_SNAP_W_OUI_ZERO = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ne-fwptypes-fwp_data_type))], [])
+alias FWP_DATA_TYPE = int;
+enum : int
+{
+    FWP_EMPTY                         = 0x00000000,
+    FWP_UINT8                         = 0x00000001,
+    FWP_UINT16                        = 0x00000002,
+    FWP_UINT32                        = 0x00000003,
+    FWP_UINT64                        = 0x00000004,
+    FWP_INT8                          = 0x00000005,
+    FWP_INT16                         = 0x00000006,
+    FWP_INT32                         = 0x00000007,
+    FWP_INT64                         = 0x00000008,
+    FWP_FLOAT                         = 0x00000009,
+    FWP_DOUBLE                        = 0x0000000a,
+    FWP_BYTE_ARRAY16_TYPE             = 0x0000000b,
+    FWP_BYTE_BLOB_TYPE                = 0x0000000c,
+    FWP_SID                           = 0x0000000d,
+    FWP_SECURITY_DESCRIPTOR_TYPE      = 0x0000000e,
+    FWP_TOKEN_INFORMATION_TYPE        = 0x0000000f,
+    FWP_TOKEN_ACCESS_INFORMATION_TYPE = 0x00000010,
+    FWP_UNICODE_STRING_TYPE           = 0x00000011,
+    FWP_BYTE_ARRAY6_TYPE              = 0x00000012,
+    FWP_SINGLE_DATA_TYPE_MAX          = 0x000000ff,
+    FWP_V4_ADDR_MASK                  = 0x00000100,
+    FWP_V6_ADDR_MASK                  = 0x00000101,
+    FWP_RANGE_TYPE                    = 0x00000102,
+    FWP_DATA_TYPE_MAX                 = 0x00000103,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ne-fwptypes-fwp_match_type))], [])
+alias FWP_MATCH_TYPE = int;
+enum : int
+{
+    FWP_MATCH_EQUAL                  = 0x00000000,
+    FWP_MATCH_GREATER                = 0x00000001,
+    FWP_MATCH_LESS                   = 0x00000002,
+    FWP_MATCH_GREATER_OR_EQUAL       = 0x00000003,
+    FWP_MATCH_LESS_OR_EQUAL          = 0x00000004,
+    FWP_MATCH_RANGE                  = 0x00000005,
+    FWP_MATCH_FLAGS_ALL_SET          = 0x00000006,
+    FWP_MATCH_FLAGS_ANY_SET          = 0x00000007,
+    FWP_MATCH_FLAGS_NONE_SET         = 0x00000008,
+    FWP_MATCH_EQUAL_CASE_INSENSITIVE = 0x00000009,
+    FWP_MATCH_NOT_EQUAL              = 0x0000000a,
+    FWP_MATCH_PREFIX                 = 0x0000000b,
+    FWP_MATCH_NOT_PREFIX             = 0x0000000c,
+    FWP_MATCH_TYPE_MAX               = 0x0000000d,
+}
+alias FWP_NETWORK_CONNECTION_POLICY_SETTING_TYPE = int;
+enum : int
+{
+    FWP_NETWORK_CONNECTION_POLICY_SOURCE_ADDRESS     = 0x00000000,
+    FWP_NETWORK_CONNECTION_POLICY_NEXT_HOP_INTERFACE = 0x00000001,
+    FWP_NETWORK_CONNECTION_POLICY_NEXT_HOP           = 0x00000002,
+    FWP_NETWORK_CONNECTION_POLICY_MAX                = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ne-fwptypes-fwp_classify_option_type))], [])
+alias FWP_CLASSIFY_OPTION_TYPE = int;
+enum : int
+{
+    FWP_CLASSIFY_OPTION_MULTICAST_STATE                    = 0x00000000,
+    FWP_CLASSIFY_OPTION_LOOSE_SOURCE_MAPPING               = 0x00000001,
+    FWP_CLASSIFY_OPTION_UNICAST_LIFETIME                   = 0x00000002,
+    FWP_CLASSIFY_OPTION_MCAST_BCAST_LIFETIME               = 0x00000003,
+    FWP_CLASSIFY_OPTION_SECURE_SOCKET_SECURITY_FLAGS       = 0x00000004,
+    FWP_CLASSIFY_OPTION_SECURE_SOCKET_AUTHIP_MM_POLICY_KEY = 0x00000005,
+    FWP_CLASSIFY_OPTION_SECURE_SOCKET_AUTHIP_QM_POLICY_KEY = 0x00000006,
+    FWP_CLASSIFY_OPTION_LOCAL_ONLY_MAPPING                 = 0x00000007,
+    FWP_CLASSIFY_OPTION_MAX                                = 0x00000008,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ne-fwptypes-fwp_vswitch_network_type))], [])
+alias FWP_VSWITCH_NETWORK_TYPE = int;
+enum : int
+{
+    FWP_VSWITCH_NETWORK_TYPE_UNKNOWN  = 0x00000000,
+    FWP_VSWITCH_NETWORK_TYPE_PRIVATE  = 0x00000001,
+    FWP_VSWITCH_NETWORK_TYPE_INTERNAL = 0x00000002,
+    FWP_VSWITCH_NETWORK_TYPE_EXTERNAL = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ne-fwptypes-fwp_filter_enum_type))], [])
+alias FWP_FILTER_ENUM_TYPE = int;
+enum : int
+{
+    FWP_FILTER_ENUM_FULLY_CONTAINED = 0x00000000,
+    FWP_FILTER_ENUM_OVERLAPPING     = 0x00000001,
+    FWP_FILTER_ENUM_TYPE_MAX        = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ne-iketypes-ikeext_key_module_type))], [])
+alias IKEEXT_KEY_MODULE_TYPE = int;
+enum : int
+{
+    IKEEXT_KEY_MODULE_IKE    = 0x00000000,
+    IKEEXT_KEY_MODULE_AUTHIP = 0x00000001,
+    IKEEXT_KEY_MODULE_IKEV2  = 0x00000002,
+    IKEEXT_KEY_MODULE_MAX    = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ne-iketypes-ikeext_authentication_method_type))], [])
+alias IKEEXT_AUTHENTICATION_METHOD_TYPE = int;
+enum : int
+{
+    IKEEXT_PRESHARED_KEY                  = 0x00000000,
+    IKEEXT_CERTIFICATE                    = 0x00000001,
+    IKEEXT_KERBEROS                       = 0x00000002,
+    IKEEXT_ANONYMOUS                      = 0x00000003,
+    IKEEXT_SSL                            = 0x00000004,
+    IKEEXT_NTLM_V2                        = 0x00000005,
+    IKEEXT_IPV6_CGA                       = 0x00000006,
+    IKEEXT_CERTIFICATE_ECDSA_P256         = 0x00000007,
+    IKEEXT_CERTIFICATE_ECDSA_P384         = 0x00000008,
+    IKEEXT_SSL_ECDSA_P256                 = 0x00000009,
+    IKEEXT_SSL_ECDSA_P384                 = 0x0000000a,
+    IKEEXT_EAP                            = 0x0000000b,
+    IKEEXT_RESERVED                       = 0x0000000c,
+    IKEEXT_AUTHENTICATION_METHOD_TYPE_MAX = 0x0000000d,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ne-iketypes-ikeext_authentication_impersonation_type))], [])
+alias IKEEXT_AUTHENTICATION_IMPERSONATION_TYPE = int;
+enum : int
+{
+    IKEEXT_IMPERSONATION_NONE             = 0x00000000,
+    IKEEXT_IMPERSONATION_SOCKET_PRINCIPAL = 0x00000001,
+    IKEEXT_IMPERSONATION_MAX              = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ne-iketypes-ikeext_cert_config_type))], [])
+alias IKEEXT_CERT_CONFIG_TYPE = int;
+enum : int
+{
+    IKEEXT_CERT_CONFIG_EXPLICIT_TRUST_LIST = 0x00000000,
+    IKEEXT_CERT_CONFIG_ENTERPRISE_STORE    = 0x00000001,
+    IKEEXT_CERT_CONFIG_TRUSTED_ROOT_STORE  = 0x00000002,
+    IKEEXT_CERT_CONFIG_UNSPECIFIED         = 0x00000003,
+    IKEEXT_CERT_CONFIG_TYPE_MAX            = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ne-iketypes-ikeext_cert_criteria_name_type))], [])
+alias IKEEXT_CERT_CRITERIA_NAME_TYPE = int;
+enum : int
+{
+    IKEEXT_CERT_CRITERIA_DNS           = 0x00000000,
+    IKEEXT_CERT_CRITERIA_UPN           = 0x00000001,
+    IKEEXT_CERT_CRITERIA_RFC822        = 0x00000002,
+    IKEEXT_CERT_CRITERIA_CN            = 0x00000003,
+    IKEEXT_CERT_CRITERIA_OU            = 0x00000004,
+    IKEEXT_CERT_CRITERIA_O             = 0x00000005,
+    IKEEXT_CERT_CRITERIA_DC            = 0x00000006,
+    IKEEXT_CERT_CRITERIA_NAME_TYPE_MAX = 0x00000007,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ne-iketypes-ikeext_cipher_type))], [])
+alias IKEEXT_CIPHER_TYPE = int;
+enum : int
+{
+    IKEEXT_CIPHER_DES               = 0x00000000,
+    IKEEXT_CIPHER_3DES              = 0x00000001,
+    IKEEXT_CIPHER_AES_128           = 0x00000002,
+    IKEEXT_CIPHER_AES_192           = 0x00000003,
+    IKEEXT_CIPHER_AES_256           = 0x00000004,
+    IKEEXT_CIPHER_AES_GCM_128_16ICV = 0x00000005,
+    IKEEXT_CIPHER_AES_GCM_256_16ICV = 0x00000006,
+    IKEEXT_CIPHER_TYPE_MAX          = 0x00000007,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ne-iketypes-ikeext_integrity_type))], [])
+alias IKEEXT_INTEGRITY_TYPE = int;
+enum : int
+{
+    IKEEXT_INTEGRITY_MD5      = 0x00000000,
+    IKEEXT_INTEGRITY_SHA1     = 0x00000001,
+    IKEEXT_INTEGRITY_SHA_256  = 0x00000002,
+    IKEEXT_INTEGRITY_SHA_384  = 0x00000003,
+    IKEEXT_INTEGRITY_TYPE_MAX = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ne-iketypes-ikeext_dh_group))], [])
+alias IKEEXT_DH_GROUP = int;
+enum : int
+{
+    IKEEXT_DH_GROUP_NONE = 0x00000000,
+    IKEEXT_DH_GROUP_1    = 0x00000001,
+    IKEEXT_DH_GROUP_2    = 0x00000002,
+    IKEEXT_DH_GROUP_14   = 0x00000003,
+    IKEEXT_DH_GROUP_2048 = 0x00000003,
+    IKEEXT_DH_ECP_256    = 0x00000004,
+    IKEEXT_DH_ECP_384    = 0x00000005,
+    IKEEXT_DH_GROUP_24   = 0x00000006,
+    IKEEXT_DH_GROUP_MAX  = 0x00000007,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ne-iketypes-ikeext_mm_sa_state))], [])
+alias IKEEXT_MM_SA_STATE = int;
+enum : int
+{
+    IKEEXT_MM_SA_STATE_NONE       = 0x00000000,
+    IKEEXT_MM_SA_STATE_SA_SENT    = 0x00000001,
+    IKEEXT_MM_SA_STATE_SSPI_SENT  = 0x00000002,
+    IKEEXT_MM_SA_STATE_FINAL      = 0x00000003,
+    IKEEXT_MM_SA_STATE_FINAL_SENT = 0x00000004,
+    IKEEXT_MM_SA_STATE_COMPLETE   = 0x00000005,
+    IKEEXT_MM_SA_STATE_MAX        = 0x00000006,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ne-iketypes-ikeext_qm_sa_state))], [])
+alias IKEEXT_QM_SA_STATE = int;
+enum : int
+{
+    IKEEXT_QM_SA_STATE_NONE     = 0x00000000,
+    IKEEXT_QM_SA_STATE_INITIAL  = 0x00000001,
+    IKEEXT_QM_SA_STATE_FINAL    = 0x00000002,
+    IKEEXT_QM_SA_STATE_COMPLETE = 0x00000003,
+    IKEEXT_QM_SA_STATE_MAX      = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ne-iketypes-ikeext_em_sa_state))], [])
+alias IKEEXT_EM_SA_STATE = int;
+enum : int
+{
+    IKEEXT_EM_SA_STATE_NONE          = 0x00000000,
+    IKEEXT_EM_SA_STATE_SENT_ATTS     = 0x00000001,
+    IKEEXT_EM_SA_STATE_SSPI_SENT     = 0x00000002,
+    IKEEXT_EM_SA_STATE_AUTH_COMPLETE = 0x00000003,
+    IKEEXT_EM_SA_STATE_FINAL         = 0x00000004,
+    IKEEXT_EM_SA_STATE_COMPLETE      = 0x00000005,
+    IKEEXT_EM_SA_STATE_MAX           = 0x00000006,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ne-iketypes-ikeext_sa_role))], [])
+alias IKEEXT_SA_ROLE = int;
+enum : int
+{
+    IKEEXT_SA_ROLE_INITIATOR = 0x00000000,
+    IKEEXT_SA_ROLE_RESPONDER = 0x00000001,
+    IKEEXT_SA_ROLE_MAX       = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ne-ipsectypes-ipsec_transform_type))], [])
+alias IPSEC_TRANSFORM_TYPE = int;
+enum : int
+{
+    IPSEC_TRANSFORM_AH                  = 0x00000001,
+    IPSEC_TRANSFORM_ESP_AUTH            = 0x00000002,
+    IPSEC_TRANSFORM_ESP_CIPHER          = 0x00000003,
+    IPSEC_TRANSFORM_ESP_AUTH_AND_CIPHER = 0x00000004,
+    IPSEC_TRANSFORM_ESP_AUTH_FW         = 0x00000005,
+    IPSEC_TRANSFORM_TYPE_MAX            = 0x00000006,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ne-ipsectypes-ipsec_auth_type))], [])
+alias IPSEC_AUTH_TYPE = int;
+enum : int
+{
+    IPSEC_AUTH_MD5     = 0x00000000,
+    IPSEC_AUTH_SHA_1   = 0x00000001,
+    IPSEC_AUTH_SHA_256 = 0x00000002,
+    IPSEC_AUTH_AES_128 = 0x00000003,
+    IPSEC_AUTH_AES_192 = 0x00000004,
+    IPSEC_AUTH_AES_256 = 0x00000005,
+    IPSEC_AUTH_MAX     = 0x00000006,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ne-ipsectypes-ipsec_cipher_type))], [])
+alias IPSEC_CIPHER_TYPE = int;
+enum : int
+{
+    IPSEC_CIPHER_TYPE_DES     = 0x00000001,
+    IPSEC_CIPHER_TYPE_3DES    = 0x00000002,
+    IPSEC_CIPHER_TYPE_AES_128 = 0x00000003,
+    IPSEC_CIPHER_TYPE_AES_192 = 0x00000004,
+    IPSEC_CIPHER_TYPE_AES_256 = 0x00000005,
+    IPSEC_CIPHER_TYPE_MAX     = 0x00000006,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ne-ipsectypes-ipsec_pfs_group))], [])
+alias IPSEC_PFS_GROUP = int;
+enum : int
+{
+    IPSEC_PFS_NONE    = 0x00000000,
+    IPSEC_PFS_1       = 0x00000001,
+    IPSEC_PFS_2       = 0x00000002,
+    IPSEC_PFS_2048    = 0x00000003,
+    IPSEC_PFS_14      = 0x00000003,
+    IPSEC_PFS_ECP_256 = 0x00000004,
+    IPSEC_PFS_ECP_384 = 0x00000005,
+    IPSEC_PFS_MM      = 0x00000006,
+    IPSEC_PFS_24      = 0x00000007,
+    IPSEC_PFS_MAX     = 0x00000008,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ne-ipsectypes-ipsec_token_type))], [])
+alias IPSEC_TOKEN_TYPE = int;
+enum : int
+{
+    IPSEC_TOKEN_TYPE_MACHINE       = 0x00000000,
+    IPSEC_TOKEN_TYPE_IMPERSONATION = 0x00000001,
+    IPSEC_TOKEN_TYPE_MAX           = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ne-ipsectypes-ipsec_token_principal))], [])
+alias IPSEC_TOKEN_PRINCIPAL = int;
+enum : int
+{
+    IPSEC_TOKEN_PRINCIPAL_LOCAL = 0x00000000,
+    IPSEC_TOKEN_PRINCIPAL_PEER  = 0x00000001,
+    IPSEC_TOKEN_PRINCIPAL_MAX   = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ne-ipsectypes-ipsec_token_mode))], [])
+alias IPSEC_TOKEN_MODE = int;
+enum : int
+{
+    IPSEC_TOKEN_MODE_MAIN     = 0x00000000,
+    IPSEC_TOKEN_MODE_EXTENDED = 0x00000001,
+    IPSEC_TOKEN_MODE_MAX      = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ne-ipsectypes-ipsec_traffic_type))], [])
+alias IPSEC_TRAFFIC_TYPE = int;
+enum : int
+{
+    IPSEC_TRAFFIC_TYPE_TRANSPORT = 0x00000000,
+    IPSEC_TRAFFIC_TYPE_TUNNEL    = 0x00000001,
+    IPSEC_TRAFFIC_TYPE_MAX       = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ne-ipsectypes-ipsec_sa_context_event_type0))], [])
+alias IPSEC_SA_CONTEXT_EVENT_TYPE0 = int;
+enum : int
+{
+    IPSEC_SA_CONTEXT_EVENT_ADD    = 0x00000001,
+    IPSEC_SA_CONTEXT_EVENT_DELETE = 0x00000002,
+    IPSEC_SA_CONTEXT_EVENT_MAX    = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ne-ipsectypes-ipsec_failure_point))], [])
+alias IPSEC_FAILURE_POINT = int;
+enum : int
+{
+    IPSEC_FAILURE_NONE      = 0x00000000,
+    IPSEC_FAILURE_ME        = 0x00000001,
+    IPSEC_FAILURE_PEER      = 0x00000002,
+    IPSEC_FAILURE_POINT_MAX = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ne-fwpmtypes-dl_address_type))], [])
+alias DL_ADDRESS_TYPE = int;
+enum : int
+{
+    DlUnicast   = 0x00000000,
+    DlMulticast = 0x00000001,
+    DlBroadcast = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ne-fwpmtypes-fwpm_change_type))], [])
+alias FWPM_CHANGE_TYPE = int;
+enum : int
+{
+    FWPM_CHANGE_ADD      = 0x00000001,
+    FWPM_CHANGE_DELETE   = 0x00000002,
+    FWPM_CHANGE_TYPE_MAX = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ne-fwpmtypes-fwpm_service_state))], [])
+alias FWPM_SERVICE_STATE = int;
+enum : int
+{
+    FWPM_SERVICE_STOPPED       = 0x00000000,
+    FWPM_SERVICE_START_PENDING = 0x00000001,
+    FWPM_SERVICE_STOP_PENDING  = 0x00000002,
+    FWPM_SERVICE_RUNNING       = 0x00000003,
+    FWPM_SERVICE_STATE_MAX     = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ne-fwpmtypes-fwpm_engine_option))], [])
+alias FWPM_ENGINE_OPTION = int;
+enum : int
+{
+    FWPM_ENGINE_COLLECT_NET_EVENTS           = 0x00000000,
+    FWPM_ENGINE_NET_EVENT_MATCH_ANY_KEYWORDS = 0x00000001,
+    FWPM_ENGINE_NAME_CACHE                   = 0x00000002,
+    FWPM_ENGINE_MONITOR_IPSEC_CONNECTIONS    = 0x00000003,
+    FWPM_ENGINE_PACKET_QUEUING               = 0x00000004,
+    FWPM_ENGINE_TXN_WATCHDOG_TIMEOUT_IN_MSEC = 0x00000005,
+    FWPM_ENGINE_OPTION_MAX                   = 0x00000006,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ne-fwpmtypes-fwpm_provider_context_type))], [])
+alias FWPM_PROVIDER_CONTEXT_TYPE = int;
+enum : int
+{
+    FWPM_IPSEC_KEYING_CONTEXT              = 0x00000000,
+    FWPM_IPSEC_IKE_QM_TRANSPORT_CONTEXT    = 0x00000001,
+    FWPM_IPSEC_IKE_QM_TUNNEL_CONTEXT       = 0x00000002,
+    FWPM_IPSEC_AUTHIP_QM_TRANSPORT_CONTEXT = 0x00000003,
+    FWPM_IPSEC_AUTHIP_QM_TUNNEL_CONTEXT    = 0x00000004,
+    FWPM_IPSEC_IKE_MM_CONTEXT              = 0x00000005,
+    FWPM_IPSEC_AUTHIP_MM_CONTEXT           = 0x00000006,
+    FWPM_CLASSIFY_OPTIONS_CONTEXT          = 0x00000007,
+    FWPM_GENERAL_CONTEXT                   = 0x00000008,
+    FWPM_IPSEC_IKEV2_QM_TUNNEL_CONTEXT     = 0x00000009,
+    FWPM_IPSEC_IKEV2_MM_CONTEXT            = 0x0000000a,
+    FWPM_IPSEC_DOSP_CONTEXT                = 0x0000000b,
+    FWPM_IPSEC_IKEV2_QM_TRANSPORT_CONTEXT  = 0x0000000c,
+    FWPM_NETWORK_CONNECTION_POLICY_CONTEXT = 0x0000000d,
+    FWPM_PROVIDER_CONTEXT_TYPE_MAX         = 0x0000000e,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ne-fwpmtypes-fwpm_field_type))], [])
+alias FWPM_FIELD_TYPE = int;
+enum : int
+{
+    FWPM_FIELD_RAW_DATA   = 0x00000000,
+    FWPM_FIELD_IP_ADDRESS = 0x00000001,
+    FWPM_FIELD_FLAGS      = 0x00000002,
+    FWPM_FIELD_TYPE_MAX   = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ne-fwpmtypes-fwpm_net_event_type))], [])
+alias FWPM_NET_EVENT_TYPE = int;
+enum : int
+{
+    FWPM_NET_EVENT_TYPE_IKEEXT_MM_FAILURE  = 0x00000000,
+    FWPM_NET_EVENT_TYPE_IKEEXT_QM_FAILURE  = 0x00000001,
+    FWPM_NET_EVENT_TYPE_IKEEXT_EM_FAILURE  = 0x00000002,
+    FWPM_NET_EVENT_TYPE_CLASSIFY_DROP      = 0x00000003,
+    FWPM_NET_EVENT_TYPE_IPSEC_KERNEL_DROP  = 0x00000004,
+    FWPM_NET_EVENT_TYPE_IPSEC_DOSP_DROP    = 0x00000005,
+    FWPM_NET_EVENT_TYPE_CLASSIFY_ALLOW     = 0x00000006,
+    FWPM_NET_EVENT_TYPE_CAPABILITY_DROP    = 0x00000007,
+    FWPM_NET_EVENT_TYPE_CAPABILITY_ALLOW   = 0x00000008,
+    FWPM_NET_EVENT_TYPE_CLASSIFY_DROP_MAC  = 0x00000009,
+    FWPM_NET_EVENT_TYPE_LPM_PACKET_ARRIVAL = 0x0000000a,
+    FWPM_NET_EVENT_TYPE_MAX                = 0x0000000b,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ne-fwpmtypes-fwpm_appc_network_capability_type))], [])
+alias FWPM_APPC_NETWORK_CAPABILITY_TYPE = int;
+enum : int
+{
+    FWPM_APPC_NETWORK_CAPABILITY_INTERNET_CLIENT          = 0x00000000,
+    FWPM_APPC_NETWORK_CAPABILITY_INTERNET_CLIENT_SERVER   = 0x00000001,
+    FWPM_APPC_NETWORK_CAPABILITY_INTERNET_PRIVATE_NETWORK = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ne-fwpmtypes-fwpm_system_port_type))], [])
+alias FWPM_SYSTEM_PORT_TYPE = int;
+enum : int
+{
+    FWPM_SYSTEM_PORT_RPC_EPMAP   = 0x00000000,
+    FWPM_SYSTEM_PORT_TEREDO      = 0x00000001,
+    FWPM_SYSTEM_PORT_IPHTTPS_IN  = 0x00000002,
+    FWPM_SYSTEM_PORT_IPHTTPS_OUT = 0x00000003,
+    FWPM_SYSTEM_PORT_TYPE_MAX    = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ne-fwpmtypes-fwpm_connection_event_type))], [])
+alias FWPM_CONNECTION_EVENT_TYPE = int;
+enum : int
+{
+    FWPM_CONNECTION_EVENT_ADD    = 0x00000000,
+    FWPM_CONNECTION_EVENT_DELETE = 0x00000001,
+    FWPM_CONNECTION_EVENT_MAX    = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ne-fwpmtypes-fwpm_vswitch_event_type))], [])
+alias FWPM_VSWITCH_EVENT_TYPE = int;
+enum : int
+{
+    FWPM_VSWITCH_EVENT_FILTER_ADD_TO_INCOMPLETE_LAYER         = 0x00000000,
+    FWPM_VSWITCH_EVENT_FILTER_ENGINE_NOT_IN_REQUIRED_POSITION = 0x00000001,
+    FWPM_VSWITCH_EVENT_ENABLED_FOR_INSPECTION                 = 0x00000002,
+    FWPM_VSWITCH_EVENT_DISABLED_FOR_INSPECTION                = 0x00000003,
+    FWPM_VSWITCH_EVENT_FILTER_ENGINE_REORDER                  = 0x00000004,
+    FWPM_VSWITCH_EVENT_MAX                                    = 0x00000005,
+}
+
+// Constants
+
+
+enum : uint
+{
+    FWPM_NET_EVENT_KEYWORD_INBOUND_MCAST      = 0x00000001,
+    FWPM_NET_EVENT_KEYWORD_INBOUND_BCAST      = 0x00000002,
+    FWPM_NET_EVENT_KEYWORD_CAPABILITY_DROP    = 0x00000004,
+    FWPM_NET_EVENT_KEYWORD_CAPABILITY_ALLOW   = 0x00000008,
+    FWPM_NET_EVENT_KEYWORD_CLASSIFY_ALLOW     = 0x00000010,
+    FWPM_NET_EVENT_KEYWORD_PORT_SCANNING_DROP = 0x00000020,
+}
+
+enum : uint
+{
+    FWPM_ENGINE_OPTION_PACKET_QUEUE_NONE    = 0x00000000,
+    FWPM_ENGINE_OPTION_PACKET_QUEUE_INBOUND = 0x00000001,
+    FWPM_ENGINE_OPTION_PACKET_QUEUE_FORWARD = 0x00000002,
+    FWPM_ENGINE_OPTION_PACKET_BATCH_INBOUND = 0x00000004,
+}
+
+enum : uint
+{
+    FWPM_SESSION_FLAG_DYNAMIC  = 0x00000001,
+    FWPM_SESSION_FLAG_RESERVED = 0x10000000,
+}
+
+enum : uint
+{
+    FWPM_PROVIDER_FLAG_PERSISTENT         = 0x00000001,
+    FWPM_PROVIDER_FLAG_DISABLED           = 0x00000010,
+    FWPM_PROVIDER_CONTEXT_FLAG_PERSISTENT = 0x00000001,
+    FWPM_PROVIDER_CONTEXT_FLAG_DOWNLEVEL  = 0x00000002,
+}
+
+enum uint FWPM_SUBLAYER_FLAG_PERSISTENT = 0x00000001;
+
+enum : uint
+{
+    FWPM_LAYER_FLAG_KERNEL          = 0x00000001,
+    FWPM_LAYER_FLAG_BUILTIN         = 0x00000002,
+    FWPM_LAYER_FLAG_CLASSIFY_MOSTLY = 0x00000004,
+    FWPM_LAYER_FLAG_BUFFERED        = 0x00000008,
+}
+
+enum : uint
+{
+    FWPM_CALLOUT_FLAG_PERSISTENT            = 0x00010000,
+    FWPM_CALLOUT_FLAG_USES_PROVIDER_CONTEXT = 0x00020000,
+    FWPM_CALLOUT_FLAG_REGISTERED            = 0x00040000,
+}
+
+enum uint FWPM_FILTER_FLAG_HAS_SECURITY_REALM_PROVIDER_CONTEXT = 0x00000080;
+
+enum : uint
+{
+    FWPM_FILTER_FLAG_SYSTEMOS_ONLY             = 0x00000100,
+    FWPM_FILTER_FLAG_GAMEOS_ONLY               = 0x00000200,
+    FWPM_FILTER_FLAG_SILENT_MODE               = 0x00000400,
+    FWPM_FILTER_FLAG_IPSEC_NO_ACQUIRE_INITIATE = 0x00000800,
+    FWPM_FILTER_FLAG_RESERVED0                 = 0x00001000,
+    FWPM_FILTER_FLAG_RESERVED1                 = 0x00002000,
+    FWPM_FILTER_FLAG_RESERVED2                 = 0x00004000,
+}
+
+enum : uint
+{
+    FWPM_NET_EVENT_FLAG_IP_PROTOCOL_SET    = 0x00000001,
+    FWPM_NET_EVENT_FLAG_LOCAL_ADDR_SET     = 0x00000002,
+    FWPM_NET_EVENT_FLAG_REMOTE_ADDR_SET    = 0x00000004,
+    FWPM_NET_EVENT_FLAG_LOCAL_PORT_SET     = 0x00000008,
+    FWPM_NET_EVENT_FLAG_REMOTE_PORT_SET    = 0x00000010,
+    FWPM_NET_EVENT_FLAG_APP_ID_SET         = 0x00000020,
+    FWPM_NET_EVENT_FLAG_USER_ID_SET        = 0x00000040,
+    FWPM_NET_EVENT_FLAG_SCOPE_ID_SET       = 0x00000080,
+    FWPM_NET_EVENT_FLAG_IP_VERSION_SET     = 0x00000100,
+    FWPM_NET_EVENT_FLAG_REAUTH_REASON_SET  = 0x00000200,
+    FWPM_NET_EVENT_FLAG_PACKAGE_ID_SET     = 0x00000400,
+    FWPM_NET_EVENT_FLAG_ENTERPRISE_ID_SET  = 0x00000800,
+    FWPM_NET_EVENT_FLAG_POLICY_FLAGS_SET   = 0x00001000,
+    FWPM_NET_EVENT_FLAG_EFFECTIVE_NAME_SET = 0x00002000,
+}
+
+enum uint IKEEXT_CERT_HASH_LEN = 0x00000014;
+
+enum : uint
+{
+    FWPM_NET_EVENT_IKEEXT_MM_FAILURE_FLAG_BENIGN   = 0x00000001,
+    FWPM_NET_EVENT_IKEEXT_MM_FAILURE_FLAG_MULTIPLE = 0x00000002,
+    FWPM_NET_EVENT_IKEEXT_EM_FAILURE_FLAG_MULTIPLE = 0x00000001,
+    FWPM_NET_EVENT_IKEEXT_EM_FAILURE_FLAG_BENIGN   = 0x00000002,
+}
+
+enum uint FWPM_CONNECTION_ENUM_FLAG_QUERY_BYTES_TRANSFERRED = 0x00000001;
+
+enum : uint
+{
+    FWPS_FILTER_FLAG_CLEAR_ACTION_RIGHT             = 0x00000001,
+    FWPS_FILTER_FLAG_PERMIT_IF_CALLOUT_UNREGISTERED = 0x00000002,
+}
+
+enum : uint
+{
+    FWPS_FILTER_FLAG_OR_CONDITIONS                       = 0x00000004,
+    FWPS_FILTER_FLAG_HAS_SECURITY_REALM_PROVIDER_CONTEXT = 0x00000008,
+}
+
+enum : uint
+{
+    FWPS_FILTER_FLAG_SILENT_MODE               = 0x00000010,
+    FWPS_FILTER_FLAG_IPSEC_NO_ACQUIRE_INITIATE = 0x00000020,
+    FWPS_FILTER_FLAG_RESERVED0                 = 0x00000040,
+    FWPS_FILTER_FLAG_RESERVED1                 = 0x00000080,
+    FWPS_FILTER_FLAG_RESERVED2                 = 0x00000100,
+}
+
+enum : uint
+{
+    FWPS_INCOMING_FLAG_CACHE_SAFE                    = 0x00000001,
+    FWPS_INCOMING_FLAG_ENFORCE_QUERY                 = 0x00000002,
+    FWPS_INCOMING_FLAG_ABSORB                        = 0x00000004,
+    FWPS_INCOMING_FLAG_CONNECTION_FAILING_INDICATION = 0x00000008,
+}
+
+enum : uint
+{
+    FWPS_INCOMING_FLAG_MID_STREAM_INSPECTION = 0x00000010,
+    FWPS_INCOMING_FLAG_RECLASSIFY            = 0x00000020,
+    FWPS_INCOMING_FLAG_IS_LOOSE_SOURCE_FLOW  = 0x00000040,
+    FWPS_INCOMING_FLAG_IS_LOCAL_ONLY_FLOW    = 0x00000080,
+}
+
+enum : uint
+{
+    FWPS_L2_INCOMING_FLAG_IS_RAW_IPV4_FRAMING          = 0x00000001,
+    FWPS_L2_INCOMING_FLAG_IS_RAW_IPV6_FRAMING          = 0x00000002,
+    FWPS_L2_INCOMING_FLAG_RECLASSIFY_MULTI_DESTINATION = 0x00000008,
+}
+
+enum uint FWPS_INCOMING_FLAG_RESERVED0 = 0x00000100;
+enum uint FWPS_RIGHT_ACTION_WRITE = 0x00000001;
+
+enum : uint
+{
+    FWPS_CLASSIFY_OUT_FLAG_ABSORB                  = 0x00000001,
+    FWPS_CLASSIFY_OUT_FLAG_BUFFER_LIMIT_REACHED    = 0x00000002,
+    FWPS_CLASSIFY_OUT_FLAG_NO_MORE_DATA            = 0x00000004,
+    FWPS_CLASSIFY_OUT_FLAG_ALE_FAST_CACHE_CHECK    = 0x00000008,
+    FWPS_CLASSIFY_OUT_FLAG_ALE_FAST_CACHE_POSSIBLE = 0x00000010,
+}
+
+enum uint FWPS_ALE_ENDPOINT_FLAG_IPSEC_SECURED = 0x00000001;
+enum uint FWP_BYTEMAP_ARRAY64_SIZE = 0x00000008;
+enum uint FWP_BYTE_ARRAY6_SIZE = 0x00000006;
+enum uint FWP_V6_ADDR_SIZE = 0x00000010;
+enum uint FWP_ACTRL_MATCH_FILTER = 0x00000001;
+
+enum : uint
+{
+    FWP_OPTION_VALUE_ALLOW_MULTICAST_STATE        = 0x00000000,
+    FWP_OPTION_VALUE_DENY_MULTICAST_STATE         = 0x00000001,
+    FWP_OPTION_VALUE_ALLOW_GLOBAL_MULTICAST_STATE = 0x00000002,
+}
+
+enum : uint
+{
+    FWP_OPTION_VALUE_DISABLE_LOOSE_SOURCE       = 0x00000000,
+    FWP_OPTION_VALUE_ENABLE_LOOSE_SOURCE        = 0x00000001,
+    FWP_OPTION_VALUE_DISABLE_LOCAL_ONLY_MAPPING = 0x00000000,
+}
+
+enum uint FWP_OPTION_VALUE_ENABLE_LOCAL_ONLY_MAPPING = 0x00000001;
+
+enum : uint
+{
+    FWP_ACTION_FLAG_TERMINATING     = 0x00001000,
+    FWP_ACTION_FLAG_NON_TERMINATING = 0x00002000,
+    FWP_ACTION_FLAG_CALLOUT         = 0x00004000,
+}
+
+enum : uint
+{
+    FWP_CONDITION_FLAG_IS_LOOPBACK                  = 0x00000001,
+    FWP_CONDITION_FLAG_IS_IPSEC_SECURED             = 0x00000002,
+    FWP_CONDITION_FLAG_IS_REAUTHORIZE               = 0x00000004,
+    FWP_CONDITION_FLAG_IS_WILDCARD_BIND             = 0x00000008,
+    FWP_CONDITION_FLAG_IS_RAW_ENDPOINT              = 0x00000010,
+    FWP_CONDITION_FLAG_IS_FRAGMENT                  = 0x00000020,
+    FWP_CONDITION_FLAG_IS_FRAGMENT_GROUP            = 0x00000040,
+    FWP_CONDITION_FLAG_IS_IPSEC_NATT_RECLASSIFY     = 0x00000080,
+    FWP_CONDITION_FLAG_REQUIRES_ALE_CLASSIFY        = 0x00000100,
+    FWP_CONDITION_FLAG_IS_IMPLICIT_BIND             = 0x00000200,
+    FWP_CONDITION_FLAG_IS_REASSEMBLED               = 0x00000400,
+    FWP_CONDITION_FLAG_IS_NAME_APP_SPECIFIED        = 0x00004000,
+    FWP_CONDITION_FLAG_IS_PROMISCUOUS               = 0x00008000,
+    FWP_CONDITION_FLAG_IS_AUTH_FW                   = 0x00010000,
+    FWP_CONDITION_FLAG_IS_RECLASSIFY                = 0x00020000,
+    FWP_CONDITION_FLAG_IS_OUTBOUND_PASS_THRU        = 0x00040000,
+    FWP_CONDITION_FLAG_IS_INBOUND_PASS_THRU         = 0x00080000,
+    FWP_CONDITION_FLAG_IS_CONNECTION_REDIRECTED     = 0x00100000,
+    FWP_CONDITION_FLAG_IS_PROXY_CONNECTION          = 0x00200000,
+    FWP_CONDITION_FLAG_IS_APPCONTAINER_LOOPBACK     = 0x00400000,
+    FWP_CONDITION_FLAG_IS_NON_APPCONTAINER_LOOPBACK = 0x00800000,
+    FWP_CONDITION_FLAG_IS_RESERVED                  = 0x01000000,
+    FWP_CONDITION_FLAG_IS_HONORING_POLICY_AUTHORIZE = 0x02000000,
+}
+
+enum : uint
+{
+    FWP_CONDITION_REAUTHORIZE_REASON_POLICY_CHANGE                  = 0x00000001,
+    FWP_CONDITION_REAUTHORIZE_REASON_NEW_ARRIVAL_INTERFACE          = 0x00000002,
+    FWP_CONDITION_REAUTHORIZE_REASON_NEW_NEXTHOP_INTERFACE          = 0x00000004,
+    FWP_CONDITION_REAUTHORIZE_REASON_PROFILE_CROSSING               = 0x00000008,
+    FWP_CONDITION_REAUTHORIZE_REASON_CLASSIFY_COMPLETION            = 0x00000010,
+    FWP_CONDITION_REAUTHORIZE_REASON_IPSEC_PROPERTIES_CHANGED       = 0x00000020,
+    FWP_CONDITION_REAUTHORIZE_REASON_MID_STREAM_INSPECTION          = 0x00000040,
+    FWP_CONDITION_REAUTHORIZE_REASON_SOCKET_PROPERTY_CHANGED        = 0x00000080,
+    FWP_CONDITION_REAUTHORIZE_REASON_NEW_INBOUND_MCAST_BCAST_PACKET = 0x00000100,
+    FWP_CONDITION_REAUTHORIZE_REASON_EDP_POLICY_CHANGED             = 0x00000200,
+    FWP_CONDITION_REAUTHORIZE_REASON_PROXY_HANDLE_CHANGED           = 0x00004000,
+    FWP_CONDITION_REAUTHORIZE_REASON_CHECK_OFFLOAD                  = 0x00010000,
+}
+
+enum : uint
+{
+    FWP_CONDITION_SOCKET_PROPERTY_FLAG_IS_SYSTEM_PORT_RPC = 0x00000001,
+    FWP_CONDITION_SOCKET_PROPERTY_FLAG_ALLOW_EDGE_TRAFFIC = 0x00000002,
+    FWP_CONDITION_SOCKET_PROPERTY_FLAG_DENY_EDGE_TRAFFIC  = 0x00000004,
+}
+
+enum : uint
+{
+    FWP_CONDITION_L2_IS_NATIVE_ETHERNET   = 0x00000001,
+    FWP_CONDITION_L2_IS_WIFI              = 0x00000002,
+    FWP_CONDITION_L2_IS_MOBILE_BROADBAND  = 0x00000004,
+    FWP_CONDITION_L2_IS_WIFI_DIRECT_DATA  = 0x00000008,
+    FWP_CONDITION_L2_IS_VM2VM             = 0x00000010,
+    FWP_CONDITION_L2_IS_MALFORMED_PACKET  = 0x00000020,
+    FWP_CONDITION_L2_IS_IP_FRAGMENT_GROUP = 0x00000040,
+    FWP_CONDITION_L2_IF_CONNECTOR_PRESENT = 0x00000080,
+}
+
+enum : uint
+{
+    FWP_FILTER_ENUM_FLAG_BEST_TERMINATING_MATCH = 0x00000001,
+    FWP_FILTER_ENUM_FLAG_SORTED                 = 0x00000002,
+    FWP_FILTER_ENUM_FLAG_BOOTTIME_ONLY          = 0x00000004,
+    FWP_FILTER_ENUM_FLAG_INCLUDE_BOOTTIME       = 0x00000008,
+    FWP_FILTER_ENUM_FLAG_INCLUDE_DISABLED       = 0x00000010,
+    FWP_FILTER_ENUM_FLAG_RESERVED1              = 0x00000020,
+}
+
+enum : uint
+{
+    FWP_CALLOUT_FLAG_CONDITIONAL_ON_FLOW         = 0x00000001,
+    FWP_CALLOUT_FLAG_ALLOW_OFFLOAD               = 0x00000002,
+    FWP_CALLOUT_FLAG_ENABLE_COMMIT_ADD_NOTIFY    = 0x00000004,
+    FWP_CALLOUT_FLAG_ALLOW_MID_STREAM_INSPECTION = 0x00000008,
+    FWP_CALLOUT_FLAG_ALLOW_RECLASSIFY            = 0x00000010,
+    FWP_CALLOUT_FLAG_RESERVED1                   = 0x00000020,
+    FWP_CALLOUT_FLAG_ALLOW_RSC                   = 0x00000040,
+    FWP_CALLOUT_FLAG_ALLOW_L2_BATCH_CLASSIFY     = 0x00000080,
+    FWP_CALLOUT_FLAG_ALLOW_USO                   = 0x00000100,
+    FWP_CALLOUT_FLAG_ALLOW_URO                   = 0x00000200,
+    FWP_CALLOUT_FLAG_RESERVED2                   = 0x00000400,
+}
+
+enum : uint
+{
+    IKEEXT_CERT_AUTH_FLAG_DISABLE_CRL_CHECK       = 0x00000002,
+    IKEEXT_CERT_AUTH_FLAG_DISABLE_REQUEST_PAYLOAD = 0x00000040,
+}
+
+enum uint IKEEXT_KERB_AUTH_FORCE_PROXY_ON_INITIATOR = 0x00000004;
+enum uint IKEEXT_NTLM_V2_AUTH_DONT_ACCEPT_EXPLICIT_CREDENTIALS = 0x00000001;
+
+enum : uint
+{
+    IKEEXT_POLICY_FLAG_MOBIKE_NOT_SUPPORTED  = 0x00000010,
+    IKEEXT_POLICY_FLAG_SITE_TO_SITE          = 0x00000020,
+    IKEEXT_POLICY_FLAG_IMS_VPN               = 0x00000040,
+    IKEEXT_POLICY_ENABLE_IKEV2_FRAGMENTATION = 0x00000080,
+}
+
+enum uint IKEEXT_POLICY_SUPPORT_LOW_POWER_MODE = 0x00000100;
+enum uint IKEEXT_POLICY_FLAG_POINT_TO_SITE = 0x00000200;
+enum uint IKEEXT_CERT_CREDENTIAL_FLAG_NAP_CERT = 0x00000001;
+
+enum : uint
+{
+    IPSEC_AUTH_CONFIG_HMAC_MD5_96      = 0x00000000,
+    IPSEC_AUTH_CONFIG_HMAC_SHA_1_96    = 0x00000001,
+    IPSEC_AUTH_CONFIG_HMAC_SHA_256_128 = 0x00000002,
+    IPSEC_AUTH_CONFIG_GCM_AES_128      = 0x00000003,
+    IPSEC_AUTH_CONFIG_GCM_AES_192      = 0x00000004,
+    IPSEC_AUTH_CONFIG_GCM_AES_256      = 0x00000005,
+    IPSEC_AUTH_CONFIG_MAX              = 0x00000006,
+}
+
+enum : uint
+{
+    IPSEC_CIPHER_CONFIG_CBC_DES     = 0x00000001,
+    IPSEC_CIPHER_CONFIG_CBC_3DES    = 0x00000002,
+    IPSEC_CIPHER_CONFIG_CBC_AES_128 = 0x00000003,
+    IPSEC_CIPHER_CONFIG_CBC_AES_192 = 0x00000004,
+    IPSEC_CIPHER_CONFIG_CBC_AES_256 = 0x00000005,
+    IPSEC_CIPHER_CONFIG_GCM_AES_128 = 0x00000006,
+    IPSEC_CIPHER_CONFIG_GCM_AES_192 = 0x00000007,
+    IPSEC_CIPHER_CONFIG_GCM_AES_256 = 0x00000008,
+    IPSEC_CIPHER_CONFIG_MAX         = 0x00000009,
+}
+
+enum uint IPSEC_POLICY_FLAG_KEY_MANAGER_ALLOW_NOTIFY_KEY = 0x00004000;
+
+enum : uint
+{
+    IPSEC_POLICY_FLAG_RESERVED1            = 0x00008000,
+    IPSEC_POLICY_FLAG_SITE_TO_SITE_TUNNEL  = 0x00010000,
+    IPSEC_POLICY_FLAG_POINT_TO_SITE_TUNNEL = 0x00020000,
+    IPSEC_POLICY_FLAG_BANDWIDTH1           = 0x10000000,
+    IPSEC_POLICY_FLAG_BANDWIDTH2           = 0x20000000,
+    IPSEC_POLICY_FLAG_BANDWIDTH3           = 0x40000000,
+    IPSEC_POLICY_FLAG_BANDWIDTH4           = 0x80000000,
+}
+
+enum uint IPSEC_KEYING_POLICY_FLAG_TERMINATING_MATCH = 0x00000001;
+
+enum : uint
+{
+    IPSEC_SA_BUNDLE_FLAG_NLB                             = 0x00000010,
+    IPSEC_SA_BUNDLE_FLAG_NO_MACHINE_LUID_VERIFY          = 0x00000020,
+    IPSEC_SA_BUNDLE_FLAG_NO_IMPERSONATION_LUID_VERIFY    = 0x00000040,
+    IPSEC_SA_BUNDLE_FLAG_NO_EXPLICIT_CRED_MATCH          = 0x00000080,
+    IPSEC_SA_BUNDLE_FLAG_FORCE_INBOUND_CONNECTIONS       = 0x00008000,
+    IPSEC_SA_BUNDLE_FLAG_FORCE_OUTBOUND_CONNECTIONS      = 0x00010000,
+    IPSEC_SA_BUNDLE_FLAG_FORWARD_PATH_INITIATOR          = 0x00020000,
+    IPSEC_SA_BUNDLE_FLAG_ENABLE_OPTIONAL_ASYMMETRIC_IDLE = 0x00040000,
+    IPSEC_SA_BUNDLE_FLAG_USING_DICTATED_KEYS             = 0x00080000,
+    IPSEC_SA_BUNDLE_FLAG_LOCALLY_DICTATED_KEYS           = 0x00100000,
+    IPSEC_SA_BUNDLE_FLAG_SA_OFFLOADED                    = 0x00200000,
+    IPSEC_SA_BUNDLE_FLAG_IP_IN_IP_PKT                    = 0x00400000,
+    IPSEC_SA_BUNDLE_FLAG_LOW_POWER_MODE_SUPPORT          = 0x00800000,
+    IPSEC_SA_BUNDLE_FLAG_TUNNEL_BANDWIDTH1               = 0x10000000,
+    IPSEC_SA_BUNDLE_FLAG_TUNNEL_BANDWIDTH2               = 0x20000000,
+    IPSEC_SA_BUNDLE_FLAG_TUNNEL_BANDWIDTH3               = 0x40000000,
+    IPSEC_SA_BUNDLE_FLAG_TUNNEL_BANDWIDTH4               = 0x80000000,
+}
+
+enum uint IPSEC_DOSP_DSCP_DISABLE_VALUE = 0x000000ff;
+enum uint IPSEC_DOSP_RATE_LIMIT_DISABLE_VALUE = 0x00000000;
+enum uint IPSEC_KEY_MANAGER_FLAG_DICTATE_KEY = 0x00000001;
+
+enum : GUID
+{
+    FWPM_LAYER_INBOUND_IPPACKET_V4         = GUID("c86fd1bf-21cd-497e-a0bb-17425c885c58"),
+    FWPM_LAYER_INBOUND_IPPACKET_V4_DISCARD = GUID("b5a230d0-a8c0-44f2-916e-991b53ded1f7"),
+    FWPM_LAYER_INBOUND_IPPACKET_V6         = GUID("f52032cb-991c-46e7-971d-2601459a91ca"),
+    FWPM_LAYER_INBOUND_IPPACKET_V6_DISCARD = GUID("bb24c279-93b4-47a2-83ad-ae1698b50885"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_OUTBOUND_IPPACKET_V4         = GUID("1e5c9fae-8a84-4135-a331-950b54229ecd"),
+    FWPM_LAYER_OUTBOUND_IPPACKET_V4_DISCARD = GUID("08e4bcb5-b647-48f3-953c-e5ddbd03937e"),
+    FWPM_LAYER_OUTBOUND_IPPACKET_V6         = GUID("a3b3ab6b-3564-488c-9117-f34e82142763"),
+    FWPM_LAYER_OUTBOUND_IPPACKET_V6_DISCARD = GUID("9513d7c4-a934-49dc-91a7-6ccb80cc02e3"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_IPFORWARD_V4         = GUID("a82acc24-4ee1-4ee1-b465-fd1d25cb10a4"),
+    FWPM_LAYER_IPFORWARD_V4_DISCARD = GUID("9e9ea773-2fae-4210-8f17-34129ef369eb"),
+    FWPM_LAYER_IPFORWARD_V6         = GUID("7b964818-19c7-493a-b71f-832c3684d28c"),
+    FWPM_LAYER_IPFORWARD_V6_DISCARD = GUID("31524a5d-1dfe-472f-bb93-518ee945d8a2"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_INBOUND_TRANSPORT_V4         = GUID("5926dfc8-e3cf-4426-a283-dc393f5d0f9d"),
+    FWPM_LAYER_INBOUND_TRANSPORT_V4_DISCARD = GUID("ac4a9833-f69d-4648-b261-6dc84835ef39"),
+    FWPM_LAYER_INBOUND_TRANSPORT_V6         = GUID("634a869f-fc23-4b90-b0c1-bf620a36ae6f"),
+    FWPM_LAYER_INBOUND_TRANSPORT_V6_DISCARD = GUID("2a6ff955-3b2b-49d2-9848-ad9d72dcaab7"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_OUTBOUND_TRANSPORT_V4         = GUID("09e61aea-d214-46e2-9b21-b26b0b2f28c8"),
+    FWPM_LAYER_OUTBOUND_TRANSPORT_V4_DISCARD = GUID("c5f10551-bdb0-43d7-a313-50e211f4d68a"),
+    FWPM_LAYER_OUTBOUND_TRANSPORT_V6         = GUID("e1735bde-013f-4655-b351-a49e15762df0"),
+    FWPM_LAYER_OUTBOUND_TRANSPORT_V6_DISCARD = GUID("f433df69-ccbd-482e-b9b2-57165658c3b3"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_STREAM_V4         = GUID("3b89653c-c170-49e4-b1cd-e0eeeee19a3e"),
+    FWPM_LAYER_STREAM_V4_DISCARD = GUID("25c4c2c2-25ff-4352-82f9-c54a4a4726dc"),
+    FWPM_LAYER_STREAM_V6         = GUID("47c9137a-7ec4-46b3-b6e4-48e926b1eda4"),
+    FWPM_LAYER_STREAM_V6_DISCARD = GUID("10a59fc7-b628-4c41-9eb8-cf37d55103cf"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_DATAGRAM_DATA_V4         = GUID("3d08bf4e-45f6-4930-a922-417098e20027"),
+    FWPM_LAYER_DATAGRAM_DATA_V4_DISCARD = GUID("18e330c6-7248-4e52-aaab-472ed67704fd"),
+    FWPM_LAYER_DATAGRAM_DATA_V6         = GUID("fa45fe2f-3cba-4427-87fc-57b9a4b10d00"),
+    FWPM_LAYER_DATAGRAM_DATA_V6_DISCARD = GUID("09d1dfe1-9b86-4a42-be9d-8c315b92a5d0"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_INBOUND_ICMP_ERROR_V4         = GUID("61499990-3cb6-4e84-b950-53b94b6964f3"),
+    FWPM_LAYER_INBOUND_ICMP_ERROR_V4_DISCARD = GUID("a6b17075-ebaf-4053-a4e7-213c8121ede5"),
+    FWPM_LAYER_INBOUND_ICMP_ERROR_V6         = GUID("65f9bdff-3b2d-4e5d-b8c6-c720651fe898"),
+    FWPM_LAYER_INBOUND_ICMP_ERROR_V6_DISCARD = GUID("a6e7ccc0-08fb-468d-a472-9771d5595e09"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_OUTBOUND_ICMP_ERROR_V4         = GUID("41390100-564c-4b32-bc1d-718048354d7c"),
+    FWPM_LAYER_OUTBOUND_ICMP_ERROR_V4_DISCARD = GUID("b3598d36-0561-4588-a6bf-e955e3f6264b"),
+    FWPM_LAYER_OUTBOUND_ICMP_ERROR_V6         = GUID("7fb03b60-7b8d-4dfa-badd-980176fc4e12"),
+    FWPM_LAYER_OUTBOUND_ICMP_ERROR_V6_DISCARD = GUID("65f2e647-8d0c-4f47-b19b-33a4d3f1357c"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_ALE_RESOURCE_ASSIGNMENT_V4         = GUID("1247d66d-0b60-4a15-8d44-7155d0f53a0c"),
+    FWPM_LAYER_ALE_RESOURCE_ASSIGNMENT_V4_DISCARD = GUID("0b5812a2-c3ff-4eca-b88d-c79e20ac6322"),
+    FWPM_LAYER_ALE_RESOURCE_ASSIGNMENT_V6         = GUID("55a650e1-5f0a-4eca-a653-88f53b26aa8c"),
+    FWPM_LAYER_ALE_RESOURCE_ASSIGNMENT_V6_DISCARD = GUID("cbc998bb-c51f-4c1a-bb4f-9775fcacab2f"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_ALE_AUTH_LISTEN_V4              = GUID("88bb5dad-76d7-4227-9c71-df0a3ed7be7e"),
+    FWPM_LAYER_ALE_AUTH_LISTEN_V4_DISCARD      = GUID("371dfada-9f26-45fd-b4eb-c29eb212893f"),
+    FWPM_LAYER_ALE_AUTH_LISTEN_V6              = GUID("7ac9de24-17dd-4814-b4bd-a9fbc95a321b"),
+    FWPM_LAYER_ALE_AUTH_LISTEN_V6_DISCARD      = GUID("60703b07-63c8-48e9-ada3-12b1af40a617"),
+    FWPM_LAYER_ALE_AUTH_RECV_ACCEPT_V4         = GUID("e1cd9fe7-f4b5-4273-96c0-592e487b8650"),
+    FWPM_LAYER_ALE_AUTH_RECV_ACCEPT_V4_DISCARD = GUID("9eeaa99b-bd22-4227-919f-0073c63357b1"),
+    FWPM_LAYER_ALE_AUTH_RECV_ACCEPT_V6         = GUID("a3b42c97-9f04-4672-b87e-cee9c483257f"),
+    FWPM_LAYER_ALE_AUTH_RECV_ACCEPT_V6_DISCARD = GUID("89455b97-dbe1-453f-a224-13da895af396"),
+    FWPM_LAYER_ALE_AUTH_CONNECT_V4             = GUID("c38d57d1-05a7-4c33-904f-7fbceee60e82"),
+    FWPM_LAYER_ALE_AUTH_CONNECT_V4_DISCARD     = GUID("d632a801-f5ba-4ad6-96e3-607017d9836a"),
+    FWPM_LAYER_ALE_AUTH_CONNECT_V6             = GUID("4a72393b-319f-44bc-84c3-ba54dcb3b6b4"),
+    FWPM_LAYER_ALE_AUTH_CONNECT_V6_DISCARD     = GUID("c97bc3b8-c9a3-4e33-8695-8e17aad4de09"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_ALE_FLOW_ESTABLISHED_V4         = GUID("af80470a-5596-4c13-9992-539e6fe57967"),
+    FWPM_LAYER_ALE_FLOW_ESTABLISHED_V4_DISCARD = GUID("146ae4a9-a1d2-4d43-a31a-4c42682b8e4f"),
+    FWPM_LAYER_ALE_FLOW_ESTABLISHED_V6         = GUID("7021d2b3-dfa4-406e-afeb-6afaf7e70efd"),
+    FWPM_LAYER_ALE_FLOW_ESTABLISHED_V6_DISCARD = GUID("46928636-bbca-4b76-941d-0fa7f5d7d372"),
+}
+
+enum GUID FWPM_LAYER_INBOUND_MAC_FRAME_ETHERNET = GUID("effb7edb-0055-4f9a-a231-4ff8131ad191");
+enum GUID FWPM_LAYER_OUTBOUND_MAC_FRAME_ETHERNET = GUID("694673bc-d6db-4870-adee-0acdbdb7f4b2");
+enum GUID FWPM_LAYER_INBOUND_MAC_FRAME_NATIVE = GUID("d4220bd3-62ce-4f08-ae88-b56e8526df50");
+enum GUID FWPM_LAYER_OUTBOUND_MAC_FRAME_NATIVE = GUID("94c44912-9d6f-4ebf-b995-05ab8a088d1b");
+enum GUID FWPM_LAYER_INGRESS_VSWITCH_ETHERNET = GUID("7d98577a-9a87-41ec-9718-7cf589c9f32d");
+enum GUID FWPM_LAYER_EGRESS_VSWITCH_ETHERNET = GUID("86c872b0-76fa-4b79-93a4-0750530ae292");
+
+enum : GUID
+{
+    FWPM_LAYER_INGRESS_VSWITCH_TRANSPORT_V4 = GUID("b2696ff6-774f-4554-9f7d-3da3945f8e85"),
+    FWPM_LAYER_INGRESS_VSWITCH_TRANSPORT_V6 = GUID("5ee314fc-7d8a-47f4-b7e3-291a36da4e12"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_EGRESS_VSWITCH_TRANSPORT_V4 = GUID("b92350b6-91f0-46b6-bdc4-871dfd4a7c98"),
+    FWPM_LAYER_EGRESS_VSWITCH_TRANSPORT_V6 = GUID("1b2def23-1881-40bd-82f4-4254e63141cb"),
+}
+
+enum GUID FWPM_LAYER_INBOUND_TRANSPORT_FAST = GUID("e41d2719-05c7-40f0-8983-ea8d17bbc2f6");
+enum GUID FWPM_LAYER_OUTBOUND_TRANSPORT_FAST = GUID("13ed4388-a070-4815-9935-7a9be6408b78");
+enum GUID FWPM_LAYER_INBOUND_MAC_FRAME_NATIVE_FAST = GUID("853aaa8e-2b78-4d24-a804-36db08b29711");
+enum GUID FWPM_LAYER_OUTBOUND_MAC_FRAME_NATIVE_FAST = GUID("470df946-c962-486f-9446-8293cbc75eb8");
+
+enum : GUID
+{
+    FWPM_LAYER_IPSEC_KM_DEMUX_V4        = GUID("f02b1526-a459-4a51-b9e3-759de52b9d2c"),
+    FWPM_LAYER_IPSEC_KM_DEMUX_V6        = GUID("2f755cf6-2fd4-4e88-b3e4-a91bca495235"),
+    FWPM_LAYER_IPSEC_V4                 = GUID("eda65c74-610d-4bc5-948f-3c4f89556867"),
+    FWPM_LAYER_IPSEC_V6                 = GUID("13c48442-8d87-4261-9a29-59d2abc348b4"),
+    FWPM_LAYER_IKEEXT_V4                = GUID("b14b7bdb-dbbd-473e-bed4-8b4708d4f270"),
+    FWPM_LAYER_IKEEXT_V6                = GUID("b64786b3-f687-4eb9-89d2-8ef32acdabe2"),
+    FWPM_LAYER_RPC_UM                   = GUID("75a89dda-95e4-40f3-adc7-7688a9c847e1"),
+    FWPM_LAYER_RPC_EPMAP                = GUID("9247bc61-eb07-47ee-872c-bfd78bfd1616"),
+    FWPM_LAYER_RPC_EP_ADD               = GUID("618dffc7-c450-4943-95db-99b4c16a55d4"),
+    FWPM_LAYER_RPC_PROXY_CONN           = GUID("94a4b50b-ba5c-4f27-907a-229fac0c2a7a"),
+    FWPM_LAYER_RPC_PROXY_IF             = GUID("f8a38615-e12c-41ac-98df-121ad981aade"),
+    FWPM_LAYER_KM_AUTHORIZATION         = GUID("4aa226e9-9020-45fb-956a-c0249d841195"),
+    FWPM_LAYER_NAME_RESOLUTION_CACHE_V4 = GUID("0c2aa681-905b-4ccd-a467-4dd811d07b7b"),
+    FWPM_LAYER_NAME_RESOLUTION_CACHE_V6 = GUID("92d592fa-6b01-434a-9dea-d1e96ea97da9"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_ALE_RESOURCE_RELEASE_V4 = GUID("74365cce-ccb0-401a-bfc1-b89934ad7e15"),
+    FWPM_LAYER_ALE_RESOURCE_RELEASE_V6 = GUID("f4e5ce80-edcc-4e13-8a2f-b91454bb057b"),
+    FWPM_LAYER_ALE_ENDPOINT_CLOSURE_V4 = GUID("b4766427-e2a2-467a-bd7e-dbcd1bd85a09"),
+    FWPM_LAYER_ALE_ENDPOINT_CLOSURE_V6 = GUID("bb536ccd-4755-4ba9-9ff7-f9edf8699c7b"),
+    FWPM_LAYER_ALE_CONNECT_REDIRECT_V4 = GUID("c6e63c8c-b784-4562-aa7d-0a67cfcaf9a3"),
+    FWPM_LAYER_ALE_CONNECT_REDIRECT_V6 = GUID("587e54a7-8046-42ba-a0aa-b716250fc7fd"),
+    FWPM_LAYER_ALE_BIND_REDIRECT_V4    = GUID("66978cad-c704-42ac-86ac-7c1a231bd253"),
+    FWPM_LAYER_ALE_BIND_REDIRECT_V6    = GUID("bef02c9c-606b-4536-8c26-1c2fc7b631d4"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_STREAM_PACKET_V4  = GUID("af52d8ec-cb2d-44e5-ad92-f8dc38d2eb29"),
+    FWPM_LAYER_STREAM_PACKET_V6  = GUID("779a8ca3-f099-468f-b5d4-83535c461c02"),
+    FWPM_LAYER_INBOUND_RESERVED2 = GUID("f4fb8d55-c076-46d8-a2c7-6a4c722ca4ed"),
+}
+
+enum : GUID
+{
+    FWPM_LAYER_OUTBOUND_NETWORK_CONNECTION_POLICY_V4 = GUID("037f317a-d696-494a-bba5-bffc265e6052"),
+    FWPM_LAYER_OUTBOUND_NETWORK_CONNECTION_POLICY_V6 = GUID("22a4fdb1-6d7e-48ae-ae77-3742525c3119"),
+}
+
+enum : GUID
+{
+    FWPM_SUBLAYER_RPC_AUDIT                     = GUID("758c84f4-fb48-4de9-9aeb-3ed9551ab1fd"),
+    FWPM_SUBLAYER_IPSEC_TUNNEL                  = GUID("83f299ed-9ff4-4967-aff4-c309f4dab827"),
+    FWPM_SUBLAYER_UNIVERSAL                     = GUID("eebecc03-ced4-4380-819a-2734397b2b74"),
+    FWPM_SUBLAYER_LIPS                          = GUID("1b75c0ce-ff60-4711-a70f-b4958cc3b2d0"),
+    FWPM_SUBLAYER_SECURE_SOCKET                 = GUID("15a66e17-3f3c-4f7b-aa6c-812aa613dd82"),
+    FWPM_SUBLAYER_TCP_CHIMNEY_OFFLOAD           = GUID("337608b9-b7d5-4d5f-82f9-3618618bc058"),
+    FWPM_SUBLAYER_INSPECTION                    = GUID("877519e1-e6a9-41a5-81b4-8c4f118e4a60"),
+    FWPM_SUBLAYER_TEREDO                        = GUID("ba69dc66-5176-4979-9c89-26a7b46a8327"),
+    FWPM_SUBLAYER_IPSEC_FORWARD_OUTBOUND_TUNNEL = GUID("a5082e73-8f71-4559-8a9a-101cea04ef87"),
+    FWPM_SUBLAYER_IPSEC_DOSP                    = GUID("e076d572-5d3d-48ef-802b-909eddb098bd"),
+    FWPM_SUBLAYER_TCP_TEMPLATES                 = GUID("24421dcf-0ac5-4caa-9e14-50f6e3636af0"),
+    FWPM_SUBLAYER_IPSEC_SECURITY_REALM          = GUID("37a57701-5884-4964-92b8-3e704688b0ad"),
+    FWPM_SUBLAYER_MPSSVC_WSH                    = GUID("b3cdd441-af90-41ba-a745-7c6008ff2300"),
+    FWPM_SUBLAYER_MPSSVC_WF                     = GUID("b3cdd441-af90-41ba-a745-7c6008ff2301"),
+    FWPM_SUBLAYER_MPSSVC_QUARANTINE             = GUID("b3cdd441-af90-41ba-a745-7c6008ff2302"),
+    FWPM_SUBLAYER_MPSSVC_EDP                    = GUID("09a47e38-fa97-471b-b123-18bcd7e65071"),
+    FWPM_SUBLAYER_MPSSVC_TENANT_RESTRICTIONS    = GUID("1ec6c7e1-fdd9-478a-b55f-ff8ba1d2c17d"),
+    FWPM_SUBLAYER_MPSSVC_APP_ISOLATION          = GUID("ffe221c3-92a8-4564-a59f-dafb70756020"),
+}
+
+enum GUID FWPM_CONDITION_ALE_PACKAGE_FAMILY_NAME = GUID("81bc78fb-f28d-4886-a604-6acc261f261b");
+
+enum : GUID
+{
+    FWPM_CONDITION_INTERFACE_MAC_ADDRESS     = GUID("f6e63dce-1f4b-4c6b-b6ef-1165e71f8ee7"),
+    FWPM_CONDITION_MAC_LOCAL_ADDRESS         = GUID("d999e981-7948-4c83-b742-c84e3b678f8f"),
+    FWPM_CONDITION_MAC_REMOTE_ADDRESS        = GUID("408f2ed4-3a70-4b4d-92a6-415ac20e2f12"),
+    FWPM_CONDITION_ETHER_TYPE                = GUID("fd08948d-a219-4d52-bb98-1a5540ee7b4e"),
+    FWPM_CONDITION_VLAN_ID                   = GUID("938eab21-3618-4e64-9ca5-2141ebda1ca2"),
+    FWPM_CONDITION_VSWITCH_TENANT_NETWORK_ID = GUID("dc04843c-79e6-4e44-a025-65b9bb0f9f94"),
+}
+
+enum : GUID
+{
+    FWPM_CONDITION_NDIS_PORT                = GUID("db7bb42b-2dac-4cd4-a59a-e0bdce1e6834"),
+    FWPM_CONDITION_NDIS_MEDIA_TYPE          = GUID("cb31cef1-791d-473b-89d1-61c5984304a0"),
+    FWPM_CONDITION_NDIS_PHYSICAL_MEDIA_TYPE = GUID("34c79823-c229-44f2-b83c-74020882ae77"),
+}
+
+enum : GUID
+{
+    FWPM_CONDITION_L2_FLAGS                = GUID("7bc43cbf-37ba-45f1-b74a-82ff518eeb10"),
+    FWPM_CONDITION_MAC_LOCAL_ADDRESS_TYPE  = GUID("cc31355c-3073-4ffb-a14f-79415cb1ead1"),
+    FWPM_CONDITION_MAC_REMOTE_ADDRESS_TYPE = GUID("027fedb4-f1c1-4030-b564-ee777fd867ea"),
+}
+
+enum : GUID
+{
+    FWPM_CONDITION_ALE_PACKAGE_ID               = GUID("71bc78fa-f17c-4997-a602-6abb261f351c"),
+    FWPM_CONDITION_MAC_SOURCE_ADDRESS           = GUID("7b795451-f1f6-4d05-b7cb-21779d802336"),
+    FWPM_CONDITION_MAC_DESTINATION_ADDRESS      = GUID("04ea2a93-858c-4027-b613-b43180c7859e"),
+    FWPM_CONDITION_MAC_SOURCE_ADDRESS_TYPE      = GUID("5c1b72e4-299e-4437-a298-bc3f014b3dc2"),
+    FWPM_CONDITION_MAC_DESTINATION_ADDRESS_TYPE = GUID("ae052932-ef42-4e99-b129-f3b3139e34f7"),
+}
+
+enum : GUID
+{
+    FWPM_CONDITION_IP_SOURCE_PORT                     = GUID("a6afef91-3df4-4730-a214-f5426aebf821"),
+    FWPM_CONDITION_IP_DESTINATION_PORT                = GUID("ce6def45-60fb-4a7b-a304-af30a117000e"),
+    FWPM_CONDITION_VSWITCH_ID                         = GUID("c4a414ba-437b-4de6-9946-d99c1b95b312"),
+    FWPM_CONDITION_VSWITCH_NETWORK_TYPE               = GUID("11d48b4b-e77a-40b4-9155-392c906c2608"),
+    FWPM_CONDITION_VSWITCH_SOURCE_INTERFACE_ID        = GUID("7f4ef24b-b2c1-4938-ba33-a1ecbed512ba"),
+    FWPM_CONDITION_VSWITCH_DESTINATION_INTERFACE_ID   = GUID("8ed48be4-c926-49f6-a4f6-ef3030e3fc16"),
+    FWPM_CONDITION_VSWITCH_SOURCE_VM_ID               = GUID("9c2a9ec2-9fc6-42bc-bdd8-406d4da0be64"),
+    FWPM_CONDITION_VSWITCH_DESTINATION_VM_ID          = GUID("6106aace-4de1-4c84-9671-3637f8bcf731"),
+    FWPM_CONDITION_VSWITCH_SOURCE_INTERFACE_TYPE      = GUID("e6b040a2-edaf-4c36-908b-f2f58ae43807"),
+    FWPM_CONDITION_VSWITCH_DESTINATION_INTERFACE_TYPE = GUID("fa9b3f06-2f1a-4c57-9e68-a7098b28dbfe"),
+}
+
+enum GUID FWPM_CONDITION_ALE_SECURITY_ATTRIBUTE_FQBN_VALUE = GUID("37a57699-5883-4963-92b8-3e704688b0ad");
+enum GUID FWPM_CONDITION_IPSEC_SECURITY_REALM_ID = GUID("37a57700-5884-4964-92b8-3e704688b0ad");
+
+enum : GUID
+{
+    FWPM_CONDITION_ALE_EFFECTIVE_NAME          = GUID("b1277b9a-b781-40fc-9671-e5f1b989f34e"),
+    FWPM_CONDITION_IP_LOCAL_ADDRESS            = GUID("d9ee00de-c1ef-4617-bfe3-ffd8f5a08957"),
+    FWPM_CONDITION_IP_REMOTE_ADDRESS           = GUID("b235ae9a-1d64-49b8-a44c-5ff3d9095045"),
+    FWPM_CONDITION_IP_SOURCE_ADDRESS           = GUID("ae96897e-2e94-4bc9-b313-b27ee80e574d"),
+    FWPM_CONDITION_IP_DESTINATION_ADDRESS      = GUID("2d79133b-b390-45c6-8699-acaceaafed33"),
+    FWPM_CONDITION_IP_LOCAL_ADDRESS_TYPE       = GUID("6ec7f6c4-376b-45d7-9e9c-d337cedcd237"),
+    FWPM_CONDITION_IP_DESTINATION_ADDRESS_TYPE = GUID("1ec1b7c9-4eea-4f5e-b9ef-76beaaaf17ee"),
+    FWPM_CONDITION_IP_NEXTHOP_ADDRESS          = GUID("eabe448a-a711-4d64-85b7-3f76b65299c7"),
+    FWPM_CONDITION_IP_LOCAL_INTERFACE          = GUID("4cd62a49-59c3-4969-b7f3-bda5d32890a4"),
+    FWPM_CONDITION_IP_ARRIVAL_INTERFACE        = GUID("618a9b6d-386b-4136-ad6e-b51587cfb1cd"),
+    FWPM_CONDITION_ARRIVAL_INTERFACE_TYPE      = GUID("89f990de-e798-4e6d-ab76-7c9558292e6f"),
+    FWPM_CONDITION_ARRIVAL_TUNNEL_TYPE         = GUID("511166dc-7a8c-4aa7-b533-95ab59fb0340"),
+    FWPM_CONDITION_ARRIVAL_INTERFACE_INDEX     = GUID("cc088db3-1792-4a71-b0f9-037d21cd828b"),
+}
+
+enum GUID FWPM_CONDITION_NEXTHOP_SUB_INTERFACE_INDEX = GUID("ef8a6122-0577-45a7-9aaf-825fbeb4fb95");
+
+enum : GUID
+{
+    FWPM_CONDITION_IP_NEXTHOP_INTERFACE    = GUID("93ae8f5b-7f6f-4719-98c8-14e97429ef04"),
+    FWPM_CONDITION_NEXTHOP_INTERFACE_TYPE  = GUID("97537c6c-d9a3-4767-a381-e942675cd920"),
+    FWPM_CONDITION_NEXTHOP_TUNNEL_TYPE     = GUID("72b1a111-987b-4720-99dd-c7c576fa2d4c"),
+    FWPM_CONDITION_NEXTHOP_INTERFACE_INDEX = GUID("138e6888-7ab8-4d65-9ee8-0591bcf6a494"),
+}
+
+enum : GUID
+{
+    FWPM_CONDITION_ORIGINAL_PROFILE_ID        = GUID("46ea1551-2255-492b-8019-aabeee349f40"),
+    FWPM_CONDITION_CURRENT_PROFILE_ID         = GUID("ab3033c9-c0e3-4759-937d-5758c65d4ae3"),
+    FWPM_CONDITION_LOCAL_INTERFACE_PROFILE_ID = GUID("4ebf7562-9f18-4d06-9941-a7a625744d71"),
+}
+
+enum GUID FWPM_CONDITION_ARRIVAL_INTERFACE_PROFILE_ID = GUID("cdfe6aab-c083-4142-8679-c08f95329c61");
+enum GUID FWPM_CONDITION_NEXTHOP_INTERFACE_PROFILE_ID = GUID("d7ff9a56-cdaa-472b-84db-d23963c1d1bf");
+
+enum : GUID
+{
+    FWPM_CONDITION_REAUTHORIZE_REASON            = GUID("11205e8c-11ae-457a-8a44-477026dd764a"),
+    FWPM_CONDITION_ORIGINAL_ICMP_TYPE            = GUID("076dfdbe-c56c-4f72-ae8a-2cfe7e5c8286"),
+    FWPM_CONDITION_IP_PHYSICAL_ARRIVAL_INTERFACE = GUID("da50d5c8-fa0d-4c89-b032-6e62136d1e96"),
+    FWPM_CONDITION_IP_PHYSICAL_NEXTHOP_INTERFACE = GUID("f09bd5ce-5150-48be-b098-c25152fb1f92"),
+}
+
+enum : GUID
+{
+    FWPM_CONDITION_INTERFACE_QUARANTINE_EPOCH  = GUID("cce68d5e-053b-43a8-9a6f-33384c28e4f6"),
+    FWPM_CONDITION_INTERFACE_TYPE              = GUID("daf8cd14-e09e-4c93-a5ae-c5c13b73ffca"),
+    FWPM_CONDITION_TUNNEL_TYPE                 = GUID("77a40437-8779-4868-a261-f5a902f1c0cd"),
+    FWPM_CONDITION_IP_FORWARD_INTERFACE        = GUID("1076b8a5-6323-4c5e-9810-e8d3fc9e6136"),
+    FWPM_CONDITION_IP_PROTOCOL                 = GUID("3971ef2b-623e-4f9a-8cb1-6e79b806b9a7"),
+    FWPM_CONDITION_IP_LOCAL_PORT               = GUID("0c1ba1af-5765-453f-af22-a8f791ac775b"),
+    FWPM_CONDITION_IP_REMOTE_PORT              = GUID("c35a604d-d22b-4e1a-91b4-68f674ee674b"),
+    FWPM_CONDITION_EMBEDDED_LOCAL_ADDRESS_TYPE = GUID("4672a468-8a0a-4202-abb4-849e92e66809"),
+    FWPM_CONDITION_EMBEDDED_REMOTE_ADDRESS     = GUID("77ee4b39-3273-4671-b63b-ab6feb66eeb6"),
+    FWPM_CONDITION_EMBEDDED_PROTOCOL           = GUID("07784107-a29e-4c7b-9ec7-29c44afafdbc"),
+    FWPM_CONDITION_EMBEDDED_LOCAL_PORT         = GUID("bfca394d-acdb-484e-b8e6-2aff79757345"),
+    FWPM_CONDITION_EMBEDDED_REMOTE_PORT        = GUID("cae4d6a1-2968-40ed-a4ce-547160dda88d"),
+    FWPM_CONDITION_FLAGS                       = GUID("632ce23b-5167-435c-86d7-e903684aa80c"),
+    FWPM_CONDITION_DIRECTION                   = GUID("8784c146-ca97-44d6-9fd1-19fb1840cbf7"),
+    FWPM_CONDITION_INTERFACE_INDEX             = GUID("667fd755-d695-434a-8af5-d3835a1259bc"),
+    FWPM_CONDITION_SUB_INTERFACE_INDEX         = GUID("0cd42473-d621-4be3-ae8c-72a348d283e1"),
+    FWPM_CONDITION_SOURCE_INTERFACE_INDEX      = GUID("2311334d-c92d-45bf-9496-edf447820e2d"),
+    FWPM_CONDITION_SOURCE_SUB_INTERFACE_INDEX  = GUID("055edd9d-acd2-4361-8dab-f9525d97662f"),
+}
+
+enum : GUID
+{
+    FWPM_CONDITION_DESTINATION_INTERFACE_INDEX     = GUID("35cf6522-4139-45ee-a0d5-67b80949d879"),
+    FWPM_CONDITION_DESTINATION_SUB_INTERFACE_INDEX = GUID("2b7d4399-d4c7-4738-a2f5-e994b43da388"),
+}
+
+enum : GUID
+{
+    FWPM_CONDITION_ALE_APP_ID                   = GUID("d78e1e87-8644-4ea5-9437-d809ecefc971"),
+    FWPM_CONDITION_ALE_ORIGINAL_APP_ID          = GUID("0e6cd086-e1fb-4212-842f-8a9f993fb3f6"),
+    FWPM_CONDITION_ALE_USER_ID                  = GUID("af043a0a-b34d-4f86-979c-c90371af6e66"),
+    FWPM_CONDITION_ALE_REMOTE_USER_ID           = GUID("f63073b7-0189-4ab0-95a4-6123cbfab862"),
+    FWPM_CONDITION_ALE_REMOTE_MACHINE_ID        = GUID("1aa47f51-7f93-4508-a271-81abb00c9cab"),
+    FWPM_CONDITION_ALE_PROMISCUOUS_MODE         = GUID("1c974776-7182-46e9-afd3-b02910e30334"),
+    FWPM_CONDITION_ALE_SIO_FIREWALL_SYSTEM_PORT = GUID("b9f4e088-cb98-4efb-a2c7-ad07332643db"),
+    FWPM_CONDITION_ALE_REAUTH_REASON            = GUID("b482d227-1979-4a98-8044-18bbe6237542"),
+    FWPM_CONDITION_ALE_NAP_CONTEXT              = GUID("46275a9d-c03f-4d77-b784-1c57f4d02753"),
+    FWPM_CONDITION_KM_AUTH_NAP_CONTEXT          = GUID("35d0ea0e-15ca-492b-900e-97fd46352cce"),
+    FWPM_CONDITION_REMOTE_USER_TOKEN            = GUID("9bf0ee66-06c9-41b9-84da-288cb43af51f"),
+    FWPM_CONDITION_RPC_IF_UUID                  = GUID("7c9c7d9f-0075-4d35-a0d1-8311c4cf6af1"),
+    FWPM_CONDITION_RPC_IF_VERSION               = GUID("eabfd9b7-1262-4a2e-adaa-5f96f6fe326d"),
+    FWPM_CONDITION_RPC_IF_FLAG                  = GUID("238a8a32-3199-467d-871c-272621ab3896"),
+    FWPM_CONDITION_DCOM_APP_ID                  = GUID("ff2e7b4d-3112-4770-b636-4d24ae3a6af2"),
+    FWPM_CONDITION_IMAGE_NAME                   = GUID("d024de4d-deaa-4317-9c85-e40ef6e140c3"),
+    FWPM_CONDITION_RPC_PROTOCOL                 = GUID("2717bc74-3a35-4ce7-b7ef-c838fabdec45"),
+    FWPM_CONDITION_RPC_AUTH_TYPE                = GUID("daba74ab-0d67-43e7-986e-75b84f82f594"),
+    FWPM_CONDITION_RPC_AUTH_LEVEL               = GUID("e5a0aed5-59ac-46ea-be05-a5f05ecf446e"),
+    FWPM_CONDITION_SEC_ENCRYPT_ALGORITHM        = GUID("0d306ef0-e974-4f74-b5c7-591b0da7d562"),
+    FWPM_CONDITION_SEC_KEY_SIZE                 = GUID("4772183b-ccf8-4aeb-bce1-c6c6161c8fe4"),
+    FWPM_CONDITION_IP_LOCAL_ADDRESS_V4          = GUID("03a629cb-6e52-49f8-9c41-5709633c09cf"),
+    FWPM_CONDITION_IP_LOCAL_ADDRESS_V6          = GUID("2381be84-7524-45b3-a05b-1e637d9c7a6a"),
+    FWPM_CONDITION_PIPE                         = GUID("1bd0741d-e3df-4e24-8634-762046eef6eb"),
+    FWPM_CONDITION_IP_REMOTE_ADDRESS_V4         = GUID("1febb610-3bcc-45e1-bc36-2e067e2cb186"),
+    FWPM_CONDITION_IP_REMOTE_ADDRESS_V6         = GUID("246e1d8c-8bee-4018-9b98-31d4582f3361"),
+    FWPM_CONDITION_RPC_OPNUM                    = GUID("d58efb76-aab7-4148-a87e-9581134129b9"),
+    FWPM_CONDITION_PROCESS_WITH_RPC_IF_UUID     = GUID("e31180a8-bbbd-4d14-a65e-7157b06233bb"),
+}
+
+enum : GUID
+{
+    FWPM_CONDITION_RPC_EP_VALUE           = GUID("dccea0b9-0886-4360-9c6a-ab043a24fba9"),
+    FWPM_CONDITION_RPC_EP_FLAGS           = GUID("218b814a-0a39-49b8-8e71-c20c39c7dd2e"),
+    FWPM_CONDITION_CLIENT_TOKEN           = GUID("c228fc1e-403a-4478-be05-c9baa4c05ace"),
+    FWPM_CONDITION_RPC_SERVER_NAME        = GUID("b605a225-c3b3-48c7-9833-7aefa9527546"),
+    FWPM_CONDITION_RPC_SERVER_PORT        = GUID("8090f645-9ad5-4e3b-9f9f-8023ca097909"),
+    FWPM_CONDITION_RPC_PROXY_AUTH_TYPE    = GUID("40953fe2-8565-4759-8488-1771b4b4b5db"),
+    FWPM_CONDITION_CLIENT_CERT_KEY_LENGTH = GUID("a3ec00c7-05f4-4df7-91f2-5f60d91ff443"),
+    FWPM_CONDITION_CLIENT_CERT_OID        = GUID("c491ad5e-f882-4283-b916-436b103ff4ad"),
+    FWPM_CONDITION_NET_EVENT_TYPE         = GUID("206e9996-490e-40cf-b831-b38641eb6fcb"),
+    FWPM_CONDITION_PEER_NAME              = GUID("9b539082-eb90-4186-a6cc-de5b63235016"),
+    FWPM_CONDITION_REMOTE_ID              = GUID("f68166fd-0682-4c89-b8f5-86436c7ef9b7"),
+    FWPM_CONDITION_AUTHENTICATION_TYPE    = GUID("eb458cd5-da7b-4ef9-8d43-7b0a840332f2"),
+    FWPM_CONDITION_KM_TYPE                = GUID("ff0f5f49-0ceb-481b-8638-1479791f3f2c"),
+    FWPM_CONDITION_KM_MODE                = GUID("feef4582-ef8f-4f7b-858b-9077d122de47"),
+    FWPM_CONDITION_IPSEC_POLICY_KEY       = GUID("ad37dee3-722f-45cc-a4e3-068048124452"),
+    FWPM_CONDITION_QM_MODE                = GUID("f64fc6d1-f9cb-43d2-8a5f-e13bc894f265"),
+    FWPM_CONDITION_COMPARTMENT_ID         = GUID("35a791ab-04ac-4ff2-a6bb-da6cfac71806"),
+    FWPM_CONDITION_RESERVED0              = GUID("678f4deb-45af-4882-93fe-19d4729d9834"),
+    FWPM_CONDITION_RESERVED1              = GUID("d818f827-5c69-48eb-bf80-d86b17755f97"),
+    FWPM_CONDITION_RESERVED2              = GUID("53d4123d-e15b-4e84-b7a8-dce16f7b62d9"),
+    FWPM_CONDITION_RESERVED3              = GUID("7f6e8ca3-6606-4932-97c7-e1f20710af3b"),
+    FWPM_CONDITION_RESERVED4              = GUID("5f58e642-b937-495e-a94b-f6b051a49250"),
+    FWPM_CONDITION_RESERVED5              = GUID("9ba8f6cd-f77c-43e6-8847-11939dc5db5a"),
+    FWPM_CONDITION_RESERVED6              = GUID("f13d84bd-59d5-44c4-8817-5ecdae1805bd"),
+    FWPM_CONDITION_RESERVED7              = GUID("65a0f930-45dd-4983-aa33-efc7b611af08"),
+    FWPM_CONDITION_RESERVED8              = GUID("4f424974-0c12-4816-9b47-9a547db39a32"),
+    FWPM_CONDITION_RESERVED9              = GUID("ce78e10f-13ff-4c70-8643-36ad1879afa3"),
+    FWPM_CONDITION_RESERVED10             = GUID("b979e282-d621-4c8c-b184-b105a61c36ce"),
+    FWPM_CONDITION_RESERVED11             = GUID("2d62ee4d-023d-411f-9582-43acbb795975"),
+    FWPM_CONDITION_RESERVED12             = GUID("a3677c32-7e35-4ddc-93da-e8c33fc923c7"),
+    FWPM_CONDITION_RESERVED13             = GUID("335a3e90-84aa-42f5-9e6f-59309536a44c"),
+    FWPM_CONDITION_RESERVED14             = GUID("30e44da2-2f1a-4116-a559-f907de83604a"),
+    FWPM_CONDITION_RESERVED15             = GUID("bab8340f-afe0-43d1-80d8-5ca456962de3"),
+}
+
+enum : GUID
+{
+    FWPM_PROVIDER_IKEEXT                     = GUID("10ad9216-ccde-456c-8b16-e9f04e60a90b"),
+    FWPM_PROVIDER_IPSEC_DOSP_CONFIG          = GUID("3c6c05a9-c05c-4bb9-8338-2327814ce8bf"),
+    FWPM_PROVIDER_TCP_CHIMNEY_OFFLOAD        = GUID("896aa19e-9a34-4bcb-ae79-beb9127c84b9"),
+    FWPM_PROVIDER_TCP_TEMPLATES              = GUID("76cfcd30-3394-432d-bed3-441ae50e63c3"),
+    FWPM_PROVIDER_MPSSVC_WSH                 = GUID("4b153735-1049-4480-aab4-d1b9bdc03710"),
+    FWPM_PROVIDER_MPSSVC_WF                  = GUID("decc16ca-3f33-4346-be1e-8fb4ae0f3d62"),
+    FWPM_PROVIDER_MPSSVC_EDP                 = GUID("a90296f7-46b8-4457-8f84-b05e05d3c622"),
+    FWPM_PROVIDER_MPSSVC_TENANT_RESTRICTIONS = GUID("d0718ff9-44da-4f50-9dc2-c963a4247613"),
+    FWPM_PROVIDER_MPSSVC_APP_ISOLATION       = GUID("3cc2631f-2d5d-43a0-b174-614837d863a1"),
+}
+
+enum : GUID
+{
+    FWPM_CALLOUT_IPSEC_INBOUND_TRANSPORT_V4         = GUID("5132900d-5e84-4b5f-80e4-01741e81ff10"),
+    FWPM_CALLOUT_IPSEC_INBOUND_TRANSPORT_V6         = GUID("49d3ac92-2a6c-4dcf-955f-1c3be009dd99"),
+    FWPM_CALLOUT_IPSEC_OUTBOUND_TRANSPORT_V4        = GUID("4b46bf0a-4523-4e57-aa38-a87987c910d9"),
+    FWPM_CALLOUT_IPSEC_OUTBOUND_TRANSPORT_V6        = GUID("38d87722-ad83-4f11-a91f-df0fb077225b"),
+    FWPM_CALLOUT_IPSEC_INBOUND_TUNNEL_V4            = GUID("191a8a46-0bf8-46cf-b045-4b45dfa6a324"),
+    FWPM_CALLOUT_IPSEC_INBOUND_TUNNEL_V6            = GUID("80c342e3-1e53-4d6f-9b44-03df5aeee154"),
+    FWPM_CALLOUT_IPSEC_OUTBOUND_TUNNEL_V4           = GUID("70a4196c-835b-4fb0-98e8-075f4d977d46"),
+    FWPM_CALLOUT_IPSEC_OUTBOUND_TUNNEL_V6           = GUID("f1835363-a6a5-4e62-b180-23db789d8da6"),
+    FWPM_CALLOUT_IPSEC_FORWARD_INBOUND_TUNNEL_V4    = GUID("28829633-c4f0-4e66-873f-844db2a899c7"),
+    FWPM_CALLOUT_IPSEC_FORWARD_INBOUND_TUNNEL_V6    = GUID("af50bec2-c686-429a-884d-b74443e7b0b4"),
+    FWPM_CALLOUT_IPSEC_FORWARD_OUTBOUND_TUNNEL_V4   = GUID("fb532136-15cb-440b-937c-1717ca320c40"),
+    FWPM_CALLOUT_IPSEC_FORWARD_OUTBOUND_TUNNEL_V6   = GUID("dae640cc-e021-4bee-9eb6-a48b275c8c1d"),
+    FWPM_CALLOUT_IPSEC_INBOUND_INITIATE_SECURE_V4   = GUID("7dff309b-ba7d-4aba-91aa-ae5c6640c944"),
+    FWPM_CALLOUT_IPSEC_INBOUND_INITIATE_SECURE_V6   = GUID("a9a0d6d9-c58c-474e-8aeb-3cfe99d6d53d"),
+    FWPM_CALLOUT_IPSEC_INBOUND_TUNNEL_ALE_ACCEPT_V4 = GUID("3df6e7de-fd20-48f2-9f26-f854444cba79"),
+    FWPM_CALLOUT_IPSEC_INBOUND_TUNNEL_ALE_ACCEPT_V6 = GUID("a1e392d3-72ac-47bb-87a7-0122c69434ab"),
+    FWPM_CALLOUT_IPSEC_ALE_CONNECT_V4               = GUID("6ac141fc-f75d-4203-b9c8-48e6149c2712"),
+    FWPM_CALLOUT_IPSEC_ALE_CONNECT_V6               = GUID("4c0dda05-e31f-4666-90b0-b3dfad34129a"),
+    FWPM_CALLOUT_IPSEC_DOSP_FORWARD_V6              = GUID("6d08a342-db9e-4fbe-9ed2-57374ce89f79"),
+    FWPM_CALLOUT_IPSEC_DOSP_FORWARD_V4              = GUID("2fcb56ec-cd37-4b4f-b108-62c2b1850a0c"),
+}
+
+enum : GUID
+{
+    FWPM_CALLOUT_WFP_TRANSPORT_LAYER_V4_SILENT_DROP = GUID("eda08606-2494-4d78-89bc-67837c03b969"),
+    FWPM_CALLOUT_WFP_TRANSPORT_LAYER_V6_SILENT_DROP = GUID("8693cc74-a075-4156-b476-9286eece814e"),
+}
+
+enum : GUID
+{
+    FWPM_CALLOUT_TCP_CHIMNEY_CONNECT_LAYER_V4 = GUID("f3e10ab3-2c25-4279-ac36-c30fc181bec4"),
+    FWPM_CALLOUT_TCP_CHIMNEY_CONNECT_LAYER_V6 = GUID("39e22085-a341-42fc-a279-aec94e689c56"),
+    FWPM_CALLOUT_TCP_CHIMNEY_ACCEPT_LAYER_V4  = GUID("e183ecb2-3a7f-4b54-8ad9-76050ed880ca"),
+    FWPM_CALLOUT_TCP_CHIMNEY_ACCEPT_LAYER_V6  = GUID("0378cf41-bf98-4603-81f2-7f12586079f6"),
+}
+
+enum : GUID
+{
+    FWPM_CALLOUT_SET_OPTIONS_AUTH_CONNECT_LAYER_V4     = GUID("bc582280-1677-41e9-94ab-c2fcb15c2eeb"),
+    FWPM_CALLOUT_SET_OPTIONS_AUTH_CONNECT_LAYER_V6     = GUID("98e5373c-b884-490f-b65f-2f6a4a575195"),
+    FWPM_CALLOUT_SET_OPTIONS_AUTH_RECV_ACCEPT_LAYER_V4 = GUID("2d55f008-0c01-4f92-b26e-a08a94569b8d"),
+    FWPM_CALLOUT_SET_OPTIONS_AUTH_RECV_ACCEPT_LAYER_V6 = GUID("63018537-f281-4dc4-83d3-8dec18b7ade2"),
+}
+
+enum : GUID
+{
+    FWPM_CALLOUT_RESERVED_AUTH_CONNECT_LAYER_V4 = GUID("288b524d-0566-4e19-b612-8f441a2e5949"),
+    FWPM_CALLOUT_RESERVED_AUTH_CONNECT_LAYER_V6 = GUID("00b84b92-2b5e-4b71-ab0e-aaca43e387e6"),
+}
+
+enum GUID FWPM_CALLOUT_TEREDO_ALE_RESOURCE_ASSIGNMENT_V6 = GUID("31b95392-066e-42a2-b7db-92f8acdd56f9");
+enum GUID FWPM_CALLOUT_EDGE_TRAVERSAL_ALE_RESOURCE_ASSIGNMENT_V4 = GUID("079b1010-f1c5-4fcd-ae05-da41107abd0b");
+enum GUID FWPM_CALLOUT_TEREDO_ALE_LISTEN_V6 = GUID("81a434e7-f60c-4378-bab8-c625a30f0197");
+enum GUID FWPM_CALLOUT_EDGE_TRAVERSAL_ALE_LISTEN_V4 = GUID("33486ab5-6d5e-4e65-a00b-a7afed0ba9a1");
+
+enum : GUID
+{
+    FWPM_CALLOUT_TCP_TEMPLATES_CONNECT_LAYER_V4 = GUID("215a0b39-4b7e-4eda-8ce4-179679df6224"),
+    FWPM_CALLOUT_TCP_TEMPLATES_CONNECT_LAYER_V6 = GUID("838b37a1-5c12-4d34-8b38-078728b2d25c"),
+    FWPM_CALLOUT_TCP_TEMPLATES_ACCEPT_LAYER_V4  = GUID("2f23f5d0-40c4-4c41-a254-46d8dba8957c"),
+    FWPM_CALLOUT_TCP_TEMPLATES_ACCEPT_LAYER_V6  = GUID("b25152f0-991c-4f53-bbe7-d24b45fe632c"),
+}
+
+enum : GUID
+{
+    FWPM_CALLOUT_POLICY_SILENT_MODE_AUTH_CONNECT_LAYER_V4     = GUID("5fbfc31d-a51c-44dc-acb6-0624a030a700"),
+    FWPM_CALLOUT_POLICY_SILENT_MODE_AUTH_CONNECT_LAYER_V6     = GUID("5fbfc31d-a51c-44dc-acb6-0624a030a701"),
+    FWPM_CALLOUT_POLICY_SILENT_MODE_AUTH_RECV_ACCEPT_LAYER_V4 = GUID("5fbfc31d-a51c-44dc-acb6-0624a030a702"),
+    FWPM_CALLOUT_POLICY_SILENT_MODE_AUTH_RECV_ACCEPT_LAYER_V6 = GUID("5fbfc31d-a51c-44dc-acb6-0624a030a703"),
+}
+
+enum GUID FWPM_CALLOUT_HTTP_TEMPLATE_SSL_HANDSHAKE = GUID("b3423249-8d09-4858-9210-95c7fda8e30f");
+
+enum : GUID
+{
+    FWPM_CALLOUT_OUTBOUND_NETWORK_CONNECTION_POLICY_LAYER_V4 = GUID("103090d4-8e28-4fd6-9894-d1d67d6b10c9"),
+    FWPM_CALLOUT_OUTBOUND_NETWORK_CONNECTION_POLICY_LAYER_V6 = GUID("4ed3446d-8dc7-459b-b09f-c1cb7a8f8689"),
+}
+
+enum : GUID
+{
+    FWPM_CALLOUT_BUILT_IN_RESERVED_1 = GUID("779719a4-e695-47b6-a199-7999fec9163b"),
+    FWPM_CALLOUT_BUILT_IN_RESERVED_2 = GUID("ef9661b6-7c5e-48fd-a130-96678ceacc41"),
+    FWPM_CALLOUT_BUILT_IN_RESERVED_3 = GUID("18729c7a-2f62-4be0-966f-974b21b86df1"),
+    FWPM_CALLOUT_BUILT_IN_RESERVED_4 = GUID("6c3fb801-daff-40e9-91e6-f7ff7e52f7d9"),
+}
+
+enum : GUID
+{
+    FWPM_PROVIDER_CONTEXT_SECURE_SOCKET_AUTHIP = GUID("b25ea800-0d02-46ed-92bd-7fa84bb73e9d"),
+    FWPM_PROVIDER_CONTEXT_SECURE_SOCKET_IPSEC  = GUID("8c2d4144-f8e0-42c0-94ce-7ccfc63b2f9b"),
+}
+
+enum : GUID
+{
+    FWPM_KEYING_MODULE_IKE    = GUID("a9bbf787-82a8-45bb-a400-5d7e5952c7a9"),
+    FWPM_KEYING_MODULE_AUTHIP = GUID("11e3dae0-dd26-4590-857d-ab4b28d1a095"),
+    FWPM_KEYING_MODULE_IKEV2  = GUID("041792cc-8f07-419d-a394-716968cb1647"),
+}
+
+enum uint FWPM_AUTO_WEIGHT_BITS = 0x0000003c;
+
+enum : uint
+{
+    FWPM_WEIGHT_RANGE_IPSEC          = 0x00000000,
+    FWPM_WEIGHT_RANGE_IKE_EXEMPTIONS = 0x0000000c,
+}
+
+enum : uint
+{
+    FWPM_ACTRL_ADD             = 0x00000001,
+    FWPM_ACTRL_ADD_LINK        = 0x00000002,
+    FWPM_ACTRL_BEGIN_READ_TXN  = 0x00000004,
+    FWPM_ACTRL_BEGIN_WRITE_TXN = 0x00000008,
+    FWPM_ACTRL_CLASSIFY        = 0x00000010,
+    FWPM_ACTRL_ENUM            = 0x00000020,
+    FWPM_ACTRL_OPEN            = 0x00000040,
+    FWPM_ACTRL_READ            = 0x00000080,
+    FWPM_ACTRL_READ_STATS      = 0x00000100,
+    FWPM_ACTRL_SUBSCRIBE       = 0x00000200,
+    FWPM_ACTRL_WRITE           = 0x00000400,
+}
+
+enum uint FWPM_TXN_READ_ONLY = 0x00000001;
+
+enum : uint
+{
+    FWPM_TUNNEL_FLAG_POINT_TO_POINT              = 0x00000001,
+    FWPM_TUNNEL_FLAG_ENABLE_VIRTUAL_IF_TUNNELING = 0x00000002,
+}
+
+enum uint FWPM_TUNNEL_FLAG_RESERVED0 = 0x00000004;
+
+enum : uint
+{
+    FWPS_METADATA_FIELD_DISCARD_REASON                   = 0x00000001,
+    FWPS_METADATA_FIELD_FLOW_HANDLE                      = 0x00000002,
+    FWPS_METADATA_FIELD_IP_HEADER_SIZE                   = 0x00000004,
+    FWPS_METADATA_FIELD_PROCESS_PATH                     = 0x00000008,
+    FWPS_METADATA_FIELD_TOKEN                            = 0x00000010,
+    FWPS_METADATA_FIELD_PROCESS_ID                       = 0x00000020,
+    FWPS_METADATA_FIELD_SYSTEM_FLAGS                     = 0x00000040,
+    FWPS_METADATA_FIELD_RESERVED                         = 0x00000080,
+    FWPS_METADATA_FIELD_SOURCE_INTERFACE_INDEX           = 0x00000100,
+    FWPS_METADATA_FIELD_DESTINATION_INTERFACE_INDEX      = 0x00000200,
+    FWPS_METADATA_FIELD_TRANSPORT_HEADER_SIZE            = 0x00000400,
+    FWPS_METADATA_FIELD_COMPARTMENT_ID                   = 0x00000800,
+    FWPS_METADATA_FIELD_FRAGMENT_DATA                    = 0x00001000,
+    FWPS_METADATA_FIELD_PATH_MTU                         = 0x00002000,
+    FWPS_METADATA_FIELD_COMPLETION_HANDLE                = 0x00004000,
+    FWPS_METADATA_FIELD_TRANSPORT_ENDPOINT_HANDLE        = 0x00008000,
+    FWPS_METADATA_FIELD_TRANSPORT_CONTROL_DATA           = 0x00010000,
+    FWPS_METADATA_FIELD_REMOTE_SCOPE_ID                  = 0x00020000,
+    FWPS_METADATA_FIELD_PACKET_DIRECTION                 = 0x00040000,
+    FWPS_METADATA_FIELD_PACKET_SYSTEM_CRITICAL           = 0x00080000,
+    FWPS_METADATA_FIELD_FORWARD_LAYER_OUTBOUND_PASS_THRU = 0x00100000,
+    FWPS_METADATA_FIELD_FORWARD_LAYER_INBOUND_PASS_THRU  = 0x00200000,
+}
+
+enum : uint
+{
+    FWPS_METADATA_FIELD_ALE_CLASSIFY_REQUIRED           = 0x00400000,
+    FWPS_METADATA_FIELD_TRANSPORT_HEADER_INCLUDE_HEADER = 0x00800000,
+}
+
+enum : uint
+{
+    FWPS_METADATA_FIELD_DESTINATION_PREFIX        = 0x01000000,
+    FWPS_METADATA_FIELD_ETHER_FRAME_LENGTH        = 0x02000000,
+    FWPS_METADATA_FIELD_PARENT_ENDPOINT_HANDLE    = 0x04000000,
+    FWPS_METADATA_FIELD_ICMP_ID_AND_SEQUENCE      = 0x08000000,
+    FWPS_METADATA_FIELD_LOCAL_REDIRECT_TARGET_PID = 0x10000000,
+    FWPS_METADATA_FIELD_ORIGINAL_DESTINATION      = 0x20000000,
+    FWPS_METADATA_FIELD_REDIRECT_RECORD_HANDLE    = 0x40000000,
+    FWPS_METADATA_FIELD_SUB_PROCESS_TAG           = 0x80000000,
+}
+
+enum : uint
+{
+    FWPS_L2_METADATA_FIELD_ETHERNET_MAC_HEADER_SIZE    = 0x00000001,
+    FWPS_L2_METADATA_FIELD_WIFI_OPERATION_MODE         = 0x00000002,
+    FWPS_L2_METADATA_FIELD_VSWITCH_SOURCE_PORT_ID      = 0x00000004,
+    FWPS_L2_METADATA_FIELD_VSWITCH_SOURCE_NIC_INDEX    = 0x00000008,
+    FWPS_L2_METADATA_FIELD_VSWITCH_PACKET_CONTEXT      = 0x00000010,
+    FWPS_L2_METADATA_FIELD_VSWITCH_DESTINATION_PORT_ID = 0x00000020,
+    FWPS_L2_METADATA_FIELD_RESERVED                    = 0x80000000,
+}
+
+// Callbacks
+
+alias FWPM_PROVIDER_CHANGE_CALLBACK0 = void function(void* context, const(FWPM_PROVIDER_CHANGE0)* change);
+alias FWPM_PROVIDER_CONTEXT_CHANGE_CALLBACK0 = void function(void* context, 
+                                                             const(FWPM_PROVIDER_CONTEXT_CHANGE0)* change);
+alias FWPM_SUBLAYER_CHANGE_CALLBACK0 = void function(void* context, const(FWPM_SUBLAYER_CHANGE0)* change);
+alias FWPM_CALLOUT_CHANGE_CALLBACK0 = void function(void* context, const(FWPM_CALLOUT_CHANGE0)* change);
+alias FWPM_FILTER_CHANGE_CALLBACK0 = void function(void* context, const(FWPM_FILTER_CHANGE0)* change);
+alias IPSEC_SA_CONTEXT_CALLBACK0 = void function(void* context, const(IPSEC_SA_CONTEXT_CHANGE0)* change);
+alias IPSEC_KEY_MANAGER_KEY_DICTATION_CHECK0 = void function(const(IKEEXT_TRAFFIC0)* ikeTraffic, 
+                                                             BOOL* willDictateKey, uint* weight);
+alias IPSEC_KEY_MANAGER_DICTATE_KEY0 = uint function(IPSEC_SA_DETAILS1* inboundSaDetails, 
+                                                     IPSEC_SA_DETAILS1* outboundSaDetails, BOOL* keyingModuleGenKey);
+alias IPSEC_KEY_MANAGER_NOTIFY_KEY0 = void function(const(IPSEC_SA_DETAILS1)* inboundSa, 
+                                                    const(IPSEC_SA_DETAILS1)* outboundSa);
+alias FWPM_NET_EVENT_CALLBACK0 = void function(void* context, const(FWPM_NET_EVENT1)* event);
+alias FWPM_NET_EVENT_CALLBACK1 = void function(void* context, const(FWPM_NET_EVENT2)* event);
+alias FWPM_NET_EVENT_CALLBACK2 = void function(void* context, const(FWPM_NET_EVENT3)* event);
+alias FWPM_NET_EVENT_CALLBACK3 = void function(void* context, const(FWPM_NET_EVENT4)* event);
+alias FWPM_NET_EVENT_CALLBACK4 = void function(void* context, const(FWPM_NET_EVENT5)* event);
+alias FWPM_DYNAMIC_KEYWORD_CALLBACK0 = void function(void* notification, void* context);
+alias FWPM_SYSTEM_PORTS_CALLBACK0 = void function(void* context, const(FWPM_SYSTEM_PORTS0)* sysPorts);
+alias FWPM_CONNECTION_CALLBACK0 = void function(void* context, FWPM_CONNECTION_EVENT_TYPE eventType, 
+                                                const(FWPM_CONNECTION0)* connection);
+alias FWPM_VSWITCH_EVENT_CALLBACK0 = uint function(void* context, const(FWPM_VSWITCH_EVENT0)* vSwitchEvent);
+
+// Structs
+
+
+@RAIIFree!FwpmEngineClose0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct FWPM_ENGINE_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!FwpmCalloutDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct FWPM_CALLOUT_ENUM_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!FwpmConnectionDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct FWPM_CONNECTION_ENUM_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!FwpmFilterDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct FWPM_FILTER_ENUM_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!FwpmLayerDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct FWPM_LAYER_ENUM_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!FwpmNetEventDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct FWPM_NET_EVENT_ENUM_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!FwpmProviderContextDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct FWPM_PROVIDER_CONTEXT_ENUM_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!FwpmProviderDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct FWPM_PROVIDER_ENUM_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!FwpmSessionDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct FWPM_SESSION_ENUM_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!FwpmSubLayerDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct FWPM_SUBLAYER_ENUM_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!IkeextSaDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct IKEEXT_SA_ENUM_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!IPsecDospStateDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct IPSEC_DOSP_STATE_ENUM_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!IPsecSaContextDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct IPSEC_SA_CONTEXT_ENUM_HANDLE
+{
+    void* Value;
+}
+
+@RAIIFree!IPsecSaDestroyEnumHandle0
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+//STRUCT ATTR: MetadataTypedefAttribute : CustomAttributeSig([], [])
+struct IPSEC_SA_ENUM_HANDLE
+{
+    void* Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ns-fwptypes-fwp_byte_array6))], [])
+struct FWP_BYTE_ARRAY6
+{
+    ubyte[6] byteArray6;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ns-fwptypes-fwp_byte_array16))], [])
+struct FWP_BYTE_ARRAY16
+{
+    ubyte[16] byteArray16;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ns-fwptypes-fwp_byte_blob))], [])
+struct FWP_BYTE_BLOB
+{
+    uint   size;
+    ubyte* data;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ns-fwptypes-fwp_token_information))], [])
+struct FWP_TOKEN_INFORMATION
+{
+    uint                sidCount;
+    SID_AND_ATTRIBUTES* sids;
+    uint                restrictedSidCount;
+    SID_AND_ATTRIBUTES* restrictedSids;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ns-fwptypes-fwp_value0))], [])
+struct FWP_VALUE0
+{
+    FWP_DATA_TYPE       type;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ns-fwptypes-fwp_v4_addr_and_mask))], [])
+struct FWP_V4_ADDR_AND_MASK
+{
+    uint addr;
+    uint mask;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ns-fwptypes-fwp_v6_addr_and_mask))], [])
+struct FWP_V6_ADDR_AND_MASK
+{
+    ubyte[16] addr;
+    ubyte     prefixLength;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ns-fwptypes-fwp_range0))], [])
+struct FWP_RANGE0
+{
+    FWP_VALUE0 valueLow;
+    FWP_VALUE0 valueHigh;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ns-fwptypes-fwp_condition_value0))], [])
+struct FWP_CONDITION_VALUE0
+{
+    FWP_DATA_TYPE       type;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ns-fwptypes-fwpm_display_data0))], [])
+struct FWPM_DISPLAY_DATA0
+{
+    PWSTR name;
+    PWSTR description;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwptypes/ns-fwptypes-ipsec_virtual_if_tunnel_info0))], [])
+struct IPSEC_VIRTUAL_IF_TUNNEL_INFO0
+{
+    ulong virtualIfTunnelId;
+    ulong trafficSelectorId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_preshared_key_authentication0))], [])
+struct IKEEXT_PRESHARED_KEY_AUTHENTICATION0
+{
+    FWP_BYTE_BLOB presharedKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_preshared_key_authentication1))], [])
+struct IKEEXT_PRESHARED_KEY_AUTHENTICATION1
+{
+    FWP_BYTE_BLOB presharedKey;
+    IKEEXT_PRESHARED_KEY_AUTHENTICATION_FLAGS flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_cert_root_config0))], [])
+struct IKEEXT_CERT_ROOT_CONFIG0
+{
+    FWP_BYTE_BLOB     certData;
+    IKEEXT_CERT_FLAGS flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_certificate_authentication0))], [])
+struct IKEEXT_CERTIFICATE_AUTHENTICATION0
+{
+    IKEEXT_CERT_CONFIG_TYPE inboundConfigType;
+    _Anonymous1_e__Union Anonymous1;
+    IKEEXT_CERT_CONFIG_TYPE outboundConfigType;
+    _Anonymous2_e__Union Anonymous2;
+    IKEEXT_CERT_AUTH     flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_certificate_authentication1))], [])
+struct IKEEXT_CERTIFICATE_AUTHENTICATION1
+{
+    IKEEXT_CERT_CONFIG_TYPE inboundConfigType;
+    _Anonymous1_e__Union Anonymous1;
+    IKEEXT_CERT_CONFIG_TYPE outboundConfigType;
+    _Anonymous2_e__Union Anonymous2;
+    IKEEXT_CERT_AUTH     flags;
+    FWP_BYTE_BLOB        localCertLocationUrl;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_cert_ekus0))], [])
+struct IKEEXT_CERT_EKUS0
+{
+    uint  numEku;
+    PSTR* eku;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_cert_name0))], [])
+struct IKEEXT_CERT_NAME0
+{
+    IKEEXT_CERT_CRITERIA_NAME_TYPE nameType;
+    PWSTR certName;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_certificate_criteria0))], [])
+struct IKEEXT_CERTIFICATE_CRITERIA0
+{
+    FWP_BYTE_BLOB      certData;
+    FWP_BYTE_BLOB      certHash;
+    IKEEXT_CERT_EKUS0* eku;
+    IKEEXT_CERT_NAME0* name;
+    uint               flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_certificate_authentication2))], [])
+struct IKEEXT_CERTIFICATE_AUTHENTICATION2
+{
+    IKEEXT_CERT_CONFIG_TYPE inboundConfigType;
+    _Anonymous1_e__Union Anonymous1;
+    IKEEXT_CERT_CONFIG_TYPE outboundConfigType;
+    _Anonymous2_e__Union Anonymous2;
+    IKEEXT_CERT_AUTH     flags;
+    FWP_BYTE_BLOB        localCertLocationUrl;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_ipv6_cga_authentication0))], [])
+struct IKEEXT_IPV6_CGA_AUTHENTICATION0
+{
+    PWSTR            keyContainerName;
+    PWSTR            cspName;
+    uint             cspType;
+    FWP_BYTE_ARRAY16 cgaModifier;
+    ubyte            cgaCollisionCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_kerberos_authentication0))], [])
+struct IKEEXT_KERBEROS_AUTHENTICATION0
+{
+    IKEEXT_KERBEROS_AUTHENTICATION_FLAGS flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_kerberos_authentication1))], [])
+struct IKEEXT_KERBEROS_AUTHENTICATION1
+{
+    IKEEXT_KERBEROS_AUTHENTICATION_FLAGS flags;
+    PWSTR proxyServer;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_reserved_authentication0))], [])
+struct IKEEXT_RESERVED_AUTHENTICATION0
+{
+    IKEEXT_RESERVED_AUTHENTICATION_FLAGS flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_ntlm_v2_authentication0))], [])
+struct IKEEXT_NTLM_V2_AUTHENTICATION0
+{
+    uint flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_eap_authentication0))], [])
+struct IKEEXT_EAP_AUTHENTICATION0
+{
+    IKEEXT_EAP_AUTHENTICATION_FLAGS flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_authentication_method0))], [])
+struct IKEEXT_AUTHENTICATION_METHOD0
+{
+    IKEEXT_AUTHENTICATION_METHOD_TYPE authenticationMethodType;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_authentication_method1))], [])
+struct IKEEXT_AUTHENTICATION_METHOD1
+{
+    IKEEXT_AUTHENTICATION_METHOD_TYPE authenticationMethodType;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_authentication_method2))], [])
+struct IKEEXT_AUTHENTICATION_METHOD2
+{
+    IKEEXT_AUTHENTICATION_METHOD_TYPE authenticationMethodType;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_cipher_algorithm0))], [])
+struct IKEEXT_CIPHER_ALGORITHM0
+{
+    IKEEXT_CIPHER_TYPE algoIdentifier;
+    uint               keyLen;
+    uint               rounds;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_integrity_algorithm0))], [])
+struct IKEEXT_INTEGRITY_ALGORITHM0
+{
+    IKEEXT_INTEGRITY_TYPE algoIdentifier;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_proposal0))], [])
+struct IKEEXT_PROPOSAL0
+{
+    IKEEXT_CIPHER_ALGORITHM0 cipherAlgorithm;
+    IKEEXT_INTEGRITY_ALGORITHM0 integrityAlgorithm;
+    uint            maxLifetimeSeconds;
+    IKEEXT_DH_GROUP dhGroup;
+    uint            quickModeLimit;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_policy0))], [])
+struct IKEEXT_POLICY0
+{
+    uint               softExpirationTime;
+    uint               numAuthenticationMethods;
+    IKEEXT_AUTHENTICATION_METHOD0* authenticationMethods;
+    IKEEXT_AUTHENTICATION_IMPERSONATION_TYPE initiatorImpersonationType;
+    uint               numIkeProposals;
+    IKEEXT_PROPOSAL0*  ikeProposals;
+    IKEEXT_POLICY_FLAG flags;
+    uint               maxDynamicFilters;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_policy1))], [])
+struct IKEEXT_POLICY1
+{
+    uint               softExpirationTime;
+    uint               numAuthenticationMethods;
+    IKEEXT_AUTHENTICATION_METHOD1* authenticationMethods;
+    IKEEXT_AUTHENTICATION_IMPERSONATION_TYPE initiatorImpersonationType;
+    uint               numIkeProposals;
+    IKEEXT_PROPOSAL0*  ikeProposals;
+    IKEEXT_POLICY_FLAG flags;
+    uint               maxDynamicFilters;
+    uint               retransmitDurationSecs;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_policy2))], [])
+struct IKEEXT_POLICY2
+{
+    uint               softExpirationTime;
+    uint               numAuthenticationMethods;
+    IKEEXT_AUTHENTICATION_METHOD2* authenticationMethods;
+    IKEEXT_AUTHENTICATION_IMPERSONATION_TYPE initiatorImpersonationType;
+    uint               numIkeProposals;
+    IKEEXT_PROPOSAL0*  ikeProposals;
+    IKEEXT_POLICY_FLAG flags;
+    uint               maxDynamicFilters;
+    uint               retransmitDurationSecs;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_em_policy0))], [])
+struct IKEEXT_EM_POLICY0
+{
+    uint numAuthenticationMethods;
+    IKEEXT_AUTHENTICATION_METHOD0* authenticationMethods;
+    IKEEXT_AUTHENTICATION_IMPERSONATION_TYPE initiatorImpersonationType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_em_policy1))], [])
+struct IKEEXT_EM_POLICY1
+{
+    uint numAuthenticationMethods;
+    IKEEXT_AUTHENTICATION_METHOD1* authenticationMethods;
+    IKEEXT_AUTHENTICATION_IMPERSONATION_TYPE initiatorImpersonationType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_em_policy2))], [])
+struct IKEEXT_EM_POLICY2
+{
+    uint numAuthenticationMethods;
+    IKEEXT_AUTHENTICATION_METHOD2* authenticationMethods;
+    IKEEXT_AUTHENTICATION_IMPERSONATION_TYPE initiatorImpersonationType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_ip_version_specific_keymodule_statistics0))], [])
+struct IKEEXT_IP_VERSION_SPECIFIC_KEYMODULE_STATISTICS0
+{
+    uint currentActiveMainModes;
+    uint totalMainModesStarted;
+    uint totalSuccessfulMainModes;
+    uint totalFailedMainModes;
+    uint totalResponderMainModes;
+    uint currentNewResponderMainModes;
+    uint currentActiveQuickModes;
+    uint totalQuickModesStarted;
+    uint totalSuccessfulQuickModes;
+    uint totalFailedQuickModes;
+    uint totalAcquires;
+    uint totalReinitAcquires;
+    uint currentActiveExtendedModes;
+    uint totalExtendedModesStarted;
+    uint totalSuccessfulExtendedModes;
+    uint totalFailedExtendedModes;
+    uint totalImpersonationExtendedModes;
+    uint totalImpersonationMainModes;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_ip_version_specific_keymodule_statistics1))], [])
+struct IKEEXT_IP_VERSION_SPECIFIC_KEYMODULE_STATISTICS1
+{
+    uint currentActiveMainModes;
+    uint totalMainModesStarted;
+    uint totalSuccessfulMainModes;
+    uint totalFailedMainModes;
+    uint totalResponderMainModes;
+    uint currentNewResponderMainModes;
+    uint currentActiveQuickModes;
+    uint totalQuickModesStarted;
+    uint totalSuccessfulQuickModes;
+    uint totalFailedQuickModes;
+    uint totalAcquires;
+    uint totalReinitAcquires;
+    uint currentActiveExtendedModes;
+    uint totalExtendedModesStarted;
+    uint totalSuccessfulExtendedModes;
+    uint totalFailedExtendedModes;
+    uint totalImpersonationExtendedModes;
+    uint totalImpersonationMainModes;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_keymodule_statistics0))], [])
+struct IKEEXT_KEYMODULE_STATISTICS0
+{
+    IKEEXT_IP_VERSION_SPECIFIC_KEYMODULE_STATISTICS0 v4Statistics;
+    IKEEXT_IP_VERSION_SPECIFIC_KEYMODULE_STATISTICS0 v6Statistics;
+    uint[97] errorFrequencyTable;
+    uint     mainModeNegotiationTime;
+    uint     quickModeNegotiationTime;
+    uint     extendedModeNegotiationTime;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_keymodule_statistics1))], [])
+struct IKEEXT_KEYMODULE_STATISTICS1
+{
+    IKEEXT_IP_VERSION_SPECIFIC_KEYMODULE_STATISTICS1 v4Statistics;
+    IKEEXT_IP_VERSION_SPECIFIC_KEYMODULE_STATISTICS1 v6Statistics;
+    uint[97] errorFrequencyTable;
+    uint     mainModeNegotiationTime;
+    uint     quickModeNegotiationTime;
+    uint     extendedModeNegotiationTime;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_ip_version_specific_common_statistics0))], [])
+struct IKEEXT_IP_VERSION_SPECIFIC_COMMON_STATISTICS0
+{
+    uint totalSocketReceiveFailures;
+    uint totalSocketSendFailures;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_ip_version_specific_common_statistics1))], [])
+struct IKEEXT_IP_VERSION_SPECIFIC_COMMON_STATISTICS1
+{
+    uint totalSocketReceiveFailures;
+    uint totalSocketSendFailures;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_common_statistics0))], [])
+struct IKEEXT_COMMON_STATISTICS0
+{
+    IKEEXT_IP_VERSION_SPECIFIC_COMMON_STATISTICS0 v4Statistics;
+    IKEEXT_IP_VERSION_SPECIFIC_COMMON_STATISTICS0 v6Statistics;
+    uint totalPacketsReceived;
+    uint totalInvalidPacketsReceived;
+    uint currentQueuedWorkitems;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_common_statistics1))], [])
+struct IKEEXT_COMMON_STATISTICS1
+{
+    IKEEXT_IP_VERSION_SPECIFIC_COMMON_STATISTICS1 v4Statistics;
+    IKEEXT_IP_VERSION_SPECIFIC_COMMON_STATISTICS1 v6Statistics;
+    uint totalPacketsReceived;
+    uint totalInvalidPacketsReceived;
+    uint currentQueuedWorkitems;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_statistics0))], [])
+struct IKEEXT_STATISTICS0
+{
+    IKEEXT_KEYMODULE_STATISTICS0 ikeStatistics;
+    IKEEXT_KEYMODULE_STATISTICS0 authipStatistics;
+    IKEEXT_COMMON_STATISTICS0 commonStatistics;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_statistics1))], [])
+struct IKEEXT_STATISTICS1
+{
+    IKEEXT_KEYMODULE_STATISTICS1 ikeStatistics;
+    IKEEXT_KEYMODULE_STATISTICS1 authipStatistics;
+    IKEEXT_KEYMODULE_STATISTICS1 ikeV2Statistics;
+    IKEEXT_COMMON_STATISTICS1 commonStatistics;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_traffic0))], [])
+struct IKEEXT_TRAFFIC0
+{
+    FWP_IP_VERSION       ipVersion;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    ulong                authIpFilterId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_cookie_pair0))], [])
+struct IKEEXT_COOKIE_PAIR0
+{
+    ulong initiator;
+    ulong responder;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_certificate_credential0))], [])
+struct IKEEXT_CERTIFICATE_CREDENTIAL0
+{
+    FWP_BYTE_BLOB subjectName;
+    FWP_BYTE_BLOB certHash;
+    uint          flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_name_credential0))], [])
+struct IKEEXT_NAME_CREDENTIAL0
+{
+    PWSTR principalName;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_credential0))], [])
+struct IKEEXT_CREDENTIAL0
+{
+    IKEEXT_AUTHENTICATION_METHOD_TYPE authenticationMethodType;
+    IKEEXT_AUTHENTICATION_IMPERSONATION_TYPE impersonationType;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_credential_pair0))], [])
+struct IKEEXT_CREDENTIAL_PAIR0
+{
+    IKEEXT_CREDENTIAL0 localCredentials;
+    IKEEXT_CREDENTIAL0 peerCredentials;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_credentials0))], [])
+struct IKEEXT_CREDENTIALS0
+{
+    uint numCredentials;
+    IKEEXT_CREDENTIAL_PAIR0* credentials;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_sa_details0))], [])
+struct IKEEXT_SA_DETAILS0
+{
+    ulong               saId;
+    IKEEXT_KEY_MODULE_TYPE keyModuleType;
+    FWP_IP_VERSION      ipVersion;
+    _Anonymous_e__Union Anonymous;
+    IKEEXT_TRAFFIC0     ikeTraffic;
+    IKEEXT_PROPOSAL0    ikeProposal;
+    IKEEXT_COOKIE_PAIR0 cookiePair;
+    IKEEXT_CREDENTIALS0 ikeCredentials;
+    GUID                ikePolicyKey;
+    ulong               virtualIfTunnelId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_certificate_credential1))], [])
+struct IKEEXT_CERTIFICATE_CREDENTIAL1
+{
+    FWP_BYTE_BLOB subjectName;
+    FWP_BYTE_BLOB certHash;
+    uint          flags;
+    FWP_BYTE_BLOB certificate;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_credential1))], [])
+struct IKEEXT_CREDENTIAL1
+{
+    IKEEXT_AUTHENTICATION_METHOD_TYPE authenticationMethodType;
+    IKEEXT_AUTHENTICATION_IMPERSONATION_TYPE impersonationType;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_credential_pair1))], [])
+struct IKEEXT_CREDENTIAL_PAIR1
+{
+    IKEEXT_CREDENTIAL1 localCredentials;
+    IKEEXT_CREDENTIAL1 peerCredentials;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_credentials1))], [])
+struct IKEEXT_CREDENTIALS1
+{
+    uint numCredentials;
+    IKEEXT_CREDENTIAL_PAIR1* credentials;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_sa_details1))], [])
+struct IKEEXT_SA_DETAILS1
+{
+    ulong               saId;
+    IKEEXT_KEY_MODULE_TYPE keyModuleType;
+    FWP_IP_VERSION      ipVersion;
+    _Anonymous_e__Union Anonymous;
+    IKEEXT_TRAFFIC0     ikeTraffic;
+    IKEEXT_PROPOSAL0    ikeProposal;
+    IKEEXT_COOKIE_PAIR0 cookiePair;
+    IKEEXT_CREDENTIALS1 ikeCredentials;
+    GUID                ikePolicyKey;
+    ulong               virtualIfTunnelId;
+    FWP_BYTE_BLOB       correlationKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_credential2))], [])
+struct IKEEXT_CREDENTIAL2
+{
+    IKEEXT_AUTHENTICATION_METHOD_TYPE authenticationMethodType;
+    IKEEXT_AUTHENTICATION_IMPERSONATION_TYPE impersonationType;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_credential_pair2))], [])
+struct IKEEXT_CREDENTIAL_PAIR2
+{
+    IKEEXT_CREDENTIAL2 localCredentials;
+    IKEEXT_CREDENTIAL2 peerCredentials;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_credentials2))], [])
+struct IKEEXT_CREDENTIALS2
+{
+    uint numCredentials;
+    IKEEXT_CREDENTIAL_PAIR2* credentials;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_sa_details2))], [])
+struct IKEEXT_SA_DETAILS2
+{
+    ulong               saId;
+    IKEEXT_KEY_MODULE_TYPE keyModuleType;
+    FWP_IP_VERSION      ipVersion;
+    _Anonymous_e__Union Anonymous;
+    IKEEXT_TRAFFIC0     ikeTraffic;
+    IKEEXT_PROPOSAL0    ikeProposal;
+    IKEEXT_COOKIE_PAIR0 cookiePair;
+    IKEEXT_CREDENTIALS2 ikeCredentials;
+    GUID                ikePolicyKey;
+    ulong               virtualIfTunnelId;
+    FWP_BYTE_BLOB       correlationKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iketypes/ns-iketypes-ikeext_sa_enum_template0))], [])
+struct IKEEXT_SA_ENUM_TEMPLATE0
+{
+    FWP_CONDITION_VALUE0 localSubNet;
+    FWP_CONDITION_VALUE0 remoteSubNet;
+    FWP_BYTE_BLOB        localMainModeCertHash;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_lifetime0))], [])
+struct IPSEC_SA_LIFETIME0
+{
+    uint lifetimeSeconds;
+    uint lifetimeKilobytes;
+    uint lifetimePackets;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_auth_transform_id0))], [])
+struct IPSEC_AUTH_TRANSFORM_ID0
+{
+    IPSEC_AUTH_TYPE authType;
+    ubyte           authConfig;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_auth_transform0))], [])
+struct IPSEC_AUTH_TRANSFORM0
+{
+    IPSEC_AUTH_TRANSFORM_ID0 authTransformId;
+    GUID* cryptoModuleId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_cipher_transform_id0))], [])
+struct IPSEC_CIPHER_TRANSFORM_ID0
+{
+    IPSEC_CIPHER_TYPE cipherType;
+    ubyte             cipherConfig;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_cipher_transform0))], [])
+struct IPSEC_CIPHER_TRANSFORM0
+{
+    IPSEC_CIPHER_TRANSFORM_ID0 cipherTransformId;
+    GUID* cryptoModuleId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_auth_and_cipher_transform0))], [])
+struct IPSEC_AUTH_AND_CIPHER_TRANSFORM0
+{
+    IPSEC_AUTH_TRANSFORM0 authTransform;
+    IPSEC_CIPHER_TRANSFORM0 cipherTransform;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_transform0))], [])
+struct IPSEC_SA_TRANSFORM0
+{
+    IPSEC_TRANSFORM_TYPE ipsecTransformType;
+    _Anonymous_e__Union  Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_proposal0))], [])
+struct IPSEC_PROPOSAL0
+{
+    IPSEC_SA_LIFETIME0   lifetime;
+    uint                 numSaTransforms;
+    IPSEC_SA_TRANSFORM0* saTransforms;
+    IPSEC_PFS_GROUP      pfsGroup;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_idle_timeout0))], [])
+struct IPSEC_SA_IDLE_TIMEOUT0
+{
+    uint idleTimeoutSeconds;
+    uint idleTimeoutSecondsFailOver;
+}
+
+struct IPSEC_TRAFFIC_SELECTOR0
+{
+    ubyte                protocolId;
+    ushort               portStart;
+    ushort               portEnd;
+    FWP_IP_VERSION       ipVersion;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+}
+
+struct IPSEC_TRAFFIC_SELECTOR_POLICY0
+{
+    uint flags;
+    uint numLocalTrafficSelectors;
+    IPSEC_TRAFFIC_SELECTOR0* localTrafficSelectors;
+    uint numRemoteTrafficSelectors;
+    IPSEC_TRAFFIC_SELECTOR0* remoteTrafficSelectors;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_transport_policy0))], [])
+struct IPSEC_TRANSPORT_POLICY0
+{
+    uint               numIpsecProposals;
+    IPSEC_PROPOSAL0*   ipsecProposals;
+    IPSEC_POLICY_FLAG  flags;
+    uint               ndAllowClearTimeoutSeconds;
+    IPSEC_SA_IDLE_TIMEOUT0 saIdleTimeout;
+    IKEEXT_EM_POLICY0* emPolicy;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_transport_policy1))], [])
+struct IPSEC_TRANSPORT_POLICY1
+{
+    uint               numIpsecProposals;
+    IPSEC_PROPOSAL0*   ipsecProposals;
+    IPSEC_POLICY_FLAG  flags;
+    uint               ndAllowClearTimeoutSeconds;
+    IPSEC_SA_IDLE_TIMEOUT0 saIdleTimeout;
+    IKEEXT_EM_POLICY1* emPolicy;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_transport_policy2))], [])
+struct IPSEC_TRANSPORT_POLICY2
+{
+    uint               numIpsecProposals;
+    IPSEC_PROPOSAL0*   ipsecProposals;
+    IPSEC_POLICY_FLAG  flags;
+    uint               ndAllowClearTimeoutSeconds;
+    IPSEC_SA_IDLE_TIMEOUT0 saIdleTimeout;
+    IKEEXT_EM_POLICY2* emPolicy;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_tunnel_endpoints0))], [])
+struct IPSEC_TUNNEL_ENDPOINTS0
+{
+    FWP_IP_VERSION       ipVersion;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_tunnel_endpoint0))], [])
+struct IPSEC_TUNNEL_ENDPOINT0
+{
+    FWP_IP_VERSION      ipVersion;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_tunnel_endpoints2))], [])
+struct IPSEC_TUNNEL_ENDPOINTS2
+{
+    FWP_IP_VERSION       ipVersion;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    ulong                localIfLuid;
+    PWSTR                remoteFqdn;
+    uint                 numAddresses;
+    IPSEC_TUNNEL_ENDPOINT0* remoteAddresses;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_tunnel_endpoints1))], [])
+struct IPSEC_TUNNEL_ENDPOINTS1
+{
+    FWP_IP_VERSION       ipVersion;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    ulong                localIfLuid;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_tunnel_policy0))], [])
+struct IPSEC_TUNNEL_POLICY0
+{
+    IPSEC_POLICY_FLAG  flags;
+    uint               numIpsecProposals;
+    IPSEC_PROPOSAL0*   ipsecProposals;
+    IPSEC_TUNNEL_ENDPOINTS0 tunnelEndpoints;
+    IPSEC_SA_IDLE_TIMEOUT0 saIdleTimeout;
+    IKEEXT_EM_POLICY0* emPolicy;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_tunnel_policy1))], [])
+struct IPSEC_TUNNEL_POLICY1
+{
+    IPSEC_POLICY_FLAG  flags;
+    uint               numIpsecProposals;
+    IPSEC_PROPOSAL0*   ipsecProposals;
+    IPSEC_TUNNEL_ENDPOINTS1 tunnelEndpoints;
+    IPSEC_SA_IDLE_TIMEOUT0 saIdleTimeout;
+    IKEEXT_EM_POLICY1* emPolicy;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_tunnel_policy2))], [])
+struct IPSEC_TUNNEL_POLICY2
+{
+    IPSEC_POLICY_FLAG  flags;
+    uint               numIpsecProposals;
+    IPSEC_PROPOSAL0*   ipsecProposals;
+    IPSEC_TUNNEL_ENDPOINTS2 tunnelEndpoints;
+    IPSEC_SA_IDLE_TIMEOUT0 saIdleTimeout;
+    IKEEXT_EM_POLICY2* emPolicy;
+    uint               fwdPathSaLifetime;
+}
+
+struct IPSEC_TUNNEL_POLICY3
+{
+    uint               flags;
+    uint               numIpsecProposals;
+    IPSEC_PROPOSAL0*   ipsecProposals;
+    IPSEC_TUNNEL_ENDPOINTS2 tunnelEndpoints;
+    IPSEC_SA_IDLE_TIMEOUT0 saIdleTimeout;
+    IKEEXT_EM_POLICY2* emPolicy;
+    uint               fwdPathSaLifetime;
+    uint               compartmentId;
+    uint               numTrafficSelectorPolicy;
+    IPSEC_TRAFFIC_SELECTOR_POLICY0* trafficSelectorPolicies;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_keying_policy0))], [])
+struct IPSEC_KEYING_POLICY0
+{
+    uint  numKeyMods;
+    GUID* keyModKeys;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_keying_policy1))], [])
+struct IPSEC_KEYING_POLICY1
+{
+    uint  numKeyMods;
+    GUID* keyModKeys;
+    uint  flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_aggregate_sa_statistics0))], [])
+struct IPSEC_AGGREGATE_SA_STATISTICS0
+{
+    uint activeSas;
+    uint pendingSaNegotiations;
+    uint totalSasAdded;
+    uint totalSasDeleted;
+    uint successfulRekeys;
+    uint activeTunnels;
+    uint offloadedSas;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_esp_drop_packet_statistics0))], [])
+struct IPSEC_ESP_DROP_PACKET_STATISTICS0
+{
+    uint invalidSpisOnInbound;
+    uint decryptionFailuresOnInbound;
+    uint authenticationFailuresOnInbound;
+    uint replayCheckFailuresOnInbound;
+    uint saNotInitializedOnInbound;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_ah_drop_packet_statistics0))], [])
+struct IPSEC_AH_DROP_PACKET_STATISTICS0
+{
+    uint invalidSpisOnInbound;
+    uint authenticationFailuresOnInbound;
+    uint replayCheckFailuresOnInbound;
+    uint saNotInitializedOnInbound;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_aggregate_drop_packet_statistics0))], [])
+struct IPSEC_AGGREGATE_DROP_PACKET_STATISTICS0
+{
+    uint invalidSpisOnInbound;
+    uint decryptionFailuresOnInbound;
+    uint authenticationFailuresOnInbound;
+    uint udpEspValidationFailuresOnInbound;
+    uint replayCheckFailuresOnInbound;
+    uint invalidClearTextInbound;
+    uint saNotInitializedOnInbound;
+    uint receiveOverIncorrectSaInbound;
+    uint secureReceivesNotMatchingFilters;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_aggregate_drop_packet_statistics1))], [])
+struct IPSEC_AGGREGATE_DROP_PACKET_STATISTICS1
+{
+    uint invalidSpisOnInbound;
+    uint decryptionFailuresOnInbound;
+    uint authenticationFailuresOnInbound;
+    uint udpEspValidationFailuresOnInbound;
+    uint replayCheckFailuresOnInbound;
+    uint invalidClearTextInbound;
+    uint saNotInitializedOnInbound;
+    uint receiveOverIncorrectSaInbound;
+    uint secureReceivesNotMatchingFilters;
+    uint totalDropPacketsInbound;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_traffic_statistics0))], [])
+struct IPSEC_TRAFFIC_STATISTICS0
+{
+    ulong encryptedByteCount;
+    ulong authenticatedAHByteCount;
+    ulong authenticatedESPByteCount;
+    ulong transportByteCount;
+    ulong tunnelByteCount;
+    ulong offloadByteCount;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_traffic_statistics1))], [])
+struct IPSEC_TRAFFIC_STATISTICS1
+{
+    ulong encryptedByteCount;
+    ulong authenticatedAHByteCount;
+    ulong authenticatedESPByteCount;
+    ulong transportByteCount;
+    ulong tunnelByteCount;
+    ulong offloadByteCount;
+    ulong totalSuccessfulPackets;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_statistics0))], [])
+struct IPSEC_STATISTICS0
+{
+    IPSEC_AGGREGATE_SA_STATISTICS0 aggregateSaStatistics;
+    IPSEC_ESP_DROP_PACKET_STATISTICS0 espDropPacketStatistics;
+    IPSEC_AH_DROP_PACKET_STATISTICS0 ahDropPacketStatistics;
+    IPSEC_AGGREGATE_DROP_PACKET_STATISTICS0 aggregateDropPacketStatistics;
+    IPSEC_TRAFFIC_STATISTICS0 inboundTrafficStatistics;
+    IPSEC_TRAFFIC_STATISTICS0 outboundTrafficStatistics;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_statistics1))], [])
+struct IPSEC_STATISTICS1
+{
+    IPSEC_AGGREGATE_SA_STATISTICS0 aggregateSaStatistics;
+    IPSEC_ESP_DROP_PACKET_STATISTICS0 espDropPacketStatistics;
+    IPSEC_AH_DROP_PACKET_STATISTICS0 ahDropPacketStatistics;
+    IPSEC_AGGREGATE_DROP_PACKET_STATISTICS1 aggregateDropPacketStatistics;
+    IPSEC_TRAFFIC_STATISTICS1 inboundTrafficStatistics;
+    IPSEC_TRAFFIC_STATISTICS1 outboundTrafficStatistics;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_auth_information0))], [])
+struct IPSEC_SA_AUTH_INFORMATION0
+{
+    IPSEC_AUTH_TRANSFORM0 authTransform;
+    FWP_BYTE_BLOB authKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_cipher_information0))], [])
+struct IPSEC_SA_CIPHER_INFORMATION0
+{
+    IPSEC_CIPHER_TRANSFORM0 cipherTransform;
+    FWP_BYTE_BLOB cipherKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_auth_and_cipher_information0))], [])
+struct IPSEC_SA_AUTH_AND_CIPHER_INFORMATION0
+{
+    IPSEC_SA_CIPHER_INFORMATION0 saCipherInformation;
+    IPSEC_SA_AUTH_INFORMATION0 saAuthInformation;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa0))], [])
+struct IPSEC_SA0
+{
+    uint                 spi;
+    IPSEC_TRANSFORM_TYPE saTransformType;
+    _Anonymous_e__Union  Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_keymodule_state0))], [])
+struct IPSEC_KEYMODULE_STATE0
+{
+    GUID          keyModuleKey;
+    FWP_BYTE_BLOB stateBlob;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_token0))], [])
+struct IPSEC_TOKEN0
+{
+    IPSEC_TOKEN_TYPE type;
+    IPSEC_TOKEN_PRINCIPAL principal;
+    IPSEC_TOKEN_MODE mode;
+    ulong            token;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_id0))], [])
+struct IPSEC_ID0
+{
+    PWSTR         mmTargetName;
+    PWSTR         emTargetName;
+    uint          numTokens;
+    IPSEC_TOKEN0* tokens;
+    ulong         explicitCredentials;
+    ulong         logonId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_bundle0))], [])
+struct IPSEC_SA_BUNDLE0
+{
+    IPSEC_SA_BUNDLE_FLAGS flags;
+    IPSEC_SA_LIFETIME0  lifetime;
+    uint                idleTimeoutSeconds;
+    uint                ndAllowClearTimeoutSeconds;
+    IPSEC_ID0*          ipsecId;
+    uint                napContext;
+    uint                qmSaId;
+    uint                numSAs;
+    IPSEC_SA0*          saList;
+    IPSEC_KEYMODULE_STATE0* keyModuleState;
+    FWP_IP_VERSION      ipVersion;
+    _Anonymous_e__Union Anonymous;
+    ulong               mmSaId;
+    IPSEC_PFS_GROUP     pfsGroup;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_bundle1))], [])
+struct IPSEC_SA_BUNDLE1
+{
+    IPSEC_SA_BUNDLE_FLAGS flags;
+    IPSEC_SA_LIFETIME0  lifetime;
+    uint                idleTimeoutSeconds;
+    uint                ndAllowClearTimeoutSeconds;
+    IPSEC_ID0*          ipsecId;
+    uint                napContext;
+    uint                qmSaId;
+    uint                numSAs;
+    IPSEC_SA0*          saList;
+    IPSEC_KEYMODULE_STATE0* keyModuleState;
+    FWP_IP_VERSION      ipVersion;
+    _Anonymous_e__Union Anonymous;
+    ulong               mmSaId;
+    IPSEC_PFS_GROUP     pfsGroup;
+    GUID                saLookupContext;
+    ulong               qmFilterId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_traffic0))], [])
+struct IPSEC_TRAFFIC0
+{
+    FWP_IP_VERSION       ipVersion;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    IPSEC_TRAFFIC_TYPE   trafficType;
+    _Anonymous3_e__Union Anonymous3;
+    ushort               remotePort;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_traffic1))], [])
+struct IPSEC_TRAFFIC1
+{
+    FWP_IP_VERSION       ipVersion;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    IPSEC_TRAFFIC_TYPE   trafficType;
+    _Anonymous3_e__Union Anonymous3;
+    ushort               remotePort;
+    ushort               localPort;
+    ubyte                ipProtocol;
+    ulong                localIfLuid;
+    uint                 realIfProfileId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_v4_udp_encapsulation0))], [])
+struct IPSEC_V4_UDP_ENCAPSULATION0
+{
+    ushort localUdpEncapPort;
+    ushort remoteUdpEncapPort;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_getspi0))], [])
+struct IPSEC_GETSPI0
+{
+    IPSEC_TRAFFIC0      inboundIpsecTraffic;
+    FWP_IP_VERSION      ipVersion;
+    _Anonymous_e__Union Anonymous;
+    GUID*               rngCryptoModuleID;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_getspi1))], [])
+struct IPSEC_GETSPI1
+{
+    IPSEC_TRAFFIC1      inboundIpsecTraffic;
+    FWP_IP_VERSION      ipVersion;
+    _Anonymous_e__Union Anonymous;
+    GUID*               rngCryptoModuleID;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_details0))], [])
+struct IPSEC_SA_DETAILS0
+{
+    FWP_IP_VERSION      ipVersion;
+    FWP_DIRECTION       saDirection;
+    IPSEC_TRAFFIC0      traffic;
+    IPSEC_SA_BUNDLE0    saBundle;
+    _Anonymous_e__Union Anonymous;
+    FWPM_FILTER0*       transportFilter;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_details1))], [])
+struct IPSEC_SA_DETAILS1
+{
+    FWP_IP_VERSION      ipVersion;
+    FWP_DIRECTION       saDirection;
+    IPSEC_TRAFFIC1      traffic;
+    IPSEC_SA_BUNDLE1    saBundle;
+    _Anonymous_e__Union Anonymous;
+    FWPM_FILTER0*       transportFilter;
+    IPSEC_VIRTUAL_IF_TUNNEL_INFO0 virtualIfTunnelInfo;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_context0))], [])
+struct IPSEC_SA_CONTEXT0
+{
+    ulong              saContextId;
+    IPSEC_SA_DETAILS0* inboundSa;
+    IPSEC_SA_DETAILS0* outboundSa;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_context1))], [])
+struct IPSEC_SA_CONTEXT1
+{
+    ulong              saContextId;
+    IPSEC_SA_DETAILS1* inboundSa;
+    IPSEC_SA_DETAILS1* outboundSa;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_context_enum_template0))], [])
+struct IPSEC_SA_CONTEXT_ENUM_TEMPLATE0
+{
+    FWP_CONDITION_VALUE0 localSubNet;
+    FWP_CONDITION_VALUE0 remoteSubNet;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_enum_template0))], [])
+struct IPSEC_SA_ENUM_TEMPLATE0
+{
+    FWP_DIRECTION saDirection;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_context_subscription0))], [])
+struct IPSEC_SA_CONTEXT_SUBSCRIPTION0
+{
+    IPSEC_SA_CONTEXT_ENUM_TEMPLATE0* enumTemplate;
+    uint flags;
+    GUID sessionKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_sa_context_change0))], [])
+struct IPSEC_SA_CONTEXT_CHANGE0
+{
+    IPSEC_SA_CONTEXT_EVENT_TYPE0 changeType;
+    ulong saContextId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_address_info0))], [])
+struct IPSEC_ADDRESS_INFO0
+{
+    uint              numV4Addresses;
+    uint*             v4Addresses;
+    uint              numV6Addresses;
+    FWP_BYTE_ARRAY16* v6Addresses;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_dosp_options0))], [])
+struct IPSEC_DOSP_OPTIONS0
+{
+    uint                 stateIdleTimeoutSeconds;
+    uint                 perIPRateLimitQueueIdleTimeoutSeconds;
+    ubyte                ipV6IPsecUnauthDscp;
+    uint                 ipV6IPsecUnauthRateLimitBytesPerSec;
+    uint                 ipV6IPsecUnauthPerIPRateLimitBytesPerSec;
+    ubyte                ipV6IPsecAuthDscp;
+    uint                 ipV6IPsecAuthRateLimitBytesPerSec;
+    ubyte                icmpV6Dscp;
+    uint                 icmpV6RateLimitBytesPerSec;
+    ubyte                ipV6FilterExemptDscp;
+    uint                 ipV6FilterExemptRateLimitBytesPerSec;
+    ubyte                defBlockExemptDscp;
+    uint                 defBlockExemptRateLimitBytesPerSec;
+    uint                 maxStateEntries;
+    uint                 maxPerIPRateLimitQueues;
+    IPSEC_DOSP_FLAGS     flags;
+    uint                 numPublicIFLuids;
+    ulong*               publicIFLuids;
+    uint                 numInternalIFLuids;
+    ulong*               internalIFLuids;
+    FWP_V6_ADDR_AND_MASK publicV6AddrMask;
+    FWP_V6_ADDR_AND_MASK internalV6AddrMask;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_dosp_statistics0))], [])
+struct IPSEC_DOSP_STATISTICS0
+{
+    ulong totalStateEntriesCreated;
+    ulong currentStateEntries;
+    ulong totalInboundAllowedIPv6IPsecUnauthPkts;
+    ulong totalInboundRatelimitDiscardedIPv6IPsecUnauthPkts;
+    ulong totalInboundPerIPRatelimitDiscardedIPv6IPsecUnauthPkts;
+    ulong totalInboundOtherDiscardedIPv6IPsecUnauthPkts;
+    ulong totalInboundAllowedIPv6IPsecAuthPkts;
+    ulong totalInboundRatelimitDiscardedIPv6IPsecAuthPkts;
+    ulong totalInboundOtherDiscardedIPv6IPsecAuthPkts;
+    ulong totalInboundAllowedICMPv6Pkts;
+    ulong totalInboundRatelimitDiscardedICMPv6Pkts;
+    ulong totalInboundAllowedIPv6FilterExemptPkts;
+    ulong totalInboundRatelimitDiscardedIPv6FilterExemptPkts;
+    ulong totalInboundDiscardedIPv6FilterBlockPkts;
+    ulong totalInboundAllowedDefBlockExemptPkts;
+    ulong totalInboundRatelimitDiscardedDefBlockExemptPkts;
+    ulong totalInboundDiscardedDefBlockPkts;
+    ulong currentInboundIPv6IPsecUnauthPerIPRateLimitQueues;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_dosp_state0))], [])
+struct IPSEC_DOSP_STATE0
+{
+    ubyte[16] publicHostV6Addr;
+    ubyte[16] internalHostV6Addr;
+    ulong     totalInboundIPv6IPsecAuthPackets;
+    ulong     totalOutboundIPv6IPsecAuthPackets;
+    uint      durationSecs;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_dosp_state_enum_template0))], [])
+struct IPSEC_DOSP_STATE_ENUM_TEMPLATE0
+{
+    FWP_V6_ADDR_AND_MASK publicV6AddrMask;
+    FWP_V6_ADDR_AND_MASK internalV6AddrMask;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ipsectypes/ns-ipsectypes-ipsec_key_manager0))], [])
+struct IPSEC_KEY_MANAGER0
+{
+    GUID               keyManagerKey;
+    FWPM_DISPLAY_DATA0 displayData;
+    uint               flags;
+    ubyte              keyDictationTimeoutHint;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_session0))], [])
+struct FWPM_SESSION0
+{
+    GUID               sessionKey;
+    FWPM_DISPLAY_DATA0 displayData;
+    uint               flags;
+    uint               txnWaitTimeoutInMSec;
+    uint               processId;
+    SID*               sid;
+    PWSTR              username;
+    BOOL               kernelMode;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_session_enum_template0))], [])
+struct FWPM_SESSION_ENUM_TEMPLATE0
+{
+    ulong reserved;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_provider0))], [])
+struct FWPM_PROVIDER0
+{
+    GUID               providerKey;
+    FWPM_DISPLAY_DATA0 displayData;
+    uint               flags;
+    FWP_BYTE_BLOB      providerData;
+    PWSTR              serviceName;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_provider_enum_template0))], [])
+struct FWPM_PROVIDER_ENUM_TEMPLATE0
+{
+    ulong reserved;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_provider_change0))], [])
+struct FWPM_PROVIDER_CHANGE0
+{
+    FWPM_CHANGE_TYPE changeType;
+    GUID             providerKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_provider_subscription0))], [])
+struct FWPM_PROVIDER_SUBSCRIPTION0
+{
+    FWPM_PROVIDER_ENUM_TEMPLATE0* enumTemplate;
+    uint flags;
+    GUID sessionKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_classify_option0))], [])
+struct FWPM_CLASSIFY_OPTION0
+{
+    FWP_CLASSIFY_OPTION_TYPE type;
+    FWP_VALUE0 value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_classify_options0))], [])
+struct FWPM_CLASSIFY_OPTIONS0
+{
+    uint numOptions;
+    FWPM_CLASSIFY_OPTION0* options;
+}
+
+struct FWPM_NETWORK_CONNECTION_POLICY_SETTING0
+{
+    FWP_NETWORK_CONNECTION_POLICY_SETTING_TYPE type;
+    FWP_VALUE0 value;
+}
+
+struct FWPM_NETWORK_CONNECTION_POLICY_SETTINGS0
+{
+    uint numSettings;
+    FWPM_NETWORK_CONNECTION_POLICY_SETTING0* settings;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_provider_context0))], [])
+struct FWPM_PROVIDER_CONTEXT0
+{
+    GUID                providerContextKey;
+    FWPM_DISPLAY_DATA0  displayData;
+    uint                flags;
+    GUID*               providerKey;
+    FWP_BYTE_BLOB       providerData;
+    FWPM_PROVIDER_CONTEXT_TYPE type;
+    _Anonymous_e__Union Anonymous;
+    ulong               providerContextId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_provider_context1))], [])
+struct FWPM_PROVIDER_CONTEXT1
+{
+    GUID                providerContextKey;
+    FWPM_DISPLAY_DATA0  displayData;
+    uint                flags;
+    GUID*               providerKey;
+    FWP_BYTE_BLOB       providerData;
+    FWPM_PROVIDER_CONTEXT_TYPE type;
+    _Anonymous_e__Union Anonymous;
+    ulong               providerContextId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_provider_context2))], [])
+struct FWPM_PROVIDER_CONTEXT2
+{
+    GUID                providerContextKey;
+    FWPM_DISPLAY_DATA0  displayData;
+    uint                flags;
+    GUID*               providerKey;
+    FWP_BYTE_BLOB       providerData;
+    FWPM_PROVIDER_CONTEXT_TYPE type;
+    _Anonymous_e__Union Anonymous;
+    ulong               providerContextId;
+}
+
+struct FWPM_PROVIDER_CONTEXT3
+{
+    GUID                providerContextKey;
+    FWPM_DISPLAY_DATA0  displayData;
+    uint                flags;
+    GUID*               providerKey;
+    FWP_BYTE_BLOB       providerData;
+    FWPM_PROVIDER_CONTEXT_TYPE type;
+    _Anonymous_e__Union Anonymous;
+    ulong               providerContextId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_provider_context_enum_template0))], [])
+struct FWPM_PROVIDER_CONTEXT_ENUM_TEMPLATE0
+{
+    GUID* providerKey;
+    FWPM_PROVIDER_CONTEXT_TYPE providerContextType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_provider_context_change0))], [])
+struct FWPM_PROVIDER_CONTEXT_CHANGE0
+{
+    FWPM_CHANGE_TYPE changeType;
+    GUID             providerContextKey;
+    ulong            providerContextId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_provider_context_subscription0))], [])
+struct FWPM_PROVIDER_CONTEXT_SUBSCRIPTION0
+{
+    FWPM_PROVIDER_CONTEXT_ENUM_TEMPLATE0* enumTemplate;
+    FWPM_SUBSCRIPTION_FLAGS flags;
+    GUID sessionKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_sublayer0))], [])
+struct FWPM_SUBLAYER0
+{
+    GUID               subLayerKey;
+    FWPM_DISPLAY_DATA0 displayData;
+    uint               flags;
+    GUID*              providerKey;
+    FWP_BYTE_BLOB      providerData;
+    ushort             weight;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_sublayer_enum_template0))], [])
+struct FWPM_SUBLAYER_ENUM_TEMPLATE0
+{
+    GUID* providerKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_sublayer_change0))], [])
+struct FWPM_SUBLAYER_CHANGE0
+{
+    FWPM_CHANGE_TYPE changeType;
+    GUID             subLayerKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_sublayer_subscription0))], [])
+struct FWPM_SUBLAYER_SUBSCRIPTION0
+{
+    FWPM_SUBLAYER_ENUM_TEMPLATE0* enumTemplate;
+    FWPM_SUBSCRIPTION_FLAGS flags;
+    GUID sessionKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_field0))], [])
+struct FWPM_FIELD0
+{
+    GUID*           fieldKey;
+    FWPM_FIELD_TYPE type;
+    FWP_DATA_TYPE   dataType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_layer0))], [])
+struct FWPM_LAYER0
+{
+    GUID               layerKey;
+    FWPM_DISPLAY_DATA0 displayData;
+    uint               flags;
+    uint               numFields;
+    FWPM_FIELD0*       field;
+    GUID               defaultSubLayerKey;
+    ushort             layerId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_layer_enum_template0))], [])
+struct FWPM_LAYER_ENUM_TEMPLATE0
+{
+    ulong reserved;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_callout0))], [])
+struct FWPM_CALLOUT0
+{
+    GUID               calloutKey;
+    FWPM_DISPLAY_DATA0 displayData;
+    uint               flags;
+    GUID*              providerKey;
+    FWP_BYTE_BLOB      providerData;
+    GUID               applicableLayer;
+    uint               calloutId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_callout_enum_template0))], [])
+struct FWPM_CALLOUT_ENUM_TEMPLATE0
+{
+    GUID* providerKey;
+    GUID  layerKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_callout_change0))], [])
+struct FWPM_CALLOUT_CHANGE0
+{
+    FWPM_CHANGE_TYPE changeType;
+    GUID             calloutKey;
+    uint             calloutId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_callout_subscription0))], [])
+struct FWPM_CALLOUT_SUBSCRIPTION0
+{
+    FWPM_CALLOUT_ENUM_TEMPLATE0* enumTemplate;
+    uint flags;
+    GUID sessionKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_action0))], [])
+struct FWPM_ACTION0
+{
+    FWP_ACTION_TYPE     type;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_filter_condition0))], [])
+struct FWPM_FILTER_CONDITION0
+{
+    GUID                 fieldKey;
+    FWP_MATCH_TYPE       matchType;
+    FWP_CONDITION_VALUE0 conditionValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_filter0))], [])
+struct FWPM_FILTER0
+{
+    GUID                filterKey;
+    FWPM_DISPLAY_DATA0  displayData;
+    FWPM_FILTER_FLAGS   flags;
+    GUID*               providerKey;
+    FWP_BYTE_BLOB       providerData;
+    GUID                layerKey;
+    GUID                subLayerKey;
+    FWP_VALUE0          weight;
+    uint                numFilterConditions;
+    FWPM_FILTER_CONDITION0* filterCondition;
+    FWPM_ACTION0        action;
+    _Anonymous_e__Union Anonymous;
+    GUID*               reserved;
+    ulong               filterId;
+    FWP_VALUE0          effectiveWeight;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_filter_enum_template0))], [])
+struct FWPM_FILTER_ENUM_TEMPLATE0
+{
+    GUID*                providerKey;
+    GUID                 layerKey;
+    FWP_FILTER_ENUM_TYPE enumType;
+    uint                 flags;
+    FWPM_PROVIDER_CONTEXT_ENUM_TEMPLATE0* providerContextTemplate;
+    uint                 numFilterConditions;
+    FWPM_FILTER_CONDITION0* filterCondition;
+    uint                 actionMask;
+    GUID*                calloutKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_filter_change0))], [])
+struct FWPM_FILTER_CHANGE0
+{
+    FWPM_CHANGE_TYPE changeType;
+    GUID             filterKey;
+    ulong            filterId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_filter_subscription0))], [])
+struct FWPM_FILTER_SUBSCRIPTION0
+{
+    FWPM_FILTER_ENUM_TEMPLATE0* enumTemplate;
+    uint flags;
+    GUID sessionKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_layer_statistics0))], [])
+struct FWPM_LAYER_STATISTICS0
+{
+    GUID layerId;
+    uint classifyPermitCount;
+    uint classifyBlockCount;
+    uint classifyVetoCount;
+    uint numCacheEntries;
+}
+
+struct FWPM_LAYER_STATISTICS1
+{
+    GUID layerId;
+    uint classifyPermitCount;
+    uint classifyBlockCount;
+    uint classifyVetoCount;
+    uint numCacheEntries;
+    uint filterCount;
+    uint totalFilterSize;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_statistics0))], [])
+struct FWPM_STATISTICS0
+{
+    uint  numLayerStatistics;
+    FWPM_LAYER_STATISTICS0* layerStatistics;
+    uint  inboundAllowedConnectionsV4;
+    uint  inboundBlockedConnectionsV4;
+    uint  outboundAllowedConnectionsV4;
+    uint  outboundBlockedConnectionsV4;
+    uint  inboundAllowedConnectionsV6;
+    uint  inboundBlockedConnectionsV6;
+    uint  outboundAllowedConnectionsV6;
+    uint  outboundBlockedConnectionsV6;
+    uint  inboundActiveConnectionsV4;
+    uint  outboundActiveConnectionsV4;
+    uint  inboundActiveConnectionsV6;
+    uint  outboundActiveConnectionsV6;
+    ulong reauthDirInbound;
+    ulong reauthDirOutbound;
+    ulong reauthFamilyV4;
+    ulong reauthFamilyV6;
+    ulong reauthProtoOther;
+    ulong reauthProtoIPv4;
+    ulong reauthProtoIPv6;
+    ulong reauthProtoICMP;
+    ulong reauthProtoICMP6;
+    ulong reauthProtoUDP;
+    ulong reauthProtoTCP;
+    ulong reauthReasonPolicyChange;
+    ulong reauthReasonNewArrivalInterface;
+    ulong reauthReasonNewNextHopInterface;
+    ulong reauthReasonProfileCrossing;
+    ulong reauthReasonClassifyCompletion;
+    ulong reauthReasonIPSecPropertiesChanged;
+    ulong reauthReasonMidStreamInspection;
+    ulong reauthReasonSocketPropertyChanged;
+    ulong reauthReasonNewInboundMCastBCastPacket;
+    ulong reauthReasonEDPPolicyChanged;
+    ulong reauthReasonProxyHandleChanged;
+}
+
+struct FWPM_STATISTICS1
+{
+    uint  numLayerStatistics;
+    FWPM_LAYER_STATISTICS1* layerStatistics;
+    uint  inboundAllowedConnectionsV4;
+    uint  inboundBlockedConnectionsV4;
+    uint  outboundAllowedConnectionsV4;
+    uint  outboundBlockedConnectionsV4;
+    uint  inboundAllowedConnectionsV6;
+    uint  inboundBlockedConnectionsV6;
+    uint  outboundAllowedConnectionsV6;
+    uint  outboundBlockedConnectionsV6;
+    uint  inboundActiveConnectionsV4;
+    uint  outboundActiveConnectionsV4;
+    uint  inboundActiveConnectionsV6;
+    uint  outboundActiveConnectionsV6;
+    ulong reauthDirInbound;
+    ulong reauthDirOutbound;
+    ulong reauthFamilyV4;
+    ulong reauthFamilyV6;
+    ulong reauthProtoOther;
+    ulong reauthProtoIPv4;
+    ulong reauthProtoIPv6;
+    ulong reauthProtoICMP;
+    ulong reauthProtoICMP6;
+    ulong reauthProtoUDP;
+    ulong reauthProtoTCP;
+    ulong reauthReasonPolicyChange;
+    ulong reauthReasonNewArrivalInterface;
+    ulong reauthReasonNewNextHopInterface;
+    ulong reauthReasonProfileCrossing;
+    ulong reauthReasonClassifyCompletion;
+    ulong reauthReasonIPSecPropertiesChanged;
+    ulong reauthReasonMidStreamInspection;
+    ulong reauthReasonSocketPropertyChanged;
+    ulong reauthReasonNewInboundMCastBCastPacket;
+    ulong reauthReasonEDPPolicyChanged;
+    ulong reauthReasonProxyHandleChanged;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_header0))], [])
+struct FWPM_NET_EVENT_HEADER0
+{
+    FILETIME             timeStamp;
+    uint                 flags;
+    FWP_IP_VERSION       ipVersion;
+    ubyte                ipProtocol;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    ushort               localPort;
+    ushort               remotePort;
+    uint                 scopeId;
+    FWP_BYTE_BLOB        appId;
+    SID*                 userId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_header1))], [])
+struct FWPM_NET_EVENT_HEADER1
+{
+    FILETIME             timeStamp;
+    uint                 flags;
+    FWP_IP_VERSION       ipVersion;
+    ubyte                ipProtocol;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    ushort               localPort;
+    ushort               remotePort;
+    uint                 scopeId;
+    FWP_BYTE_BLOB        appId;
+    SID*                 userId;
+    _Anonymous3_e__Union Anonymous3;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_header2))], [])
+struct FWPM_NET_EVENT_HEADER2
+{
+    FILETIME             timeStamp;
+    uint                 flags;
+    FWP_IP_VERSION       ipVersion;
+    ubyte                ipProtocol;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    ushort               localPort;
+    ushort               remotePort;
+    uint                 scopeId;
+    FWP_BYTE_BLOB        appId;
+    SID*                 userId;
+    FWP_AF               addressFamily;
+    SID*                 packageSid;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_header3))], [])
+struct FWPM_NET_EVENT_HEADER3
+{
+    FILETIME             timeStamp;
+    uint                 flags;
+    FWP_IP_VERSION       ipVersion;
+    ubyte                ipProtocol;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    ushort               localPort;
+    ushort               remotePort;
+    uint                 scopeId;
+    FWP_BYTE_BLOB        appId;
+    SID*                 userId;
+    FWP_AF               addressFamily;
+    SID*                 packageSid;
+    PWSTR                enterpriseId;
+    ulong                policyFlags;
+    FWP_BYTE_BLOB        effectiveName;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_ikeext_mm_failure0))], [])
+struct FWPM_NET_EVENT_IKEEXT_MM_FAILURE0
+{
+    uint                failureErrorCode;
+    IPSEC_FAILURE_POINT failurePoint;
+    uint                flags;
+    IKEEXT_KEY_MODULE_TYPE keyingModuleType;
+    IKEEXT_MM_SA_STATE  mmState;
+    IKEEXT_SA_ROLE      saRole;
+    IKEEXT_AUTHENTICATION_METHOD_TYPE mmAuthMethod;
+    ubyte[20]           endCertHash;
+    ulong               mmId;
+    ulong               mmFilterId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_ikeext_mm_failure1))], [])
+struct FWPM_NET_EVENT_IKEEXT_MM_FAILURE1
+{
+    uint                failureErrorCode;
+    IPSEC_FAILURE_POINT failurePoint;
+    uint                flags;
+    IKEEXT_KEY_MODULE_TYPE keyingModuleType;
+    IKEEXT_MM_SA_STATE  mmState;
+    IKEEXT_SA_ROLE      saRole;
+    IKEEXT_AUTHENTICATION_METHOD_TYPE mmAuthMethod;
+    ubyte[20]           endCertHash;
+    ulong               mmId;
+    ulong               mmFilterId;
+    PWSTR               localPrincipalNameForAuth;
+    PWSTR               remotePrincipalNameForAuth;
+    uint                numLocalPrincipalGroupSids;
+    PWSTR*              localPrincipalGroupSids;
+    uint                numRemotePrincipalGroupSids;
+    PWSTR*              remotePrincipalGroupSids;
+}
+
+struct FWPM_NET_EVENT_IKEEXT_MM_FAILURE2
+{
+    uint                failureErrorCode;
+    IPSEC_FAILURE_POINT failurePoint;
+    uint                flags;
+    IKEEXT_KEY_MODULE_TYPE keyingModuleType;
+    IKEEXT_MM_SA_STATE  mmState;
+    IKEEXT_SA_ROLE      saRole;
+    IKEEXT_AUTHENTICATION_METHOD_TYPE mmAuthMethod;
+    ubyte[20]           endCertHash;
+    ulong               mmId;
+    ulong               mmFilterId;
+    PWSTR               localPrincipalNameForAuth;
+    PWSTR               remotePrincipalNameForAuth;
+    uint                numLocalPrincipalGroupSids;
+    PWSTR*              localPrincipalGroupSids;
+    uint                numRemotePrincipalGroupSids;
+    PWSTR*              remotePrincipalGroupSids;
+    GUID*               providerContextKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_ikeext_qm_failure0))], [])
+struct FWPM_NET_EVENT_IKEEXT_QM_FAILURE0
+{
+    uint                 failureErrorCode;
+    IPSEC_FAILURE_POINT  failurePoint;
+    IKEEXT_KEY_MODULE_TYPE keyingModuleType;
+    IKEEXT_QM_SA_STATE   qmState;
+    IKEEXT_SA_ROLE       saRole;
+    IPSEC_TRAFFIC_TYPE   saTrafficType;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    ulong                qmFilterId;
+}
+
+struct FWPM_NET_EVENT_IKEEXT_QM_FAILURE1
+{
+    uint                 failureErrorCode;
+    IPSEC_FAILURE_POINT  failurePoint;
+    IKEEXT_KEY_MODULE_TYPE keyingModuleType;
+    IKEEXT_QM_SA_STATE   qmState;
+    IKEEXT_SA_ROLE       saRole;
+    IPSEC_TRAFFIC_TYPE   saTrafficType;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    ulong                qmFilterId;
+    ulong                mmSaLuid;
+    GUID                 mmProviderContextKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_ikeext_em_failure0))], [])
+struct FWPM_NET_EVENT_IKEEXT_EM_FAILURE0
+{
+    uint                failureErrorCode;
+    IPSEC_FAILURE_POINT failurePoint;
+    uint                flags;
+    IKEEXT_EM_SA_STATE  emState;
+    IKEEXT_SA_ROLE      saRole;
+    IKEEXT_AUTHENTICATION_METHOD_TYPE emAuthMethod;
+    ubyte[20]           endCertHash;
+    ulong               mmId;
+    ulong               qmFilterId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_ikeext_em_failure1))], [])
+struct FWPM_NET_EVENT_IKEEXT_EM_FAILURE1
+{
+    uint                failureErrorCode;
+    IPSEC_FAILURE_POINT failurePoint;
+    uint                flags;
+    IKEEXT_EM_SA_STATE  emState;
+    IKEEXT_SA_ROLE      saRole;
+    IKEEXT_AUTHENTICATION_METHOD_TYPE emAuthMethod;
+    ubyte[20]           endCertHash;
+    ulong               mmId;
+    ulong               qmFilterId;
+    PWSTR               localPrincipalNameForAuth;
+    PWSTR               remotePrincipalNameForAuth;
+    uint                numLocalPrincipalGroupSids;
+    PWSTR*              localPrincipalGroupSids;
+    uint                numRemotePrincipalGroupSids;
+    PWSTR*              remotePrincipalGroupSids;
+    IPSEC_TRAFFIC_TYPE  saTrafficType;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_classify_drop0))], [])
+struct FWPM_NET_EVENT_CLASSIFY_DROP0
+{
+    ulong  filterId;
+    ushort layerId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_classify_drop1))], [])
+struct FWPM_NET_EVENT_CLASSIFY_DROP1
+{
+    ulong  filterId;
+    ushort layerId;
+    uint   reauthReason;
+    uint   originalProfile;
+    uint   currentProfile;
+    uint   msFwpDirection;
+    BOOL   isLoopback;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_classify_drop2))], [])
+struct FWPM_NET_EVENT_CLASSIFY_DROP2
+{
+    ulong         filterId;
+    ushort        layerId;
+    uint          reauthReason;
+    uint          originalProfile;
+    uint          currentProfile;
+    uint          msFwpDirection;
+    BOOL          isLoopback;
+    FWP_BYTE_BLOB vSwitchId;
+    uint          vSwitchSourcePort;
+    uint          vSwitchDestinationPort;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_classify_drop_mac0))], [])
+struct FWPM_NET_EVENT_CLASSIFY_DROP_MAC0
+{
+    FWP_BYTE_ARRAY6 localMacAddr;
+    FWP_BYTE_ARRAY6 remoteMacAddr;
+    uint            mediaType;
+    uint            ifType;
+    ushort          etherType;
+    uint            ndisPortNumber;
+    uint            reserved;
+    ushort          vlanTag;
+    ulong           ifLuid;
+    ulong           filterId;
+    ushort          layerId;
+    uint            reauthReason;
+    uint            originalProfile;
+    uint            currentProfile;
+    uint            msFwpDirection;
+    BOOL            isLoopback;
+    FWP_BYTE_BLOB   vSwitchId;
+    uint            vSwitchSourcePort;
+    uint            vSwitchDestinationPort;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_classify_allow0))], [])
+struct FWPM_NET_EVENT_CLASSIFY_ALLOW0
+{
+    ulong  filterId;
+    ushort layerId;
+    uint   reauthReason;
+    uint   originalProfile;
+    uint   currentProfile;
+    uint   msFwpDirection;
+    BOOL   isLoopback;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_ipsec_kernel_drop0))], [])
+struct FWPM_NET_EVENT_IPSEC_KERNEL_DROP0
+{
+    int           failureStatus;
+    FWP_DIRECTION direction;
+    uint          spi;
+    ulong         filterId;
+    ushort        layerId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_ipsec_dosp_drop0))], [])
+struct FWPM_NET_EVENT_IPSEC_DOSP_DROP0
+{
+    FWP_IP_VERSION       ipVersion;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    int                  failureStatus;
+    FWP_DIRECTION        direction;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_capability_drop0))], [])
+struct FWPM_NET_EVENT_CAPABILITY_DROP0
+{
+    FWPM_APPC_NETWORK_CAPABILITY_TYPE networkCapabilityId;
+    ulong filterId;
+    BOOL  isLoopback;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_capability_allow0))], [])
+struct FWPM_NET_EVENT_CAPABILITY_ALLOW0
+{
+    FWPM_APPC_NETWORK_CAPABILITY_TYPE networkCapabilityId;
+    ulong filterId;
+    BOOL  isLoopback;
+}
+
+struct FWPM_NET_EVENT_LPM_PACKET_ARRIVAL0
+{
+    uint spi;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event0))], [])
+struct FWPM_NET_EVENT0
+{
+    FWPM_NET_EVENT_HEADER0 header;
+    FWPM_NET_EVENT_TYPE type;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event1))], [])
+struct FWPM_NET_EVENT1
+{
+    FWPM_NET_EVENT_HEADER1 header;
+    FWPM_NET_EVENT_TYPE type;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event2))], [])
+struct FWPM_NET_EVENT2
+{
+    FWPM_NET_EVENT_HEADER2 header;
+    FWPM_NET_EVENT_TYPE type;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event3))], [])
+struct FWPM_NET_EVENT3
+{
+    FWPM_NET_EVENT_HEADER3 header;
+    FWPM_NET_EVENT_TYPE type;
+    _Anonymous_e__Union Anonymous;
+}
+
+struct FWPM_NET_EVENT4
+{
+    FWPM_NET_EVENT_HEADER3 header;
+    FWPM_NET_EVENT_TYPE type;
+    _Anonymous_e__Union Anonymous;
+}
+
+struct FWPM_NET_EVENT5
+{
+    FWPM_NET_EVENT_HEADER3 header;
+    FWPM_NET_EVENT_TYPE type;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_enum_template0))], [])
+struct FWPM_NET_EVENT_ENUM_TEMPLATE0
+{
+    FILETIME startTime;
+    FILETIME endTime;
+    uint     numFilterConditions;
+    FWPM_FILTER_CONDITION0* filterCondition;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_net_event_subscription0))], [])
+struct FWPM_NET_EVENT_SUBSCRIPTION0
+{
+    FWPM_NET_EVENT_ENUM_TEMPLATE0* enumTemplate;
+    uint flags;
+    GUID sessionKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_system_ports_by_type0))], [])
+struct FWPM_SYSTEM_PORTS_BY_TYPE0
+{
+    FWPM_SYSTEM_PORT_TYPE type;
+    uint    numPorts;
+    ushort* ports;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_system_ports0))], [])
+struct FWPM_SYSTEM_PORTS0
+{
+    uint numTypes;
+    FWPM_SYSTEM_PORTS_BY_TYPE0* types;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_connection0))], [])
+struct FWPM_CONNECTION0
+{
+    ulong                connectionId;
+    FWP_IP_VERSION       ipVersion;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    GUID*                providerKey;
+    IPSEC_TRAFFIC_TYPE   ipsecTrafficModeType;
+    IKEEXT_KEY_MODULE_TYPE keyModuleType;
+    IKEEXT_PROPOSAL0     mmCrypto;
+    IKEEXT_CREDENTIAL2   mmPeer;
+    IKEEXT_CREDENTIAL2   emPeer;
+    ulong                bytesTransferredIn;
+    ulong                bytesTransferredOut;
+    ulong                bytesTransferredTotal;
+    FILETIME             startSysTime;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_connection_enum_template0))], [])
+struct FWPM_CONNECTION_ENUM_TEMPLATE0
+{
+    ulong connectionId;
+    uint  flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_connection_subscription0))], [])
+struct FWPM_CONNECTION_SUBSCRIPTION0
+{
+    FWPM_CONNECTION_ENUM_TEMPLATE0* enumTemplate;
+    uint flags;
+    GUID sessionKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_vswitch_event0))], [])
+struct FWPM_VSWITCH_EVENT0
+{
+    FWPM_VSWITCH_EVENT_TYPE eventType;
+    PWSTR               vSwitchId;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmtypes/ns-fwpmtypes-fwpm_vswitch_event_subscription0))], [])
+struct FWPM_VSWITCH_EVENT_SUBSCRIPTION0
+{
+    uint flags;
+    GUID sessionKey;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmu/ns-fwpmu-ipsec_key_manager_callbacks0))], [])
+struct IPSEC_KEY_MANAGER_CALLBACKS0
+{
+    GUID reserved;
+    uint flags;
+    IPSEC_KEY_MANAGER_KEY_DICTATION_CHECK0 keyDictationCheck;
+    IPSEC_KEY_MANAGER_DICTATE_KEY0 keyDictation;
+    IPSEC_KEY_MANAGER_NOTIFY_KEY0 keyNotify;
+}
+
+// Functions
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+void FwpmFreeMemory0(void** p);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmEngineOpen0(/*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/const(PWSTR) serverName, 
+                     uint authnService, SEC_WINNT_AUTH_IDENTITY_W* authIdentity, const(FWPM_SESSION0)* session, 
+                     FWPM_ENGINE_HANDLE* engineHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmEngineClose0(FWPM_ENGINE_HANDLE engineHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmEngineGetOption0(FWPM_ENGINE_HANDLE engineHandle, FWPM_ENGINE_OPTION option, FWP_VALUE0** value);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmEngineSetOption0(FWPM_ENGINE_HANDLE engineHandle, FWPM_ENGINE_OPTION option, const(FWP_VALUE0)* newValue);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmEngineGetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, PSID* sidOwner, PSID* sidGroup, 
+                                ACL** dacl, ACL** sacl, PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmEngineSetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, const(SID)* sidOwner, 
+                                const(SID)* sidGroup, const(ACL)* dacl, const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSessionCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, 
+                                  const(FWPM_SESSION_ENUM_TEMPLATE0)* enumTemplate, 
+                                  FWPM_SESSION_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSessionEnum0(FWPM_ENGINE_HANDLE engineHandle, FWPM_SESSION_ENUM_HANDLE enumHandle, 
+                      uint numEntriesRequested, FWPM_SESSION0*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSessionDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, FWPM_SESSION_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmTransactionBegin0(FWPM_ENGINE_HANDLE engineHandle, uint flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmTransactionCommit0(FWPM_ENGINE_HANDLE engineHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmTransactionAbort0(FWPM_ENGINE_HANDLE engineHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderAdd0(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_PROVIDER0)* provider, PSECURITY_DESCRIPTOR sd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderDeleteByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderGetByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, FWPM_PROVIDER0** provider);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, 
+                                   const(FWPM_PROVIDER_ENUM_TEMPLATE0)* enumTemplate, 
+                                   FWPM_PROVIDER_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderEnum0(FWPM_ENGINE_HANDLE engineHandle, FWPM_PROVIDER_ENUM_HANDLE enumHandle, 
+                       uint numEntriesRequested, FWPM_PROVIDER0*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, FWPM_PROVIDER_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderGetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, uint securityInfo, 
+                                       PSID* sidOwner, PSID* sidGroup, ACL** dacl, ACL** sacl, 
+                                       PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderSetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, uint securityInfo, 
+                                       const(SID)* sidOwner, const(SID)* sidGroup, const(ACL)* dacl, 
+                                       const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderSubscribeChanges0(FWPM_ENGINE_HANDLE engineHandle, 
+                                   const(FWPM_PROVIDER_SUBSCRIPTION0)* subscription, 
+                                   FWPM_PROVIDER_CHANGE_CALLBACK0 callback, void* context, HANDLE* changeHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderUnsubscribeChanges0(FWPM_ENGINE_HANDLE engineHandle, HANDLE changeHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderSubscriptionsGet0(FWPM_ENGINE_HANDLE engineHandle, FWPM_PROVIDER_SUBSCRIPTION0*** entries, 
+                                   uint* numEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextAdd0(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_PROVIDER_CONTEXT0)* providerContext, 
+                             PSECURITY_DESCRIPTOR sd, ulong* id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextAdd1(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_PROVIDER_CONTEXT1)* providerContext, 
+                             PSECURITY_DESCRIPTOR sd, ulong* id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextAdd2(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_PROVIDER_CONTEXT2)* providerContext, 
+                             PSECURITY_DESCRIPTOR sd, ulong* id);
+
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextAdd3(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_PROVIDER_CONTEXT3)* providerContext, 
+                             PSECURITY_DESCRIPTOR sd, ulong* id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextDeleteById0(FWPM_ENGINE_HANDLE engineHandle, ulong id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextDeleteByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextGetById0(FWPM_ENGINE_HANDLE engineHandle, ulong id, 
+                                 FWPM_PROVIDER_CONTEXT0** providerContext);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextGetById1(FWPM_ENGINE_HANDLE engineHandle, ulong id, 
+                                 FWPM_PROVIDER_CONTEXT1** providerContext);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextGetById2(FWPM_ENGINE_HANDLE engineHandle, ulong id, 
+                                 FWPM_PROVIDER_CONTEXT2** providerContext);
+
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextGetById3(FWPM_ENGINE_HANDLE engineHandle, ulong id, 
+                                 FWPM_PROVIDER_CONTEXT3** providerContext);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextGetByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, 
+                                  FWPM_PROVIDER_CONTEXT0** providerContext);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextGetByKey1(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, 
+                                  FWPM_PROVIDER_CONTEXT1** providerContext);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextGetByKey2(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, 
+                                  FWPM_PROVIDER_CONTEXT2** providerContext);
+
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextGetByKey3(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, 
+                                  FWPM_PROVIDER_CONTEXT3** providerContext);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, 
+                                          const(FWPM_PROVIDER_CONTEXT_ENUM_TEMPLATE0)* enumTemplate, 
+                                          FWPM_PROVIDER_CONTEXT_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextEnum0(FWPM_ENGINE_HANDLE engineHandle, FWPM_PROVIDER_CONTEXT_ENUM_HANDLE enumHandle, 
+                              uint numEntriesRequested, FWPM_PROVIDER_CONTEXT0*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextEnum1(FWPM_ENGINE_HANDLE engineHandle, FWPM_PROVIDER_CONTEXT_ENUM_HANDLE enumHandle, 
+                              uint numEntriesRequested, FWPM_PROVIDER_CONTEXT1*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextEnum2(FWPM_ENGINE_HANDLE engineHandle, FWPM_PROVIDER_CONTEXT_ENUM_HANDLE enumHandle, 
+                              uint numEntriesRequested, FWPM_PROVIDER_CONTEXT2*** entries, uint* numEntriesReturned);
+
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextEnum3(FWPM_ENGINE_HANDLE engineHandle, FWPM_PROVIDER_CONTEXT_ENUM_HANDLE enumHandle, 
+                              uint numEntriesRequested, FWPM_PROVIDER_CONTEXT3*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, 
+                                           FWPM_PROVIDER_CONTEXT_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextGetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, uint securityInfo, 
+                                              PSID* sidOwner, PSID* sidGroup, ACL** dacl, ACL** sacl, 
+                                              PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextSetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, uint securityInfo, 
+                                              const(SID)* sidOwner, const(SID)* sidGroup, const(ACL)* dacl, 
+                                              const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextSubscribeChanges0(FWPM_ENGINE_HANDLE engineHandle, 
+                                          const(FWPM_PROVIDER_CONTEXT_SUBSCRIPTION0)* subscription, 
+                                          FWPM_PROVIDER_CONTEXT_CHANGE_CALLBACK0 callback, void* context, 
+                                          HANDLE* changeHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextUnsubscribeChanges0(FWPM_ENGINE_HANDLE engineHandle, HANDLE changeHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmProviderContextSubscriptionsGet0(FWPM_ENGINE_HANDLE engineHandle, 
+                                          FWPM_PROVIDER_CONTEXT_SUBSCRIPTION0*** entries, uint* numEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSubLayerAdd0(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_SUBLAYER0)* subLayer, PSECURITY_DESCRIPTOR sd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSubLayerDeleteByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSubLayerGetByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, FWPM_SUBLAYER0** subLayer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSubLayerCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, 
+                                   const(FWPM_SUBLAYER_ENUM_TEMPLATE0)* enumTemplate, 
+                                   FWPM_SUBLAYER_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSubLayerEnum0(FWPM_ENGINE_HANDLE engineHandle, FWPM_SUBLAYER_ENUM_HANDLE enumHandle, 
+                       uint numEntriesRequested, FWPM_SUBLAYER0*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSubLayerDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, FWPM_SUBLAYER_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSubLayerGetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, uint securityInfo, 
+                                       PSID* sidOwner, PSID* sidGroup, ACL** dacl, ACL** sacl, 
+                                       PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSubLayerSetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, uint securityInfo, 
+                                       const(SID)* sidOwner, const(SID)* sidGroup, const(ACL)* dacl, 
+                                       const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSubLayerSubscribeChanges0(FWPM_ENGINE_HANDLE engineHandle, 
+                                   const(FWPM_SUBLAYER_SUBSCRIPTION0)* subscription, 
+                                   FWPM_SUBLAYER_CHANGE_CALLBACK0 callback, void* context, HANDLE* changeHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSubLayerUnsubscribeChanges0(FWPM_ENGINE_HANDLE engineHandle, HANDLE changeHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSubLayerSubscriptionsGet0(FWPM_ENGINE_HANDLE engineHandle, FWPM_SUBLAYER_SUBSCRIPTION0*** entries, 
+                                   uint* numEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmLayerGetById0(FWPM_ENGINE_HANDLE engineHandle, ushort id, FWPM_LAYER0** layer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmLayerGetByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, FWPM_LAYER0** layer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmLayerCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_LAYER_ENUM_TEMPLATE0)* enumTemplate, 
+                                FWPM_LAYER_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmLayerEnum0(FWPM_ENGINE_HANDLE engineHandle, FWPM_LAYER_ENUM_HANDLE enumHandle, uint numEntriesRequested, 
+                    FWPM_LAYER0*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmLayerDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, FWPM_LAYER_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmLayerGetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, uint securityInfo, 
+                                    PSID* sidOwner, PSID* sidGroup, ACL** dacl, ACL** sacl, 
+                                    PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmLayerSetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, uint securityInfo, 
+                                    const(SID)* sidOwner, const(SID)* sidGroup, const(ACL)* dacl, const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutAdd0(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_CALLOUT0)* callout, PSECURITY_DESCRIPTOR sd, 
+                     uint* id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutDeleteById0(FWPM_ENGINE_HANDLE engineHandle, uint id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutDeleteByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutGetById0(FWPM_ENGINE_HANDLE engineHandle, uint id, FWPM_CALLOUT0** callout);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutGetByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, FWPM_CALLOUT0** callout);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, 
+                                  const(FWPM_CALLOUT_ENUM_TEMPLATE0)* enumTemplate, 
+                                  FWPM_CALLOUT_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutEnum0(FWPM_ENGINE_HANDLE engineHandle, FWPM_CALLOUT_ENUM_HANDLE enumHandle, 
+                      uint numEntriesRequested, FWPM_CALLOUT0*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, FWPM_CALLOUT_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutGetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, uint securityInfo, 
+                                      PSID* sidOwner, PSID* sidGroup, ACL** dacl, ACL** sacl, 
+                                      PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutSetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, uint securityInfo, 
+                                      const(SID)* sidOwner, const(SID)* sidGroup, const(ACL)* dacl, const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutSubscribeChanges0(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_CALLOUT_SUBSCRIPTION0)* subscription, 
+                                  FWPM_CALLOUT_CHANGE_CALLBACK0 callback, void* context, HANDLE* changeHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutUnsubscribeChanges0(FWPM_ENGINE_HANDLE engineHandle, HANDLE changeHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmCalloutSubscriptionsGet0(FWPM_ENGINE_HANDLE engineHandle, FWPM_CALLOUT_SUBSCRIPTION0*** entries, 
+                                  uint* numEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterAdd0(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_FILTER0)* filter, PSECURITY_DESCRIPTOR sd, 
+                    ulong* id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterDeleteById0(FWPM_ENGINE_HANDLE engineHandle, ulong id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterDeleteByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterGetById0(FWPM_ENGINE_HANDLE engineHandle, ulong id, FWPM_FILTER0** filter);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterGetByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, FWPM_FILTER0** filter);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_FILTER_ENUM_TEMPLATE0)* enumTemplate, 
+                                 FWPM_FILTER_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterEnum0(FWPM_ENGINE_HANDLE engineHandle, FWPM_FILTER_ENUM_HANDLE enumHandle, uint numEntriesRequested, 
+                     FWPM_FILTER0*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, FWPM_FILTER_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterGetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, uint securityInfo, 
+                                     PSID* sidOwner, PSID* sidGroup, ACL** dacl, ACL** sacl, 
+                                     PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterSetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key, uint securityInfo, 
+                                     const(SID)* sidOwner, const(SID)* sidGroup, const(ACL)* dacl, const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterSubscribeChanges0(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_FILTER_SUBSCRIPTION0)* subscription, 
+                                 FWPM_FILTER_CHANGE_CALLBACK0 callback, void* context, HANDLE* changeHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterUnsubscribeChanges0(FWPM_ENGINE_HANDLE engineHandle, HANDLE changeHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmFilterSubscriptionsGet0(FWPM_ENGINE_HANDLE engineHandle, FWPM_FILTER_SUBSCRIPTION0*** entries, 
+                                 uint* numEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmGetAppIdFromFileName0(const(PWSTR) fileName, FWP_BYTE_BLOB** appId);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmIPsecTunnelAdd0(FWPM_ENGINE_HANDLE engineHandle, uint flags, 
+                         const(FWPM_PROVIDER_CONTEXT0)* mainModePolicy, const(FWPM_PROVIDER_CONTEXT0)* tunnelPolicy, 
+                         uint numFilterConditions, const(FWPM_FILTER_CONDITION0)* filterConditions, 
+                         PSECURITY_DESCRIPTOR sd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmIPsecTunnelAdd1(FWPM_ENGINE_HANDLE engineHandle, uint flags, 
+                         const(FWPM_PROVIDER_CONTEXT1)* mainModePolicy, const(FWPM_PROVIDER_CONTEXT1)* tunnelPolicy, 
+                         uint numFilterConditions, const(FWPM_FILTER_CONDITION0)* filterConditions, 
+                         const(GUID)* keyModKey, PSECURITY_DESCRIPTOR sd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmIPsecTunnelAdd2(FWPM_ENGINE_HANDLE engineHandle, uint flags, 
+                         const(FWPM_PROVIDER_CONTEXT2)* mainModePolicy, const(FWPM_PROVIDER_CONTEXT2)* tunnelPolicy, 
+                         uint numFilterConditions, const(FWPM_FILTER_CONDITION0)* filterConditions, 
+                         const(GUID)* keyModKey, PSECURITY_DESCRIPTOR sd);
+
+@DllImport("fwpuclnt.dll")
+uint FwpmIPsecTunnelAdd3(FWPM_ENGINE_HANDLE engineHandle, uint flags, 
+                         const(FWPM_PROVIDER_CONTEXT3)* mainModePolicy, const(FWPM_PROVIDER_CONTEXT3)* tunnelPolicy, 
+                         uint numFilterConditions, const(FWPM_FILTER_CONDITION0)* filterConditions, 
+                         const(GUID)* keyModKey, PSECURITY_DESCRIPTOR sd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmIPsecTunnelDeleteByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecGetStatistics0(FWPM_ENGINE_HANDLE engineHandle, IPSEC_STATISTICS0* ipsecStatistics);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecGetStatistics1(FWPM_ENGINE_HANDLE engineHandle, IPSEC_STATISTICS1* ipsecStatistics);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextCreate0(FWPM_ENGINE_HANDLE engineHandle, const(IPSEC_TRAFFIC0)* outboundTraffic, 
+                           ulong* inboundFilterId, ulong* id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextCreate1(FWPM_ENGINE_HANDLE engineHandle, const(IPSEC_TRAFFIC1)* outboundTraffic, 
+                           const(IPSEC_VIRTUAL_IF_TUNNEL_INFO0)* virtualIfTunnelInfo, ulong* inboundFilterId, 
+                           ulong* id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextDeleteById0(FWPM_ENGINE_HANDLE engineHandle, ulong id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextGetById0(FWPM_ENGINE_HANDLE engineHandle, ulong id, IPSEC_SA_CONTEXT0** saContext);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextGetById1(FWPM_ENGINE_HANDLE engineHandle, ulong id, IPSEC_SA_CONTEXT1** saContext);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextGetSpi0(FWPM_ENGINE_HANDLE engineHandle, ulong id, const(IPSEC_GETSPI0)* getSpi, 
+                           uint* inboundSpi);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextGetSpi1(FWPM_ENGINE_HANDLE engineHandle, ulong id, const(IPSEC_GETSPI1)* getSpi, 
+                           uint* inboundSpi);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextSetSpi0(FWPM_ENGINE_HANDLE engineHandle, ulong id, const(IPSEC_GETSPI1)* getSpi, 
+                           uint inboundSpi);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextAddInbound0(FWPM_ENGINE_HANDLE engineHandle, ulong id, const(IPSEC_SA_BUNDLE0)* inboundBundle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextAddOutbound0(FWPM_ENGINE_HANDLE engineHandle, ulong id, const(IPSEC_SA_BUNDLE0)* outboundBundle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextAddInbound1(FWPM_ENGINE_HANDLE engineHandle, ulong id, const(IPSEC_SA_BUNDLE1)* inboundBundle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextAddOutbound1(FWPM_ENGINE_HANDLE engineHandle, ulong id, const(IPSEC_SA_BUNDLE1)* outboundBundle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextExpire0(FWPM_ENGINE_HANDLE engineHandle, ulong id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextUpdate0(FWPM_ENGINE_HANDLE engineHandle, ulong flags, const(IPSEC_SA_CONTEXT1)* newValues);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, 
+                                     const(IPSEC_SA_CONTEXT_ENUM_TEMPLATE0)* enumTemplate, 
+                                     IPSEC_SA_CONTEXT_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextEnum0(FWPM_ENGINE_HANDLE engineHandle, IPSEC_SA_CONTEXT_ENUM_HANDLE enumHandle, 
+                         uint numEntriesRequested, IPSEC_SA_CONTEXT0*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextEnum1(FWPM_ENGINE_HANDLE engineHandle, IPSEC_SA_CONTEXT_ENUM_HANDLE enumHandle, 
+                         uint numEntriesRequested, IPSEC_SA_CONTEXT1*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, IPSEC_SA_CONTEXT_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextSubscribe0(FWPM_ENGINE_HANDLE engineHandle, const(IPSEC_SA_CONTEXT_SUBSCRIPTION0)* subscription, 
+                              IPSEC_SA_CONTEXT_CALLBACK0 callback, void* context, HANDLE* eventsHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextUnsubscribe0(FWPM_ENGINE_HANDLE engineHandle, HANDLE eventsHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaContextSubscriptionsGet0(FWPM_ENGINE_HANDLE engineHandle, IPSEC_SA_CONTEXT_SUBSCRIPTION0*** entries, 
+                                     uint* numEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, const(IPSEC_SA_ENUM_TEMPLATE0)* enumTemplate, 
+                              IPSEC_SA_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaEnum0(FWPM_ENGINE_HANDLE engineHandle, IPSEC_SA_ENUM_HANDLE enumHandle, uint numEntriesRequested, 
+                  IPSEC_SA_DETAILS0*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaEnum1(FWPM_ENGINE_HANDLE engineHandle, IPSEC_SA_ENUM_HANDLE enumHandle, uint numEntriesRequested, 
+                  IPSEC_SA_DETAILS1*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, IPSEC_SA_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaDbGetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, PSID* sidOwner, PSID* sidGroup, 
+                               ACL** dacl, ACL** sacl, PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecSaDbSetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, const(SID)* sidOwner, 
+                               const(SID)* sidGroup, const(ACL)* dacl, const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecDospGetStatistics0(FWPM_ENGINE_HANDLE engineHandle, IPSEC_DOSP_STATISTICS0* idpStatistics);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecDospStateCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, 
+                                     const(IPSEC_DOSP_STATE_ENUM_TEMPLATE0)* enumTemplate, 
+                                     IPSEC_DOSP_STATE_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecDospStateEnum0(FWPM_ENGINE_HANDLE engineHandle, IPSEC_DOSP_STATE_ENUM_HANDLE enumHandle, 
+                         uint numEntriesRequested, IPSEC_DOSP_STATE0*** entries, uint* numEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecDospStateDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, IPSEC_DOSP_STATE_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecDospGetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, PSID* sidOwner, PSID* sidGroup, 
+                               ACL** dacl, ACL** sacl, PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecDospSetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, const(SID)* sidOwner, 
+                               const(SID)* sidGroup, const(ACL)* dacl, const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecKeyManagerAddAndRegister0(FWPM_ENGINE_HANDLE engineHandle, const(IPSEC_KEY_MANAGER0)* keyManager, 
+                                    const(IPSEC_KEY_MANAGER_CALLBACKS0)* keyManagerCallbacks, HANDLE* keyMgmtHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecKeyManagerUnregisterAndDelete0(FWPM_ENGINE_HANDLE engineHandle, HANDLE keyMgmtHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecKeyManagersGet0(FWPM_ENGINE_HANDLE engineHandle, IPSEC_KEY_MANAGER0*** entries, uint* numEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecKeyManagerGetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, 
+                                          /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/const(void)* reserved, 
+                                          uint securityInfo, PSID* sidOwner, PSID* sidGroup, ACL** dacl, ACL** sacl, 
+                                          PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint IPsecKeyManagerSetSecurityInfoByKey0(FWPM_ENGINE_HANDLE engineHandle, 
+                                          /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/const(void)* reserved, 
+                                          uint securityInfo, const(SID)* sidOwner, const(SID)* sidGroup, 
+                                          const(ACL)* dacl, const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextGetStatistics0(FWPM_ENGINE_HANDLE engineHandle, IKEEXT_STATISTICS0* ikeextStatistics);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextGetStatistics1(FWPM_ENGINE_HANDLE engineHandle, IKEEXT_STATISTICS1* ikeextStatistics);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextSaDeleteById0(FWPM_ENGINE_HANDLE engineHandle, ulong id);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextSaGetById0(FWPM_ENGINE_HANDLE engineHandle, ulong id, IKEEXT_SA_DETAILS0** sa);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextSaGetById1(FWPM_ENGINE_HANDLE engineHandle, ulong id, GUID* saLookupContext, IKEEXT_SA_DETAILS1** sa);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextSaGetById2(FWPM_ENGINE_HANDLE engineHandle, ulong id, GUID* saLookupContext, IKEEXT_SA_DETAILS2** sa);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextSaCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, const(IKEEXT_SA_ENUM_TEMPLATE0)* enumTemplate, 
+                               IKEEXT_SA_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextSaEnum0(FWPM_ENGINE_HANDLE engineHandle, IKEEXT_SA_ENUM_HANDLE enumHandle, uint numEntriesRequested, 
+                   IKEEXT_SA_DETAILS0*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextSaEnum1(FWPM_ENGINE_HANDLE engineHandle, IKEEXT_SA_ENUM_HANDLE enumHandle, uint numEntriesRequested, 
+                   IKEEXT_SA_DETAILS1*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextSaEnum2(FWPM_ENGINE_HANDLE engineHandle, IKEEXT_SA_ENUM_HANDLE enumHandle, uint numEntriesRequested, 
+                   IKEEXT_SA_DETAILS2*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextSaDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, IKEEXT_SA_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextSaDbGetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, PSID* sidOwner, PSID* sidGroup, 
+                                ACL** dacl, ACL** sacl, PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint IkeextSaDbSetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, const(SID)* sidOwner, 
+                                const(SID)* sidGroup, const(ACL)* dacl, const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, 
+                                   const(FWPM_NET_EVENT_ENUM_TEMPLATE0)* enumTemplate, 
+                                   FWPM_NET_EVENT_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventEnum0(FWPM_ENGINE_HANDLE engineHandle, FWPM_NET_EVENT_ENUM_HANDLE enumHandle, 
+                       uint numEntriesRequested, FWPM_NET_EVENT0*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventEnum1(FWPM_ENGINE_HANDLE engineHandle, FWPM_NET_EVENT_ENUM_HANDLE enumHandle, 
+                       uint numEntriesRequested, FWPM_NET_EVENT1*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventEnum2(FWPM_ENGINE_HANDLE engineHandle, FWPM_NET_EVENT_ENUM_HANDLE enumHandle, 
+                       uint numEntriesRequested, FWPM_NET_EVENT2*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventEnum3(FWPM_ENGINE_HANDLE engineHandle, FWPM_NET_EVENT_ENUM_HANDLE enumHandle, 
+                       uint numEntriesRequested, FWPM_NET_EVENT3*** entries, uint* numEntriesReturned);
+
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventEnum4(FWPM_ENGINE_HANDLE engineHandle, FWPM_NET_EVENT_ENUM_HANDLE enumHandle, 
+                       uint numEntriesRequested, FWPM_NET_EVENT4*** entries, uint* numEntriesReturned);
+
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventEnum5(FWPM_ENGINE_HANDLE engineHandle, FWPM_NET_EVENT_ENUM_HANDLE enumHandle, 
+                       uint numEntriesRequested, FWPM_NET_EVENT5*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, FWPM_NET_EVENT_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventsGetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, PSID* sidOwner, 
+                                   PSID* sidGroup, ACL** dacl, ACL** sacl, PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventsSetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, const(SID)* sidOwner, 
+                                   const(SID)* sidGroup, const(ACL)* dacl, const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventSubscribe0(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_NET_EVENT_SUBSCRIPTION0)* subscription, 
+                            FWPM_NET_EVENT_CALLBACK0 callback, void* context, HANDLE* eventsHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventUnsubscribe0(FWPM_ENGINE_HANDLE engineHandle, HANDLE eventsHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventSubscriptionsGet0(FWPM_ENGINE_HANDLE engineHandle, FWPM_NET_EVENT_SUBSCRIPTION0*** entries, 
+                                   uint* numEntries);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventSubscribe1(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_NET_EVENT_SUBSCRIPTION0)* subscription, 
+                            FWPM_NET_EVENT_CALLBACK1 callback, void* context, HANDLE* eventsHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventSubscribe2(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_NET_EVENT_SUBSCRIPTION0)* subscription, 
+                            FWPM_NET_EVENT_CALLBACK2 callback, void* context, HANDLE* eventsHandle);
+
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventSubscribe3(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_NET_EVENT_SUBSCRIPTION0)* subscription, 
+                            FWPM_NET_EVENT_CALLBACK3 callback, void* context, HANDLE* eventsHandle);
+
+@DllImport("fwpuclnt.dll")
+uint FwpmNetEventSubscribe4(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_NET_EVENT_SUBSCRIPTION0)* subscription, 
+                            FWPM_NET_EVENT_CALLBACK4 callback, void* context, HANDLE* eventsHandle);
+
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmu/nf-fwpmu-fwpmdynamickeywordsubscribe0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmDynamicKeywordSubscribe0(uint flags, FWPM_DYNAMIC_KEYWORD_CALLBACK0 callback, void* context, 
+                                  HANDLE* subscriptionHandle);
+
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fwpmu/nf-fwpmu-fwpmdynamickeywordunsubscribe0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmDynamicKeywordUnsubscribe0(HANDLE subscriptionHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSystemPortsGet0(FWPM_ENGINE_HANDLE engineHandle, FWPM_SYSTEM_PORTS0** sysPorts);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSystemPortsSubscribe0(FWPM_ENGINE_HANDLE engineHandle, 
+                               /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* reserved, 
+                               FWPM_SYSTEM_PORTS_CALLBACK0 callback, void* context, HANDLE* sysPortsHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmSystemPortsUnsubscribe0(FWPM_ENGINE_HANDLE engineHandle, HANDLE sysPortsHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmConnectionGetById0(FWPM_ENGINE_HANDLE engineHandle, ulong id, FWPM_CONNECTION0** connection);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmConnectionEnum0(FWPM_ENGINE_HANDLE engineHandle, FWPM_CONNECTION_ENUM_HANDLE enumHandle, 
+                         uint numEntriesRequested, FWPM_CONNECTION0*** entries, uint* numEntriesReturned);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmConnectionCreateEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, 
+                                     const(FWPM_CONNECTION_ENUM_TEMPLATE0)* enumTemplate, 
+                                     FWPM_CONNECTION_ENUM_HANDLE* enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmConnectionDestroyEnumHandle0(FWPM_ENGINE_HANDLE engineHandle, FWPM_CONNECTION_ENUM_HANDLE enumHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmConnectionGetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, PSID* sidOwner, 
+                                    PSID* sidGroup, ACL** dacl, ACL** sacl, PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmConnectionSetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, const(SID)* sidOwner, 
+                                    const(SID)* sidGroup, const(ACL)* dacl, const(ACL)* sacl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmConnectionSubscribe0(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_CONNECTION_SUBSCRIPTION0)* subscription, 
+                              FWPM_CONNECTION_CALLBACK0 callback, void* context, HANDLE* eventsHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmConnectionUnsubscribe0(FWPM_ENGINE_HANDLE engineHandle, HANDLE eventsHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmvSwitchEventSubscribe0(FWPM_ENGINE_HANDLE engineHandle, 
+                                const(FWPM_VSWITCH_EVENT_SUBSCRIPTION0)* subscription, 
+                                FWPM_VSWITCH_EVENT_CALLBACK0 callback, void* context, HANDLE* subscriptionHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmvSwitchEventUnsubscribe0(FWPM_ENGINE_HANDLE engineHandle, HANDLE subscriptionHandle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmvSwitchEventsGetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, PSID* sidOwner, 
+                                       PSID* sidGroup, ACL** dacl, ACL** sacl, 
+                                       PSECURITY_DESCRIPTOR* securityDescriptor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("fwpuclnt.dll")
+uint FwpmvSwitchEventsSetSecurityInfo0(FWPM_ENGINE_HANDLE engineHandle, uint securityInfo, const(SID)* sidOwner, 
+                                       const(SID)* sidGroup, const(ACL)* dacl, const(ACL)* sacl);
+
+@DllImport("fwpuclnt.dll")
+uint FwpmConnectionPolicyAdd0(FWPM_ENGINE_HANDLE engineHandle, const(FWPM_PROVIDER_CONTEXT3)* connectionPolicy, 
+                              FWP_IP_VERSION ipVersion, ulong weight, uint numFilterConditions, 
+                              const(FWPM_FILTER_CONDITION0)* filterConditions, PSECURITY_DESCRIPTOR sd);
+
+@DllImport("fwpuclnt.dll")
+uint FwpmConnectionPolicyDeleteByKey0(FWPM_ENGINE_HANDLE engineHandle, const(GUID)* key);
+
+

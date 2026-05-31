@@ -42,8 +42,9 @@ struct GenericTypeIndex { uint index; }
 struct GenericMethodTypeIndex { uint index; }
 
 struct TypeSig
-{    
+{
     alias TypeValue = Algebraic!(ElementType, TypeDef, TypeRef, TypeSpec, GenericTypeInstSig, GenericTypeIndex, GenericMethodTypeIndex);
+
     this(const(Metadata)* db, ref const(ubyte)[] data)
     {
         isSZArray = readCompressedCond!ElementType(data, ElementType.szArray);

@@ -30,7 +30,7 @@ public struct Row(MD md)
         this.index = index;
     }
 
-    private T getValue(T)(uint column) const
+    public T getValue(T)(uint column) const
     {
         return table.getValue!T(index - 1, column);
     }
@@ -86,15 +86,15 @@ public struct Row(MD md)
         return table.db.findFirst!(target, T)(CompositeIndex!T(index, enumVal), targetColumn);
     }
 
-    private auto findFirstRequired(MD target)(ubyte targetColumn) const
-    {
-        return table.db.findFirstRequired!target(index, targetColumn);
-    }
+    // private auto findFirstRequired(MD target)(ubyte targetColumn) const
+    // {
+    //     return table.db.findFirstRequired!target(index, targetColumn);
+    // }
 
-    private auto findFirstRequired(MD target, T)(ubyte targetColumn, T enumVal) const
-    {
-        return table.db.findFirstRequired!(target, T)(CompositeIndex!T(index, enumVal), targetColumn);
-    }
+    // private auto findFirstRequired(MD target, T)(ubyte targetColumn, T enumVal) const
+    // {
+    //     return table.db.findFirstRequired!(target, T)(CompositeIndex!T(index, enumVal), targetColumn);
+    // }
 
     private auto findParent(MD target)(ubyte parentColumn) const
     {
@@ -217,22 +217,22 @@ public struct Row(MD md)
     }
     else static if (md == MD.typeDef)
     {
-        public const(TypeAttributes) typeAttributes() const
+        public const(TypeAttributes) typeAttributes() const //+
         {
             return TypeAttributes(getValue!uint(0));
         }
 
-        public string name() const
+        public string name() const //+
         {
             return getString(1);
         }
 
-        public string namespace() const
+        public string namespace() const //+
         {
             return getString(2);
         }
 
-        public auto extends() const
+        public auto extends() const //+
         {        
             alias V = Nullable!TypeDefOrRefValue;
             auto r = compositeValue(table.db, getCompositeIndex!TypeDefOrRef(3));
@@ -241,43 +241,43 @@ public struct Row(MD md)
             return V(r);
         }
 
-        public auto fields() const
+        public auto fields() const //+
         {
             return getList!(MD.field)(4);
         }
 
-        public auto methods() const
+        public auto methods() const //+
         {
             auto g = getValue!uint(5);
             return getList!(MD.methodDef)(5);
         }
 
-        public auto attributes() const
+        public auto attributes() const //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.typeDef);
         }
 
-        public auto interfaces() const
+        public auto interfaces() const //+
         {
             return getRange!(MD.interfaceImpl)(0);
         }
 
-        public auto layout() const
+        public auto layout() const //+
         {
             return findFirst!(MD.classLayout)(2);
         }
 
-        public auto genericParameters() const
+        public auto genericParameters() const //+
         {
             return getRange!(MD.genericParam, TypeOrMethodDef)(2, TypeOrMethodDef.typeDef);
         }
 
-        public auto methodImplementations() const
+        public auto methodImplementations() const //+
         {
             return getRange!(MD.methodImpl)(0);
         }
 
-        public auto enclosing() const
+        public auto enclosing() const //+
         {          
             auto row = findFirst!(MD.nestedClass)(0);
             if (!row.isNull)            
@@ -285,7 +285,7 @@ public struct Row(MD md)
             return this;
         }
 
-        public bool isEnum() const
+        public bool isEnum() const //+
         {
             auto row = extends();
             if (row.isNull)
@@ -303,7 +303,7 @@ public struct Row(MD md)
             return false;            
         }
 
-        public bool isDelegate() const
+        public bool isDelegate() const //+
         {
             auto row = extends();
             if (row.isNull)
@@ -321,7 +321,7 @@ public struct Row(MD md)
             return false;            
         }
 
-        public bool isValueType() const
+        public bool isValueType() const //+
         {
             auto row = extends();
             if (row.isNull)
@@ -339,12 +339,12 @@ public struct Row(MD md)
             return false;            
         }
 
-        public bool isInterface() const
+        public bool isInterface() const //+
         {
             return typeAttributes.semantics == TypeSemantics.interface_;
         }
 
-        public ElementType underlyingEnumType() const
+        public ElementType underlyingEnumType() const //+
         {
             ElementType result;
             foreach(field; fields)
@@ -360,7 +360,7 @@ public struct Row(MD md)
             return result;
         }
 
-        public auto properties()
+        public auto properties() //+
         {
             auto propMap = findFirst!(MD.propertyMap)(0);
             if (!propMap.isNull)
@@ -369,7 +369,7 @@ public struct Row(MD md)
                 return ListEnumerator!(MD.property)(table.db, 2, 1);
         }
 
-        public auto events()
+        public auto events() //+
         {
             auto eventMap = findFirst!(MD.eventMap)(0);
             if (!eventMap.isNull)
@@ -378,7 +378,7 @@ public struct Row(MD md)
                 return ListEnumerator!(MD.event)(table.db, 2, 1);
         }
 
-        public bool isNested() const
+        public bool isNested() const //+
         {
             return !findFirst!(MD.nestedClass)(1).isNull;
         }
@@ -386,35 +386,35 @@ public struct Row(MD md)
     else static if (md == MD.field)
     {
 
-        public FieldAttributes fieldAttributes() const
+        public FieldAttributes fieldAttributes() const //+
         {
             return FieldAttributes(getValue!ushort(0));
         }
 
-        public string name() const
+        public string name() const //+
         {
             return getString(1);
         }
 
-        public const(FieldSig) signature() const
+        public const(FieldSig) signature() const //+
         {
             auto view = getBlob(2);
             return FieldSig(table.db, view);
         }
 
-        public auto attributes() const
+        public auto attributes() const //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.field);
         }
 
-        public auto parent() const
+        public auto parent() const //+
         {
             return findParent!(MD.typeDef)(4);
         }
 
         public auto constant() const
         {
-            return findFirst!(MD.constant)(1, HasConstant.field);            
+            return findFirst!(MD.constant)(1, HasConstant.field);
         }
 
         public auto marshal() const
@@ -424,92 +424,92 @@ public struct Row(MD md)
     }
     else static if (md == MD.methodDef)
     {
-        public uint RVA()
+        public uint RVA() //+
         {
             return getValue!uint(0);
         }
 
-        public const(MethodAttributes) methodAttributes() const
+        public const(MethodAttributes) methodAttributes() const //+
         {
             return MethodAttributes(getValue!ushort(1), getValue!ushort(2));
         }
 
-        public string name() const
+        public string name() const //+
         {
             return getString(3);
         }
 
-        public MethodDefSig signature() const
+        public MethodDefSig signature() const //+
         {
             auto data = getBlob(4);
             return MethodDefSig(table.db, data);
         }
 
-        public auto parameters() const
+        public auto parameters() const //+
         {
             return getList!(MD.param)(5);
         }
 
-        public auto genericParameters() const
+        public auto genericParameters() const //+
         {
             return getRange!(MD.genericParam, TypeOrMethodDef)(2, TypeOrMethodDef.methodDef);
         }
 
-        public auto parent() const
+        public auto parent() const //+
         {
             return findParent!(MD.typeDef)(5);
         }
 
-        public auto implementation()
+        public auto implementation() //+
         {
             return findFirst!(MD.implMap)(1, MemberForwarded.methodDef);
         }
 
-        public auto attributes() const
+        public auto attributes() const //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.methodDef);
         }
     }
     else static if (md == MD.param)
     {
-        public const(ParamAttributes) paramAttributes() const
+        public const(ParamAttributes) paramAttributes() const //+
         {
             return ParamAttributes(getValue!ushort(0));
         }
 
-        public uint rank() const
+        public uint rank() const //+
         {
             return getValue!uint(1);
         }
 
-        public string name() const
+        public string name() const //+
         {
             return getString(2);
         }
 
-        public auto constant() const
+        public auto constant() const //+
         {
             return findFirst!(MD.constant)(1, HasConstant.param);            
         }
 
-        public auto marshal() const
+        public auto marshal() const //+
         {
             return findFirst!(MD.fieldMarshal)(0, HasFieldMarshal.param);            
         }
 
-        public auto attributes() const
+        public auto attributes() const //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.param);
         }
     }
     else static if (md == MD.interfaceImpl)
     {
-        public auto type() const
+        public auto type() const //+
         {
             return table.db.typeDefTable[getValue!uint(0)];
         }
 
-        public auto implementation() const
+        public auto implementation() const //+
         {
             auto idx = getCompositeIndex!TypeDefOrRef(1);
             return compositeValue(table.db, idx);
@@ -522,18 +522,18 @@ public struct Row(MD md)
     }
     else static if (md == MD.memberRef)
     {
-        public auto reference() const
+        public auto reference() const //+
         {
             auto idx = getCompositeIndex!MemberRefParent(0);
             return compositeValue(table.db, idx);
         }
 
-        public string name() const
+        public string name() const //+
         {
             return getString(1);
         }
 
-        public MethodDefSig signature() const
+        public MethodDefSig signature() const //+
         {
             auto data = getBlob(2);
             return MethodDefSig(table.db, data);
@@ -549,18 +549,18 @@ public struct Row(MD md)
     {
         alias ConstantValue = Algebraic!(bool, byte, ubyte, short, ushort, int, uint, long, ulong, wchar, float, double, wstring, typeof(null));
 
-        public ConstantType type() const
+        public ConstantType type() const //+
         {
             return getValue!ConstantType(0);
         }
 
-        public auto parent() const
+        public auto parent() const //+
         {
             auto idx = getCompositeIndex!HasConstant(1);
             return compositeValue(table.db, idx);
         }
 
-        public auto value() const
+        public auto value() const //+
         {
             auto t = type();
             if (t == ConstantType.class_)
@@ -605,19 +605,19 @@ public struct Row(MD md)
     }
     else static if (md == MD.customAttribute)
     {
-        public auto parent() const
+        public auto parent() const //+
         {
             auto idx = getCompositeIndex!HasCustomAttribute(0);
             return compositeValue(table.db, idx);
         }
 
-        public auto constructor() const
+        public auto constructor() const //+
         {
             auto idx = getCompositeIndex!CustomAttributeType(1);
             return compositeValue(table.db, idx);
         }
 
-        public auto type() const
+        public auto type() const //+
         {
             auto ctor = constructor;
             if (ctor.peek!MethodDef)
@@ -636,7 +636,7 @@ public struct Row(MD md)
             }
         }
 
-        public auto name() const
+        public auto name() const //+
         {
             auto t = type();
             if (auto td = t.peek!TypeDef)
@@ -645,7 +645,7 @@ public struct Row(MD md)
                 return t.get!TypeRef.name;
         }
 
-        public auto value() const
+        public auto value() const //+
         {
             auto view = getBlob(2);
             auto ctor = constructor();
@@ -657,13 +657,13 @@ public struct Row(MD md)
     }
     else static if (md == MD.fieldMarshal)
     {
-        public auto parent() const
+        public auto parent() const //+
         {
             auto idx = getCompositeIndex!HasFieldMarshal(0);
             return compositeValue(table.db, idx);
         }
 
-        public const(FieldMarshalSig) signature() const
+        public const(FieldMarshalSig) signature() const //+
         {
             auto data = getBlob(1);
             return FieldMarshalSig(data);
@@ -673,55 +673,55 @@ public struct Row(MD md)
     else static if (md == MD.declSecurity)
     {
 
-        public SecurityAction action() const
+        public SecurityAction action() const //+
         {
             return getValue!SecurityAction(0);
         }
 
-        public auto parent() const
+        public auto parent() const //+
         {
             auto idx = getCompositeIndex!HasDeclSecurity(1);
             return compositeValue(table.db, idx);
         }
 
-        public const(PermissionSig) permissions() const
+        public const(PermissionSig) permissions() const //+
         {
             auto data = getBlob(2);
             return PermissionSig(table.db, data);
         }
     }
-    else static if (md == MD.classLayout)
+    else static if (md == MD.classLayout) //+
     {
         public ushort packingSize() const
         {
             return getValue!ushort(0);
         }
 
-        public uint classSize() const
+        public uint classSize() const //+
         {
             return getValue!uint(1);
         }
 
-        public auto parent() const
+        public auto parent() const //+
         {
             return table.db.typeDefTable[getValue!uint(2)];
         }
     }
     else static if (md == MD.fieldLayout)
     {
-        public uint offset() const
+        public uint offset() const //+
         {
             return getValue!uint(0);
         }
 
-        public auto parent() const
+        public auto parent() const //+
         {
             return table.db.fieldTable[getValue!uint(1)];
         }
     }
     else static if (md == MD.standAloneSig)
     {
-        public const(MethodDefSig) signature() const
+        public const(MethodDefSig) signature() const //+
         {
             auto data = getBlob(0);
             return MethodDefSig(table.db, data);
@@ -734,12 +734,12 @@ public struct Row(MD md)
     }
     else static if (md == MD.eventMap) 
     {
-        public auto parent() const
+        public auto parent() const //+
         {
             return table.db.typeDefTable[getValue!uint(0)];
         }
 
-        public auto events() const
+        public auto events() const //+
         {
             return getList!(MD.event)(1);
         }
@@ -747,28 +747,28 @@ public struct Row(MD md)
     }
     else static if (md == MD.event)
     {
-        public const(EventAttributes) eventAttributes() const
+        public const(EventAttributes) eventAttributes() const //+
         {
             return EventAttributes(getValue!ushort(0));
         }
 
-        public string name() const
+        public string name() const //+
         {
             return getString(1);
         }
 
-        public auto eventType() const
+        public auto eventType() const //+
         {
             auto idx = getCompositeIndex!TypeDefOrRef(2);
             return compositeValue(table.db, idx);
         }
 
-        public auto attributes() const
+        public auto attributes() const //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.event);
         }
 
-        public auto parent() const
+        public auto parent() const //+
         {
             return findParent!(MD.eventMap)(1).parent();
         }
@@ -780,49 +780,49 @@ public struct Row(MD md)
     }
     else static if (md == MD.propertyMap)
     {
-        public auto parent() const
+        public auto parent() const //+
         {
             return table.db.typeDefTable[getValue!uint(0)];
         }
 
-        public auto properties() const
+        public auto properties() const //+
         {
             return getList!(MD.property)(1);
         }
     }
     else static if (md == MD.property)
     {
-        public const(PropertyAttributes) propertyAttributes() const
+        public const(PropertyAttributes) propertyAttributes() const //+
         {
             return PropertyAttributes(getValue!ushort(0));
         }
 
-        public string name() const
+        public string name() const //+
         {
             return getString(1);
         }
 
-        public auto attributes() const
+        public auto attributes() const //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.property);
         }
 
-        public auto parent() const
+        public auto parent() const //+
         {
             return findParent!(MD.propertyMap)(1).parent();
         }
 
-        public auto semantics() const
+        public auto semantics() const //+
         {
             return getRange!(MD.methodSemantics, HasSemantics)(2, HasSemantics.property);
         }
 
-        public auto constant() const
+        public auto constant() const //+
         {
             return findFirst!(MD.constant)(1, HasConstant.property);            
         }
 
-        public const(PropertySig) signature() const
+        public const(PropertySig) signature() const //+
         {
             auto view = getBlob(2);
             return PropertySig(table.db, view);
@@ -830,34 +830,34 @@ public struct Row(MD md)
     }
     else static if (md == MD.methodSemantics)
     {
-        public const(SemanticsAttributes) semantics()
+        public const(SemanticsAttributes) semantics() //+
         {
             return SemanticsAttributes(getValue!ushort(0));
         }
 
-        public auto method()
+        public auto method() //+
         {
             return table.db.methodDefTable[getValue!uint(1)];
         }
 
-        public auto association()
+        public auto association() //+
         {
             return compositeValue(table.db, getCompositeIndex!HasSemantics(2));
         }
     }
     else static if (md == MD.methodImpl)
     {
-        public auto parent()
+        public auto parent() //+
         {
             return table.db.methodDefTable[getValue!uint(0)];
         }
 
-        public auto methodBody()
+        public auto methodBody() //+
         {
             return compositeValue(table.db, getCompositeIndex!MethodDefOrRef(1));
         }
 
-        public auto methodDeclaration()
+        public auto methodDeclaration() //+
         {
             return compositeValue(table.db, getCompositeIndex!MethodDefOrRef(2));
         }
@@ -866,46 +866,46 @@ public struct Row(MD md)
     {
         public string name()
         {
-            return getString(0);
+            return getString(0); //+
         }   
 
-        public auto attributes()
+        public auto attributes() //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.moduleRef);
         }
     }
     else static if (md == MD.typeSpec)
     {
-        public const(TypeSpecSig) signature()
+        public const(TypeSpecSig) signature() //+
         {
             auto data = getBlob(0);
             return TypeSpecSig(table.db, data);
         }
 
-        public auto attributes()
+        public auto attributes() //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.moduleRef);
         }
     }
     else static if (md == MD.implMap)
     {
-        public PInvokeAttributes implAttributes()
+        public PInvokeAttributes implAttributes() //+
         {
             return PInvokeAttributes(getValue!ushort(0));
         }
 
-        public auto memberForwarded()
+        public auto memberForwarded() //+
         {
             auto idx = getCompositeIndex!MemberForwarded(1);
             return compositeValue(table.db, idx);
         }
 
-        public string name()
+        public string name() //+
         {
             return getString(2);
         }
 
-        public auto importScope()
+        public auto importScope() //+
         {
             return table.db.moduleRefTable[getValue!uint(3)];
         }
@@ -913,50 +913,50 @@ public struct Row(MD md)
     }
     else static if (md == MD.fieldRVA)
     {
-        public uint rva()
+        public uint rva() //+
         {
             return getValue!uint(0);
         }
 
-        public auto parent()
+        public auto parent() //+
         {
             return table.db.fieldTable[getValue!uint(1)];
         }
     }
     else static if (md == MD.assembly)
     {
-        public AssemblyHashAlgorithm algorithm()
+        public AssemblyHashAlgorithm algorithm() //+
         {
             return getValue!AssemblyHashAlgorithm(0);
         }
 
-        public AssemblyVersion ver()
+        public AssemblyVersion ver() //+
         {
             auto v = getValue!ulong(1);
             return *cast(AssemblyVersion*)(&v);
         }
 
-        public AssemblyAttributes assemblyAttributes()
+        public AssemblyAttributes assemblyAttributes() //+
         {
             return AssemblyAttributes(getValue!uint(2));
         }
 
-        public const(ubyte)[] publicKey()
+        public const(ubyte)[] publicKey() //+
         {
             return getBlob(3);
         }
 
-        public string name()
+        public string name() //+
         {
             return getString(4);
         }
 
-        public string culture()
+        public string culture() //+
         {
             return getString(5);
         }
 
-        public auto attributes()
+        public auto attributes() //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.assembly);
         }
@@ -964,57 +964,57 @@ public struct Row(MD md)
     }
     else static if (md == MD.assemblyProcessor)
     {
-        public AssemblyArch processor()
+        public AssemblyArch processor() //+
         {
             return getValue!AssemblyArch(0);
         }
     }
     else static if (md == MD.assemblyOS)
     {
-        public uint osPlatform()
+        public uint osPlatform() //+
         {
-            return getValue!uint(0);
+            return getValue!uint(0); //+
         }
 
-        public uint osMajorVersion()
+        public uint osMajorVersion() //+
         {
-            return getValue!uint(1);
+            return getValue!uint(1); //+
         }
 
-        public uint osMinorVersion()
+        public uint osMinorVersion() //+
         {
             return getValue!uint(2);
         }
     }
     else static if (md == MD.assemblyRef)
     {
-        public AssemblyVersion ver()
+        public AssemblyVersion ver() //+
         {
             auto v = getValue!ulong(0);
             return *cast(AssemblyVersion*)(&v);
         }
 
-        public AssemblyAttributes assemblyAttributes()
+        public AssemblyAttributes assemblyAttributes() //+
         {
             return AssemblyAttributes(getValue!uint(1));
         }
 
-        public const(ubyte)[] publicKeyOrToken()
+        public const(ubyte)[] publicKeyOrToken() //+
         {
             return getBlob(2);
         }
 
-        public string name()
+        public string name() //+
         {
             return getString(3);
         }
 
-        public string culture()
+        public string culture() //+
         {
             return getString(4);
         }
 
-        public auto attributes()
+        public auto attributes() //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.assemblyRef);
         }
@@ -1022,63 +1022,63 @@ public struct Row(MD md)
     }
     else static if (md == MD.assemblyRefProcessor)
     {
-        public AssemblyArch processor()
+        public AssemblyArch processor() //+
         {
             return getValue!AssemblyArch(0);
         }
 
-        public auto assembly()
+        public auto assembly() //+
         {
             return table.db.assemblyRefTable[getValue!uint(1)];
         }
     }
     else static if (md == MD.assemblyRefOS)
     {
-        public uint osPlatform()
+        public uint osPlatform() //+
         {
             return getValue!uint(0);
         }
 
-        public uint osMajorVersion()
+        public uint osMajorVersion() //+
         {
             return getValue!uint(1);
         }
 
-        public uint osMinorVersion()
+        public uint osMinorVersion() //+
         {
             return getValue!uint(2);
         }
 
-        public auto assembly()
+        public auto assembly() //+
         {
             return table.db.assemblyRefTable[getValue!uint(3)];
         }
     }
     else static if (md == MD.file)
     {
-        public bool hasMetadata()
+        public bool hasMetadata() //+
         {
             return getValue!uint(0) != 0;
         }
 
-        public string name()
+        public string name() //+
         {
             return getString(1);
         }
 
-        public const(ubyte)[] hash()
+        public const(ubyte)[] hash() //+
         {
             return getBlob(2);
         }
 
-        public auto attributes()
+        public auto attributes() //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.file);
         }
     }
     else static if (md == MD.exportedType)
     {
-        public TypeAttributes typeAttributes()
+        public TypeAttributes typeAttributes() //+
         {
             return TypeAttributes(getValue!uint(0));
         }
@@ -1095,23 +1095,23 @@ public struct Row(MD md)
             return (Nullable!TypeDef).init;
         }
 
-        public string name()
+        public string name() //+
         {
             return getString(2);
         }
 
-        public string namespace()
+        public string namespace() //+
         {
             return getString(3);
         }
 
-        public auto implementation()
+        public auto implementation() //+
         {
             auto idx = getCompositeIndex!Implementation(4);
             return compositeValue(table.db, idx);
         }
 
-        public auto attributes()
+        public auto attributes() //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.exportedType);
         }
@@ -1119,22 +1119,22 @@ public struct Row(MD md)
     }
     else static if (md == MD.manifestResource)
     {        
-        public uint offset()
+        public uint offset() //+
         {
             return getValue!uint(0);
         }
 
-        public ManifestVisibility visibility()
+        public ManifestVisibility visibility() //+
         {
             return getValue!ManifestVisibility(1);
         }
 
-        public string name()
+        public string name() //+
         {
             return getString(2);
         }
 
-        public auto implementation()
+        public auto implementation() //+
         {
             auto idx = getCompositeIndex!Implementation(3);
             if (idx.codedIndex == 0)
@@ -1142,49 +1142,47 @@ public struct Row(MD md)
             return Nullable!(ImplementationValue)(compositeValue(table.db, idx));
         }
 
-        public auto attributes()
+        public auto attributes() //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.manifestResource);
         }
     }
     else static if (md == MD.nestedClass)
     {        
-        public auto nested()
+        public auto nested() //+
         {
             return table.db.typeDefTable[getValue!uint(0)];
         }
 
-        public auto enclosing()
+        public auto enclosing() //+
         {
             return table.db.typeDefTable[getValue!uint(1)];
         }
-
-
     }
     else static if (md == MD.genericParam)
     {        
-        public ushort rank()
+        public ushort rank() //+
         {
             return getValue!ushort(0);
         }
 
-        public GenericAttributes genericAttributes()
+        public GenericAttributes genericAttributes() //+
         {
             return GenericAttributes(getValue!ushort(1));
         }
 
-        public auto owner()
+        public auto owner() //+
         {
             auto idx = getCompositeIndex!TypeOrMethodDef(2);
             return compositeValue(table.db, idx);
         }
 
-        public string name()
+        public string name() //+
         {
             return getString(3);
         }
 
-        public auto attributes()
+        public auto attributes() //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.genericParam);
         }
@@ -1192,18 +1190,18 @@ public struct Row(MD md)
     }
     else static if (md == MD.genericParamConstraint)
     {        
-        public auto owner()
+        public auto owner() //+
         {
             return table.db.genericParamTable[getValue!uint(0)];
         }
 
-        public auto constraint()
+        public auto constraint() //+
         {
             auto idx = getCompositeIndex!TypeDefOrRef(1);
             return compositeValue(table.db, idx);
         }
 
-        public auto attributes()
+        public auto attributes() //+
         {
             return getRange!(MD.customAttribute, HasCustomAttribute)(0, HasCustomAttribute.genericParamConstraint);
         }

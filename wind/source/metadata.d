@@ -397,19 +397,19 @@ public struct Metadata
         return CompositeRangeEnumerator!(md, T)(&this, sourceIndex, targetColumn);
     }
 
-    public auto findFirstRequired(MD md)(uint sourceIndex, ubyte targetColumn) const
-    {
-        auto r = findFirst!md(sourceIndex, targetColumn);
-        enforce(!r.isNull, format("Missing %s reference (%d)", md.stringof, sourceIndex));
-        return r.get;
-    }
+    // public auto findFirstRequired(MD md)(uint sourceIndex, ubyte targetColumn) const
+    // {
+    //     auto r = findFirst!md(sourceIndex, targetColumn);
+    //     enforce(!r.isNull, format("Missing %s reference (%d)", md.stringof, sourceIndex));
+    //     return r.get;
+    // }
 
-    public auto findFirstRequired(MD md, T)(CompositeIndex!T sourceIndex, ubyte targetColumn) const
-    {
-        auto r = findFirst!(md, T)(sourceIndex, targetColumn);
-        enforce(!r.isNull, format("Missing %s reference (%d)", md.stringof, sourceIndex.index));
-        return r.get;
-    }
+    // public auto findFirstRequired(MD md, T)(CompositeIndex!T sourceIndex, ubyte targetColumn) const
+    // {
+    //     auto r = findFirst!(md, T)(sourceIndex, targetColumn);
+    //     enforce(!r.isNull, format("Missing %s reference (%d)", md.stringof, sourceIndex.index));
+    //     return r.get;
+    // }
 
     public auto findFirst(MD md)(uint sourceIndex, ubyte targetColumn) const
     {

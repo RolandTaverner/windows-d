@@ -1,0 +1,10850 @@
+// Written in the D programming language.
+
+module windows.win32.ui.controls;
+
+public import windows.core;
+public import system : Guid;
+public import windows.win32.foundation : BOOL, CHAR, COLORREF, HANDLE, HINSTANCE,
+                                         HRESULT, HWND, LPARAM, LRESULT, POINT,
+                                         PSTR, PWSTR, RECT, SIZE, SYSTEMTIME,
+                                         WPARAM;
+public import windows.win32.graphics.gdi : BLENDFUNCTION, DRAWEDGE_FLAGS, DRAW_EDGE_FLAGS,
+                                           DRAW_TEXT_FORMAT, HBITMAP, HBRUSH, HDC,
+                                           HFONT, HPALETTE, HPEN, HRGN, LOGFONTW,
+                                           RGBQUAD, TEXTMETRICW;
+public import windows.win32.system.com : IStream, IUnknown;
+public import windows.win32.system.registry : HKEY;
+public import windows.win32.ui.input.pointer : HSYNTHETICPOINTERDEVICE, POINTER_FEEDBACK_MODE;
+public import windows.win32.ui.windowsandmessaging : DLGPROC, DLGTEMPLATE, HICON, HMENU,
+                                                     IMAGE_FLAGS, POINTER_INPUT_TYPE,
+                                                     SCROLLBAR_CONSTANTS, SCROLLINFO,
+                                                     WINDOWPOS;
+
+extern(Windows) @nogc nothrow:
+
+
+// Enums
+
+alias THEME_PROPERTY_SYMBOL_ID = uint;
+enum : uint
+{
+    TMT_RESERVEDLOW             = 0x00000000,
+    TMT_RESERVEDHIGH            = 0x00001f3f,
+    TMT_DIBDATA                 = 0x00000002,
+    TMT_GLYPHDIBDATA            = 0x00000008,
+    TMT_ENUM                    = 0x000000c8,
+    TMT_STRING                  = 0x000000c9,
+    TMT_INT                     = 0x000000ca,
+    TMT_BOOL                    = 0x000000cb,
+    TMT_COLOR                   = 0x000000cc,
+    TMT_MARGINS                 = 0x000000cd,
+    TMT_FILENAME                = 0x000000ce,
+    TMT_SIZE                    = 0x000000cf,
+    TMT_POSITION                = 0x000000d0,
+    TMT_RECT                    = 0x000000d1,
+    TMT_FONT                    = 0x000000d2,
+    TMT_INTLIST                 = 0x000000d3,
+    TMT_HBITMAP                 = 0x000000d4,
+    TMT_DISKSTREAM              = 0x000000d5,
+    TMT_STREAM                  = 0x000000d6,
+    TMT_BITMAPREF               = 0x000000d7,
+    TMT_FLOAT                   = 0x000000d8,
+    TMT_FLOATLIST               = 0x000000d9,
+    TMT_COLORSCHEMES            = 0x00000191,
+    TMT_SIZES                   = 0x00000192,
+    TMT_CHARSET                 = 0x00000193,
+    TMT_NAME                    = 0x00000258,
+    TMT_DISPLAYNAME             = 0x00000259,
+    TMT_TOOLTIP                 = 0x0000025a,
+    TMT_COMPANY                 = 0x0000025b,
+    TMT_AUTHOR                  = 0x0000025c,
+    TMT_COPYRIGHT               = 0x0000025d,
+    TMT_URL                     = 0x0000025e,
+    TMT_VERSION                 = 0x0000025f,
+    TMT_DESCRIPTION             = 0x00000260,
+    TMT_FIRST_RCSTRING_NAME     = 0x00000259,
+    TMT_LAST_RCSTRING_NAME      = 0x00000260,
+    TMT_CAPTIONFONT             = 0x00000321,
+    TMT_SMALLCAPTIONFONT        = 0x00000322,
+    TMT_MENUFONT                = 0x00000323,
+    TMT_STATUSFONT              = 0x00000324,
+    TMT_MSGBOXFONT              = 0x00000325,
+    TMT_ICONTITLEFONT           = 0x00000326,
+    TMT_HEADING1FONT            = 0x00000327,
+    TMT_HEADING2FONT            = 0x00000328,
+    TMT_BODYFONT                = 0x00000329,
+    TMT_FIRSTFONT               = 0x00000321,
+    TMT_LASTFONT                = 0x00000329,
+    TMT_FLATMENUS               = 0x000003e9,
+    TMT_FIRSTBOOL               = 0x000003e9,
+    TMT_LASTBOOL                = 0x000003e9,
+    TMT_SIZINGBORDERWIDTH       = 0x000004b1,
+    TMT_SCROLLBARWIDTH          = 0x000004b2,
+    TMT_SCROLLBARHEIGHT         = 0x000004b3,
+    TMT_CAPTIONBARWIDTH         = 0x000004b4,
+    TMT_CAPTIONBARHEIGHT        = 0x000004b5,
+    TMT_SMCAPTIONBARWIDTH       = 0x000004b6,
+    TMT_SMCAPTIONBARHEIGHT      = 0x000004b7,
+    TMT_MENUBARWIDTH            = 0x000004b8,
+    TMT_MENUBARHEIGHT           = 0x000004b9,
+    TMT_PADDEDBORDERWIDTH       = 0x000004ba,
+    TMT_FIRSTSIZE               = 0x000004b1,
+    TMT_LASTSIZE                = 0x000004ba,
+    TMT_MINCOLORDEPTH           = 0x00000515,
+    TMT_FIRSTINT                = 0x00000515,
+    TMT_LASTINT                 = 0x00000515,
+    TMT_CSSNAME                 = 0x00000579,
+    TMT_XMLNAME                 = 0x0000057a,
+    TMT_LASTUPDATED             = 0x0000057b,
+    TMT_ALIAS                   = 0x0000057c,
+    TMT_FIRSTSTRING             = 0x00000579,
+    TMT_LASTSTRING              = 0x0000057c,
+    TMT_SCROLLBAR               = 0x00000641,
+    TMT_BACKGROUND              = 0x00000642,
+    TMT_ACTIVECAPTION           = 0x00000643,
+    TMT_INACTIVECAPTION         = 0x00000644,
+    TMT_MENU                    = 0x00000645,
+    TMT_WINDOW                  = 0x00000646,
+    TMT_WINDOWFRAME             = 0x00000647,
+    TMT_MENUTEXT                = 0x00000648,
+    TMT_WINDOWTEXT              = 0x00000649,
+    TMT_CAPTIONTEXT             = 0x0000064a,
+    TMT_ACTIVEBORDER            = 0x0000064b,
+    TMT_INACTIVEBORDER          = 0x0000064c,
+    TMT_APPWORKSPACE            = 0x0000064d,
+    TMT_HIGHLIGHT               = 0x0000064e,
+    TMT_HIGHLIGHTTEXT           = 0x0000064f,
+    TMT_BTNFACE                 = 0x00000650,
+    TMT_BTNSHADOW               = 0x00000651,
+    TMT_GRAYTEXT                = 0x00000652,
+    TMT_BTNTEXT                 = 0x00000653,
+    TMT_INACTIVECAPTIONTEXT     = 0x00000654,
+    TMT_BTNHIGHLIGHT            = 0x00000655,
+    TMT_DKSHADOW3D              = 0x00000656,
+    TMT_LIGHT3D                 = 0x00000657,
+    TMT_INFOTEXT                = 0x00000658,
+    TMT_INFOBK                  = 0x00000659,
+    TMT_BUTTONALTERNATEFACE     = 0x0000065a,
+    TMT_HOTTRACKING             = 0x0000065b,
+    TMT_GRADIENTACTIVECAPTION   = 0x0000065c,
+    TMT_GRADIENTINACTIVECAPTION = 0x0000065d,
+    TMT_MENUHILIGHT             = 0x0000065e,
+    TMT_MENUBAR                 = 0x0000065f,
+    TMT_FIRSTCOLOR              = 0x00000641,
+    TMT_LASTCOLOR               = 0x0000065f,
+    TMT_FROMHUE1                = 0x00000709,
+    TMT_FROMHUE2                = 0x0000070a,
+    TMT_FROMHUE3                = 0x0000070b,
+    TMT_FROMHUE4                = 0x0000070c,
+    TMT_FROMHUE5                = 0x0000070d,
+    TMT_TOHUE1                  = 0x0000070e,
+    TMT_TOHUE2                  = 0x0000070f,
+    TMT_TOHUE3                  = 0x00000710,
+    TMT_TOHUE4                  = 0x00000711,
+    TMT_TOHUE5                  = 0x00000712,
+    TMT_FROMCOLOR1              = 0x000007d1,
+    TMT_FROMCOLOR2              = 0x000007d2,
+    TMT_FROMCOLOR3              = 0x000007d3,
+    TMT_FROMCOLOR4              = 0x000007d4,
+    TMT_FROMCOLOR5              = 0x000007d5,
+    TMT_TOCOLOR1                = 0x000007d6,
+    TMT_TOCOLOR2                = 0x000007d7,
+    TMT_TOCOLOR3                = 0x000007d8,
+    TMT_TOCOLOR4                = 0x000007d9,
+    TMT_TOCOLOR5                = 0x000007da,
+    TMT_TRANSPARENT             = 0x00000899,
+    TMT_AUTOSIZE                = 0x0000089a,
+    TMT_BORDERONLY              = 0x0000089b,
+    TMT_COMPOSITED              = 0x0000089c,
+    TMT_BGFILL                  = 0x0000089d,
+    TMT_GLYPHTRANSPARENT        = 0x0000089e,
+    TMT_GLYPHONLY               = 0x0000089f,
+    TMT_ALWAYSSHOWSIZINGBAR     = 0x000008a0,
+    TMT_MIRRORIMAGE             = 0x000008a1,
+    TMT_UNIFORMSIZING           = 0x000008a2,
+    TMT_INTEGRALSIZING          = 0x000008a3,
+    TMT_SOURCEGROW              = 0x000008a4,
+    TMT_SOURCESHRINK            = 0x000008a5,
+    TMT_DRAWBORDERS             = 0x000008a6,
+    TMT_NOETCHEDEFFECT          = 0x000008a7,
+    TMT_TEXTAPPLYOVERLAY        = 0x000008a8,
+    TMT_TEXTGLOW                = 0x000008a9,
+    TMT_TEXTITALIC              = 0x000008aa,
+    TMT_COMPOSITEDOPAQUE        = 0x000008ab,
+    TMT_LOCALIZEDMIRRORIMAGE    = 0x000008ac,
+    TMT_IMAGECOUNT              = 0x00000961,
+    TMT_ALPHALEVEL              = 0x00000962,
+    TMT_BORDERSIZE              = 0x00000963,
+    TMT_ROUNDCORNERWIDTH        = 0x00000964,
+    TMT_ROUNDCORNERHEIGHT       = 0x00000965,
+    TMT_GRADIENTRATIO1          = 0x00000966,
+    TMT_GRADIENTRATIO2          = 0x00000967,
+    TMT_GRADIENTRATIO3          = 0x00000968,
+    TMT_GRADIENTRATIO4          = 0x00000969,
+    TMT_GRADIENTRATIO5          = 0x0000096a,
+    TMT_PROGRESSCHUNKSIZE       = 0x0000096b,
+    TMT_PROGRESSSPACESIZE       = 0x0000096c,
+    TMT_SATURATION              = 0x0000096d,
+    TMT_TEXTBORDERSIZE          = 0x0000096e,
+    TMT_ALPHATHRESHOLD          = 0x0000096f,
+    TMT_WIDTH                   = 0x00000970,
+    TMT_HEIGHT                  = 0x00000971,
+    TMT_GLYPHINDEX              = 0x00000972,
+    TMT_TRUESIZESTRETCHMARK     = 0x00000973,
+    TMT_MINDPI1                 = 0x00000974,
+    TMT_MINDPI2                 = 0x00000975,
+    TMT_MINDPI3                 = 0x00000976,
+    TMT_MINDPI4                 = 0x00000977,
+    TMT_MINDPI5                 = 0x00000978,
+    TMT_TEXTGLOWSIZE            = 0x00000979,
+    TMT_FRAMESPERSECOND         = 0x0000097a,
+    TMT_PIXELSPERFRAME          = 0x0000097b,
+    TMT_ANIMATIONDELAY          = 0x0000097c,
+    TMT_GLOWINTENSITY           = 0x0000097d,
+    TMT_OPACITY                 = 0x0000097e,
+    TMT_COLORIZATIONCOLOR       = 0x0000097f,
+    TMT_COLORIZATIONOPACITY     = 0x00000980,
+    TMT_MINDPI6                 = 0x00000981,
+    TMT_MINDPI7                 = 0x00000982,
+    TMT_GLYPHFONT               = 0x00000a29,
+    TMT_IMAGEFILE               = 0x00000bb9,
+    TMT_IMAGEFILE1              = 0x00000bba,
+    TMT_IMAGEFILE2              = 0x00000bbb,
+    TMT_IMAGEFILE3              = 0x00000bbc,
+    TMT_IMAGEFILE4              = 0x00000bbd,
+    TMT_IMAGEFILE5              = 0x00000bbe,
+    TMT_GLYPHIMAGEFILE          = 0x00000bc0,
+    TMT_IMAGEFILE6              = 0x00000bc1,
+    TMT_IMAGEFILE7              = 0x00000bc2,
+    TMT_TEXT                    = 0x00000c81,
+    TMT_CLASSICVALUE            = 0x00000c82,
+    TMT_OFFSET                  = 0x00000d49,
+    TMT_TEXTSHADOWOFFSET        = 0x00000d4a,
+    TMT_MINSIZE                 = 0x00000d4b,
+    TMT_MINSIZE1                = 0x00000d4c,
+    TMT_MINSIZE2                = 0x00000d4d,
+    TMT_MINSIZE3                = 0x00000d4e,
+    TMT_MINSIZE4                = 0x00000d4f,
+    TMT_MINSIZE5                = 0x00000d50,
+    TMT_NORMALSIZE              = 0x00000d51,
+    TMT_MINSIZE6                = 0x00000d52,
+    TMT_MINSIZE7                = 0x00000d53,
+    TMT_SIZINGMARGINS           = 0x00000e11,
+    TMT_CONTENTMARGINS          = 0x00000e12,
+    TMT_CAPTIONMARGINS          = 0x00000e13,
+    TMT_BORDERCOLOR             = 0x00000ed9,
+    TMT_FILLCOLOR               = 0x00000eda,
+    TMT_TEXTCOLOR               = 0x00000edb,
+    TMT_EDGELIGHTCOLOR          = 0x00000edc,
+    TMT_EDGEHIGHLIGHTCOLOR      = 0x00000edd,
+    TMT_EDGESHADOWCOLOR         = 0x00000ede,
+    TMT_EDGEDKSHADOWCOLOR       = 0x00000edf,
+    TMT_EDGEFILLCOLOR           = 0x00000ee0,
+    TMT_TRANSPARENTCOLOR        = 0x00000ee1,
+    TMT_GRADIENTCOLOR1          = 0x00000ee2,
+    TMT_GRADIENTCOLOR2          = 0x00000ee3,
+    TMT_GRADIENTCOLOR3          = 0x00000ee4,
+    TMT_GRADIENTCOLOR4          = 0x00000ee5,
+    TMT_GRADIENTCOLOR5          = 0x00000ee6,
+    TMT_SHADOWCOLOR             = 0x00000ee7,
+    TMT_GLOWCOLOR               = 0x00000ee8,
+    TMT_TEXTBORDERCOLOR         = 0x00000ee9,
+    TMT_TEXTSHADOWCOLOR         = 0x00000eea,
+    TMT_GLYPHTEXTCOLOR          = 0x00000eeb,
+    TMT_GLYPHTRANSPARENTCOLOR   = 0x00000eec,
+    TMT_FILLCOLORHINT           = 0x00000eed,
+    TMT_BORDERCOLORHINT         = 0x00000eee,
+    TMT_ACCENTCOLORHINT         = 0x00000eef,
+    TMT_TEXTCOLORHINT           = 0x00000ef0,
+    TMT_HEADING1TEXTCOLOR       = 0x00000ef1,
+    TMT_HEADING2TEXTCOLOR       = 0x00000ef2,
+    TMT_BODYTEXTCOLOR           = 0x00000ef3,
+    TMT_BGTYPE                  = 0x00000fa1,
+    TMT_BORDERTYPE              = 0x00000fa2,
+    TMT_FILLTYPE                = 0x00000fa3,
+    TMT_SIZINGTYPE              = 0x00000fa4,
+    TMT_HALIGN                  = 0x00000fa5,
+    TMT_CONTENTALIGNMENT        = 0x00000fa6,
+    TMT_VALIGN                  = 0x00000fa7,
+    TMT_OFFSETTYPE              = 0x00000fa8,
+    TMT_ICONEFFECT              = 0x00000fa9,
+    TMT_TEXTSHADOWTYPE          = 0x00000faa,
+    TMT_IMAGELAYOUT             = 0x00000fab,
+    TMT_GLYPHTYPE               = 0x00000fac,
+    TMT_IMAGESELECTTYPE         = 0x00000fad,
+    TMT_GLYPHFONTSIZINGTYPE     = 0x00000fae,
+    TMT_TRUESIZESCALINGTYPE     = 0x00000faf,
+    TMT_USERPICTURE             = 0x00001389,
+    TMT_DEFAULTPANESIZE         = 0x0000138a,
+    TMT_BLENDCOLOR              = 0x0000138b,
+    TMT_CUSTOMSPLITRECT         = 0x0000138c,
+    TMT_ANIMATIONBUTTONRECT     = 0x0000138d,
+    TMT_ANIMATIONDURATION       = 0x0000138e,
+    TMT_TRANSITIONDURATIONS     = 0x00001770,
+    TMT_SCALEDBACKGROUND        = 0x00001b59,
+    TMT_ATLASIMAGE              = 0x00001f40,
+    TMT_ATLASINPUTIMAGE         = 0x00001f41,
+    TMT_ATLASRECT               = 0x00001f42,
+}
+alias SET_THEME_APP_PROPERTIES_FLAGS = uint;
+enum : uint
+{
+    ALLOW_NONCLIENT  = 0x00000001,
+    ALLOW_CONTROLS   = 0x00000002,
+    ALLOW_WEBCONTENT = 0x00000004,
+    VALIDBITS        = 0x00000007,
+}
+alias DRAGLISTINFO_NOTIFICATION_FLAGS = uint;
+enum : uint
+{
+    DL_BEGINDRAG  = 0x00000485,
+    DL_CANCELDRAG = 0x00000488,
+    DL_DRAGGING   = 0x00000486,
+    DL_DROPPED    = 0x00000487,
+}
+alias WORD_BREAK_ACTION = int;
+enum : int
+{
+    WB_CLASSIFY      = 0x00000003,
+    WB_ISDELIMITER   = 0x00000002,
+    WB_LEFT          = 0x00000000,
+    WB_LEFTBREAK     = 0x00000006,
+    WB_MOVEWORDLEFT  = 0x00000004,
+    WB_MOVEWORDRIGHT = 0x00000005,
+    WB_RIGHT         = 0x00000001,
+    WB_RIGHTBREAK    = 0x00000007,
+}
+alias DPAMM_MESSAGE = uint;
+enum : uint
+{
+    DPAMM_MERGE  = 0x00000001,
+    DPAMM_DELETE = 0x00000002,
+    DPAMM_INSERT = 0x00000003,
+}
+alias DLG_DIR_LIST_FILE_TYPE = uint;
+enum : uint
+{
+    DDL_ARCHIVE   = 0x00000020,
+    DDL_DIRECTORY = 0x00000010,
+    DDL_DRIVES    = 0x00004000,
+    DDL_EXCLUSIVE = 0x00008000,
+    DDL_HIDDEN    = 0x00000002,
+    DDL_READONLY  = 0x00000001,
+    DDL_READWRITE = 0x00000000,
+    DDL_SYSTEM    = 0x00000004,
+    DDL_POSTMSGS  = 0x00002000,
+}
+alias OPEN_THEME_DATA_FLAGS = uint;
+enum : uint
+{
+    OTD_FORCE_RECT_SIZING = 0x00000001,
+    OTD_NONCLIENT         = 0x00000002,
+}
+alias GET_THEME_BITMAP_FLAGS = uint;
+enum : uint
+{
+    GBF_DIRECT    = 0x00000001,
+    GBF_COPY      = 0x00000002,
+    GBF_VALIDBITS = 0x00000003,
+}
+alias ENABLE_SCROLL_BAR_ARROWS = uint;
+enum : uint
+{
+    ESB_DISABLE_BOTH  = 0x00000003,
+    ESB_DISABLE_DOWN  = 0x00000002,
+    ESB_DISABLE_LEFT  = 0x00000001,
+    ESB_DISABLE_LTUP  = 0x00000001,
+    ESB_DISABLE_RIGHT = 0x00000002,
+    ESB_DISABLE_RTDN  = 0x00000002,
+    ESB_DISABLE_UP    = 0x00000001,
+    ESB_ENABLE_BOTH   = 0x00000000,
+}
+alias IMAGE_LIST_DRAW_STYLE = uint;
+enum : uint
+{
+    ILD_NORMAL        = 0x00000000,
+    ILD_TRANSPARENT   = 0x00000001,
+    ILD_BLEND25       = 0x00000002,
+    ILD_FOCUS         = 0x00000002,
+    ILD_BLEND50       = 0x00000004,
+    ILD_SELECTED      = 0x00000004,
+    ILD_BLEND         = 0x00000004,
+    ILD_MASK          = 0x00000010,
+    ILD_IMAGE         = 0x00000020,
+    ILD_ROP           = 0x00000040,
+    ILD_OVERLAYMASK   = 0x00000f00,
+    ILD_PRESERVEALPHA = 0x00001000,
+    ILD_SCALE         = 0x00002000,
+    ILD_DPISCALE      = 0x00004000,
+    ILD_ASYNC         = 0x00008000,
+}
+alias WSB_PROP = int;
+enum : int
+{
+    WSB_PROP_CXHSCROLL = 0x00000002,
+    WSB_PROP_CXHTHUMB  = 0x00000010,
+    WSB_PROP_CXVSCROLL = 0x00000008,
+    WSB_PROP_CYHSCROLL = 0x00000004,
+    WSB_PROP_CYVSCROLL = 0x00000001,
+    WSB_PROP_CYVTHUMB  = 0x00000020,
+    WSB_PROP_HBKGCOLOR = 0x00000080,
+    WSB_PROP_HSTYLE    = 0x00000200,
+    WSB_PROP_PALETTE   = 0x00000800,
+    WSB_PROP_VBKGCOLOR = 0x00000040,
+    WSB_PROP_VSTYLE    = 0x00000100,
+    WSB_PROP_WINSTYLE  = 0x00000400,
+}
+alias PSPCB_MESSAGE = uint;
+enum : uint
+{
+    PSPCB_ADDREF        = 0x00000000,
+    PSPCB_CREATE        = 0x00000002,
+    PSPCB_RELEASE       = 0x00000001,
+    PSPCB_SI_INITDIALOG = 0x00000401,
+}
+alias HEADER_CONTROL_NOTIFICATION_BUTTON = int;
+enum : int
+{
+    HEADER_CONTROL_NOTIFICATION_BUTTON_LEFT   = 0x00000000,
+    HEADER_CONTROL_NOTIFICATION_BUTTON_RIGHT  = 0x00000001,
+    HEADER_CONTROL_NOTIFICATION_BUTTON_MIDDLE = 0x00000002,
+}
+alias IMAGE_LIST_COPY_FLAGS = uint;
+enum : uint
+{
+    ILCF_MOVE = 0x00000000,
+    ILCF_SWAP = 0x00000001,
+}
+alias DLG_BUTTON_CHECK_STATE = uint;
+enum : uint
+{
+    BST_CHECKED       = 0x00000001,
+    BST_INDETERMINATE = 0x00000002,
+    BST_UNCHECKED     = 0x00000000,
+}
+alias DRAW_THEME_PARENT_BACKGROUND_FLAGS = uint;
+enum : uint
+{
+    DTPB_WINDOWDC          = 0x00000001,
+    DTPB_USECTLCOLORSTATIC = 0x00000002,
+    DTPB_USEERASEBKGND     = 0x00000004,
+}
+alias IMAGE_LIST_ITEM_FLAGS = uint;
+enum : uint
+{
+    ILIF_ALPHA      = 0x00000001,
+    ILIF_LOWQUALITY = 0x00000002,
+}
+alias HDI_MASK = uint;
+enum : uint
+{
+    HDI_WIDTH      = 0x00000001,
+    HDI_HEIGHT     = 0x00000001,
+    HDI_TEXT       = 0x00000002,
+    HDI_FORMAT     = 0x00000004,
+    HDI_LPARAM     = 0x00000008,
+    HDI_BITMAP     = 0x00000010,
+    HDI_IMAGE      = 0x00000020,
+    HDI_DI_SETITEM = 0x00000040,
+    HDI_ORDER      = 0x00000080,
+    HDI_FILTER     = 0x00000100,
+    HDI_STATE      = 0x00000200,
+}
+alias NMREBAR_MASK_FLAGS = uint;
+enum : uint
+{
+    RBNM_ID     = 0x00000001,
+    RBNM_LPARAM = 0x00000004,
+    RBNM_STYLE  = 0x00000002,
+}
+alias EDITBALLOONTIP_ICON = int;
+enum : int
+{
+    TTI_ERROR         = 0x00000003,
+    TTI_INFO          = 0x00000001,
+    TTI_NONE          = 0x00000000,
+    TTI_WARNING       = 0x00000002,
+    TTI_INFO_LARGE    = 0x00000004,
+    TTI_WARNING_LARGE = 0x00000005,
+    TTI_ERROR_LARGE   = 0x00000006,
+}
+alias LVCOLUMNW_FORMAT = int;
+enum : int
+{
+    LVCFMT_LEFT            = 0x00000000,
+    LVCFMT_RIGHT           = 0x00000001,
+    LVCFMT_CENTER          = 0x00000002,
+    LVCFMT_JUSTIFYMASK     = 0x00000003,
+    LVCFMT_IMAGE           = 0x00000800,
+    LVCFMT_BITMAP_ON_RIGHT = 0x00001000,
+    LVCFMT_COL_HAS_IMAGES  = 0x00008000,
+    LVCFMT_FIXED_WIDTH     = 0x00000100,
+    LVCFMT_NO_DPI_SCALE    = 0x00040000,
+    LVCFMT_FIXED_RATIO     = 0x00080000,
+    LVCFMT_SPLITBUTTON     = 0x01000000,
+}
+alias NMPGSCROLL_KEYS = ushort;
+enum : ushort
+{
+    PGK_NONE    = 0x0000,
+    PGK_SHIFT   = 0x0001,
+    PGK_CONTROL = 0x0002,
+    PGK_MENU    = 0x0004,
+}
+alias COMBOBOX_EX_ITEM_FLAGS = uint;
+enum : uint
+{
+    CBEIF_DI_SETITEM    = 0x10000000,
+    CBEIF_IMAGE         = 0x00000002,
+    CBEIF_INDENT        = 0x00000010,
+    CBEIF_LPARAM        = 0x00000020,
+    CBEIF_OVERLAY       = 0x00000008,
+    CBEIF_SELECTEDIMAGE = 0x00000004,
+    CBEIF_TEXT          = 0x00000001,
+}
+alias TVITEMEXW_CHILDREN = int;
+enum : int
+{
+    I_ZERO             = 0x00000000,
+    I_ONE_OR_MORE      = 0x00000001,
+    I_CHILDRENCALLBACK = 0xffffffff,
+    I_CHILDRENAUTO     = 0xfffffffe,
+}
+alias TVITEM_MASK = uint;
+enum : uint
+{
+    TVIF_CHILDREN      = 0x00000040,
+    TVIF_DI_SETITEM    = 0x00001000,
+    TVIF_HANDLE        = 0x00000010,
+    TVIF_IMAGE         = 0x00000002,
+    TVIF_PARAM         = 0x00000004,
+    TVIF_SELECTEDIMAGE = 0x00000020,
+    TVIF_STATE         = 0x00000008,
+    TVIF_TEXT          = 0x00000001,
+    TVIF_EXPANDEDIMAGE = 0x00000200,
+    TVIF_INTEGRAL      = 0x00000080,
+    TVIF_STATEEX       = 0x00000100,
+}
+alias TCITEMHEADERA_MASK = uint;
+enum : uint
+{
+    TCIF_IMAGE      = 0x00000002,
+    TCIF_RTLREADING = 0x00000004,
+    TCIF_TEXT       = 0x00000001,
+    TCIF_PARAM      = 0x00000008,
+    TCIF_STATE      = 0x00000010,
+}
+alias TCHITTESTINFO_FLAGS = uint;
+enum : uint
+{
+    TCHT_NOWHERE     = 0x00000001,
+    TCHT_ONITEM      = 0x00000006,
+    TCHT_ONITEMICON  = 0x00000002,
+    TCHT_ONITEMLABEL = 0x00000004,
+}
+alias COMBOBOXINFO_BUTTON_STATE = uint;
+enum : uint
+{
+    STATE_SYSTEM_INVISIBLE   = 0x00008000,
+    STATE_SYSTEM_PRESSED     = 0x00000008,
+    STATE_SYSTEM_FOCUSABLE   = 0x00100000,
+    STATE_SYSTEM_OFFSCREEN   = 0x00010000,
+    STATE_SYSTEM_UNAVAILABLE = 0x00000001,
+}
+alias NMCUSTOMDRAW_DRAW_STAGE = uint;
+enum : uint
+{
+    CDDS_POSTPAINT     = 0x00000002,
+    CDDS_PREERASE      = 0x00000003,
+    CDDS_PREPAINT      = 0x00000001,
+    CDDS_ITEMPOSTERASE = 0x00010004,
+    CDDS_ITEMPOSTPAINT = 0x00010002,
+    CDDS_ITEMPREERASE  = 0x00010003,
+    CDDS_ITEMPREPAINT  = 0x00010001,
+    CDDS_SUBITEM       = 0x00020000,
+}
+alias MCGRIDINFO_PART = uint;
+enum : uint
+{
+    MCGIP_CALENDARCONTROL = 0x00000000,
+    MCGIP_NEXT            = 0x00000001,
+    MCGIP_PREV            = 0x00000002,
+    MCGIP_FOOTER          = 0x00000003,
+    MCGIP_CALENDAR        = 0x00000004,
+    MCGIP_CALENDARHEADER  = 0x00000005,
+    MCGIP_CALENDARBODY    = 0x00000006,
+    MCGIP_CALENDARROW     = 0x00000007,
+    MCGIP_CALENDARCELL    = 0x00000008,
+}
+alias LVITEMA_GROUP_ID = int;
+enum : int
+{
+    I_GROUPIDCALLBACK = 0xffffffff,
+    I_GROUPIDNONE     = 0xfffffffe,
+}
+alias NMTBHOTITEM_FLAGS = uint;
+enum : uint
+{
+    HICF_ACCELERATOR    = 0x00000004,
+    HICF_ARROWKEYS      = 0x00000002,
+    HICF_DUPACCEL       = 0x00000008,
+    HICF_ENTERING       = 0x00000010,
+    HICF_LEAVING        = 0x00000020,
+    HICF_LMOUSE         = 0x00000080,
+    HICF_MOUSE          = 0x00000001,
+    HICF_OTHER          = 0x00000000,
+    HICF_RESELECT       = 0x00000040,
+    HICF_TOGGLEDROPDOWN = 0x00000100,
+}
+alias TOOLTIP_FLAGS = uint;
+enum : uint
+{
+    TTF_IDISHWND    = 0x00000001,
+    TTF_CENTERTIP   = 0x00000002,
+    TTF_RTLREADING  = 0x00000004,
+    TTF_SUBCLASS    = 0x00000010,
+    TTF_TRACK       = 0x00000020,
+    TTF_ABSOLUTE    = 0x00000080,
+    TTF_TRANSPARENT = 0x00000100,
+    TTF_PARSELINKS  = 0x00001000,
+    TTF_DI_SETITEM  = 0x00008000,
+}
+alias LVTILEVIEWINFO_FLAGS = uint;
+enum : uint
+{
+    LVTVIF_AUTOSIZE    = 0x00000000,
+    LVTVIF_FIXEDWIDTH  = 0x00000001,
+    LVTVIF_FIXEDHEIGHT = 0x00000002,
+    LVTVIF_FIXEDSIZE   = 0x00000003,
+}
+alias LVTILEVIEWINFO_MASK = uint;
+enum : uint
+{
+    LVTVIM_TILESIZE    = 0x00000001,
+    LVTVIM_COLUMNS     = 0x00000002,
+    LVTVIM_LABELMARGIN = 0x00000004,
+}
+alias NMPGSCROLL_DIR = int;
+enum : int
+{
+    PGF_SCROLLDOWN  = 0x00000002,
+    PGF_SCROLLLEFT  = 0x00000004,
+    PGF_SCROLLRIGHT = 0x00000008,
+    PGF_SCROLLUP    = 0x00000001,
+}
+alias LVCOLUMNW_MASK = uint;
+enum : uint
+{
+    LVCF_FMT          = 0x00000001,
+    LVCF_WIDTH        = 0x00000002,
+    LVCF_TEXT         = 0x00000004,
+    LVCF_SUBITEM      = 0x00000008,
+    LVCF_IMAGE        = 0x00000010,
+    LVCF_ORDER        = 0x00000020,
+    LVCF_MINWIDTH     = 0x00000040,
+    LVCF_DEFAULTWIDTH = 0x00000080,
+    LVCF_IDEALWIDTH   = 0x00000100,
+}
+alias LVFINDINFOW_FLAGS = uint;
+enum : uint
+{
+    LVFI_PARAM     = 0x00000001,
+    LVFI_PARTIAL   = 0x00000008,
+    LVFI_STRING    = 0x00000002,
+    LVFI_SUBSTRING = 0x00000004,
+    LVFI_WRAP      = 0x00000020,
+    LVFI_NEARESTXY = 0x00000040,
+}
+alias BUTTON_IMAGELIST_ALIGN = uint;
+enum : uint
+{
+    BUTTON_IMAGELIST_ALIGN_LEFT   = 0x00000000,
+    BUTTON_IMAGELIST_ALIGN_RIGHT  = 0x00000001,
+    BUTTON_IMAGELIST_ALIGN_TOP    = 0x00000002,
+    BUTTON_IMAGELIST_ALIGN_BOTTOM = 0x00000003,
+    BUTTON_IMAGELIST_ALIGN_CENTER = 0x00000004,
+}
+alias TBBUTTONINFOW_MASK = uint;
+enum : uint
+{
+    TBIF_BYINDEX = 0x80000000,
+    TBIF_COMMAND = 0x00000020,
+    TBIF_IMAGE   = 0x00000001,
+    TBIF_LPARAM  = 0x00000010,
+    TBIF_SIZE    = 0x00000040,
+    TBIF_STATE   = 0x00000004,
+    TBIF_STYLE   = 0x00000008,
+    TBIF_TEXT    = 0x00000002,
+}
+alias TBINSERTMARK_FLAGS = uint;
+enum : uint
+{
+    TBIMHT_NONE       = 0x00000000,
+    TBIMHT_AFTER      = 0x00000001,
+    TBIMHT_BACKGROUND = 0x00000002,
+}
+alias LVGROUP_MASK = uint;
+enum : uint
+{
+    LVGF_NONE              = 0x00000000,
+    LVGF_HEADER            = 0x00000001,
+    LVGF_FOOTER            = 0x00000002,
+    LVGF_STATE             = 0x00000004,
+    LVGF_ALIGN             = 0x00000008,
+    LVGF_GROUPID           = 0x00000010,
+    LVGF_SUBTITLE          = 0x00000100,
+    LVGF_TASK              = 0x00000200,
+    LVGF_DESCRIPTIONTOP    = 0x00000400,
+    LVGF_DESCRIPTIONBOTTOM = 0x00000800,
+    LVGF_TITLEIMAGE        = 0x00001000,
+    LVGF_EXTENDEDIMAGE     = 0x00002000,
+    LVGF_ITEMS             = 0x00004000,
+    LVGF_SUBSET            = 0x00008000,
+    LVGF_SUBSETITEMS       = 0x00010000,
+}
+alias BP_PAINTPARAMS_FLAGS = uint;
+enum : uint
+{
+    BPPF_ERASE     = 0x00000001,
+    BPPF_NOCLIP    = 0x00000002,
+    BPPF_NONCLIENT = 0x00000004,
+}
+alias TVHITTESTINFO_FLAGS = uint;
+enum : uint
+{
+    TVHT_ABOVE           = 0x00000100,
+    TVHT_BELOW           = 0x00000200,
+    TVHT_NOWHERE         = 0x00000001,
+    TVHT_ONITEM          = 0x00000046,
+    TVHT_ONITEMBUTTON    = 0x00000010,
+    TVHT_ONITEMICON      = 0x00000002,
+    TVHT_ONITEMINDENT    = 0x00000008,
+    TVHT_ONITEMLABEL     = 0x00000004,
+    TVHT_ONITEMRIGHT     = 0x00000020,
+    TVHT_ONITEMSTATEICON = 0x00000040,
+    TVHT_TOLEFT          = 0x00000800,
+    TVHT_TORIGHT         = 0x00000400,
+}
+alias DRAWITEMSTRUCT_CTL_TYPE = uint;
+enum : uint
+{
+    ODT_BUTTON   = 0x00000004,
+    ODT_COMBOBOX = 0x00000003,
+    ODT_LISTBOX  = 0x00000002,
+    ODT_LISTVIEW = 0x00000066,
+    ODT_MENU     = 0x00000001,
+    ODT_STATIC   = 0x00000005,
+    ODT_TAB      = 0x00000065,
+}
+alias NMPGCALCSIZE_FLAGS = uint;
+enum : uint
+{
+    PGF_CALCHEIGHT = 0x00000002,
+    PGF_CALCWIDTH  = 0x00000001,
+}
+alias MCGRIDINFO_FLAGS = uint;
+enum : uint
+{
+    MCGIF_DATE = 0x00000001,
+    MCGIF_RECT = 0x00000002,
+    MCGIF_NAME = 0x00000004,
+}
+alias LVHITTESTINFO_FLAGS = uint;
+enum : uint
+{
+    LVHT_ABOVE               = 0x00000008,
+    LVHT_BELOW               = 0x00000010,
+    LVHT_NOWHERE             = 0x00000001,
+    LVHT_ONITEMICON          = 0x00000002,
+    LVHT_ONITEMLABEL         = 0x00000004,
+    LVHT_ONITEMSTATEICON     = 0x00000008,
+    LVHT_TOLEFT              = 0x00000040,
+    LVHT_TORIGHT             = 0x00000020,
+    LVHT_EX_GROUP_HEADER     = 0x10000000,
+    LVHT_EX_GROUP_FOOTER     = 0x20000000,
+    LVHT_EX_GROUP_COLLAPSE   = 0x40000000,
+    LVHT_EX_GROUP_BACKGROUND = 0x80000000,
+    LVHT_EX_GROUP_STATEICON  = 0x01000000,
+    LVHT_EX_GROUP_SUBSETLINK = 0x02000000,
+    LVHT_EX_GROUP            = 0xf3000000,
+    LVHT_EX_ONCONTENTS       = 0x04000000,
+    LVHT_EX_FOOTER           = 0x08000000,
+}
+alias INITCOMMONCONTROLSEX_ICC = uint;
+enum : uint
+{
+    ICC_ANIMATE_CLASS      = 0x00000080,
+    ICC_BAR_CLASSES        = 0x00000004,
+    ICC_COOL_CLASSES       = 0x00000400,
+    ICC_DATE_CLASSES       = 0x00000100,
+    ICC_HOTKEY_CLASS       = 0x00000040,
+    ICC_INTERNET_CLASSES   = 0x00000800,
+    ICC_LINK_CLASS         = 0x00008000,
+    ICC_LISTVIEW_CLASSES   = 0x00000001,
+    ICC_NATIVEFNTCTL_CLASS = 0x00002000,
+    ICC_PAGESCROLLER_CLASS = 0x00001000,
+    ICC_PROGRESS_CLASS     = 0x00000020,
+    ICC_STANDARD_CLASSES   = 0x00004000,
+    ICC_TAB_CLASSES        = 0x00000008,
+    ICC_TREEVIEW_CLASSES   = 0x00000002,
+    ICC_UPDOWN_CLASS       = 0x00000010,
+    ICC_USEREX_CLASSES     = 0x00000200,
+    ICC_WIN95_CLASSES      = 0x000000ff,
+}
+alias NMLVCUSTOMDRAW_ITEM_TYPE = uint;
+enum : uint
+{
+    LVCDI_ITEM      = 0x00000000,
+    LVCDI_GROUP     = 0x00000001,
+    LVCDI_ITEMSLIST = 0x00000002,
+}
+alias NMTBDISPINFOW_MASK = uint;
+enum : uint
+{
+    TBNF_IMAGE      = 0x00000001,
+    TBNF_TEXT       = 0x00000002,
+    TBNF_DI_SETITEM = 0x10000000,
+}
+alias NMLVEMPTYMARKUP_FLAGS = uint;
+enum : uint
+{
+    EMF_CENTERED = 0x00000001,
+}
+alias LVFOOTERITEM_MASK = uint;
+enum : uint
+{
+    LVFIF_TEXT  = 0x00000001,
+    LVFIF_STATE = 0x00000002,
+}
+alias IMAGELIST_CREATION_FLAGS = uint;
+enum : uint
+{
+    ILC_MASK             = 0x00000001,
+    ILC_COLOR            = 0x00000000,
+    ILC_COLORDDB         = 0x000000fe,
+    ILC_COLOR4           = 0x00000004,
+    ILC_COLOR8           = 0x00000008,
+    ILC_COLOR16          = 0x00000010,
+    ILC_COLOR24          = 0x00000018,
+    ILC_COLOR32          = 0x00000020,
+    ILC_PALETTE          = 0x00000800,
+    ILC_MIRROR           = 0x00002000,
+    ILC_PERITEMMIRROR    = 0x00008000,
+    ILC_ORIGINALSIZE     = 0x00010000,
+    ILC_HIGHQUALITYSCALE = 0x00020000,
+}
+alias DTTOPTS_FLAGS = uint;
+enum : uint
+{
+    DTT_TEXTCOLOR    = 0x00000001,
+    DTT_BORDERCOLOR  = 0x00000002,
+    DTT_SHADOWCOLOR  = 0x00000004,
+    DTT_SHADOWTYPE   = 0x00000008,
+    DTT_SHADOWOFFSET = 0x00000010,
+    DTT_BORDERSIZE   = 0x00000020,
+    DTT_FONTPROP     = 0x00000040,
+    DTT_COLORPROP    = 0x00000080,
+    DTT_STATEID      = 0x00000100,
+    DTT_CALCRECT     = 0x00000200,
+    DTT_APPLYOVERLAY = 0x00000400,
+    DTT_GLOWSIZE     = 0x00000800,
+    DTT_CALLBACK     = 0x00001000,
+    DTT_COMPOSITED   = 0x00002000,
+    DTT_VALIDBITS    = 0x00002fff,
+}
+alias NMLVGETINFOTIP_FLAGS = uint;
+enum : uint
+{
+    LVGIT_UNFOLDED = 0x00000001,
+    LVGIT_ZERO     = 0x00000000,
+}
+alias LIST_VIEW_ITEM_STATE_FLAGS = uint;
+enum : uint
+{
+    LVIS_FOCUSED        = 0x00000001,
+    LVIS_SELECTED       = 0x00000002,
+    LVIS_CUT            = 0x00000004,
+    LVIS_DROPHILITED    = 0x00000008,
+    LVIS_GLOW           = 0x00000010,
+    LVIS_ACTIVATING     = 0x00000020,
+    LVIS_OVERLAYMASK    = 0x00000f00,
+    LVIS_STATEIMAGEMASK = 0x0000f000,
+}
+alias NM_TREEVIEW_ACTION = uint;
+enum : uint
+{
+    TVE_COLLAPSE      = 0x00000001,
+    TVE_EXPAND        = 0x00000002,
+    TVE_TOGGLE        = 0x00000003,
+    TVE_EXPANDPARTIAL = 0x00004000,
+    TVE_COLLAPSERESET = 0x00008000,
+    TVC_UNKNOWN       = 0x00000000,
+    TVC_BYMOUSE       = 0x00000001,
+    TVC_BYKEYBOARD    = 0x00000002,
+}
+alias MONTH_CALDENDAR_MESSAGES_VIEW = uint;
+enum : uint
+{
+    MCMV_MONTH   = 0x00000000,
+    MCMV_YEAR    = 0x00000001,
+    MCMV_DECADE  = 0x00000002,
+    MCMV_CENTURY = 0x00000003,
+    MCMV_MAX     = 0x00000003,
+}
+alias TAB_CONTROL_ITEM_STATE = uint;
+enum : uint
+{
+    TCIS_BUTTONPRESSED = 0x00000001,
+    TCIS_HIGHLIGHTED   = 0x00000002,
+}
+alias TREE_VIEW_ITEM_STATE_FLAGS = uint;
+enum : uint
+{
+    TVIS_SELECTED       = 0x00000002,
+    TVIS_CUT            = 0x00000004,
+    TVIS_DROPHILITED    = 0x00000008,
+    TVIS_BOLD           = 0x00000010,
+    TVIS_EXPANDED       = 0x00000020,
+    TVIS_EXPANDEDONCE   = 0x00000040,
+    TVIS_EXPANDPARTIAL  = 0x00000080,
+    TVIS_OVERLAYMASK    = 0x00000f00,
+    TVIS_STATEIMAGEMASK = 0x0000f000,
+    TVIS_USERMASK       = 0x0000f000,
+    TVIS_EX_FLAT        = 0x00000001,
+    TVIS_EX_DISABLED    = 0x00000002,
+    TVIS_EX_ALL         = 0x00000002,
+}
+alias HEADER_CONTROL_FORMAT_FLAGS = int;
+enum : int
+{
+    HDF_LEFT            = 0x00000000,
+    HDF_RIGHT           = 0x00000001,
+    HDF_CENTER          = 0x00000002,
+    HDF_JUSTIFYMASK     = 0x00000003,
+    HDF_RTLREADING      = 0x00000004,
+    HDF_BITMAP          = 0x00002000,
+    HDF_STRING          = 0x00004000,
+    HDF_OWNERDRAW       = 0x00008000,
+    HDF_IMAGE           = 0x00000800,
+    HDF_BITMAP_ON_RIGHT = 0x00001000,
+    HDF_SORTUP          = 0x00000400,
+    HDF_SORTDOWN        = 0x00000200,
+    HDF_CHECKBOX        = 0x00000040,
+    HDF_CHECKED         = 0x00000080,
+    HDF_FIXEDWIDTH      = 0x00000100,
+    HDF_SPLITBUTTON     = 0x01000000,
+}
+alias HEADER_CONTROL_FORMAT_TYPE = uint;
+enum : uint
+{
+    HDFT_ISSTRING   = 0x00000000,
+    HDFT_ISNUMBER   = 0x00000001,
+    HDFT_ISDATE     = 0x00000002,
+    HDFT_HASNOVALUE = 0x00008000,
+}
+alias HEADER_CONTROL_FORMAT_STATE = uint;
+enum : uint
+{
+    HDIS_FOCUSED = 0x00000001,
+}
+alias HEADER_HITTEST_INFO_FLAGS = uint;
+enum : uint
+{
+    HHT_NOWHERE         = 0x00000001,
+    HHT_ONHEADER        = 0x00000002,
+    HHT_ONDIVIDER       = 0x00000004,
+    HHT_ONDIVOPEN       = 0x00000008,
+    HHT_ONFILTER        = 0x00000010,
+    HHT_ONFILTERBUTTON  = 0x00000020,
+    HHT_ABOVE           = 0x00000100,
+    HHT_BELOW           = 0x00000200,
+    HHT_TORIGHT         = 0x00000400,
+    HHT_TOLEFT          = 0x00000800,
+    HHT_ONITEMSTATEICON = 0x00001000,
+    HHT_ONDROPDOWN      = 0x00002000,
+    HHT_ONOVERFLOW      = 0x00004000,
+}
+alias IMAGE_LIST_WRITE_STREAM_FLAGS = uint;
+enum : uint
+{
+    ILP_NORMAL    = 0x00000000,
+    ILP_DOWNLEVEL = 0x00000001,
+}
+alias LIST_ITEM_FLAGS = uint;
+enum : uint
+{
+    LIF_ITEMINDEX = 0x00000001,
+    LIF_STATE     = 0x00000002,
+    LIF_ITEMID    = 0x00000004,
+    LIF_URL       = 0x00000008,
+}
+alias LIST_ITEM_STATE_FLAGS = uint;
+enum : uint
+{
+    LIS_FOCUSED       = 0x00000001,
+    LIS_ENABLED       = 0x00000002,
+    LIS_VISITED       = 0x00000004,
+    LIS_HOTTRACK      = 0x00000008,
+    LIS_DEFAULTCOLORS = 0x00000010,
+}
+alias LIST_VIEW_BACKGROUND_IMAGE_FLAGS = uint;
+enum : uint
+{
+    LVBKIF_SOURCE_NONE     = 0x00000000,
+    LVBKIF_SOURCE_HBITMAP  = 0x00000001,
+    LVBKIF_SOURCE_URL      = 0x00000002,
+    LVBKIF_SOURCE_MASK     = 0x00000003,
+    LVBKIF_STYLE_NORMAL    = 0x00000000,
+    LVBKIF_STYLE_TILE      = 0x00000010,
+    LVBKIF_STYLE_MASK      = 0x00000010,
+    LVBKIF_FLAG_TILEOFFSET = 0x00000100,
+    LVBKIF_TYPE_WATERMARK  = 0x10000000,
+    LVBKIF_FLAG_ALPHABLEND = 0x20000000,
+}
+alias LIST_VIEW_GROUP_STATE_FLAGS = uint;
+enum : uint
+{
+    LVGS_NORMAL            = 0x00000000,
+    LVGS_COLLAPSED         = 0x00000001,
+    LVGS_HIDDEN            = 0x00000002,
+    LVGS_NOHEADER          = 0x00000004,
+    LVGS_COLLAPSIBLE       = 0x00000008,
+    LVGS_FOCUSED           = 0x00000010,
+    LVGS_SELECTED          = 0x00000020,
+    LVGS_SUBSETED          = 0x00000040,
+    LVGS_SUBSETLINKFOCUSED = 0x00000080,
+}
+alias LIST_VIEW_GROUP_ALIGN_FLAGS = uint;
+enum : uint
+{
+    LVGA_HEADER_LEFT   = 0x00000001,
+    LVGA_HEADER_CENTER = 0x00000002,
+    LVGA_HEADER_RIGHT  = 0x00000004,
+    LVGA_FOOTER_LEFT   = 0x00000008,
+    LVGA_FOOTER_CENTER = 0x00000010,
+    LVGA_FOOTER_RIGHT  = 0x00000020,
+}
+alias LIST_VIEW_ITEM_COLUMN_FORMAT_FLAGS = int;
+enum : int
+{
+    LVCFMT_LINE_BREAK         = 0x00100000,
+    LVCFMT_FILL               = 0x00200000,
+    LVCFMT_WRAP               = 0x00400000,
+    LVCFMT_NO_TITLE           = 0x00800000,
+    LVCFMT_TILE_PLACEMENTMASK = 0x00300000,
+}
+alias MCHITTESTINFO_HIT_FLAGS = uint;
+enum : uint
+{
+    MCHT_TITLE            = 0x00010000,
+    MCHT_CALENDAR         = 0x00020000,
+    MCHT_TODAYLINK        = 0x00030000,
+    MCHT_CALENDARCONTROL  = 0x00100000,
+    MCHT_NEXT             = 0x01000000,
+    MCHT_PREV             = 0x02000000,
+    MCHT_NOWHERE          = 0x00000000,
+    MCHT_TITLEBK          = 0x00010000,
+    MCHT_TITLEMONTH       = 0x00010001,
+    MCHT_TITLEYEAR        = 0x00010002,
+    MCHT_TITLEBTNNEXT     = 0x01010003,
+    MCHT_TITLEBTNPREV     = 0x02010003,
+    MCHT_CALENDARBK       = 0x00020000,
+    MCHT_CALENDARDATE     = 0x00020001,
+    MCHT_CALENDARDATENEXT = 0x01020001,
+    MCHT_CALENDARDATEPREV = 0x02020001,
+    MCHT_CALENDARDAY      = 0x00020002,
+    MCHT_CALENDARWEEKNUM  = 0x00020003,
+    MCHT_CALENDARDATEMIN  = 0x00020004,
+    MCHT_CALENDARDATEMAX  = 0x00020005,
+}
+alias NMCUSTOMDRAW_DRAW_STATE_FLAGS = uint;
+enum : uint
+{
+    CDIS_SELECTED         = 0x00000001,
+    CDIS_GRAYED           = 0x00000002,
+    CDIS_DISABLED         = 0x00000004,
+    CDIS_CHECKED          = 0x00000008,
+    CDIS_FOCUS            = 0x00000010,
+    CDIS_DEFAULT          = 0x00000020,
+    CDIS_HOT              = 0x00000040,
+    CDIS_MARKED           = 0x00000080,
+    CDIS_INDETERMINATE    = 0x00000100,
+    CDIS_SHOWKEYBOARDCUES = 0x00000200,
+    CDIS_NEARHOT          = 0x00000400,
+    CDIS_OTHERSIDEHOT     = 0x00000800,
+    CDIS_DROPHILITED      = 0x00001000,
+}
+alias NMDATETIMECHANGE_FLAGS = uint;
+enum : uint
+{
+    GDT_NONE  = 0x00000001,
+    GDT_VALID = 0x00000000,
+}
+alias LIST_VIEW_ITEM_FLAGS = uint;
+enum : uint
+{
+    LVIF_TEXT        = 0x00000001,
+    LVIF_IMAGE       = 0x00000002,
+    LVIF_PARAM       = 0x00000004,
+    LVIF_STATE       = 0x00000008,
+    LVIF_INDENT      = 0x00000010,
+    LVIF_NORECOMPUTE = 0x00000800,
+    LVIF_GROUPID     = 0x00000100,
+    LVIF_COLUMNS     = 0x00000200,
+    LVIF_COLFMT      = 0x00010000,
+    LVIF_DI_SETITEM  = 0x00001000,
+}
+alias ODA_FLAGS = uint;
+enum : uint
+{
+    ODA_DRAWENTIRE = 0x00000001,
+    ODA_SELECT     = 0x00000002,
+    ODA_FOCUS      = 0x00000004,
+}
+alias ODS_FLAGS = uint;
+enum : uint
+{
+    ODS_SELECTED     = 0x00000001,
+    ODS_GRAYED       = 0x00000002,
+    ODS_DISABLED     = 0x00000004,
+    ODS_CHECKED      = 0x00000008,
+    ODS_FOCUS        = 0x00000010,
+    ODS_DEFAULT      = 0x00000020,
+    ODS_COMBOBOXEDIT = 0x00001000,
+    ODS_HOTLIGHT     = 0x00000040,
+    ODS_INACTIVE     = 0x00000080,
+    ODS_NOACCEL      = 0x00000100,
+    ODS_NOFOCUSRECT  = 0x00000200,
+}
+alias HIT_TEST_BACKGROUND_OPTIONS = uint;
+enum : uint
+{
+    HTTB_BACKGROUNDSEG         = 0x00000000,
+    HTTB_FIXEDBORDER           = 0x00000002,
+    HTTB_CAPTION               = 0x00000004,
+    HTTB_RESIZINGBORDER_LEFT   = 0x00000010,
+    HTTB_RESIZINGBORDER_TOP    = 0x00000020,
+    HTTB_RESIZINGBORDER_RIGHT  = 0x00000040,
+    HTTB_RESIZINGBORDER_BOTTOM = 0x00000080,
+    HTTB_RESIZINGBORDER        = 0x000000f0,
+    HTTB_SIZINGTEMPLATE        = 0x00000100,
+    HTTB_SYSTEMSIZINGMARGINS   = 0x00000200,
+}
+alias TASKDIALOG_COMMON_BUTTON_FLAGS = int;
+enum : int
+{
+    TDCBF_OK_BUTTON       = 0x00000001,
+    TDCBF_YES_BUTTON      = 0x00000002,
+    TDCBF_NO_BUTTON       = 0x00000004,
+    TDCBF_CANCEL_BUTTON   = 0x00000008,
+    TDCBF_RETRY_BUTTON    = 0x00000010,
+    TDCBF_CLOSE_BUTTON    = 0x00000020,
+    TDCBF_ABORT_BUTTON    = 0x00010000,
+    TDCBF_IGNORE_BUTTON   = 0x00020000,
+    TDCBF_TRYAGAIN_BUTTON = 0x00040000,
+    TDCBF_CONTINUE_BUTTON = 0x00080000,
+    TDCBF_HELP_BUTTON     = 0x00100000,
+}
+alias TVITEMPART = int;
+enum : int
+{
+    TVGIPR_BUTTON = 0x00000001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ne-commctrl-ec_endofline))], [])
+alias EC_ENDOFLINE = int;
+enum : int
+{
+    EC_ENDOFLINE_DETECTFROMCONTENT = 0x00000000,
+    EC_ENDOFLINE_CRLF              = 0x00000001,
+    EC_ENDOFLINE_CR                = 0x00000002,
+    EC_ENDOFLINE_LF                = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ne-commctrl-ec_searchweb_entrypoint))], [])
+alias EC_SEARCHWEB_ENTRYPOINT = int;
+enum : int
+{
+    EC_SEARCHWEB_ENTRYPOINT_EXTERNAL    = 0x00000000,
+    EC_SEARCHWEB_ENTRYPOINT_CONTEXTMENU = 0x00000001,
+}
+alias TASKDIALOG_FLAGS = int;
+enum : int
+{
+    TDF_ENABLE_HYPERLINKS           = 0x00000001,
+    TDF_USE_HICON_MAIN              = 0x00000002,
+    TDF_USE_HICON_FOOTER            = 0x00000004,
+    TDF_ALLOW_DIALOG_CANCELLATION   = 0x00000008,
+    TDF_USE_COMMAND_LINKS           = 0x00000010,
+    TDF_USE_COMMAND_LINKS_NO_ICON   = 0x00000020,
+    TDF_EXPAND_FOOTER_AREA          = 0x00000040,
+    TDF_EXPANDED_BY_DEFAULT         = 0x00000080,
+    TDF_VERIFICATION_FLAG_CHECKED   = 0x00000100,
+    TDF_SHOW_PROGRESS_BAR           = 0x00000200,
+    TDF_SHOW_MARQUEE_PROGRESS_BAR   = 0x00000400,
+    TDF_CALLBACK_TIMER              = 0x00000800,
+    TDF_POSITION_RELATIVE_TO_WINDOW = 0x00001000,
+    TDF_RTL_LAYOUT                  = 0x00002000,
+    TDF_NO_DEFAULT_RADIO_BUTTON     = 0x00004000,
+    TDF_CAN_BE_MINIMIZED            = 0x00008000,
+    TDF_NO_SET_FOREGROUND           = 0x00010000,
+    TDF_SIZE_TO_CONTENT             = 0x01000000,
+}
+alias TASKDIALOG_MESSAGES = int;
+enum : int
+{
+    TDM_NAVIGATE_PAGE                       = 0x00000465,
+    TDM_CLICK_BUTTON                        = 0x00000466,
+    TDM_SET_MARQUEE_PROGRESS_BAR            = 0x00000467,
+    TDM_SET_PROGRESS_BAR_STATE              = 0x00000468,
+    TDM_SET_PROGRESS_BAR_RANGE              = 0x00000469,
+    TDM_SET_PROGRESS_BAR_POS                = 0x0000046a,
+    TDM_SET_PROGRESS_BAR_MARQUEE            = 0x0000046b,
+    TDM_SET_ELEMENT_TEXT                    = 0x0000046c,
+    TDM_CLICK_RADIO_BUTTON                  = 0x0000046e,
+    TDM_ENABLE_BUTTON                       = 0x0000046f,
+    TDM_ENABLE_RADIO_BUTTON                 = 0x00000470,
+    TDM_CLICK_VERIFICATION                  = 0x00000471,
+    TDM_UPDATE_ELEMENT_TEXT                 = 0x00000472,
+    TDM_SET_BUTTON_ELEVATION_REQUIRED_STATE = 0x00000473,
+    TDM_UPDATE_ICON                         = 0x00000474,
+}
+alias TASKDIALOG_NOTIFICATIONS = int;
+enum : int
+{
+    TDN_CREATED                = 0x00000000,
+    TDN_NAVIGATED              = 0x00000001,
+    TDN_BUTTON_CLICKED         = 0x00000002,
+    TDN_HYPERLINK_CLICKED      = 0x00000003,
+    TDN_TIMER                  = 0x00000004,
+    TDN_DESTROYED              = 0x00000005,
+    TDN_RADIO_BUTTON_CLICKED   = 0x00000006,
+    TDN_DIALOG_CONSTRUCTED     = 0x00000007,
+    TDN_VERIFICATION_CLICKED   = 0x00000008,
+    TDN_HELP                   = 0x00000009,
+    TDN_EXPANDO_BUTTON_CLICKED = 0x0000000a,
+}
+alias TASKDIALOG_ELEMENTS = int;
+enum : int
+{
+    TDE_CONTENT              = 0x00000000,
+    TDE_EXPANDED_INFORMATION = 0x00000001,
+    TDE_FOOTER               = 0x00000002,
+    TDE_MAIN_INSTRUCTION     = 0x00000003,
+}
+alias TASKDIALOG_ICON_ELEMENTS = int;
+enum : int
+{
+    TDIE_ICON_MAIN   = 0x00000000,
+    TDIE_ICON_FOOTER = 0x00000001,
+}
+alias _LI_METRIC = int;
+enum : int
+{
+    LIM_SMALL = 0x00000000,
+    LIM_LARGE = 0x00000001,
+}
+alias TA_PROPERTY = int;
+enum : int
+{
+    TAP_FLAGS              = 0x00000000,
+    TAP_TRANSFORMCOUNT     = 0x00000001,
+    TAP_STAGGERDELAY       = 0x00000002,
+    TAP_STAGGERDELAYCAP    = 0x00000003,
+    TAP_STAGGERDELAYFACTOR = 0x00000004,
+    TAP_ZORDER             = 0x00000005,
+}
+alias TA_PROPERTY_FLAG = int;
+enum : int
+{
+    TAPF_NONE            = 0x00000000,
+    TAPF_HASSTAGGER      = 0x00000001,
+    TAPF_ISRTLAWARE      = 0x00000002,
+    TAPF_ALLOWCOLLECTION = 0x00000004,
+    TAPF_HASBACKGROUND   = 0x00000008,
+    TAPF_HASPERSPECTIVE  = 0x00000010,
+}
+alias TA_TRANSFORM_TYPE = int;
+enum : int
+{
+    TATT_TRANSLATE_2D = 0x00000000,
+    TATT_SCALE_2D     = 0x00000001,
+    TATT_OPACITY      = 0x00000002,
+    TATT_CLIP         = 0x00000003,
+}
+alias TA_TRANSFORM_FLAG = int;
+enum : int
+{
+    TATF_NONE              = 0x00000000,
+    TATF_TARGETVALUES_USER = 0x00000001,
+    TATF_HASINITIALVALUES  = 0x00000002,
+    TATF_HASORIGINVALUES   = 0x00000004,
+}
+alias TA_TIMINGFUNCTION_TYPE = int;
+enum : int
+{
+    TTFT_UNDEFINED    = 0x00000000,
+    TTFT_CUBIC_BEZIER = 0x00000001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uxtheme/ne-uxtheme-themesize))], [])
+alias THEMESIZE = int;
+enum : int
+{
+    TS_MIN  = 0x00000000,
+    TS_TRUE = 0x00000001,
+    TS_DRAW = 0x00000002,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uxtheme/ne-uxtheme-propertyorigin))], [])
+alias PROPERTYORIGIN = int;
+enum : int
+{
+    PO_STATE    = 0x00000000,
+    PO_PART     = 0x00000001,
+    PO_CLASS    = 0x00000002,
+    PO_GLOBAL   = 0x00000003,
+    PO_NOTFOUND = 0x00000004,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uxtheme/ne-uxtheme-windowthemeattributetype))], [])
+alias WINDOWTHEMEATTRIBUTETYPE = int;
+enum : int
+{
+    WTA_NONCLIENT = 0x00000001,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uxtheme/ne-uxtheme-bp_bufferformat))], [])
+alias BP_BUFFERFORMAT = int;
+enum : int
+{
+    BPBF_COMPATIBLEBITMAP = 0x00000000,
+    BPBF_DIB              = 0x00000001,
+    BPBF_TOPDOWNDIB       = 0x00000002,
+    BPBF_TOPDOWNMONODIB   = 0x00000003,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uxtheme/ne-uxtheme-bp_animationstyle))], [])
+alias BP_ANIMATIONSTYLE = int;
+enum : int
+{
+    BPAS_NONE   = 0x00000000,
+    BPAS_LINEAR = 0x00000001,
+    BPAS_CUBIC  = 0x00000002,
+    BPAS_SINE   = 0x00000003,
+}
+alias AEROWIZARDPARTS = int;
+enum : int
+{
+    AW_TITLEBAR    = 0x00000001,
+    AW_HEADERAREA  = 0x00000002,
+    AW_CONTENTAREA = 0x00000003,
+    AW_COMMANDAREA = 0x00000004,
+    AW_BUTTON      = 0x00000005,
+}
+alias TITLEBARSTATES = int;
+enum : int
+{
+    AW_S_TITLEBAR_ACTIVE   = 0x00000001,
+    AW_S_TITLEBAR_INACTIVE = 0x00000002,
+}
+alias HEADERAREASTATES = int;
+enum : int
+{
+    AW_S_HEADERAREA_NOMARGIN = 0x00000001,
+}
+alias CONTENTAREASTATES = int;
+enum : int
+{
+    AW_S_CONTENTAREA_NOMARGIN = 0x00000001,
+}
+alias BUTTONPARTS = int;
+enum : int
+{
+    BP_PUSHBUTTON             = 0x00000001,
+    BP_RADIOBUTTON            = 0x00000002,
+    BP_CHECKBOX               = 0x00000003,
+    BP_GROUPBOX               = 0x00000004,
+    BP_USERBUTTON             = 0x00000005,
+    BP_COMMANDLINK            = 0x00000006,
+    BP_COMMANDLINKGLYPH       = 0x00000007,
+    BP_RADIOBUTTON_HCDISABLED = 0x00000008,
+    BP_CHECKBOX_HCDISABLED    = 0x00000009,
+    BP_GROUPBOX_HCDISABLED    = 0x0000000a,
+    BP_PUSHBUTTONDROPDOWN     = 0x0000000b,
+}
+alias PUSHBUTTONSTATES = int;
+enum : int
+{
+    PBS_NORMAL              = 0x00000001,
+    PBS_HOT                 = 0x00000002,
+    PBS_PRESSED             = 0x00000003,
+    PBS_DISABLED            = 0x00000004,
+    PBS_DEFAULTED           = 0x00000005,
+    PBS_DEFAULTED_ANIMATING = 0x00000006,
+}
+alias RADIOBUTTONSTATES = int;
+enum : int
+{
+    RBS_UNCHECKEDNORMAL   = 0x00000001,
+    RBS_UNCHECKEDHOT      = 0x00000002,
+    RBS_UNCHECKEDPRESSED  = 0x00000003,
+    RBS_UNCHECKEDDISABLED = 0x00000004,
+    RBS_CHECKEDNORMAL     = 0x00000005,
+    RBS_CHECKEDHOT        = 0x00000006,
+    RBS_CHECKEDPRESSED    = 0x00000007,
+    RBS_CHECKEDDISABLED   = 0x00000008,
+}
+alias CHECKBOXSTATES = int;
+enum : int
+{
+    CBS_UNCHECKEDNORMAL   = 0x00000001,
+    CBS_UNCHECKEDHOT      = 0x00000002,
+    CBS_UNCHECKEDPRESSED  = 0x00000003,
+    CBS_UNCHECKEDDISABLED = 0x00000004,
+    CBS_CHECKEDNORMAL     = 0x00000005,
+    CBS_CHECKEDHOT        = 0x00000006,
+    CBS_CHECKEDPRESSED    = 0x00000007,
+    CBS_CHECKEDDISABLED   = 0x00000008,
+    CBS_MIXEDNORMAL       = 0x00000009,
+    CBS_MIXEDHOT          = 0x0000000a,
+    CBS_MIXEDPRESSED      = 0x0000000b,
+    CBS_MIXEDDISABLED     = 0x0000000c,
+    CBS_IMPLICITNORMAL    = 0x0000000d,
+    CBS_IMPLICITHOT       = 0x0000000e,
+    CBS_IMPLICITPRESSED   = 0x0000000f,
+    CBS_IMPLICITDISABLED  = 0x00000010,
+    CBS_EXCLUDEDNORMAL    = 0x00000011,
+    CBS_EXCLUDEDHOT       = 0x00000012,
+    CBS_EXCLUDEDPRESSED   = 0x00000013,
+    CBS_EXCLUDEDDISABLED  = 0x00000014,
+}
+alias GROUPBOXSTATES = int;
+enum : int
+{
+    GBS_NORMAL   = 0x00000001,
+    GBS_DISABLED = 0x00000002,
+}
+alias COMMANDLINKSTATES = int;
+enum : int
+{
+    CMDLS_NORMAL              = 0x00000001,
+    CMDLS_HOT                 = 0x00000002,
+    CMDLS_PRESSED             = 0x00000003,
+    CMDLS_DISABLED            = 0x00000004,
+    CMDLS_DEFAULTED           = 0x00000005,
+    CMDLS_DEFAULTED_ANIMATING = 0x00000006,
+}
+alias COMMANDLINKGLYPHSTATES = int;
+enum : int
+{
+    CMDLGS_NORMAL    = 0x00000001,
+    CMDLGS_HOT       = 0x00000002,
+    CMDLGS_PRESSED   = 0x00000003,
+    CMDLGS_DISABLED  = 0x00000004,
+    CMDLGS_DEFAULTED = 0x00000005,
+}
+alias PUSHBUTTONDROPDOWNSTATES = int;
+enum : int
+{
+    PBDDS_NORMAL   = 0x00000001,
+    PBDDS_DISABLED = 0x00000002,
+}
+alias COMBOBOXPARTS = int;
+enum : int
+{
+    CP_DROPDOWNBUTTON        = 0x00000001,
+    CP_BACKGROUND            = 0x00000002,
+    CP_TRANSPARENTBACKGROUND = 0x00000003,
+    CP_BORDER                = 0x00000004,
+    CP_READONLY              = 0x00000005,
+    CP_DROPDOWNBUTTONRIGHT   = 0x00000006,
+    CP_DROPDOWNBUTTONLEFT    = 0x00000007,
+    CP_CUEBANNER             = 0x00000008,
+    CP_DROPDOWNITEM          = 0x00000009,
+}
+alias COMBOBOXSTYLESTATES = int;
+enum : int
+{
+    CBXS_NORMAL   = 0x00000001,
+    CBXS_HOT      = 0x00000002,
+    CBXS_PRESSED  = 0x00000003,
+    CBXS_DISABLED = 0x00000004,
+}
+alias DROPDOWNBUTTONRIGHTSTATES = int;
+enum : int
+{
+    CBXSR_NORMAL   = 0x00000001,
+    CBXSR_HOT      = 0x00000002,
+    CBXSR_PRESSED  = 0x00000003,
+    CBXSR_DISABLED = 0x00000004,
+}
+alias DROPDOWNBUTTONLEFTSTATES = int;
+enum : int
+{
+    CBXSL_NORMAL   = 0x00000001,
+    CBXSL_HOT      = 0x00000002,
+    CBXSL_PRESSED  = 0x00000003,
+    CBXSL_DISABLED = 0x00000004,
+}
+alias TRANSPARENTBACKGROUNDSTATES = int;
+enum : int
+{
+    CBTBS_NORMAL   = 0x00000001,
+    CBTBS_HOT      = 0x00000002,
+    CBTBS_DISABLED = 0x00000003,
+    CBTBS_FOCUSED  = 0x00000004,
+}
+alias BORDERSTATES = int;
+enum : int
+{
+    CBB_NORMAL   = 0x00000001,
+    CBB_HOT      = 0x00000002,
+    CBB_FOCUSED  = 0x00000003,
+    CBB_DISABLED = 0x00000004,
+}
+alias READONLYSTATES = int;
+enum : int
+{
+    CBRO_NORMAL   = 0x00000001,
+    CBRO_HOT      = 0x00000002,
+    CBRO_PRESSED  = 0x00000003,
+    CBRO_DISABLED = 0x00000004,
+}
+alias CUEBANNERSTATES = int;
+enum : int
+{
+    CBCB_NORMAL   = 0x00000001,
+    CBCB_HOT      = 0x00000002,
+    CBCB_PRESSED  = 0x00000003,
+    CBCB_DISABLED = 0x00000004,
+}
+alias DROPDOWNITEMSTATES = int;
+enum : int
+{
+    CBDI_NORMAL      = 0x00000001,
+    CBDI_HIGHLIGHTED = 0x00000002,
+}
+alias COMMUNICATIONSPARTS = int;
+enum : int
+{
+    CSST_TAB = 0x00000001,
+}
+alias TABSTATES = int;
+enum : int
+{
+    CSTB_NORMAL   = 0x00000001,
+    CSTB_HOT      = 0x00000002,
+    CSTB_SELECTED = 0x00000003,
+}
+alias CONTROLPANELPARTS = int;
+enum : int
+{
+    CPANEL_NAVIGATIONPANE      = 0x00000001,
+    CPANEL_CONTENTPANE         = 0x00000002,
+    CPANEL_NAVIGATIONPANELABEL = 0x00000003,
+    CPANEL_CONTENTPANELABEL    = 0x00000004,
+    CPANEL_TITLE               = 0x00000005,
+    CPANEL_BODYTEXT            = 0x00000006,
+    CPANEL_HELPLINK            = 0x00000007,
+    CPANEL_TASKLINK            = 0x00000008,
+    CPANEL_GROUPTEXT           = 0x00000009,
+    CPANEL_CONTENTLINK         = 0x0000000a,
+    CPANEL_SECTIONTITLELINK    = 0x0000000b,
+    CPANEL_LARGECOMMANDAREA    = 0x0000000c,
+    CPANEL_SMALLCOMMANDAREA    = 0x0000000d,
+    CPANEL_BUTTON              = 0x0000000e,
+    CPANEL_MESSAGETEXT         = 0x0000000f,
+    CPANEL_NAVIGATIONPANELINE  = 0x00000010,
+    CPANEL_CONTENTPANELINE     = 0x00000011,
+    CPANEL_BANNERAREA          = 0x00000012,
+    CPANEL_BODYTITLE           = 0x00000013,
+}
+alias HELPLINKSTATES = int;
+enum : int
+{
+    CPHL_NORMAL   = 0x00000001,
+    CPHL_HOT      = 0x00000002,
+    CPHL_PRESSED  = 0x00000003,
+    CPHL_DISABLED = 0x00000004,
+}
+alias TASKLINKSTATES = int;
+enum : int
+{
+    CPTL_NORMAL   = 0x00000001,
+    CPTL_HOT      = 0x00000002,
+    CPTL_PRESSED  = 0x00000003,
+    CPTL_DISABLED = 0x00000004,
+    CPTL_PAGE     = 0x00000005,
+}
+alias CONTENTLINKSTATES = int;
+enum : int
+{
+    CPCL_NORMAL   = 0x00000001,
+    CPCL_HOT      = 0x00000002,
+    CPCL_PRESSED  = 0x00000003,
+    CPCL_DISABLED = 0x00000004,
+}
+alias SECTIONTITLELINKSTATES = int;
+enum : int
+{
+    CPSTL_NORMAL = 0x00000001,
+    CPSTL_HOT    = 0x00000002,
+}
+alias DATEPICKERPARTS = int;
+enum : int
+{
+    DP_DATETEXT                = 0x00000001,
+    DP_DATEBORDER              = 0x00000002,
+    DP_SHOWCALENDARBUTTONRIGHT = 0x00000003,
+}
+alias DATETEXTSTATES = int;
+enum : int
+{
+    DPDT_NORMAL   = 0x00000001,
+    DPDT_DISABLED = 0x00000002,
+    DPDT_SELECTED = 0x00000003,
+}
+alias DATEBORDERSTATES = int;
+enum : int
+{
+    DPDB_NORMAL   = 0x00000001,
+    DPDB_HOT      = 0x00000002,
+    DPDB_FOCUSED  = 0x00000003,
+    DPDB_DISABLED = 0x00000004,
+}
+alias SHOWCALENDARBUTTONRIGHTSTATES = int;
+enum : int
+{
+    DPSCBR_NORMAL   = 0x00000001,
+    DPSCBR_HOT      = 0x00000002,
+    DPSCBR_PRESSED  = 0x00000003,
+    DPSCBR_DISABLED = 0x00000004,
+}
+alias DRAGDROPPARTS = int;
+enum : int
+{
+    DD_COPY           = 0x00000001,
+    DD_MOVE           = 0x00000002,
+    DD_UPDATEMETADATA = 0x00000003,
+    DD_CREATELINK     = 0x00000004,
+    DD_WARNING        = 0x00000005,
+    DD_NONE           = 0x00000006,
+    DD_IMAGEBG        = 0x00000007,
+    DD_TEXTBG         = 0x00000008,
+}
+alias COPYSTATES = int;
+enum : int
+{
+    DDCOPY_HIGHLIGHT   = 0x00000001,
+    DDCOPY_NOHIGHLIGHT = 0x00000002,
+}
+alias MOVESTATES = int;
+enum : int
+{
+    DDMOVE_HIGHLIGHT   = 0x00000001,
+    DDMOVE_NOHIGHLIGHT = 0x00000002,
+}
+alias UPDATEMETADATASTATES = int;
+enum : int
+{
+    DDUPDATEMETADATA_HIGHLIGHT   = 0x00000001,
+    DDUPDATEMETADATA_NOHIGHLIGHT = 0x00000002,
+}
+alias CREATELINKSTATES = int;
+enum : int
+{
+    DDCREATELINK_HIGHLIGHT   = 0x00000001,
+    DDCREATELINK_NOHIGHLIGHT = 0x00000002,
+}
+alias WARNINGSTATES = int;
+enum : int
+{
+    DDWARNING_HIGHLIGHT   = 0x00000001,
+    DDWARNING_NOHIGHLIGHT = 0x00000002,
+}
+alias NONESTATES = int;
+enum : int
+{
+    DDNONE_HIGHLIGHT   = 0x00000001,
+    DDNONE_NOHIGHLIGHT = 0x00000002,
+}
+alias EDITPARTS = int;
+enum : int
+{
+    EP_EDITTEXT             = 0x00000001,
+    EP_CARET                = 0x00000002,
+    EP_BACKGROUND           = 0x00000003,
+    EP_PASSWORD             = 0x00000004,
+    EP_BACKGROUNDWITHBORDER = 0x00000005,
+    EP_EDITBORDER_NOSCROLL  = 0x00000006,
+    EP_EDITBORDER_HSCROLL   = 0x00000007,
+    EP_EDITBORDER_VSCROLL   = 0x00000008,
+    EP_EDITBORDER_HVSCROLL  = 0x00000009,
+}
+alias EDITTEXTSTATES = int;
+enum : int
+{
+    ETS_NORMAL    = 0x00000001,
+    ETS_HOT       = 0x00000002,
+    ETS_SELECTED  = 0x00000003,
+    ETS_DISABLED  = 0x00000004,
+    ETS_FOCUSED   = 0x00000005,
+    ETS_READONLY  = 0x00000006,
+    ETS_ASSIST    = 0x00000007,
+    ETS_CUEBANNER = 0x00000008,
+}
+alias BACKGROUNDSTATES = int;
+enum : int
+{
+    EBS_NORMAL   = 0x00000001,
+    EBS_HOT      = 0x00000002,
+    EBS_DISABLED = 0x00000003,
+    EBS_FOCUSED  = 0x00000004,
+    EBS_READONLY = 0x00000005,
+    EBS_ASSIST   = 0x00000006,
+}
+alias BACKGROUNDWITHBORDERSTATES = int;
+enum : int
+{
+    EBWBS_NORMAL   = 0x00000001,
+    EBWBS_HOT      = 0x00000002,
+    EBWBS_DISABLED = 0x00000003,
+    EBWBS_FOCUSED  = 0x00000004,
+}
+alias EDITBORDER_NOSCROLLSTATES = int;
+enum : int
+{
+    EPSN_NORMAL   = 0x00000001,
+    EPSN_HOT      = 0x00000002,
+    EPSN_FOCUSED  = 0x00000003,
+    EPSN_DISABLED = 0x00000004,
+}
+alias EDITBORDER_HSCROLLSTATES = int;
+enum : int
+{
+    EPSH_NORMAL   = 0x00000001,
+    EPSH_HOT      = 0x00000002,
+    EPSH_FOCUSED  = 0x00000003,
+    EPSH_DISABLED = 0x00000004,
+}
+alias EDITBORDER_VSCROLLSTATES = int;
+enum : int
+{
+    EPSV_NORMAL   = 0x00000001,
+    EPSV_HOT      = 0x00000002,
+    EPSV_FOCUSED  = 0x00000003,
+    EPSV_DISABLED = 0x00000004,
+}
+alias EDITBORDER_HVSCROLLSTATES = int;
+enum : int
+{
+    EPSHV_NORMAL   = 0x00000001,
+    EPSHV_HOT      = 0x00000002,
+    EPSHV_FOCUSED  = 0x00000003,
+    EPSHV_DISABLED = 0x00000004,
+}
+alias EXPLORERBARPARTS = int;
+enum : int
+{
+    EBP_HEADERBACKGROUND       = 0x00000001,
+    EBP_HEADERCLOSE            = 0x00000002,
+    EBP_HEADERPIN              = 0x00000003,
+    EBP_IEBARMENU              = 0x00000004,
+    EBP_NORMALGROUPBACKGROUND  = 0x00000005,
+    EBP_NORMALGROUPCOLLAPSE    = 0x00000006,
+    EBP_NORMALGROUPEXPAND      = 0x00000007,
+    EBP_NORMALGROUPHEAD        = 0x00000008,
+    EBP_SPECIALGROUPBACKGROUND = 0x00000009,
+    EBP_SPECIALGROUPCOLLAPSE   = 0x0000000a,
+    EBP_SPECIALGROUPEXPAND     = 0x0000000b,
+    EBP_SPECIALGROUPHEAD       = 0x0000000c,
+}
+alias HEADERCLOSESTATES = int;
+enum : int
+{
+    EBHC_NORMAL  = 0x00000001,
+    EBHC_HOT     = 0x00000002,
+    EBHC_PRESSED = 0x00000003,
+}
+alias HEADERPINSTATES = int;
+enum : int
+{
+    EBHP_NORMAL          = 0x00000001,
+    EBHP_HOT             = 0x00000002,
+    EBHP_PRESSED         = 0x00000003,
+    EBHP_SELECTEDNORMAL  = 0x00000004,
+    EBHP_SELECTEDHOT     = 0x00000005,
+    EBHP_SELECTEDPRESSED = 0x00000006,
+}
+alias IEBARMENUSTATES = int;
+enum : int
+{
+    EBM_NORMAL  = 0x00000001,
+    EBM_HOT     = 0x00000002,
+    EBM_PRESSED = 0x00000003,
+}
+alias NORMALGROUPCOLLAPSESTATES = int;
+enum : int
+{
+    EBNGC_NORMAL  = 0x00000001,
+    EBNGC_HOT     = 0x00000002,
+    EBNGC_PRESSED = 0x00000003,
+}
+alias NORMALGROUPEXPANDSTATES = int;
+enum : int
+{
+    EBNGE_NORMAL  = 0x00000001,
+    EBNGE_HOT     = 0x00000002,
+    EBNGE_PRESSED = 0x00000003,
+}
+alias SPECIALGROUPCOLLAPSESTATES = int;
+enum : int
+{
+    EBSGC_NORMAL  = 0x00000001,
+    EBSGC_HOT     = 0x00000002,
+    EBSGC_PRESSED = 0x00000003,
+}
+alias SPECIALGROUPEXPANDSTATES = int;
+enum : int
+{
+    EBSGE_NORMAL  = 0x00000001,
+    EBSGE_HOT     = 0x00000002,
+    EBSGE_PRESSED = 0x00000003,
+}
+alias FLYOUTPARTS = int;
+enum : int
+{
+    FLYOUT_HEADER     = 0x00000001,
+    FLYOUT_BODY       = 0x00000002,
+    FLYOUT_LABEL      = 0x00000003,
+    FLYOUT_LINK       = 0x00000004,
+    FLYOUT_DIVIDER    = 0x00000005,
+    FLYOUT_WINDOW     = 0x00000006,
+    FLYOUT_LINKAREA   = 0x00000007,
+    FLYOUT_LINKHEADER = 0x00000008,
+}
+alias LABELSTATES = int;
+enum : int
+{
+    FLS_NORMAL     = 0x00000001,
+    FLS_SELECTED   = 0x00000002,
+    FLS_EMPHASIZED = 0x00000003,
+    FLS_DISABLED   = 0x00000004,
+}
+alias LINKSTATES = int;
+enum : int
+{
+    FLYOUTLINK_NORMAL = 0x00000001,
+    FLYOUTLINK_HOVER  = 0x00000002,
+}
+alias BODYSTATES = int;
+enum : int
+{
+    FBS_NORMAL     = 0x00000001,
+    FBS_EMPHASIZED = 0x00000002,
+}
+alias LINKHEADERSTATES = int;
+enum : int
+{
+    FLH_NORMAL = 0x00000001,
+    FLH_HOVER  = 0x00000002,
+}
+alias HEADERPARTS = int;
+enum : int
+{
+    HP_HEADERITEM           = 0x00000001,
+    HP_HEADERITEMLEFT       = 0x00000002,
+    HP_HEADERITEMRIGHT      = 0x00000003,
+    HP_HEADERSORTARROW      = 0x00000004,
+    HP_HEADERDROPDOWN       = 0x00000005,
+    HP_HEADERDROPDOWNFILTER = 0x00000006,
+    HP_HEADEROVERFLOW       = 0x00000007,
+}
+alias HEADERSTYLESTATES = int;
+enum : int
+{
+    HBG_DETAILS = 0x00000001,
+    HBG_ICON    = 0x00000002,
+}
+alias HEADERITEMSTATES = int;
+enum : int
+{
+    HIS_NORMAL            = 0x00000001,
+    HIS_HOT               = 0x00000002,
+    HIS_PRESSED           = 0x00000003,
+    HIS_SORTEDNORMAL      = 0x00000004,
+    HIS_SORTEDHOT         = 0x00000005,
+    HIS_SORTEDPRESSED     = 0x00000006,
+    HIS_ICONNORMAL        = 0x00000007,
+    HIS_ICONHOT           = 0x00000008,
+    HIS_ICONPRESSED       = 0x00000009,
+    HIS_ICONSORTEDNORMAL  = 0x0000000a,
+    HIS_ICONSORTEDHOT     = 0x0000000b,
+    HIS_ICONSORTEDPRESSED = 0x0000000c,
+}
+alias HEADERITEMLEFTSTATES = int;
+enum : int
+{
+    HILS_NORMAL  = 0x00000001,
+    HILS_HOT     = 0x00000002,
+    HILS_PRESSED = 0x00000003,
+}
+alias HEADERITEMRIGHTSTATES = int;
+enum : int
+{
+    HIRS_NORMAL  = 0x00000001,
+    HIRS_HOT     = 0x00000002,
+    HIRS_PRESSED = 0x00000003,
+}
+alias HEADERSORTARROWSTATES = int;
+enum : int
+{
+    HSAS_SORTEDUP   = 0x00000001,
+    HSAS_SORTEDDOWN = 0x00000002,
+}
+alias HEADERDROPDOWNSTATES = int;
+enum : int
+{
+    HDDS_NORMAL  = 0x00000001,
+    HDDS_SOFTHOT = 0x00000002,
+    HDDS_HOT     = 0x00000003,
+}
+alias HEADERDROPDOWNFILTERSTATES = int;
+enum : int
+{
+    HDDFS_NORMAL  = 0x00000001,
+    HDDFS_SOFTHOT = 0x00000002,
+    HDDFS_HOT     = 0x00000003,
+}
+alias HEADEROVERFLOWSTATES = int;
+enum : int
+{
+    HOFS_NORMAL = 0x00000001,
+    HOFS_HOT    = 0x00000002,
+}
+alias LISTBOXPARTS = int;
+enum : int
+{
+    LBCP_BORDER_HSCROLL  = 0x00000001,
+    LBCP_BORDER_HVSCROLL = 0x00000002,
+    LBCP_BORDER_NOSCROLL = 0x00000003,
+    LBCP_BORDER_VSCROLL  = 0x00000004,
+    LBCP_ITEM            = 0x00000005,
+}
+alias BORDER_HSCROLLSTATES = int;
+enum : int
+{
+    LBPSH_NORMAL   = 0x00000001,
+    LBPSH_FOCUSED  = 0x00000002,
+    LBPSH_HOT      = 0x00000003,
+    LBPSH_DISABLED = 0x00000004,
+}
+alias BORDER_HVSCROLLSTATES = int;
+enum : int
+{
+    LBPSHV_NORMAL   = 0x00000001,
+    LBPSHV_FOCUSED  = 0x00000002,
+    LBPSHV_HOT      = 0x00000003,
+    LBPSHV_DISABLED = 0x00000004,
+}
+alias BORDER_NOSCROLLSTATES = int;
+enum : int
+{
+    LBPSN_NORMAL   = 0x00000001,
+    LBPSN_FOCUSED  = 0x00000002,
+    LBPSN_HOT      = 0x00000003,
+    LBPSN_DISABLED = 0x00000004,
+}
+alias BORDER_VSCROLLSTATES = int;
+enum : int
+{
+    LBPSV_NORMAL   = 0x00000001,
+    LBPSV_FOCUSED  = 0x00000002,
+    LBPSV_HOT      = 0x00000003,
+    LBPSV_DISABLED = 0x00000004,
+}
+alias ITEMSTATES = int;
+enum : int
+{
+    LBPSI_HOT              = 0x00000001,
+    LBPSI_HOTSELECTED      = 0x00000002,
+    LBPSI_SELECTED         = 0x00000003,
+    LBPSI_SELECTEDNOTFOCUS = 0x00000004,
+}
+alias LISTVIEWPARTS = int;
+enum : int
+{
+    LVP_LISTITEM         = 0x00000001,
+    LVP_LISTGROUP        = 0x00000002,
+    LVP_LISTDETAIL       = 0x00000003,
+    LVP_LISTSORTEDDETAIL = 0x00000004,
+    LVP_EMPTYTEXT        = 0x00000005,
+    LVP_GROUPHEADER      = 0x00000006,
+    LVP_GROUPHEADERLINE  = 0x00000007,
+    LVP_EXPANDBUTTON     = 0x00000008,
+    LVP_COLLAPSEBUTTON   = 0x00000009,
+    LVP_COLUMNDETAIL     = 0x0000000a,
+}
+alias LISTITEMSTATES = int;
+enum : int
+{
+    LISS_NORMAL           = 0x00000001,
+    LISS_HOT              = 0x00000002,
+    LISS_SELECTED         = 0x00000003,
+    LISS_DISABLED         = 0x00000004,
+    LISS_SELECTEDNOTFOCUS = 0x00000005,
+    LISS_HOTSELECTED      = 0x00000006,
+}
+alias GROUPHEADERSTATES = int;
+enum : int
+{
+    LVGH_OPEN                       = 0x00000001,
+    LVGH_OPENHOT                    = 0x00000002,
+    LVGH_OPENSELECTED               = 0x00000003,
+    LVGH_OPENSELECTEDHOT            = 0x00000004,
+    LVGH_OPENSELECTEDNOTFOCUSED     = 0x00000005,
+    LVGH_OPENSELECTEDNOTFOCUSEDHOT  = 0x00000006,
+    LVGH_OPENMIXEDSELECTION         = 0x00000007,
+    LVGH_OPENMIXEDSELECTIONHOT      = 0x00000008,
+    LVGH_CLOSE                      = 0x00000009,
+    LVGH_CLOSEHOT                   = 0x0000000a,
+    LVGH_CLOSESELECTED              = 0x0000000b,
+    LVGH_CLOSESELECTEDHOT           = 0x0000000c,
+    LVGH_CLOSESELECTEDNOTFOCUSED    = 0x0000000d,
+    LVGH_CLOSESELECTEDNOTFOCUSEDHOT = 0x0000000e,
+    LVGH_CLOSEMIXEDSELECTION        = 0x0000000f,
+    LVGH_CLOSEMIXEDSELECTIONHOT     = 0x00000010,
+}
+alias GROUPHEADERLINESTATES = int;
+enum : int
+{
+    LVGHL_OPEN                       = 0x00000001,
+    LVGHL_OPENHOT                    = 0x00000002,
+    LVGHL_OPENSELECTED               = 0x00000003,
+    LVGHL_OPENSELECTEDHOT            = 0x00000004,
+    LVGHL_OPENSELECTEDNOTFOCUSED     = 0x00000005,
+    LVGHL_OPENSELECTEDNOTFOCUSEDHOT  = 0x00000006,
+    LVGHL_OPENMIXEDSELECTION         = 0x00000007,
+    LVGHL_OPENMIXEDSELECTIONHOT      = 0x00000008,
+    LVGHL_CLOSE                      = 0x00000009,
+    LVGHL_CLOSEHOT                   = 0x0000000a,
+    LVGHL_CLOSESELECTED              = 0x0000000b,
+    LVGHL_CLOSESELECTEDHOT           = 0x0000000c,
+    LVGHL_CLOSESELECTEDNOTFOCUSED    = 0x0000000d,
+    LVGHL_CLOSESELECTEDNOTFOCUSEDHOT = 0x0000000e,
+    LVGHL_CLOSEMIXEDSELECTION        = 0x0000000f,
+    LVGHL_CLOSEMIXEDSELECTIONHOT     = 0x00000010,
+}
+alias EXPANDBUTTONSTATES = int;
+enum : int
+{
+    LVEB_NORMAL = 0x00000001,
+    LVEB_HOVER  = 0x00000002,
+    LVEB_PUSHED = 0x00000003,
+}
+alias COLLAPSEBUTTONSTATES = int;
+enum : int
+{
+    LVCB_NORMAL = 0x00000001,
+    LVCB_HOVER  = 0x00000002,
+    LVCB_PUSHED = 0x00000003,
+}
+alias MENUPARTS = int;
+enum : int
+{
+    MENU_MENUITEM_TMSCHEMA        = 0x00000001,
+    MENU_MENUDROPDOWN_TMSCHEMA    = 0x00000002,
+    MENU_MENUBARITEM_TMSCHEMA     = 0x00000003,
+    MENU_MENUBARDROPDOWN_TMSCHEMA = 0x00000004,
+    MENU_CHEVRON_TMSCHEMA         = 0x00000005,
+    MENU_SEPARATOR_TMSCHEMA       = 0x00000006,
+    MENU_BARBACKGROUND            = 0x00000007,
+    MENU_BARITEM                  = 0x00000008,
+    MENU_POPUPBACKGROUND          = 0x00000009,
+    MENU_POPUPBORDERS             = 0x0000000a,
+    MENU_POPUPCHECK               = 0x0000000b,
+    MENU_POPUPCHECKBACKGROUND     = 0x0000000c,
+    MENU_POPUPGUTTER              = 0x0000000d,
+    MENU_POPUPITEM                = 0x0000000e,
+    MENU_POPUPSEPARATOR           = 0x0000000f,
+    MENU_POPUPSUBMENU             = 0x00000010,
+    MENU_SYSTEMCLOSE              = 0x00000011,
+    MENU_SYSTEMMAXIMIZE           = 0x00000012,
+    MENU_SYSTEMMINIMIZE           = 0x00000013,
+    MENU_SYSTEMRESTORE            = 0x00000014,
+    MENU_POPUPSUBMENUHCHOT        = 0x00000015,
+    MENU_SYSTEMCLOSEHCHOT         = 0x00000016,
+    MENU_SYSTEMMAXIMIZEHCHOT      = 0x00000017,
+    MENU_SYSTEMMINIMIZEHCHOT      = 0x00000018,
+    MENU_SYSTEMRESTOREHCHOT       = 0x00000019,
+    MENU_POPUPITEMKBFOCUS         = 0x0000001a,
+    MENU_POPUPITEMFOCUSABLE       = 0x0000001b,
+    MENU_POPUPSUBMENU_HCHOT       = 0x00000015,
+}
+alias BARBACKGROUNDSTATES = int;
+enum : int
+{
+    MB_ACTIVE   = 0x00000001,
+    MB_INACTIVE = 0x00000002,
+}
+alias BARITEMSTATES = int;
+enum : int
+{
+    MBI_NORMAL         = 0x00000001,
+    MBI_HOT            = 0x00000002,
+    MBI_PUSHED         = 0x00000003,
+    MBI_DISABLED       = 0x00000004,
+    MBI_DISABLEDHOT    = 0x00000005,
+    MBI_DISABLEDPUSHED = 0x00000006,
+}
+alias POPUPCHECKSTATES = int;
+enum : int
+{
+    MC_CHECKMARKNORMAL   = 0x00000001,
+    MC_CHECKMARKDISABLED = 0x00000002,
+    MC_BULLETNORMAL      = 0x00000003,
+    MC_BULLETDISABLED    = 0x00000004,
+}
+alias POPUPCHECKBACKGROUNDSTATES = int;
+enum : int
+{
+    MCB_DISABLED = 0x00000001,
+    MCB_NORMAL   = 0x00000002,
+    MCB_BITMAP   = 0x00000003,
+}
+alias POPUPITEMSTATES = int;
+enum : int
+{
+    MPI_NORMAL      = 0x00000001,
+    MPI_HOT         = 0x00000002,
+    MPI_DISABLED    = 0x00000003,
+    MPI_DISABLEDHOT = 0x00000004,
+}
+alias POPUPSUBMENUSTATES = int;
+enum : int
+{
+    MSM_NORMAL   = 0x00000001,
+    MSM_DISABLED = 0x00000002,
+}
+alias SYSTEMCLOSESTATES = int;
+enum : int
+{
+    MSYSC_NORMAL   = 0x00000001,
+    MSYSC_DISABLED = 0x00000002,
+}
+alias SYSTEMMAXIMIZESTATES = int;
+enum : int
+{
+    MSYSMX_NORMAL   = 0x00000001,
+    MSYSMX_DISABLED = 0x00000002,
+}
+alias SYSTEMMINIMIZESTATES = int;
+enum : int
+{
+    MSYSMN_NORMAL   = 0x00000001,
+    MSYSMN_DISABLED = 0x00000002,
+}
+alias SYSTEMRESTORESTATES = int;
+enum : int
+{
+    MSYSR_NORMAL   = 0x00000001,
+    MSYSR_DISABLED = 0x00000002,
+}
+alias POPUPSUBMENUHCHOTSTATES = int;
+enum : int
+{
+    MSMHC_HOT = 0x00000001,
+}
+alias SYSTEMCLOSEHCHOTSTATES = int;
+enum : int
+{
+    MSYSCHC_HOT = 0x00000001,
+}
+alias SYSTEMMAXIMIZEHCHOTSTATES = int;
+enum : int
+{
+    MSYSMXHC_HOT = 0x00000001,
+}
+alias SYSTEMMINIMIZEHCHOTSTATES = int;
+enum : int
+{
+    MSYSMNHC_HOT = 0x00000001,
+}
+alias SYSTEMRESTOREHCHOTSTATES = int;
+enum : int
+{
+    MSYSRHC_HOT = 0x00000001,
+}
+alias POPUPITEMKBFOCUSSTATES = int;
+enum : int
+{
+    MPIKBFOCUS_NORMAL = 0x00000001,
+}
+alias POPUPITEMFOCUSABLESTATES = int;
+enum : int
+{
+    MPIF_NORMAL      = 0x00000001,
+    MPIF_HOT         = 0x00000002,
+    MPIF_DISABLED    = 0x00000003,
+    MPIF_DISABLEDHOT = 0x00000004,
+}
+alias NAVIGATIONPARTS = int;
+enum : int
+{
+    NAV_BACKBUTTON    = 0x00000001,
+    NAV_FORWARDBUTTON = 0x00000002,
+    NAV_MENUBUTTON    = 0x00000003,
+}
+alias NAV_BACKBUTTONSTATES = int;
+enum : int
+{
+    NAV_BB_NORMAL   = 0x00000001,
+    NAV_BB_HOT      = 0x00000002,
+    NAV_BB_PRESSED  = 0x00000003,
+    NAV_BB_DISABLED = 0x00000004,
+}
+alias NAV_FORWARDBUTTONSTATES = int;
+enum : int
+{
+    NAV_FB_NORMAL   = 0x00000001,
+    NAV_FB_HOT      = 0x00000002,
+    NAV_FB_PRESSED  = 0x00000003,
+    NAV_FB_DISABLED = 0x00000004,
+}
+alias NAV_MENUBUTTONSTATES = int;
+enum : int
+{
+    NAV_MB_NORMAL   = 0x00000001,
+    NAV_MB_HOT      = 0x00000002,
+    NAV_MB_PRESSED  = 0x00000003,
+    NAV_MB_DISABLED = 0x00000004,
+}
+alias PROGRESSPARTS = int;
+enum : int
+{
+    PP_BAR                = 0x00000001,
+    PP_BARVERT            = 0x00000002,
+    PP_CHUNK              = 0x00000003,
+    PP_CHUNKVERT          = 0x00000004,
+    PP_FILL               = 0x00000005,
+    PP_FILLVERT           = 0x00000006,
+    PP_PULSEOVERLAY       = 0x00000007,
+    PP_MOVEOVERLAY        = 0x00000008,
+    PP_PULSEOVERLAYVERT   = 0x00000009,
+    PP_MOVEOVERLAYVERT    = 0x0000000a,
+    PP_TRANSPARENTBAR     = 0x0000000b,
+    PP_TRANSPARENTBARVERT = 0x0000000c,
+}
+alias TRANSPARENTBARSTATES = int;
+enum : int
+{
+    PBBS_NORMAL  = 0x00000001,
+    PBBS_PARTIAL = 0x00000002,
+}
+alias TRANSPARENTBARVERTSTATES = int;
+enum : int
+{
+    PBBVS_NORMAL  = 0x00000001,
+    PBBVS_PARTIAL = 0x00000002,
+}
+alias FILLSTATES = int;
+enum : int
+{
+    PBFS_NORMAL  = 0x00000001,
+    PBFS_ERROR   = 0x00000002,
+    PBFS_PAUSED  = 0x00000003,
+    PBFS_PARTIAL = 0x00000004,
+}
+alias FILLVERTSTATES = int;
+enum : int
+{
+    PBFVS_NORMAL  = 0x00000001,
+    PBFVS_ERROR   = 0x00000002,
+    PBFVS_PAUSED  = 0x00000003,
+    PBFVS_PARTIAL = 0x00000004,
+}
+alias REBARPARTS = int;
+enum : int
+{
+    RP_GRIPPER      = 0x00000001,
+    RP_GRIPPERVERT  = 0x00000002,
+    RP_BAND         = 0x00000003,
+    RP_CHEVRON      = 0x00000004,
+    RP_CHEVRONVERT  = 0x00000005,
+    RP_BACKGROUND   = 0x00000006,
+    RP_SPLITTER     = 0x00000007,
+    RP_SPLITTERVERT = 0x00000008,
+}
+alias CHEVRONSTATES = int;
+enum : int
+{
+    CHEVS_NORMAL  = 0x00000001,
+    CHEVS_HOT     = 0x00000002,
+    CHEVS_PRESSED = 0x00000003,
+}
+alias CHEVRONVERTSTATES = int;
+enum : int
+{
+    CHEVSV_NORMAL  = 0x00000001,
+    CHEVSV_HOT     = 0x00000002,
+    CHEVSV_PRESSED = 0x00000003,
+}
+alias SPLITTERSTATES = int;
+enum : int
+{
+    SPLITS_NORMAL  = 0x00000001,
+    SPLITS_HOT     = 0x00000002,
+    SPLITS_PRESSED = 0x00000003,
+}
+alias SPLITTERVERTSTATES = int;
+enum : int
+{
+    SPLITSV_NORMAL  = 0x00000001,
+    SPLITSV_HOT     = 0x00000002,
+    SPLITSV_PRESSED = 0x00000003,
+}
+alias SCROLLBARPARTS = int;
+enum : int
+{
+    SBP_ARROWBTN       = 0x00000001,
+    SBP_THUMBBTNHORZ   = 0x00000002,
+    SBP_THUMBBTNVERT   = 0x00000003,
+    SBP_LOWERTRACKHORZ = 0x00000004,
+    SBP_UPPERTRACKHORZ = 0x00000005,
+    SBP_LOWERTRACKVERT = 0x00000006,
+    SBP_UPPERTRACKVERT = 0x00000007,
+    SBP_GRIPPERHORZ    = 0x00000008,
+    SBP_GRIPPERVERT    = 0x00000009,
+    SBP_SIZEBOX        = 0x0000000a,
+    SBP_SIZEBOXBKGND   = 0x0000000b,
+}
+alias ARROWBTNSTATES = int;
+enum : int
+{
+    ABS_UPNORMAL      = 0x00000001,
+    ABS_UPHOT         = 0x00000002,
+    ABS_UPPRESSED     = 0x00000003,
+    ABS_UPDISABLED    = 0x00000004,
+    ABS_DOWNNORMAL    = 0x00000005,
+    ABS_DOWNHOT       = 0x00000006,
+    ABS_DOWNPRESSED   = 0x00000007,
+    ABS_DOWNDISABLED  = 0x00000008,
+    ABS_LEFTNORMAL    = 0x00000009,
+    ABS_LEFTHOT       = 0x0000000a,
+    ABS_LEFTPRESSED   = 0x0000000b,
+    ABS_LEFTDISABLED  = 0x0000000c,
+    ABS_RIGHTNORMAL   = 0x0000000d,
+    ABS_RIGHTHOT      = 0x0000000e,
+    ABS_RIGHTPRESSED  = 0x0000000f,
+    ABS_RIGHTDISABLED = 0x00000010,
+    ABS_UPHOVER       = 0x00000011,
+    ABS_DOWNHOVER     = 0x00000012,
+    ABS_LEFTHOVER     = 0x00000013,
+    ABS_RIGHTHOVER    = 0x00000014,
+}
+alias SCROLLBARSTYLESTATES = int;
+enum : int
+{
+    SCRBS_NORMAL   = 0x00000001,
+    SCRBS_HOT      = 0x00000002,
+    SCRBS_PRESSED  = 0x00000003,
+    SCRBS_DISABLED = 0x00000004,
+    SCRBS_HOVER    = 0x00000005,
+}
+alias SIZEBOXSTATES = int;
+enum : int
+{
+    SZB_RIGHTALIGN           = 0x00000001,
+    SZB_LEFTALIGN            = 0x00000002,
+    SZB_TOPRIGHTALIGN        = 0x00000003,
+    SZB_TOPLEFTALIGN         = 0x00000004,
+    SZB_HALFBOTTOMRIGHTALIGN = 0x00000005,
+    SZB_HALFBOTTOMLEFTALIGN  = 0x00000006,
+    SZB_HALFTOPRIGHTALIGN    = 0x00000007,
+    SZB_HALFTOPLEFTALIGN     = 0x00000008,
+}
+alias SPINPARTS = int;
+enum : int
+{
+    SPNP_UP       = 0x00000001,
+    SPNP_DOWN     = 0x00000002,
+    SPNP_UPHORZ   = 0x00000003,
+    SPNP_DOWNHORZ = 0x00000004,
+}
+alias UPSTATES = int;
+enum : int
+{
+    UPS_NORMAL   = 0x00000001,
+    UPS_HOT      = 0x00000002,
+    UPS_PRESSED  = 0x00000003,
+    UPS_DISABLED = 0x00000004,
+}
+alias DOWNSTATES = int;
+enum : int
+{
+    DNS_NORMAL   = 0x00000001,
+    DNS_HOT      = 0x00000002,
+    DNS_PRESSED  = 0x00000003,
+    DNS_DISABLED = 0x00000004,
+}
+alias UPHORZSTATES = int;
+enum : int
+{
+    UPHZS_NORMAL   = 0x00000001,
+    UPHZS_HOT      = 0x00000002,
+    UPHZS_PRESSED  = 0x00000003,
+    UPHZS_DISABLED = 0x00000004,
+}
+alias DOWNHORZSTATES = int;
+enum : int
+{
+    DNHZS_NORMAL   = 0x00000001,
+    DNHZS_HOT      = 0x00000002,
+    DNHZS_PRESSED  = 0x00000003,
+    DNHZS_DISABLED = 0x00000004,
+}
+alias STATUSPARTS = int;
+enum : int
+{
+    SP_PANE        = 0x00000001,
+    SP_GRIPPERPANE = 0x00000002,
+    SP_GRIPPER     = 0x00000003,
+}
+alias TABPARTS = int;
+enum : int
+{
+    TABP_TABITEM             = 0x00000001,
+    TABP_TABITEMLEFTEDGE     = 0x00000002,
+    TABP_TABITEMRIGHTEDGE    = 0x00000003,
+    TABP_TABITEMBOTHEDGE     = 0x00000004,
+    TABP_TOPTABITEM          = 0x00000005,
+    TABP_TOPTABITEMLEFTEDGE  = 0x00000006,
+    TABP_TOPTABITEMRIGHTEDGE = 0x00000007,
+    TABP_TOPTABITEMBOTHEDGE  = 0x00000008,
+    TABP_PANE                = 0x00000009,
+    TABP_BODY                = 0x0000000a,
+    TABP_AEROWIZARDBODY      = 0x0000000b,
+}
+alias TABITEMSTATES = int;
+enum : int
+{
+    TIS_NORMAL   = 0x00000001,
+    TIS_HOT      = 0x00000002,
+    TIS_SELECTED = 0x00000003,
+    TIS_DISABLED = 0x00000004,
+    TIS_FOCUSED  = 0x00000005,
+}
+alias TABITEMLEFTEDGESTATES = int;
+enum : int
+{
+    TILES_NORMAL   = 0x00000001,
+    TILES_HOT      = 0x00000002,
+    TILES_SELECTED = 0x00000003,
+    TILES_DISABLED = 0x00000004,
+    TILES_FOCUSED  = 0x00000005,
+}
+alias TABITEMRIGHTEDGESTATES = int;
+enum : int
+{
+    TIRES_NORMAL   = 0x00000001,
+    TIRES_HOT      = 0x00000002,
+    TIRES_SELECTED = 0x00000003,
+    TIRES_DISABLED = 0x00000004,
+    TIRES_FOCUSED  = 0x00000005,
+}
+alias TABITEMBOTHEDGESTATES = int;
+enum : int
+{
+    TIBES_NORMAL   = 0x00000001,
+    TIBES_HOT      = 0x00000002,
+    TIBES_SELECTED = 0x00000003,
+    TIBES_DISABLED = 0x00000004,
+    TIBES_FOCUSED  = 0x00000005,
+}
+alias TOPTABITEMSTATES = int;
+enum : int
+{
+    TTIS_NORMAL   = 0x00000001,
+    TTIS_HOT      = 0x00000002,
+    TTIS_SELECTED = 0x00000003,
+    TTIS_DISABLED = 0x00000004,
+    TTIS_FOCUSED  = 0x00000005,
+}
+alias TOPTABITEMLEFTEDGESTATES = int;
+enum : int
+{
+    TTILES_NORMAL   = 0x00000001,
+    TTILES_HOT      = 0x00000002,
+    TTILES_SELECTED = 0x00000003,
+    TTILES_DISABLED = 0x00000004,
+    TTILES_FOCUSED  = 0x00000005,
+}
+alias TOPTABITEMRIGHTEDGESTATES = int;
+enum : int
+{
+    TTIRES_NORMAL   = 0x00000001,
+    TTIRES_HOT      = 0x00000002,
+    TTIRES_SELECTED = 0x00000003,
+    TTIRES_DISABLED = 0x00000004,
+    TTIRES_FOCUSED  = 0x00000005,
+}
+alias TOPTABITEMBOTHEDGESTATES = int;
+enum : int
+{
+    TTIBES_NORMAL   = 0x00000001,
+    TTIBES_HOT      = 0x00000002,
+    TTIBES_SELECTED = 0x00000003,
+    TTIBES_DISABLED = 0x00000004,
+    TTIBES_FOCUSED  = 0x00000005,
+}
+alias TASKDIALOGPARTS = int;
+enum : int
+{
+    TDLG_PRIMARYPANEL        = 0x00000001,
+    TDLG_MAININSTRUCTIONPANE = 0x00000002,
+    TDLG_MAINICON            = 0x00000003,
+    TDLG_CONTENTPANE         = 0x00000004,
+    TDLG_CONTENTICON         = 0x00000005,
+    TDLG_EXPANDEDCONTENT     = 0x00000006,
+    TDLG_COMMANDLINKPANE     = 0x00000007,
+    TDLG_SECONDARYPANEL      = 0x00000008,
+    TDLG_CONTROLPANE         = 0x00000009,
+    TDLG_BUTTONSECTION       = 0x0000000a,
+    TDLG_BUTTONWRAPPER       = 0x0000000b,
+    TDLG_EXPANDOTEXT         = 0x0000000c,
+    TDLG_EXPANDOBUTTON       = 0x0000000d,
+    TDLG_VERIFICATIONTEXT    = 0x0000000e,
+    TDLG_FOOTNOTEPANE        = 0x0000000f,
+    TDLG_FOOTNOTEAREA        = 0x00000010,
+    TDLG_FOOTNOTESEPARATOR   = 0x00000011,
+    TDLG_EXPANDEDFOOTERAREA  = 0x00000012,
+    TDLG_PROGRESSBAR         = 0x00000013,
+    TDLG_IMAGEALIGNMENT      = 0x00000014,
+    TDLG_RADIOBUTTONPANE     = 0x00000015,
+}
+alias CONTENTPANESTATES = int;
+enum : int
+{
+    TDLGCPS_STANDALONE = 0x00000001,
+}
+alias EXPANDOBUTTONSTATES = int;
+enum : int
+{
+    TDLGEBS_NORMAL           = 0x00000001,
+    TDLGEBS_HOVER            = 0x00000002,
+    TDLGEBS_PRESSED          = 0x00000003,
+    TDLGEBS_EXPANDEDNORMAL   = 0x00000004,
+    TDLGEBS_EXPANDEDHOVER    = 0x00000005,
+    TDLGEBS_EXPANDEDPRESSED  = 0x00000006,
+    TDLGEBS_NORMALDISABLED   = 0x00000007,
+    TDLGEBS_EXPANDEDDISABLED = 0x00000008,
+}
+alias TEXTSTYLEPARTS = int;
+enum : int
+{
+    TEXT_MAININSTRUCTION = 0x00000001,
+    TEXT_INSTRUCTION     = 0x00000002,
+    TEXT_BODYTITLE       = 0x00000003,
+    TEXT_BODYTEXT        = 0x00000004,
+    TEXT_SECONDARYTEXT   = 0x00000005,
+    TEXT_HYPERLINKTEXT   = 0x00000006,
+    TEXT_EXPANDED        = 0x00000007,
+    TEXT_LABEL           = 0x00000008,
+    TEXT_CONTROLLABEL    = 0x00000009,
+}
+alias HYPERLINKTEXTSTATES = int;
+enum : int
+{
+    TS_HYPERLINK_NORMAL   = 0x00000001,
+    TS_HYPERLINK_HOT      = 0x00000002,
+    TS_HYPERLINK_PRESSED  = 0x00000003,
+    TS_HYPERLINK_DISABLED = 0x00000004,
+}
+alias CONTROLLABELSTATES = int;
+enum : int
+{
+    TS_CONTROLLABEL_NORMAL   = 0x00000001,
+    TS_CONTROLLABEL_DISABLED = 0x00000002,
+}
+alias TOOLBARPARTS = int;
+enum : int
+{
+    TP_BUTTON              = 0x00000001,
+    TP_DROPDOWNBUTTON      = 0x00000002,
+    TP_SPLITBUTTON         = 0x00000003,
+    TP_SPLITBUTTONDROPDOWN = 0x00000004,
+    TP_SEPARATOR           = 0x00000005,
+    TP_SEPARATORVERT       = 0x00000006,
+    TP_DROPDOWNBUTTONGLYPH = 0x00000007,
+}
+alias TOOLBARSTYLESTATES = int;
+enum : int
+{
+    TS_NORMAL       = 0x00000001,
+    TS_HOT          = 0x00000002,
+    TS_PRESSED      = 0x00000003,
+    TS_DISABLED     = 0x00000004,
+    TS_CHECKED      = 0x00000005,
+    TS_HOTCHECKED   = 0x00000006,
+    TS_NEARHOT      = 0x00000007,
+    TS_OTHERSIDEHOT = 0x00000008,
+}
+alias TOOLTIPPARTS = int;
+enum : int
+{
+    TTP_STANDARD      = 0x00000001,
+    TTP_STANDARDTITLE = 0x00000002,
+    TTP_BALLOON       = 0x00000003,
+    TTP_BALLOONTITLE  = 0x00000004,
+    TTP_CLOSE         = 0x00000005,
+    TTP_BALLOONSTEM   = 0x00000006,
+    TTP_WRENCH        = 0x00000007,
+}
+alias CLOSESTATES = int;
+enum : int
+{
+    TTCS_NORMAL  = 0x00000001,
+    TTCS_HOT     = 0x00000002,
+    TTCS_PRESSED = 0x00000003,
+}
+alias STANDARDSTATES = int;
+enum : int
+{
+    TTSS_NORMAL = 0x00000001,
+    TTSS_LINK   = 0x00000002,
+}
+alias BALLOONSTATES = int;
+enum : int
+{
+    TTBS_NORMAL = 0x00000001,
+    TTBS_LINK   = 0x00000002,
+}
+alias BALLOONSTEMSTATES = int;
+enum : int
+{
+    TTBSS_POINTINGUPLEFTWALL    = 0x00000001,
+    TTBSS_POINTINGUPCENTERED    = 0x00000002,
+    TTBSS_POINTINGUPRIGHTWALL   = 0x00000003,
+    TTBSS_POINTINGDOWNRIGHTWALL = 0x00000004,
+    TTBSS_POINTINGDOWNCENTERED  = 0x00000005,
+    TTBSS_POINTINGDOWNLEFTWALL  = 0x00000006,
+}
+alias WRENCHSTATES = int;
+enum : int
+{
+    TTWS_NORMAL  = 0x00000001,
+    TTWS_HOT     = 0x00000002,
+    TTWS_PRESSED = 0x00000003,
+}
+alias TRACKBARPARTS = int;
+enum : int
+{
+    TKP_TRACK       = 0x00000001,
+    TKP_TRACKVERT   = 0x00000002,
+    TKP_THUMB       = 0x00000003,
+    TKP_THUMBBOTTOM = 0x00000004,
+    TKP_THUMBTOP    = 0x00000005,
+    TKP_THUMBVERT   = 0x00000006,
+    TKP_THUMBLEFT   = 0x00000007,
+    TKP_THUMBRIGHT  = 0x00000008,
+    TKP_TICS        = 0x00000009,
+    TKP_TICSVERT    = 0x0000000a,
+}
+alias TRACKBARSTYLESTATES = int;
+enum : int
+{
+    TKS_NORMAL = 0x00000001,
+}
+alias TRACKSTATES = int;
+enum : int
+{
+    TRS_NORMAL = 0x00000001,
+}
+alias TRACKVERTSTATES = int;
+enum : int
+{
+    TRVS_NORMAL = 0x00000001,
+}
+alias THUMBSTATES = int;
+enum : int
+{
+    TUS_NORMAL   = 0x00000001,
+    TUS_HOT      = 0x00000002,
+    TUS_PRESSED  = 0x00000003,
+    TUS_FOCUSED  = 0x00000004,
+    TUS_DISABLED = 0x00000005,
+}
+alias THUMBBOTTOMSTATES = int;
+enum : int
+{
+    TUBS_NORMAL   = 0x00000001,
+    TUBS_HOT      = 0x00000002,
+    TUBS_PRESSED  = 0x00000003,
+    TUBS_FOCUSED  = 0x00000004,
+    TUBS_DISABLED = 0x00000005,
+}
+alias THUMBTOPSTATES = int;
+enum : int
+{
+    TUTS_NORMAL   = 0x00000001,
+    TUTS_HOT      = 0x00000002,
+    TUTS_PRESSED  = 0x00000003,
+    TUTS_FOCUSED  = 0x00000004,
+    TUTS_DISABLED = 0x00000005,
+}
+alias THUMBVERTSTATES = int;
+enum : int
+{
+    TUVS_NORMAL   = 0x00000001,
+    TUVS_HOT      = 0x00000002,
+    TUVS_PRESSED  = 0x00000003,
+    TUVS_FOCUSED  = 0x00000004,
+    TUVS_DISABLED = 0x00000005,
+}
+alias THUMBLEFTSTATES = int;
+enum : int
+{
+    TUVLS_NORMAL   = 0x00000001,
+    TUVLS_HOT      = 0x00000002,
+    TUVLS_PRESSED  = 0x00000003,
+    TUVLS_FOCUSED  = 0x00000004,
+    TUVLS_DISABLED = 0x00000005,
+}
+alias THUMBRIGHTSTATES = int;
+enum : int
+{
+    TUVRS_NORMAL   = 0x00000001,
+    TUVRS_HOT      = 0x00000002,
+    TUVRS_PRESSED  = 0x00000003,
+    TUVRS_FOCUSED  = 0x00000004,
+    TUVRS_DISABLED = 0x00000005,
+}
+alias TICSSTATES = int;
+enum : int
+{
+    TSS_NORMAL = 0x00000001,
+}
+alias TICSVERTSTATES = int;
+enum : int
+{
+    TSVS_NORMAL = 0x00000001,
+}
+alias TREEVIEWPARTS = int;
+enum : int
+{
+    TVP_TREEITEM = 0x00000001,
+    TVP_GLYPH    = 0x00000002,
+    TVP_BRANCH   = 0x00000003,
+    TVP_HOTGLYPH = 0x00000004,
+}
+alias TREEITEMSTATES = int;
+enum : int
+{
+    TREIS_NORMAL           = 0x00000001,
+    TREIS_HOT              = 0x00000002,
+    TREIS_SELECTED         = 0x00000003,
+    TREIS_DISABLED         = 0x00000004,
+    TREIS_SELECTEDNOTFOCUS = 0x00000005,
+    TREIS_HOTSELECTED      = 0x00000006,
+}
+alias GLYPHSTATES = int;
+enum : int
+{
+    GLPS_CLOSED = 0x00000001,
+    GLPS_OPENED = 0x00000002,
+}
+alias HOTGLYPHSTATES = int;
+enum : int
+{
+    HGLPS_CLOSED = 0x00000001,
+    HGLPS_OPENED = 0x00000002,
+}
+alias USERTILEPARTS = int;
+enum : int
+{
+    UTP_STROKEBACKGROUND = 0x00000001,
+    UTP_HOVERBACKGROUND  = 0x00000002,
+}
+alias HOVERBACKGROUNDSTATES = int;
+enum : int
+{
+    UTS_NORMAL  = 0x00000001,
+    UTS_HOT     = 0x00000002,
+    UTS_PRESSED = 0x00000003,
+}
+alias TEXTSELECTIONGRIPPERPARTS = int;
+enum : int
+{
+    TSGP_GRIPPER = 0x00000001,
+}
+alias GRIPPERSTATES = int;
+enum : int
+{
+    TSGS_NORMAL   = 0x00000001,
+    TSGS_CENTERED = 0x00000002,
+}
+alias WINDOWPARTS = int;
+enum : int
+{
+    WP_CAPTION                        = 0x00000001,
+    WP_SMALLCAPTION                   = 0x00000002,
+    WP_MINCAPTION                     = 0x00000003,
+    WP_SMALLMINCAPTION                = 0x00000004,
+    WP_MAXCAPTION                     = 0x00000005,
+    WP_SMALLMAXCAPTION                = 0x00000006,
+    WP_FRAMELEFT                      = 0x00000007,
+    WP_FRAMERIGHT                     = 0x00000008,
+    WP_FRAMEBOTTOM                    = 0x00000009,
+    WP_SMALLFRAMELEFT                 = 0x0000000a,
+    WP_SMALLFRAMERIGHT                = 0x0000000b,
+    WP_SMALLFRAMEBOTTOM               = 0x0000000c,
+    WP_SYSBUTTON                      = 0x0000000d,
+    WP_MDISYSBUTTON                   = 0x0000000e,
+    WP_MINBUTTON                      = 0x0000000f,
+    WP_MDIMINBUTTON                   = 0x00000010,
+    WP_MAXBUTTON                      = 0x00000011,
+    WP_CLOSEBUTTON                    = 0x00000012,
+    WP_SMALLCLOSEBUTTON               = 0x00000013,
+    WP_MDICLOSEBUTTON                 = 0x00000014,
+    WP_RESTOREBUTTON                  = 0x00000015,
+    WP_MDIRESTOREBUTTON               = 0x00000016,
+    WP_HELPBUTTON                     = 0x00000017,
+    WP_MDIHELPBUTTON                  = 0x00000018,
+    WP_HORZSCROLL                     = 0x00000019,
+    WP_HORZTHUMB                      = 0x0000001a,
+    WP_VERTSCROLL                     = 0x0000001b,
+    WP_VERTTHUMB                      = 0x0000001c,
+    WP_DIALOG                         = 0x0000001d,
+    WP_CAPTIONSIZINGTEMPLATE          = 0x0000001e,
+    WP_SMALLCAPTIONSIZINGTEMPLATE     = 0x0000001f,
+    WP_FRAMELEFTSIZINGTEMPLATE        = 0x00000020,
+    WP_SMALLFRAMELEFTSIZINGTEMPLATE   = 0x00000021,
+    WP_FRAMERIGHTSIZINGTEMPLATE       = 0x00000022,
+    WP_SMALLFRAMERIGHTSIZINGTEMPLATE  = 0x00000023,
+    WP_FRAMEBOTTOMSIZINGTEMPLATE      = 0x00000024,
+    WP_SMALLFRAMEBOTTOMSIZINGTEMPLATE = 0x00000025,
+    WP_FRAME                          = 0x00000026,
+    WP_BORDER                         = 0x00000027,
+}
+alias FRAMESTATES = int;
+enum : int
+{
+    FS_ACTIVE   = 0x00000001,
+    FS_INACTIVE = 0x00000002,
+}
+alias CAPTIONSTATES = int;
+enum : int
+{
+    CS_ACTIVE   = 0x00000001,
+    CS_INACTIVE = 0x00000002,
+    CS_DISABLED = 0x00000003,
+}
+alias MAXCAPTIONSTATES = int;
+enum : int
+{
+    MXCS_ACTIVE   = 0x00000001,
+    MXCS_INACTIVE = 0x00000002,
+    MXCS_DISABLED = 0x00000003,
+}
+alias MINCAPTIONSTATES = int;
+enum : int
+{
+    MNCS_ACTIVE   = 0x00000001,
+    MNCS_INACTIVE = 0x00000002,
+    MNCS_DISABLED = 0x00000003,
+}
+alias HORZSCROLLSTATES = int;
+enum : int
+{
+    HSS_NORMAL   = 0x00000001,
+    HSS_HOT      = 0x00000002,
+    HSS_PUSHED   = 0x00000003,
+    HSS_DISABLED = 0x00000004,
+}
+alias HORZTHUMBSTATES = int;
+enum : int
+{
+    HTS_NORMAL   = 0x00000001,
+    HTS_HOT      = 0x00000002,
+    HTS_PUSHED   = 0x00000003,
+    HTS_DISABLED = 0x00000004,
+}
+alias VERTSCROLLSTATES = int;
+enum : int
+{
+    VSS_NORMAL   = 0x00000001,
+    VSS_HOT      = 0x00000002,
+    VSS_PUSHED   = 0x00000003,
+    VSS_DISABLED = 0x00000004,
+}
+alias VERTTHUMBSTATES = int;
+enum : int
+{
+    VTS_NORMAL   = 0x00000001,
+    VTS_HOT      = 0x00000002,
+    VTS_PUSHED   = 0x00000003,
+    VTS_DISABLED = 0x00000004,
+}
+alias SYSBUTTONSTATES = int;
+enum : int
+{
+    SBS_NORMAL   = 0x00000001,
+    SBS_HOT      = 0x00000002,
+    SBS_PUSHED   = 0x00000003,
+    SBS_DISABLED = 0x00000004,
+}
+alias MINBUTTONSTATES = int;
+enum : int
+{
+    MINBS_NORMAL   = 0x00000001,
+    MINBS_HOT      = 0x00000002,
+    MINBS_PUSHED   = 0x00000003,
+    MINBS_DISABLED = 0x00000004,
+}
+alias MAXBUTTONSTATES = int;
+enum : int
+{
+    MAXBS_NORMAL   = 0x00000001,
+    MAXBS_HOT      = 0x00000002,
+    MAXBS_PUSHED   = 0x00000003,
+    MAXBS_DISABLED = 0x00000004,
+}
+alias RESTOREBUTTONSTATES = int;
+enum : int
+{
+    RBS_NORMAL   = 0x00000001,
+    RBS_HOT      = 0x00000002,
+    RBS_PUSHED   = 0x00000003,
+    RBS_DISABLED = 0x00000004,
+}
+alias HELPBUTTONSTATES = int;
+enum : int
+{
+    HBS_NORMAL   = 0x00000001,
+    HBS_HOT      = 0x00000002,
+    HBS_PUSHED   = 0x00000003,
+    HBS_DISABLED = 0x00000004,
+}
+alias CLOSEBUTTONSTATES = int;
+enum : int
+{
+    CBS_NORMAL   = 0x00000001,
+    CBS_HOT      = 0x00000002,
+    CBS_PUSHED   = 0x00000003,
+    CBS_DISABLED = 0x00000004,
+}
+alias SMALLCLOSEBUTTONSTATES = int;
+enum : int
+{
+    SCBS_NORMAL   = 0x00000001,
+    SCBS_HOT      = 0x00000002,
+    SCBS_PUSHED   = 0x00000003,
+    SCBS_DISABLED = 0x00000004,
+}
+alias FRAMEBOTTOMSTATES = int;
+enum : int
+{
+    FRB_ACTIVE   = 0x00000001,
+    FRB_INACTIVE = 0x00000002,
+}
+alias FRAMELEFTSTATES = int;
+enum : int
+{
+    FRL_ACTIVE   = 0x00000001,
+    FRL_INACTIVE = 0x00000002,
+}
+alias FRAMERIGHTSTATES = int;
+enum : int
+{
+    FRR_ACTIVE   = 0x00000001,
+    FRR_INACTIVE = 0x00000002,
+}
+alias SMALLCAPTIONSTATES = int;
+enum : int
+{
+    SCS_ACTIVE   = 0x00000001,
+    SCS_INACTIVE = 0x00000002,
+    SCS_DISABLED = 0x00000003,
+}
+alias SMALLFRAMEBOTTOMSTATES = int;
+enum : int
+{
+    SFRB_ACTIVE   = 0x00000001,
+    SFRB_INACTIVE = 0x00000002,
+}
+alias SMALLFRAMELEFTSTATES = int;
+enum : int
+{
+    SFRL_ACTIVE   = 0x00000001,
+    SFRL_INACTIVE = 0x00000002,
+}
+alias SMALLFRAMERIGHTSTATES = int;
+enum : int
+{
+    SFRR_ACTIVE   = 0x00000001,
+    SFRR_INACTIVE = 0x00000002,
+}
+alias MDICLOSEBUTTONSTATES = int;
+enum : int
+{
+    MDCL_NORMAL   = 0x00000001,
+    MDCL_HOT      = 0x00000002,
+    MDCL_PUSHED   = 0x00000003,
+    MDCL_DISABLED = 0x00000004,
+}
+alias MDIMINBUTTONSTATES = int;
+enum : int
+{
+    MDMI_NORMAL   = 0x00000001,
+    MDMI_HOT      = 0x00000002,
+    MDMI_PUSHED   = 0x00000003,
+    MDMI_DISABLED = 0x00000004,
+}
+alias MDIRESTOREBUTTONSTATES = int;
+enum : int
+{
+    MDRE_NORMAL   = 0x00000001,
+    MDRE_HOT      = 0x00000002,
+    MDRE_PUSHED   = 0x00000003,
+    MDRE_DISABLED = 0x00000004,
+}
+alias BGTYPE = int;
+enum : int
+{
+    BT_IMAGEFILE  = 0x00000000,
+    BT_BORDERFILL = 0x00000001,
+    BT_NONE       = 0x00000002,
+}
+alias IMAGELAYOUT = int;
+enum : int
+{
+    IL_VERTICAL   = 0x00000000,
+    IL_HORIZONTAL = 0x00000001,
+}
+alias BORDERTYPE = int;
+enum : int
+{
+    BT_RECT      = 0x00000000,
+    BT_ROUNDRECT = 0x00000001,
+    BT_ELLIPSE   = 0x00000002,
+}
+alias FILLTYPE = int;
+enum : int
+{
+    FT_SOLID          = 0x00000000,
+    FT_VERTGRADIENT   = 0x00000001,
+    FT_HORZGRADIENT   = 0x00000002,
+    FT_RADIALGRADIENT = 0x00000003,
+    FT_TILEIMAGE      = 0x00000004,
+}
+alias SIZINGTYPE = int;
+enum : int
+{
+    ST_TRUESIZE = 0x00000000,
+    ST_STRETCH  = 0x00000001,
+    ST_TILE     = 0x00000002,
+}
+alias HALIGN = int;
+enum : int
+{
+    HA_LEFT   = 0x00000000,
+    HA_CENTER = 0x00000001,
+    HA_RIGHT  = 0x00000002,
+}
+alias CONTENTALIGNMENT = int;
+enum : int
+{
+    CA_LEFT   = 0x00000000,
+    CA_CENTER = 0x00000001,
+    CA_RIGHT  = 0x00000002,
+}
+alias VALIGN = int;
+enum : int
+{
+    VA_TOP    = 0x00000000,
+    VA_CENTER = 0x00000001,
+    VA_BOTTOM = 0x00000002,
+}
+alias OFFSETTYPE = int;
+enum : int
+{
+    OT_TOPLEFT           = 0x00000000,
+    OT_TOPRIGHT          = 0x00000001,
+    OT_TOPMIDDLE         = 0x00000002,
+    OT_BOTTOMLEFT        = 0x00000003,
+    OT_BOTTOMRIGHT       = 0x00000004,
+    OT_BOTTOMMIDDLE      = 0x00000005,
+    OT_MIDDLELEFT        = 0x00000006,
+    OT_MIDDLERIGHT       = 0x00000007,
+    OT_LEFTOFCAPTION     = 0x00000008,
+    OT_RIGHTOFCAPTION    = 0x00000009,
+    OT_LEFTOFLASTBUTTON  = 0x0000000a,
+    OT_RIGHTOFLASTBUTTON = 0x0000000b,
+    OT_ABOVELASTBUTTON   = 0x0000000c,
+    OT_BELOWLASTBUTTON   = 0x0000000d,
+}
+alias ICONEFFECT = int;
+enum : int
+{
+    ICE_NONE   = 0x00000000,
+    ICE_GLOW   = 0x00000001,
+    ICE_SHADOW = 0x00000002,
+    ICE_PULSE  = 0x00000003,
+    ICE_ALPHA  = 0x00000004,
+}
+alias TEXTSHADOWTYPE = int;
+enum : int
+{
+    TST_NONE       = 0x00000000,
+    TST_SINGLE     = 0x00000001,
+    TST_CONTINUOUS = 0x00000002,
+}
+alias GLYPHTYPE = int;
+enum : int
+{
+    GT_NONE       = 0x00000000,
+    GT_IMAGEGLYPH = 0x00000001,
+    GT_FONTGLYPH  = 0x00000002,
+}
+alias IMAGESELECTTYPE = int;
+enum : int
+{
+    IST_NONE = 0x00000000,
+    IST_SIZE = 0x00000001,
+    IST_DPI  = 0x00000002,
+}
+alias TRUESIZESCALINGTYPE = int;
+enum : int
+{
+    TSST_NONE = 0x00000000,
+    TSST_SIZE = 0x00000001,
+    TSST_DPI  = 0x00000002,
+}
+alias GLYPHFONTSIZINGTYPE = int;
+enum : int
+{
+    GFST_NONE = 0x00000000,
+    GFST_SIZE = 0x00000001,
+    GFST_DPI  = 0x00000002,
+}
+alias LINKPARTS = int;
+enum : int
+{
+    LP_HYPERLINK = 0x00000001,
+}
+alias HYPERLINKSTATES = int;
+enum : int
+{
+    HLS_NORMALTEXT = 0x00000001,
+    HLS_LINKTEXT   = 0x00000002,
+}
+alias EMPTYMARKUPPARTS = int;
+enum : int
+{
+    EMP_MARKUPTEXT = 0x00000001,
+}
+alias MARKUPTEXTSTATES = int;
+enum : int
+{
+    EMT_NORMALTEXT = 0x00000001,
+    EMT_LINKTEXT   = 0x00000002,
+}
+alias STATICPARTS = int;
+enum : int
+{
+    STAT_TEXT = 0x00000001,
+}
+alias PAGEPARTS = int;
+enum : int
+{
+    PGRP_UP       = 0x00000001,
+    PGRP_DOWN     = 0x00000002,
+    PGRP_UPHORZ   = 0x00000003,
+    PGRP_DOWNHORZ = 0x00000004,
+}
+alias MONTHCALPARTS = int;
+enum : int
+{
+    MC_BACKGROUND            = 0x00000001,
+    MC_BORDERS               = 0x00000002,
+    MC_GRIDBACKGROUND        = 0x00000003,
+    MC_COLHEADERSPLITTER     = 0x00000004,
+    MC_GRIDCELLBACKGROUND    = 0x00000005,
+    MC_GRIDCELL              = 0x00000006,
+    MC_GRIDCELLUPPER         = 0x00000007,
+    MC_TRAILINGGRIDCELL      = 0x00000008,
+    MC_TRAILINGGRIDCELLUPPER = 0x00000009,
+    MC_NAVNEXT               = 0x0000000a,
+    MC_NAVPREV               = 0x0000000b,
+}
+alias GRIDCELLBACKGROUNDSTATES = int;
+enum : int
+{
+    MCGCB_SELECTED           = 0x00000001,
+    MCGCB_HOT                = 0x00000002,
+    MCGCB_SELECTEDHOT        = 0x00000003,
+    MCGCB_SELECTEDNOTFOCUSED = 0x00000004,
+    MCGCB_TODAY              = 0x00000005,
+    MCGCB_TODAYSELECTED      = 0x00000006,
+}
+alias GRIDCELLSTATES = int;
+enum : int
+{
+    MCGC_HOT           = 0x00000001,
+    MCGC_HASSTATE      = 0x00000002,
+    MCGC_HASSTATEHOT   = 0x00000003,
+    MCGC_TODAY         = 0x00000004,
+    MCGC_TODAYSELECTED = 0x00000005,
+    MCGC_SELECTED      = 0x00000006,
+    MCGC_SELECTEDHOT   = 0x00000007,
+}
+alias GRIDCELLUPPERSTATES = int;
+enum : int
+{
+    MCGCU_HOT         = 0x00000001,
+    MCGCU_HASSTATE    = 0x00000002,
+    MCGCU_HASSTATEHOT = 0x00000003,
+    MCGCU_SELECTED    = 0x00000004,
+    MCGCU_SELECTEDHOT = 0x00000005,
+}
+alias TRAILINGGRIDCELLSTATES = int;
+enum : int
+{
+    MCTGC_HOT           = 0x00000001,
+    MCTGC_HASSTATE      = 0x00000002,
+    MCTGC_HASSTATEHOT   = 0x00000003,
+    MCTGC_TODAY         = 0x00000004,
+    MCTGC_TODAYSELECTED = 0x00000005,
+    MCTGC_SELECTED      = 0x00000006,
+    MCTGC_SELECTEDHOT   = 0x00000007,
+}
+alias TRAILINGGRIDCELLUPPERSTATES = int;
+enum : int
+{
+    MCTGCU_HOT         = 0x00000001,
+    MCTGCU_HASSTATE    = 0x00000002,
+    MCTGCU_HASSTATEHOT = 0x00000003,
+    MCTGCU_SELECTED    = 0x00000004,
+    MCTGCU_SELECTEDHOT = 0x00000005,
+}
+alias NAVNEXTSTATES = int;
+enum : int
+{
+    MCNN_NORMAL   = 0x00000001,
+    MCNN_HOT      = 0x00000002,
+    MCNN_PRESSED  = 0x00000003,
+    MCNN_DISABLED = 0x00000004,
+}
+alias NAVPREVSTATES = int;
+enum : int
+{
+    MCNP_NORMAL   = 0x00000001,
+    MCNP_HOT      = 0x00000002,
+    MCNP_PRESSED  = 0x00000003,
+    MCNP_DISABLED = 0x00000004,
+}
+alias CLOCKPARTS = int;
+enum : int
+{
+    CLP_TIME = 0x00000001,
+}
+alias CLOCKSTATES = int;
+enum : int
+{
+    CLS_NORMAL  = 0x00000001,
+    CLS_HOT     = 0x00000002,
+    CLS_PRESSED = 0x00000003,
+}
+alias TRAYNOTIFYPARTS = int;
+enum : int
+{
+    TNP_BACKGROUND     = 0x00000001,
+    TNP_ANIMBACKGROUND = 0x00000002,
+}
+alias TASKBARPARTS = int;
+enum : int
+{
+    TBP_BACKGROUNDBOTTOM = 0x00000001,
+    TBP_BACKGROUNDRIGHT  = 0x00000002,
+    TBP_BACKGROUNDTOP    = 0x00000003,
+    TBP_BACKGROUNDLEFT   = 0x00000004,
+    TBP_SIZINGBARBOTTOM  = 0x00000005,
+    TBP_SIZINGBARRIGHT   = 0x00000006,
+    TBP_SIZINGBARTOP     = 0x00000007,
+    TBP_SIZINGBARLEFT    = 0x00000008,
+}
+alias TASKBANDPARTS = int;
+enum : int
+{
+    TDP_GROUPCOUNT           = 0x00000001,
+    TDP_FLASHBUTTON          = 0x00000002,
+    TDP_FLASHBUTTONGROUPMENU = 0x00000003,
+}
+alias STARTPANELPARTS = int;
+enum : int
+{
+    SPP_USERPANE                  = 0x00000001,
+    SPP_MOREPROGRAMS              = 0x00000002,
+    SPP_MOREPROGRAMSARROW         = 0x00000003,
+    SPP_PROGLIST                  = 0x00000004,
+    SPP_PROGLISTSEPARATOR         = 0x00000005,
+    SPP_PLACESLIST                = 0x00000006,
+    SPP_PLACESLISTSEPARATOR       = 0x00000007,
+    SPP_LOGOFF                    = 0x00000008,
+    SPP_LOGOFFBUTTONS             = 0x00000009,
+    SPP_USERPICTURE               = 0x0000000a,
+    SPP_PREVIEW                   = 0x0000000b,
+    SPP_MOREPROGRAMSTAB           = 0x0000000c,
+    SPP_NSCHOST                   = 0x0000000d,
+    SPP_SOFTWAREEXPLORER          = 0x0000000e,
+    SPP_OPENBOX                   = 0x0000000f,
+    SPP_SEARCHVIEW                = 0x00000010,
+    SPP_MOREPROGRAMSARROWBACK     = 0x00000011,
+    SPP_TOPMATCH                  = 0x00000012,
+    SPP_LOGOFFSPLITBUTTONDROPDOWN = 0x00000013,
+}
+alias MOREPROGRAMSTABSTATES = int;
+enum : int
+{
+    SPMPT_NORMAL   = 0x00000001,
+    SPMPT_HOT      = 0x00000002,
+    SPMPT_SELECTED = 0x00000003,
+    SPMPT_DISABLED = 0x00000004,
+    SPMPT_FOCUSED  = 0x00000005,
+}
+alias SOFTWAREEXPLORERSTATES = int;
+enum : int
+{
+    SPSE_NORMAL   = 0x00000001,
+    SPSE_HOT      = 0x00000002,
+    SPSE_SELECTED = 0x00000003,
+    SPSE_DISABLED = 0x00000004,
+    SPSE_FOCUSED  = 0x00000005,
+}
+alias OPENBOXSTATES = int;
+enum : int
+{
+    SPOB_NORMAL   = 0x00000001,
+    SPOB_HOT      = 0x00000002,
+    SPOB_SELECTED = 0x00000003,
+    SPOB_DISABLED = 0x00000004,
+    SPOB_FOCUSED  = 0x00000005,
+}
+alias MOREPROGRAMSARROWSTATES = int;
+enum : int
+{
+    SPS_NORMAL  = 0x00000001,
+    SPS_HOT     = 0x00000002,
+    SPS_PRESSED = 0x00000003,
+}
+alias MOREPROGRAMSARROWBACKSTATES = int;
+enum : int
+{
+    SPSB_NORMAL  = 0x00000001,
+    SPSB_HOT     = 0x00000002,
+    SPSB_PRESSED = 0x00000003,
+}
+alias LOGOFFBUTTONSSTATES = int;
+enum : int
+{
+    SPLS_NORMAL  = 0x00000001,
+    SPLS_HOT     = 0x00000002,
+    SPLS_PRESSED = 0x00000003,
+}
+alias MENUBANDPARTS = int;
+enum : int
+{
+    MDP_NEWAPPBUTTON = 0x00000001,
+    MDP_SEPERATOR    = 0x00000002,
+}
+alias MENUBANDSTATES = int;
+enum : int
+{
+    MDS_NORMAL     = 0x00000001,
+    MDS_HOT        = 0x00000002,
+    MDS_PRESSED    = 0x00000003,
+    MDS_DISABLED   = 0x00000004,
+    MDS_CHECKED    = 0x00000005,
+    MDS_HOTCHECKED = 0x00000006,
+}
+//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-feedback_type))], [])
+alias FEEDBACK_TYPE = int;
+enum : int
+{
+    FEEDBACK_TOUCH_CONTACTVISUALIZATION = 0x00000001,
+    FEEDBACK_PEN_BARRELVISUALIZATION    = 0x00000002,
+    FEEDBACK_PEN_TAP                    = 0x00000003,
+    FEEDBACK_PEN_DOUBLETAP              = 0x00000004,
+    FEEDBACK_PEN_PRESSANDHOLD           = 0x00000005,
+    FEEDBACK_PEN_RIGHTTAP               = 0x00000006,
+    FEEDBACK_TOUCH_TAP                  = 0x00000007,
+    FEEDBACK_TOUCH_DOUBLETAP            = 0x00000008,
+    FEEDBACK_TOUCH_PRESSANDHOLD         = 0x00000009,
+    FEEDBACK_TOUCH_RIGHTTAP             = 0x0000000a,
+    FEEDBACK_GESTURE_PRESSANDTAP        = 0x0000000b,
+    FEEDBACK_MAX                        = 0xffffffff,
+}
+
+// Constants
+
+
+enum : HTREEITEM
+{
+    TVI_ROOT  = HTREEITEM(0xffff0000),
+    TVI_FIRST = HTREEITEM(0xffff0001),
+    TVI_LAST  = HTREEITEM(0xffff0002),
+    TVI_SORT  = HTREEITEM(0xffff0003),
+}
+
+enum uint NM_FIRST = 0x00000000;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-outofmemory))], [])*/uint NM_OUTOFMEMORY = 0xffffffff;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-click-list-view))], [])*/uint NM_CLICK = 0xfffffffe;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-dblclk-tab))], [])*/uint NM_DBLCLK = 0xfffffffd;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-return-list-view-))], [])*/uint
+{
+    NM_RETURN  = 0xfffffffc,
+    NM_RCLICK  = 0xfffffffb,
+    NM_RDBLCLK = 0xfffffffa,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-setfocus-list-view-))], [])*/uint NM_SETFOCUS = 0xfffffff9;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-killfocus-list-view))], [])*/uint NM_KILLFOCUS = 0xfffffff8;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-customdraw-toolbar))], [])*/uint NM_CUSTOMDRAW = 0xfffffff4;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-hover-list-view))], [])*/uint NM_HOVER = 0xfffffff3;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-nchittest))], [])*/uint NM_NCHITTEST = 0xfffffff2;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-keydown-toolbar))], [])*/uint NM_KEYDOWN = 0xfffffff1;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-releasedcapture-tab-))], [])*/uint NM_RELEASEDCAPTURE = 0xfffffff0;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-setcursor))], [])*/uint NM_SETCURSOR = 0xffffffef;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-char))], [])*/uint
+{
+    NM_CHAR            = 0xffffffee,
+    NM_TOOLTIPSCREATED = 0xffffffed,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-ldown))], [])*/uint NM_LDOWN = 0xffffffec;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-rdown))], [])*/uint NM_RDOWN = 0xffffffeb;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-themechanged))], [])*/uint NM_THEMECHANGED = 0xffffffea;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-fontchanged))], [])*/uint NM_FONTCHANGED = 0xffffffe9;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-customtext))], [])*/uint NM_CUSTOMTEXT = 0xffffffe8;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-tvstateimagechanging))], [])*/uint NM_TVSTATEIMAGECHANGING = 0xffffffe8;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-scrollcaret))], [])*/uint EM_SCROLLCARET = 0x000000b7;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setlimittext))], [])*/uint EM_SETLIMITTEXT = 0x000000c5;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getlimittext))], [])*/uint EM_GETLIMITTEXT = 0x000000d5;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-posfromchar))], [])*/uint EM_POSFROMCHAR = 0x000000d6;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-charfrompos))], [])*/uint EM_CHARFROMPOS = 0x000000d7;
+enum uint HOTKEYF_EXT = 0x00000008;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DevNotes/wm-ctlcolor-))], [])*/uint WM_CTLCOLOR = 0x00000019;
+enum uint ODT_HEADER = 0x00000064;
+enum uint LVM_FIRST = 0x00001000;
+enum uint TV_FIRST = 0x00001100;
+enum uint HDM_FIRST = 0x00001200;
+enum uint TCM_FIRST = 0x00001300;
+enum uint PGM_FIRST = 0x00001400;
+enum uint ECM_FIRST = 0x00001500;
+enum uint BCM_FIRST = 0x00001600;
+enum uint CBM_FIRST = 0x00001700;
+
+enum : uint
+{
+    CCM_FIRST          = 0x00002000,
+    CCM_LAST           = 0x00002200,
+    CCM_SETBKCOLOR     = 0x00002001,
+    CCM_SETCOLORSCHEME = 0x00002002,
+}
+
+enum uint CCM_GETCOLORSCHEME = 0x00002003;
+enum uint CCM_GETDROPTARGET = 0x00002004;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ccm-setunicodeformat))], [])*/uint CCM_SETUNICODEFORMAT = 0x00002005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ccm-getunicodeformat))], [])*/uint CCM_GETUNICODEFORMAT = 0x00002006;
+enum uint COMCTL32_VERSION = 0x00000006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ccm-setversion))], [])*/uint CCM_SETVERSION = 0x00002007;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ccm-getversion))], [])*/uint CCM_GETVERSION = 0x00002008;
+enum uint CCM_SETNOTIFYWINDOW = 0x00002009;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ccm-setwindowtheme))], [])*/uint CCM_SETWINDOWTHEME = 0x0000200b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ccm-dpiscale))], [])*/uint CCM_DPISCALE = 0x0000200c;
+enum uint INFOTIPSIZE = 0x00000400;
+enum uint NM_LAST = 0xffffff9d;
+
+enum : uint
+{
+    LVN_FIRST = 0xffffff9c,
+    LVN_LAST  = 0xffffff39,
+}
+
+enum : uint
+{
+    HDN_FIRST = 0xfffffed4,
+    HDN_LAST  = 0xfffffe71,
+}
+
+enum : uint
+{
+    TVN_FIRST = 0xfffffe70,
+    TVN_LAST  = 0xfffffe0d,
+}
+
+enum : uint
+{
+    TTN_FIRST = 0xfffffdf8,
+    TTN_LAST  = 0xfffffddb,
+}
+
+enum : uint
+{
+    TCN_FIRST = 0xfffffdda,
+    TCN_LAST  = 0xfffffdbc,
+}
+
+enum : uint
+{
+    CDN_FIRST = 0xfffffda7,
+    CDN_LAST  = 0xfffffd45,
+}
+
+enum : uint
+{
+    TBN_FIRST = 0xfffffd44,
+    TBN_LAST  = 0xfffffd30,
+}
+
+enum : uint
+{
+    UDN_FIRST = 0xfffffd2f,
+    UDN_LAST  = 0xfffffd27,
+}
+
+enum : uint
+{
+    DTN_FIRST = 0xfffffd1c,
+    DTN_LAST  = 0xfffffd17,
+}
+
+enum : uint
+{
+    MCN_FIRST = 0xfffffd16,
+    MCN_LAST  = 0xfffffd10,
+}
+
+enum uint DTN_FIRST2 = 0xfffffd0f;
+enum uint DTN_LAST2 = 0xfffffce1;
+
+enum : uint
+{
+    CBEN_FIRST = 0xfffffce0,
+    CBEN_LAST  = 0xfffffcc2,
+}
+
+enum : uint
+{
+    RBN_FIRST = 0xfffffcc1,
+    RBN_LAST  = 0xfffffca5,
+}
+
+enum : uint
+{
+    IPN_FIRST = 0xfffffca4,
+    IPN_LAST  = 0xfffffc91,
+}
+
+enum : uint
+{
+    SBN_FIRST = 0xfffffc90,
+    SBN_LAST  = 0xfffffc7d,
+}
+
+enum : uint
+{
+    PGN_FIRST = 0xfffffc7c,
+    PGN_LAST  = 0xfffffc4a,
+}
+
+enum : uint
+{
+    WMN_FIRST = 0xfffffc18,
+    WMN_LAST  = 0xfffffb50,
+}
+
+enum : uint
+{
+    BCN_FIRST = 0xfffffb1e,
+    BCN_LAST  = 0xfffffaba,
+}
+
+enum : uint
+{
+    TRBN_FIRST = 0xfffffa23,
+    TRBN_LAST  = 0xfffffa11,
+}
+
+enum uint EN_FIRST = 0xfffffa10;
+enum uint EN_LAST = 0xfffff9fc;
+
+enum : uint
+{
+    MSGF_COMMCTRL_BEGINDRAG   = 0x00004200,
+    MSGF_COMMCTRL_SIZEHEADER  = 0x00004201,
+    MSGF_COMMCTRL_DRAGSELECT  = 0x00004202,
+    MSGF_COMMCTRL_TOOLBARCUST = 0x00004203,
+}
+
+enum uint CDRF_DODEFAULT = 0x00000000;
+
+enum : uint
+{
+    CDRF_NEWFONT     = 0x00000002,
+    CDRF_SKIPDEFAULT = 0x00000004,
+}
+
+enum : uint
+{
+    CDRF_DOERASE       = 0x00000008,
+    CDRF_SKIPPOSTPAINT = 0x00000100,
+}
+
+enum : uint
+{
+    CDRF_NOTIFYPOSTPAINT   = 0x00000010,
+    CDRF_NOTIFYITEMDRAW    = 0x00000020,
+    CDRF_NOTIFYSUBITEMDRAW = 0x00000020,
+    CDRF_NOTIFYPOSTERASE   = 0x00000040,
+}
+
+enum uint CDDS_POSTERASE = 0x00000004;
+enum uint CDDS_ITEM = 0x00010000;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/nm-getcustomsplitrect))], [])*/uint NM_GETCUSTOMSPLITRECT = 0xfffffb21;
+
+enum : int
+{
+    CLR_NONE    = 0xffffffff,
+    CLR_DEFAULT = 0xff000000,
+}
+
+enum int CLR_HILIGHT = 0xff000000;
+enum uint ILS_NORMAL = 0x00000000;
+
+enum : uint
+{
+    ILS_GLOW     = 0x00000001,
+    ILS_SHADOW   = 0x00000002,
+    ILS_SATURATE = 0x00000004,
+}
+
+enum uint ILS_ALPHA = 0x00000008;
+
+enum : uint
+{
+    ILGT_NORMAL = 0x00000000,
+    ILGT_ASYNC  = 0x00000001,
+}
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    WC_HEADERA = "SysHeader32",
+    WC_HEADERW = "SysHeader32",
+    WC_HEADER  = "SysHeader32",
+}
+
+enum : uint
+{
+    HDS_HORZ    = 0x00000000,
+    HDS_BUTTONS = 0x00000002,
+}
+
+enum : uint
+{
+    HDS_HOTTRACK = 0x00000004,
+    HDS_HIDDEN   = 0x00000008,
+}
+
+enum uint HDS_DRAGDROP = 0x00000040;
+
+enum : uint
+{
+    HDS_FULLDRAG  = 0x00000080,
+    HDS_FILTERBAR = 0x00000100,
+}
+
+enum : uint
+{
+    HDS_FLAT       = 0x00000200,
+    HDS_CHECKBOXES = 0x00000400,
+}
+
+enum uint HDS_NOSIZING = 0x00000800;
+enum uint HDS_OVERFLOW = 0x00001000;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-getitemcount))], [])*/uint HDM_GETITEMCOUNT = 0x00001200;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-insertitem))], [])*/uint
+{
+    HDM_INSERTITEMA = 0x00001201,
+    HDM_INSERTITEMW = 0x0000120a,
+    HDM_INSERTITEM  = 0x0000120a,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-deleteitem))], [])*/uint HDM_DELETEITEM = 0x00001202;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-getitem))], [])*/uint
+{
+    HDM_GETITEMA = 0x00001203,
+    HDM_GETITEMW = 0x0000120b,
+    HDM_GETITEM  = 0x0000120b,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-setitem))], [])*/uint
+{
+    HDM_SETITEMA = 0x00001204,
+    HDM_SETITEMW = 0x0000120c,
+    HDM_SETITEM  = 0x0000120c,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-layout))], [])*/uint HDM_LAYOUT = 0x00001205;
+
+enum : uint
+{
+    HDSIL_NORMAL = 0x00000000,
+    HDSIL_STATE  = 0x00000001,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-hittest))], [])*/uint HDM_HITTEST = 0x00001206;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-getitemrect))], [])*/uint HDM_GETITEMRECT = 0x00001207;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-setimagelist))], [])*/uint HDM_SETIMAGELIST = 0x00001208;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-getimagelist))], [])*/uint HDM_GETIMAGELIST = 0x00001209;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-ordertoindex))], [])*/uint HDM_ORDERTOINDEX = 0x0000120f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-createdragimage))], [])*/uint HDM_CREATEDRAGIMAGE = 0x00001210;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-getorderarray))], [])*/uint HDM_GETORDERARRAY = 0x00001211;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-setorderarray))], [])*/uint
+{
+    HDM_SETORDERARRAY   = 0x00001212,
+    HDM_SETHOTDIVIDER   = 0x00001213,
+    HDM_SETBITMAPMARGIN = 0x00001214,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-getbitmapmargin))], [])*/uint HDM_GETBITMAPMARGIN = 0x00001215;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-setunicodeformat))], [])*/uint HDM_SETUNICODEFORMAT = 0x00002005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-getunicodeformat))], [])*/uint HDM_GETUNICODEFORMAT = 0x00002006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-setfilterchangetimeout))], [])*/uint HDM_SETFILTERCHANGETIMEOUT = 0x00001216;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-editfilter))], [])*/uint HDM_EDITFILTER = 0x00001217;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-clearfilter))], [])*/uint HDM_CLEARFILTER = 0x00001218;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-getitemdropdownrect))], [])*/uint HDM_GETITEMDROPDOWNRECT = 0x00001219;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-getoverflowrect))], [])*/uint HDM_GETOVERFLOWRECT = 0x0000121a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-getfocuseditem))], [])*/uint HDM_GETFOCUSEDITEM = 0x0000121b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdm-setfocuseditem))], [])*/uint HDM_SETFOCUSEDITEM = 0x0000121c;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-itemchanging))], [])*/uint
+{
+    HDN_ITEMCHANGINGA = 0xfffffed4,
+    HDN_ITEMCHANGINGW = 0xfffffec0,
+    HDN_ITEMCHANGEDA  = 0xfffffed3,
+    HDN_ITEMCHANGEDW  = 0xfffffebf,
+    HDN_ITEMCLICKA    = 0xfffffed2,
+    HDN_ITEMCLICKW    = 0xfffffebe,
+    HDN_ITEMDBLCLICKA = 0xfffffed1,
+    HDN_ITEMDBLCLICKW = 0xfffffebd,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-dividerdblclick))], [])*/uint
+{
+    HDN_DIVIDERDBLCLICKA = 0xfffffecf,
+    HDN_DIVIDERDBLCLICKW = 0xfffffebb,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-begintrack))], [])*/uint
+{
+    HDN_BEGINTRACKA = 0xfffffece,
+    HDN_BEGINTRACKW = 0xfffffeba,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-endtrack))], [])*/uint
+{
+    HDN_ENDTRACKA = 0xfffffecd,
+    HDN_ENDTRACKW = 0xfffffeb9,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-track))], [])*/uint
+{
+    HDN_TRACKA = 0xfffffecc,
+    HDN_TRACKW = 0xfffffeb8,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-getdispinfo))], [])*/uint
+{
+    HDN_GETDISPINFOA = 0xfffffecb,
+    HDN_GETDISPINFOW = 0xfffffeb7,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-begindrag))], [])*/uint HDN_BEGINDRAG = 0xfffffeca;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-enddrag))], [])*/uint HDN_ENDDRAG = 0xfffffec9;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-filterchange))], [])*/uint
+{
+    HDN_FILTERCHANGE   = 0xfffffec8,
+    HDN_FILTERBTNCLICK = 0xfffffec7,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-beginfilteredit))], [])*/uint HDN_BEGINFILTEREDIT = 0xfffffec6;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-endfilteredit))], [])*/uint HDN_ENDFILTEREDIT = 0xfffffec5;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-itemstateiconclick))], [])*/uint HDN_ITEMSTATEICONCLICK = 0xfffffec4;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-itemkeydown))], [])*/uint HDN_ITEMKEYDOWN = 0xfffffec3;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-dropdown))], [])*/uint HDN_DROPDOWN = 0xfffffec2;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-overflowclick))], [])*/uint HDN_OVERFLOWCLICK = 0xfffffec1;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-itemchanging))], [])*/uint
+{
+    HDN_ITEMCHANGING = 0xfffffec0,
+    HDN_ITEMCHANGED  = 0xfffffebf,
+    HDN_ITEMCLICK    = 0xfffffebe,
+    HDN_ITEMDBLCLICK = 0xfffffebd,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-dividerdblclick))], [])*/uint HDN_DIVIDERDBLCLICK = 0xfffffebb;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-begintrack))], [])*/uint HDN_BEGINTRACK = 0xfffffeba;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-endtrack))], [])*/uint HDN_ENDTRACK = 0xfffffeb9;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hdn-track))], [])*/uint
+{
+    HDN_TRACK       = 0xfffffeb8,
+    HDN_GETDISPINFO = 0xfffffeb7,
+}
+
+enum : const(wchar)*
+{
+    TOOLBARCLASSNAMEW = "ToolbarWindow32",
+    TOOLBARCLASSNAMEA = "ToolbarWindow32",
+    TOOLBARCLASSNAME  = "ToolbarWindow32",
+}
+
+enum uint CMB_MASKED = 0x00000002;
+
+enum : uint
+{
+    TBSTATE_CHECKED       = 0x00000001,
+    TBSTATE_PRESSED       = 0x00000002,
+    TBSTATE_ENABLED       = 0x00000004,
+    TBSTATE_HIDDEN        = 0x00000008,
+    TBSTATE_INDETERMINATE = 0x00000010,
+}
+
+enum : uint
+{
+    TBSTATE_WRAP     = 0x00000020,
+    TBSTATE_ELLIPSES = 0x00000040,
+    TBSTATE_MARKED   = 0x00000080,
+}
+
+enum : uint
+{
+    TBSTYLE_BUTTON       = 0x00000000,
+    TBSTYLE_SEP          = 0x00000001,
+    TBSTYLE_CHECK        = 0x00000002,
+    TBSTYLE_GROUP        = 0x00000004,
+    TBSTYLE_DROPDOWN     = 0x00000008,
+    TBSTYLE_AUTOSIZE     = 0x00000010,
+    TBSTYLE_NOPREFIX     = 0x00000020,
+    TBSTYLE_TOOLTIPS     = 0x00000100,
+    TBSTYLE_WRAPABLE     = 0x00000200,
+    TBSTYLE_ALTDRAG      = 0x00000400,
+    TBSTYLE_FLAT         = 0x00000800,
+    TBSTYLE_LIST         = 0x00001000,
+    TBSTYLE_CUSTOMERASE  = 0x00002000,
+    TBSTYLE_REGISTERDROP = 0x00004000,
+}
+
+enum : uint
+{
+    TBSTYLE_TRANSPARENT     = 0x00008000,
+    TBSTYLE_EX_DRAWDDARROWS = 0x00000001,
+}
+
+enum : uint
+{
+    BTNS_BUTTON   = 0x00000000,
+    BTNS_SEP      = 0x00000001,
+    BTNS_CHECK    = 0x00000002,
+    BTNS_GROUP    = 0x00000004,
+    BTNS_DROPDOWN = 0x00000008,
+}
+
+enum uint BTNS_AUTOSIZE = 0x00000010;
+enum uint BTNS_NOPREFIX = 0x00000020;
+enum uint BTNS_SHOWTEXT = 0x00000040;
+enum uint BTNS_WHOLEDROPDOWN = 0x00000080;
+
+enum : uint
+{
+    TBSTYLE_EX_MIXEDBUTTONS       = 0x00000008,
+    TBSTYLE_EX_HIDECLIPPEDBUTTONS = 0x00000010,
+}
+
+enum : uint
+{
+    TBSTYLE_EX_MULTICOLUMN  = 0x00000002,
+    TBSTYLE_EX_VERTICAL     = 0x00000004,
+    TBSTYLE_EX_DOUBLEBUFFER = 0x00000080,
+}
+
+enum : uint
+{
+    TBCDRF_NOEDGES        = 0x00010000,
+    TBCDRF_HILITEHOTTRACK = 0x00020000,
+}
+
+enum : uint
+{
+    TBCDRF_NOOFFSET       = 0x00040000,
+    TBCDRF_NOMARK         = 0x00080000,
+    TBCDRF_NOETCHEDEFFECT = 0x00100000,
+}
+
+enum : uint
+{
+    TBCDRF_BLENDICON    = 0x00200000,
+    TBCDRF_NOBACKGROUND = 0x00400000,
+}
+
+enum uint TBCDRF_USECDCOLORS = 0x00800000;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-enablebutton))], [])*/uint TB_ENABLEBUTTON = 0x00000401;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-checkbutton))], [])*/uint TB_CHECKBUTTON = 0x00000402;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-pressbutton))], [])*/uint TB_PRESSBUTTON = 0x00000403;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-hidebutton))], [])*/uint TB_HIDEBUTTON = 0x00000404;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-indeterminate))], [])*/uint TB_INDETERMINATE = 0x00000405;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-markbutton))], [])*/uint TB_MARKBUTTON = 0x00000406;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-isbuttonenabled))], [])*/uint
+{
+    TB_ISBUTTONENABLED       = 0x00000409,
+    TB_ISBUTTONCHECKED       = 0x0000040a,
+    TB_ISBUTTONPRESSED       = 0x0000040b,
+    TB_ISBUTTONHIDDEN        = 0x0000040c,
+    TB_ISBUTTONINDETERMINATE = 0x0000040d,
+    TB_ISBUTTONHIGHLIGHTED   = 0x0000040e,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setstate))], [])*/uint TB_SETSTATE = 0x00000411;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getstate))], [])*/uint TB_GETSTATE = 0x00000412;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-addbitmap))], [])*/uint TB_ADDBITMAP = 0x00000413;
+
+enum : uint
+{
+    IDB_STD_SMALL_COLOR = 0x00000000,
+    IDB_STD_LARGE_COLOR = 0x00000001,
+}
+
+enum : uint
+{
+    IDB_VIEW_SMALL_COLOR = 0x00000004,
+    IDB_VIEW_LARGE_COLOR = 0x00000005,
+}
+
+enum : uint
+{
+    IDB_HIST_SMALL_COLOR = 0x00000008,
+    IDB_HIST_LARGE_COLOR = 0x00000009,
+    IDB_HIST_NORMAL      = 0x0000000c,
+    IDB_HIST_HOT         = 0x0000000d,
+    IDB_HIST_DISABLED    = 0x0000000e,
+    IDB_HIST_PRESSED     = 0x0000000f,
+}
+
+enum : uint
+{
+    STD_CUT    = 0x00000000,
+    STD_COPY   = 0x00000001,
+    STD_PASTE  = 0x00000002,
+    STD_UNDO   = 0x00000003,
+    STD_REDOW  = 0x00000004,
+    STD_DELETE = 0x00000005,
+}
+
+enum : uint
+{
+    STD_FILENEW  = 0x00000006,
+    STD_FILEOPEN = 0x00000007,
+    STD_FILESAVE = 0x00000008,
+}
+
+enum : uint
+{
+    STD_PRINTPRE   = 0x00000009,
+    STD_PROPERTIES = 0x0000000a,
+}
+
+enum : uint
+{
+    STD_HELP    = 0x0000000b,
+    STD_FIND    = 0x0000000c,
+    STD_REPLACE = 0x0000000d,
+}
+
+enum uint STD_PRINT = 0x0000000e;
+enum uint VIEW_LARGEICONS = 0x00000000;
+enum uint VIEW_SMALLICONS = 0x00000001;
+
+enum : uint
+{
+    VIEW_LIST     = 0x00000002,
+    VIEW_DETAILS  = 0x00000003,
+    VIEW_SORTNAME = 0x00000004,
+    VIEW_SORTSIZE = 0x00000005,
+    VIEW_SORTDATE = 0x00000006,
+    VIEW_SORTTYPE = 0x00000007,
+}
+
+enum uint VIEW_PARENTFOLDER = 0x00000008;
+
+enum : uint
+{
+    VIEW_NETCONNECT    = 0x00000009,
+    VIEW_NETDISCONNECT = 0x0000000a,
+}
+
+enum uint VIEW_NEWFOLDER = 0x0000000b;
+enum uint VIEW_VIEWMENU = 0x0000000c;
+
+enum : uint
+{
+    HIST_BACK      = 0x00000000,
+    HIST_FORWARD   = 0x00000001,
+    HIST_FAVORITES = 0x00000002,
+}
+
+enum uint HIST_ADDTOFAVORITES = 0x00000003;
+enum uint HIST_VIEWTREE = 0x00000004;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-addbuttons))], [])*/uint TB_ADDBUTTONSA = 0x00000414;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-insertbutton))], [])*/uint TB_INSERTBUTTONA = 0x00000415;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-deletebutton))], [])*/uint TB_DELETEBUTTON = 0x00000416;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getbutton))], [])*/uint TB_GETBUTTON = 0x00000417;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-buttoncount))], [])*/uint TB_BUTTONCOUNT = 0x00000418;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-commandtoindex))], [])*/uint TB_COMMANDTOINDEX = 0x00000419;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-saverestore))], [])*/uint
+{
+    TB_SAVERESTOREA = 0x0000041a,
+    TB_SAVERESTOREW = 0x0000044c,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-customize))], [])*/uint TB_CUSTOMIZE = 0x0000041b;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-addstring))], [])*/uint
+{
+    TB_ADDSTRINGA = 0x0000041c,
+    TB_ADDSTRINGW = 0x0000044d,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getitemrect))], [])*/uint TB_GETITEMRECT = 0x0000041d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-buttonstructsize))], [])*/uint TB_BUTTONSTRUCTSIZE = 0x0000041e;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setbuttonsize))], [])*/uint
+{
+    TB_SETBUTTONSIZE = 0x0000041f,
+    TB_SETBITMAPSIZE = 0x00000420,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-autosize))], [])*/uint TB_AUTOSIZE = 0x00000421;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-gettooltips))], [])*/uint TB_GETTOOLTIPS = 0x00000423;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-settooltips))], [])*/uint
+{
+    TB_SETTOOLTIPS = 0x00000424,
+    TB_SETPARENT   = 0x00000425,
+    TB_SETROWS     = 0x00000427,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getrows))], [])*/uint TB_GETROWS = 0x00000428;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setcmdid))], [])*/uint TB_SETCMDID = 0x0000042a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-changebitmap))], [])*/uint TB_CHANGEBITMAP = 0x0000042b;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getbitmap))], [])*/uint
+{
+    TB_GETBITMAP      = 0x0000042c,
+    TB_GETBUTTONTEXTA = 0x0000042d,
+    TB_GETBUTTONTEXTW = 0x0000044b,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-replacebitmap))], [])*/uint TB_REPLACEBITMAP = 0x0000042e;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setindent))], [])*/uint
+{
+    TB_SETINDENT    = 0x0000042f,
+    TB_SETIMAGELIST = 0x00000430,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getimagelist))], [])*/uint TB_GETIMAGELIST = 0x00000431;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-loadimages))], [])*/uint TB_LOADIMAGES = 0x00000432;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getrect))], [])*/uint TB_GETRECT = 0x00000433;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-sethotimagelist))], [])*/uint TB_SETHOTIMAGELIST = 0x00000434;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-gethotimagelist))], [])*/uint TB_GETHOTIMAGELIST = 0x00000435;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setdisabledimagelist))], [])*/uint TB_SETDISABLEDIMAGELIST = 0x00000436;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getdisabledimagelist))], [])*/uint TB_GETDISABLEDIMAGELIST = 0x00000437;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setstyle))], [])*/uint TB_SETSTYLE = 0x00000438;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getstyle))], [])*/uint
+{
+    TB_GETSTYLE      = 0x00000439,
+    TB_GETBUTTONSIZE = 0x0000043a,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setbuttonwidth))], [])*/uint TB_SETBUTTONWIDTH = 0x0000043b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setmaxtextrows))], [])*/uint TB_SETMAXTEXTROWS = 0x0000043c;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-gettextrows))], [])*/uint
+{
+    TB_GETTEXTROWS   = 0x0000043d,
+    TB_GETBUTTONTEXT = 0x0000044b,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-saverestore))], [])*/uint TB_SAVERESTORE = 0x0000044c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-addstring))], [])*/uint TB_ADDSTRING = 0x0000044d;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getobject))], [])*/uint
+{
+    TB_GETOBJECT  = 0x0000043e,
+    TB_GETHOTITEM = 0x00000447,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-sethotitem))], [])*/uint
+{
+    TB_SETHOTITEM         = 0x00000448,
+    TB_SETANCHORHIGHLIGHT = 0x00000449,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getanchorhighlight))], [])*/uint TB_GETANCHORHIGHLIGHT = 0x0000044a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-mapaccelerator))], [])*/uint TB_MAPACCELERATORA = 0x0000044e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getinsertmark))], [])*/uint TB_GETINSERTMARK = 0x0000044f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setinsertmark))], [])*/uint TB_SETINSERTMARK = 0x00000450;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-insertmarkhittest))], [])*/uint TB_INSERTMARKHITTEST = 0x00000451;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-movebutton))], [])*/uint TB_MOVEBUTTON = 0x00000452;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getmaxsize))], [])*/uint TB_GETMAXSIZE = 0x00000453;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setextendedstyle))], [])*/uint TB_SETEXTENDEDSTYLE = 0x00000454;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getextendedstyle))], [])*/uint TB_GETEXTENDEDSTYLE = 0x00000455;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getpadding))], [])*/uint TB_GETPADDING = 0x00000456;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setpadding))], [])*/uint
+{
+    TB_SETPADDING         = 0x00000457,
+    TB_SETINSERTMARKCOLOR = 0x00000458,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getinsertmarkcolor))], [])*/uint TB_GETINSERTMARKCOLOR = 0x00000459;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setcolorscheme))], [])*/uint TB_SETCOLORSCHEME = 0x00002002;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getcolorscheme))], [])*/uint TB_GETCOLORSCHEME = 0x00002003;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setunicodeformat))], [])*/uint TB_SETUNICODEFORMAT = 0x00002005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getunicodeformat))], [])*/uint TB_GETUNICODEFORMAT = 0x00002006;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-mapaccelerator))], [])*/uint
+{
+    TB_MAPACCELERATORW = 0x0000045a,
+    TB_MAPACCELERATOR  = 0x0000045a,
+}
+
+enum uint TBBF_LARGE = 0x00000001;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getbitmapflags))], [])*/uint
+{
+    TB_GETBITMAPFLAGS = 0x00000429,
+    TB_GETBUTTONINFOW = 0x0000043f,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setbuttoninfo))], [])*/uint TB_SETBUTTONINFOW = 0x00000440;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getbuttoninfo))], [])*/uint TB_GETBUTTONINFOA = 0x00000441;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setbuttoninfo))], [])*/uint TB_SETBUTTONINFOA = 0x00000442;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getbuttoninfo))], [])*/uint TB_GETBUTTONINFO = 0x0000043f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setbuttoninfo))], [])*/uint TB_SETBUTTONINFO = 0x00000440;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-insertbutton))], [])*/uint TB_INSERTBUTTONW = 0x00000443;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-addbuttons))], [])*/uint TB_ADDBUTTONSW = 0x00000444;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-hittest))], [])*/uint TB_HITTEST = 0x00000445;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-insertbutton))], [])*/uint TB_INSERTBUTTON = 0x00000443;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-addbuttons))], [])*/uint TB_ADDBUTTONS = 0x00000444;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setdrawtextflags))], [])*/uint TB_SETDRAWTEXTFLAGS = 0x00000446;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getstring))], [])*/uint
+{
+    TB_GETSTRINGW = 0x0000045b,
+    TB_GETSTRINGA = 0x0000045c,
+    TB_GETSTRING  = 0x0000045b,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setboundingsize))], [])*/uint TB_SETBOUNDINGSIZE = 0x0000045d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-sethotitem2))], [])*/uint TB_SETHOTITEM2 = 0x0000045e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-hasaccelerator))], [])*/uint TB_HASACCELERATOR = 0x0000045f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setlistgap))], [])*/uint TB_SETLISTGAP = 0x00000460;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getimagelistcount))], [])*/uint TB_GETIMAGELISTCOUNT = 0x00000462;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getidealsize))], [])*/uint TB_GETIDEALSIZE = 0x00000463;
+
+enum : uint
+{
+    TBMF_PAD           = 0x00000001,
+    TBMF_BARPAD        = 0x00000002,
+    TBMF_BUTTONSPACING = 0x00000004,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getmetrics))], [])*/uint TB_GETMETRICS = 0x00000465;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setmetrics))], [])*/uint TB_SETMETRICS = 0x00000466;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getitemdropdownrect))], [])*/uint TB_GETITEMDROPDOWNRECT = 0x00000467;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setpressedimagelist))], [])*/uint TB_SETPRESSEDIMAGELIST = 0x00000468;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-getpressedimagelist))], [])*/uint TB_GETPRESSEDIMAGELIST = 0x00000469;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tb-setwindowtheme))], [])*/uint TB_SETWINDOWTHEME = 0x0000200b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-getbuttoninfo))], [])*/uint TBN_GETBUTTONINFOA = 0xfffffd44;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-begindrag))], [])*/uint TBN_BEGINDRAG = 0xfffffd43;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-enddrag))], [])*/uint TBN_ENDDRAG = 0xfffffd42;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-beginadjust))], [])*/uint TBN_BEGINADJUST = 0xfffffd41;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-endadjust))], [])*/uint TBN_ENDADJUST = 0xfffffd40;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-reset))], [])*/uint
+{
+    TBN_RESET       = 0xfffffd3f,
+    TBN_QUERYINSERT = 0xfffffd3e,
+    TBN_QUERYDELETE = 0xfffffd3d,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-toolbarchange))], [])*/uint TBN_TOOLBARCHANGE = 0xfffffd3c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-custhelp))], [])*/uint TBN_CUSTHELP = 0xfffffd3b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-dropdown))], [])*/uint TBN_DROPDOWN = 0xfffffd3a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-getobject))], [])*/uint TBN_GETOBJECT = 0xfffffd38;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-hotitemchange))], [])*/uint TBN_HOTITEMCHANGE = 0xfffffd37;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-dragout))], [])*/uint
+{
+    TBN_DRAGOUT        = 0xfffffd36,
+    TBN_DELETINGBUTTON = 0xfffffd35,
+}
+
+enum : uint
+{
+    TBN_GETDISPINFOA   = 0xfffffd34,
+    TBN_GETDISPINFOW   = 0xfffffd33,
+    TBN_GETINFOTIPA    = 0xfffffd32,
+    TBN_GETINFOTIPW    = 0xfffffd31,
+    TBN_GETBUTTONINFOW = 0xfffffd30,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-restore))], [])*/uint TBN_RESTORE = 0xfffffd2f;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-save))], [])*/uint
+{
+    TBN_SAVE          = 0xfffffd2e,
+    TBN_INITCUSTOMIZE = 0xfffffd2d,
+}
+
+enum : uint
+{
+    TBNRF_HIDEHELP     = 0x00000001,
+    TBNRF_ENDCUSTOMIZE = 0x00000002,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-wraphotitem))], [])*/uint TBN_WRAPHOTITEM = 0xfffffd2c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-dupaccelerator))], [])*/uint TBN_DUPACCELERATOR = 0xfffffd2b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-wrapaccelerator))], [])*/uint TBN_WRAPACCELERATOR = 0xfffffd2a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-dragover))], [])*/uint TBN_DRAGOVER = 0xfffffd29;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-mapaccelerator))], [])*/uint TBN_MAPACCELERATOR = 0xfffffd28;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-getinfotip))], [])*/uint
+{
+    TBN_GETINFOTIP  = 0xfffffd31,
+    TBN_GETDISPINFO = 0xfffffd33,
+}
+
+enum : uint
+{
+    TBDDRET_DEFAULT      = 0x00000000,
+    TBDDRET_NODEFAULT    = 0x00000001,
+    TBDDRET_TREATPRESSED = 0x00000002,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbn-getbuttoninfo))], [])*/uint TBN_GETBUTTONINFO = 0xfffffd30;
+
+enum : const(wchar)*
+{
+    REBARCLASSNAMEW = "ReBarWindow32",
+    REBARCLASSNAMEA = "ReBarWindow32",
+    REBARCLASSNAME  = "ReBarWindow32",
+}
+
+enum uint RBIM_IMAGELIST = 0x00000001;
+enum uint RBS_TOOLTIPS = 0x00000100;
+enum uint RBS_VARHEIGHT = 0x00000200;
+enum uint RBS_BANDBORDERS = 0x00000400;
+enum uint RBS_FIXEDORDER = 0x00000800;
+enum uint RBS_REGISTERDROP = 0x00001000;
+enum uint RBS_AUTOSIZE = 0x00002000;
+enum uint RBS_VERTICALGRIPPER = 0x00004000;
+enum uint RBS_DBLCLKTOGGLE = 0x00008000;
+
+enum : uint
+{
+    RBBS_BREAK     = 0x00000001,
+    RBBS_FIXEDSIZE = 0x00000002,
+}
+
+enum uint RBBS_CHILDEDGE = 0x00000004;
+
+enum : uint
+{
+    RBBS_HIDDEN   = 0x00000008,
+    RBBS_NOVERT   = 0x00000010,
+    RBBS_FIXEDBMP = 0x00000020,
+}
+
+enum uint RBBS_VARIABLEHEIGHT = 0x00000040;
+enum uint RBBS_GRIPPERALWAYS = 0x00000080;
+enum uint RBBS_NOGRIPPER = 0x00000100;
+enum uint RBBS_USECHEVRON = 0x00000200;
+enum uint RBBS_HIDETITLE = 0x00000400;
+enum uint RBBS_TOPALIGN = 0x00000800;
+
+enum : uint
+{
+    RBBIM_STYLE     = 0x00000001,
+    RBBIM_COLORS    = 0x00000002,
+    RBBIM_TEXT      = 0x00000004,
+    RBBIM_IMAGE     = 0x00000008,
+    RBBIM_CHILD     = 0x00000010,
+    RBBIM_CHILDSIZE = 0x00000020,
+}
+
+enum : uint
+{
+    RBBIM_SIZE       = 0x00000040,
+    RBBIM_BACKGROUND = 0x00000080,
+}
+
+enum : uint
+{
+    RBBIM_ID        = 0x00000100,
+    RBBIM_IDEALSIZE = 0x00000200,
+}
+
+enum : uint
+{
+    RBBIM_LPARAM     = 0x00000400,
+    RBBIM_HEADERSIZE = 0x00000800,
+}
+
+enum : uint
+{
+    RBBIM_CHEVRONLOCATION = 0x00001000,
+    RBBIM_CHEVRONSTATE    = 0x00002000,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-insertband))], [])*/uint RB_INSERTBANDA = 0x00000401;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-deleteband))], [])*/uint RB_DELETEBAND = 0x00000402;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getbarinfo))], [])*/uint RB_GETBARINFO = 0x00000403;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-setbarinfo))], [])*/uint
+{
+    RB_SETBARINFO   = 0x00000404,
+    RB_SETBANDINFOA = 0x00000406,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-setparent))], [])*/uint RB_SETPARENT = 0x00000407;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-hittest))], [])*/uint RB_HITTEST = 0x00000408;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getrect))], [])*/uint RB_GETRECT = 0x00000409;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-insertband))], [])*/uint RB_INSERTBANDW = 0x0000040a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-setbandinfo))], [])*/uint RB_SETBANDINFOW = 0x0000040b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getbandcount))], [])*/uint RB_GETBANDCOUNT = 0x0000040c;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getrowcount))], [])*/uint
+{
+    RB_GETROWCOUNT  = 0x0000040d,
+    RB_GETROWHEIGHT = 0x0000040e,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-idtoindex))], [])*/uint RB_IDTOINDEX = 0x00000410;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-gettooltips))], [])*/uint RB_GETTOOLTIPS = 0x00000411;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-settooltips))], [])*/uint
+{
+    RB_SETTOOLTIPS = 0x00000412,
+    RB_SETBKCOLOR  = 0x00000413,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getbkcolor))], [])*/uint RB_GETBKCOLOR = 0x00000414;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-settextcolor))], [])*/uint RB_SETTEXTCOLOR = 0x00000415;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-gettextcolor))], [])*/uint RB_GETTEXTCOLOR = 0x00000416;
+enum uint RBSTR_CHANGERECT = 0x00000001;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-sizetorect))], [])*/uint RB_SIZETORECT = 0x00000417;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-setcolorscheme))], [])*/uint RB_SETCOLORSCHEME = 0x00002002;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getcolorscheme))], [])*/uint RB_GETCOLORSCHEME = 0x00002003;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-insertband))], [])*/uint RB_INSERTBAND = 0x0000040a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-setbandinfo))], [])*/uint RB_SETBANDINFO = 0x0000040b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-begindrag))], [])*/uint RB_BEGINDRAG = 0x00000418;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-enddrag))], [])*/uint RB_ENDDRAG = 0x00000419;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-dragmove))], [])*/uint RB_DRAGMOVE = 0x0000041a;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getbarheight))], [])*/uint
+{
+    RB_GETBARHEIGHT = 0x0000041b,
+    RB_GETBANDINFOW = 0x0000041c,
+    RB_GETBANDINFOA = 0x0000041d,
+    RB_GETBANDINFO  = 0x0000041c,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-minimizeband))], [])*/uint RB_MINIMIZEBAND = 0x0000041e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-maximizeband))], [])*/uint RB_MAXIMIZEBAND = 0x0000041f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getdroptarget))], [])*/uint RB_GETDROPTARGET = 0x00002004;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getbandborders))], [])*/uint RB_GETBANDBORDERS = 0x00000422;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-showband))], [])*/uint RB_SHOWBAND = 0x00000423;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-setpalette))], [])*/uint RB_SETPALETTE = 0x00000425;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getpalette))], [])*/uint RB_GETPALETTE = 0x00000426;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-moveband))], [])*/uint RB_MOVEBAND = 0x00000427;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-setunicodeformat))], [])*/uint RB_SETUNICODEFORMAT = 0x00002005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getunicodeformat))], [])*/uint RB_GETUNICODEFORMAT = 0x00002006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getbandmargins))], [])*/uint RB_GETBANDMARGINS = 0x00000428;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-setwindowtheme))], [])*/uint RB_SETWINDOWTHEME = 0x0000200b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-setextendedstyle))], [])*/uint RB_SETEXTENDEDSTYLE = 0x00000429;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-getextendedstyle))], [])*/uint RB_GETEXTENDEDSTYLE = 0x0000042a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-pushchevron))], [])*/uint RB_PUSHCHEVRON = 0x0000042b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rb-setbandwidth))], [])*/uint RB_SETBANDWIDTH = 0x0000042c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rbn-heightchange))], [])*/uint RBN_HEIGHTCHANGE = 0xfffffcc1;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rbn-getobject))], [])*/uint RBN_GETOBJECT = 0xfffffcc0;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rbn-layoutchanged))], [])*/uint RBN_LAYOUTCHANGED = 0xfffffcbf;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rbn-autosize))], [])*/uint RBN_AUTOSIZE = 0xfffffcbe;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rbn-begindrag))], [])*/uint RBN_BEGINDRAG = 0xfffffcbd;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rbn-enddrag))], [])*/uint RBN_ENDDRAG = 0xfffffcbc;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rbn-deletingband))], [])*/uint
+{
+    RBN_DELETINGBAND = 0xfffffcbb,
+    RBN_DELETEDBAND  = 0xfffffcba,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rbn-childsize))], [])*/uint
+{
+    RBN_CHILDSIZE     = 0xfffffcb9,
+    RBN_CHEVRONPUSHED = 0xfffffcb7,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rbn-splitterdrag))], [])*/uint RBN_SPLITTERDRAG = 0xfffffcb6;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rbn-minmax))], [])*/uint RBN_MINMAX = 0xfffffcac;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/rbn-autobreak))], [])*/uint RBN_AUTOBREAK = 0xfffffcab;
+
+enum : uint
+{
+    RBAB_AUTOSIZE = 0x00000001,
+    RBAB_ADDBAND  = 0x00000002,
+}
+
+enum : uint
+{
+    RBHT_NOWHERE  = 0x00000001,
+    RBHT_CAPTION  = 0x00000002,
+    RBHT_CLIENT   = 0x00000003,
+    RBHT_GRABBER  = 0x00000004,
+    RBHT_CHEVRON  = 0x00000008,
+    RBHT_SPLITTER = 0x00000010,
+}
+
+enum : const(wchar)*
+{
+    TOOLTIPS_CLASSW = "tooltips_class32",
+    TOOLTIPS_CLASSA = "tooltips_class32",
+    TOOLTIPS_CLASS  = "tooltips_class32",
+}
+
+enum uint TTS_ALWAYSTIP = 0x00000001;
+
+enum : uint
+{
+    TTS_NOPREFIX  = 0x00000002,
+    TTS_NOANIMATE = 0x00000010,
+    TTS_NOFADE    = 0x00000020,
+}
+
+enum uint TTS_BALLOON = 0x00000040;
+
+enum : uint
+{
+    TTS_CLOSE          = 0x00000080,
+    TTS_USEVISUALSTYLE = 0x00000100,
+}
+
+enum uint TTDT_AUTOMATIC = 0x00000000;
+
+enum : uint
+{
+    TTDT_RESHOW  = 0x00000001,
+    TTDT_AUTOPOP = 0x00000002,
+    TTDT_INITIAL = 0x00000003,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-activate))], [])*/uint TTM_ACTIVATE = 0x00000401;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-setdelaytime))], [])*/uint TTM_SETDELAYTIME = 0x00000403;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-addtool))], [])*/uint
+{
+    TTM_ADDTOOLA = 0x00000404,
+    TTM_ADDTOOLW = 0x00000432,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-deltool))], [])*/uint
+{
+    TTM_DELTOOLA = 0x00000405,
+    TTM_DELTOOLW = 0x00000433,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-newtoolrect))], [])*/uint
+{
+    TTM_NEWTOOLRECTA = 0x00000406,
+    TTM_NEWTOOLRECTW = 0x00000434,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-relayevent))], [])*/uint TTM_RELAYEVENT = 0x00000407;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-gettoolinfo))], [])*/uint
+{
+    TTM_GETTOOLINFOA = 0x00000408,
+    TTM_GETTOOLINFOW = 0x00000435,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-settoolinfo))], [])*/uint
+{
+    TTM_SETTOOLINFOA = 0x00000409,
+    TTM_SETTOOLINFOW = 0x00000436,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-hittest))], [])*/uint
+{
+    TTM_HITTESTA = 0x0000040a,
+    TTM_HITTESTW = 0x00000437,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-gettext))], [])*/uint
+{
+    TTM_GETTEXTA = 0x0000040b,
+    TTM_GETTEXTW = 0x00000438,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-updatetiptext))], [])*/uint
+{
+    TTM_UPDATETIPTEXTA = 0x0000040c,
+    TTM_UPDATETIPTEXTW = 0x00000439,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-gettoolcount))], [])*/uint TTM_GETTOOLCOUNT = 0x0000040d;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-enumtools))], [])*/uint
+{
+    TTM_ENUMTOOLSA = 0x0000040e,
+    TTM_ENUMTOOLSW = 0x0000043a,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-getcurrenttool))], [])*/uint
+{
+    TTM_GETCURRENTTOOLA = 0x0000040f,
+    TTM_GETCURRENTTOOLW = 0x0000043b,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-windowfrompoint))], [])*/uint TTM_WINDOWFROMPOINT = 0x00000410;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-trackactivate))], [])*/uint
+{
+    TTM_TRACKACTIVATE = 0x00000411,
+    TTM_TRACKPOSITION = 0x00000412,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-settipbkcolor))], [])*/uint
+{
+    TTM_SETTIPBKCOLOR   = 0x00000413,
+    TTM_SETTIPTEXTCOLOR = 0x00000414,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-getdelaytime))], [])*/uint
+{
+    TTM_GETDELAYTIME    = 0x00000415,
+    TTM_GETTIPBKCOLOR   = 0x00000416,
+    TTM_GETTIPTEXTCOLOR = 0x00000417,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-setmaxtipwidth))], [])*/uint TTM_SETMAXTIPWIDTH = 0x00000418;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-getmaxtipwidth))], [])*/uint TTM_GETMAXTIPWIDTH = 0x00000419;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-setmargin))], [])*/uint TTM_SETMARGIN = 0x0000041a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-getmargin))], [])*/uint TTM_GETMARGIN = 0x0000041b;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-pop))], [])*/uint
+{
+    TTM_POP    = 0x0000041c,
+    TTM_UPDATE = 0x0000041d,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-getbubblesize))], [])*/uint TTM_GETBUBBLESIZE = 0x0000041e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-adjustrect))], [])*/uint TTM_ADJUSTRECT = 0x0000041f;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-settitle))], [])*/uint
+{
+    TTM_SETTITLEA = 0x00000420,
+    TTM_SETTITLEW = 0x00000421,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-popup))], [])*/uint
+{
+    TTM_POPUP    = 0x00000422,
+    TTM_GETTITLE = 0x00000423,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-addtool))], [])*/uint TTM_ADDTOOL = 0x00000432;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-deltool))], [])*/uint TTM_DELTOOL = 0x00000433;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-newtoolrect))], [])*/uint TTM_NEWTOOLRECT = 0x00000434;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-gettoolinfo))], [])*/uint TTM_GETTOOLINFO = 0x00000435;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-settoolinfo))], [])*/uint TTM_SETTOOLINFO = 0x00000436;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-hittest))], [])*/uint TTM_HITTEST = 0x00000437;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-gettext))], [])*/uint TTM_GETTEXT = 0x00000438;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-updatetiptext))], [])*/uint TTM_UPDATETIPTEXT = 0x00000439;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-enumtools))], [])*/uint TTM_ENUMTOOLS = 0x0000043a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-getcurrenttool))], [])*/uint TTM_GETCURRENTTOOL = 0x0000043b;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttm-settitle))], [])*/uint
+{
+    TTM_SETTITLE       = 0x00000421,
+    TTM_SETWINDOWTHEME = 0x0000200b,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttn-getdispinfo))], [])*/uint
+{
+    TTN_GETDISPINFOA = 0xfffffdf8,
+    TTN_GETDISPINFOW = 0xfffffdee,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttn-show))], [])*/uint
+{
+    TTN_SHOW      = 0xfffffdf7,
+    TTN_POP       = 0xfffffdf6,
+    TTN_LINKCLICK = 0xfffffdf5,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttn-getdispinfo))], [])*/uint TTN_GETDISPINFO = 0xfffffdee;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ttn-needtext))], [])*/uint
+{
+    TTN_NEEDTEXT  = 0xfffffdee,
+    TTN_NEEDTEXTA = 0xfffffdf8,
+    TTN_NEEDTEXTW = 0xfffffdee,
+}
+
+enum : uint
+{
+    SBARS_SIZEGRIP = 0x00000100,
+    SBARS_TOOLTIPS = 0x00000800,
+}
+
+enum uint SBT_TOOLTIPS = 0x00000800;
+
+enum : const(wchar)*
+{
+    STATUSCLASSNAMEW = "msctls_statusbar32",
+    STATUSCLASSNAMEA = "msctls_statusbar32",
+    STATUSCLASSNAME  = "msctls_statusbar32",
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-settext))], [])*/uint
+{
+    SB_SETTEXTA = 0x00000401,
+    SB_SETTEXTW = 0x0000040b,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-gettext))], [])*/uint
+{
+    SB_GETTEXTA       = 0x00000402,
+    SB_GETTEXTW       = 0x0000040d,
+    SB_GETTEXTLENGTHA = 0x00000403,
+    SB_GETTEXTLENGTHW = 0x0000040c,
+    SB_GETTEXT        = 0x0000040d,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-settext))], [])*/uint SB_SETTEXT = 0x0000040b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-gettextlength))], [])*/uint SB_GETTEXTLENGTH = 0x0000040c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-setparts))], [])*/uint SB_SETPARTS = 0x00000404;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-getparts))], [])*/uint
+{
+    SB_GETPARTS   = 0x00000406,
+    SB_GETBORDERS = 0x00000407,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-setminheight))], [])*/uint SB_SETMINHEIGHT = 0x00000408;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-simple))], [])*/uint SB_SIMPLE = 0x00000409;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-getrect))], [])*/uint SB_GETRECT = 0x0000040a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-issimple))], [])*/uint SB_ISSIMPLE = 0x0000040e;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-seticon))], [])*/uint
+{
+    SB_SETICON     = 0x0000040f,
+    SB_SETTIPTEXTA = 0x00000410,
+    SB_SETTIPTEXTW = 0x00000411,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-gettiptext))], [])*/uint
+{
+    SB_GETTIPTEXTA = 0x00000412,
+    SB_GETTIPTEXTW = 0x00000413,
+    SB_GETICON     = 0x00000414,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-setunicodeformat))], [])*/uint SB_SETUNICODEFORMAT = 0x00002005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-getunicodeformat))], [])*/uint SB_GETUNICODEFORMAT = 0x00002006;
+enum uint SBT_OWNERDRAW = 0x00001000;
+enum uint SBT_NOBORDERS = 0x00000100;
+enum uint SBT_POPOUT = 0x00000200;
+enum uint SBT_RTLREADING = 0x00000400;
+enum uint SBT_NOTABPARSING = 0x00000800;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sb-setbkcolor))], [])*/uint SB_SETBKCOLOR = 0x00002001;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/sbn-simplemodechange))], [])*/uint SBN_SIMPLEMODECHANGE = 0xfffffc90;
+enum uint SB_SIMPLEID = 0x000000ff;
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    TRACKBAR_CLASSA = "msctls_trackbar32",
+    TRACKBAR_CLASSW = "msctls_trackbar32",
+    TRACKBAR_CLASS  = "msctls_trackbar32",
+}
+
+enum uint TBS_AUTOTICKS = 0x00000001;
+
+enum : uint
+{
+    TBS_VERT   = 0x00000002,
+    TBS_HORZ   = 0x00000000,
+    TBS_TOP    = 0x00000004,
+    TBS_BOTTOM = 0x00000000,
+}
+
+enum : uint
+{
+    TBS_LEFT    = 0x00000004,
+    TBS_RIGHT   = 0x00000000,
+    TBS_BOTH    = 0x00000008,
+    TBS_NOTICKS = 0x00000010,
+}
+
+enum uint TBS_ENABLESELRANGE = 0x00000020;
+enum uint TBS_FIXEDLENGTH = 0x00000040;
+enum uint TBS_NOTHUMB = 0x00000080;
+enum uint TBS_TOOLTIPS = 0x00000100;
+enum uint TBS_REVERSED = 0x00000200;
+enum uint TBS_DOWNISLEFT = 0x00000400;
+enum uint TBS_NOTIFYBEFOREMOVE = 0x00000800;
+enum uint TBS_TRANSPARENTBKGND = 0x00001000;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-getrangemin))], [])*/uint
+{
+    TBM_GETRANGEMIN = 0x00000401,
+    TBM_GETRANGEMAX = 0x00000402,
+    TBM_GETTIC      = 0x00000403,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-settic))], [])*/uint
+{
+    TBM_SETTIC      = 0x00000404,
+    TBM_SETPOS      = 0x00000405,
+    TBM_SETRANGE    = 0x00000406,
+    TBM_SETRANGEMIN = 0x00000407,
+    TBM_SETRANGEMAX = 0x00000408,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-cleartics))], [])*/uint TBM_CLEARTICS = 0x00000409;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-setsel))], [])*/uint
+{
+    TBM_SETSEL      = 0x0000040a,
+    TBM_SETSELSTART = 0x0000040b,
+    TBM_SETSELEND   = 0x0000040c,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-getptics))], [])*/uint
+{
+    TBM_GETPTICS    = 0x0000040e,
+    TBM_GETTICPOS   = 0x0000040f,
+    TBM_GETNUMTICS  = 0x00000410,
+    TBM_GETSELSTART = 0x00000411,
+    TBM_GETSELEND   = 0x00000412,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-clearsel))], [])*/uint TBM_CLEARSEL = 0x00000413;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-setticfreq))], [])*/uint
+{
+    TBM_SETTICFREQ  = 0x00000414,
+    TBM_SETPAGESIZE = 0x00000415,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-getpagesize))], [])*/uint TBM_GETPAGESIZE = 0x00000416;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-setlinesize))], [])*/uint TBM_SETLINESIZE = 0x00000417;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-getlinesize))], [])*/uint
+{
+    TBM_GETLINESIZE    = 0x00000418,
+    TBM_GETTHUMBRECT   = 0x00000419,
+    TBM_GETCHANNELRECT = 0x0000041a,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-setthumblength))], [])*/uint TBM_SETTHUMBLENGTH = 0x0000041b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-getthumblength))], [])*/uint TBM_GETTHUMBLENGTH = 0x0000041c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-settooltips))], [])*/uint TBM_SETTOOLTIPS = 0x0000041d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-gettooltips))], [])*/uint TBM_GETTOOLTIPS = 0x0000041e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-settipside))], [])*/uint TBM_SETTIPSIDE = 0x0000041f;
+
+enum : uint
+{
+    TBTS_TOP    = 0x00000000,
+    TBTS_LEFT   = 0x00000001,
+    TBTS_BOTTOM = 0x00000002,
+    TBTS_RIGHT  = 0x00000003,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-setbuddy))], [])*/uint TBM_SETBUDDY = 0x00000420;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-getbuddy))], [])*/uint TBM_GETBUDDY = 0x00000421;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-setposnotify))], [])*/uint
+{
+    TBM_SETPOSNOTIFY     = 0x00000422,
+    TBM_SETUNICODEFORMAT = 0x00002005,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tbm-getunicodeformat))], [])*/uint TBM_GETUNICODEFORMAT = 0x00002006;
+
+enum : uint
+{
+    TB_LINEUP   = 0x00000000,
+    TB_LINEDOWN = 0x00000001,
+}
+
+enum : uint
+{
+    TB_PAGEUP   = 0x00000002,
+    TB_PAGEDOWN = 0x00000003,
+}
+
+enum : uint
+{
+    TB_THUMBPOSITION = 0x00000004,
+    TB_THUMBTRACK    = 0x00000005,
+}
+
+enum : uint
+{
+    TB_TOP    = 0x00000006,
+    TB_BOTTOM = 0x00000007,
+}
+
+enum uint TB_ENDTRACK = 0x00000008;
+
+enum : uint
+{
+    TBCD_TICS    = 0x00000001,
+    TBCD_THUMB   = 0x00000002,
+    TBCD_CHANNEL = 0x00000003,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/trbn-thumbposchanging))], [])*/uint TRBN_THUMBPOSCHANGING = 0xfffffa22;
+enum uint DL_CURSORSET = 0x00000000;
+enum uint DL_STOPCURSOR = 0x00000001;
+enum uint DL_COPYCURSOR = 0x00000002;
+enum uint DL_MOVECURSOR = 0x00000003;
+enum const(wchar)* DRAGLISTMSGSTRING = "commctrl_DragListMsg";
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    UPDOWN_CLASSA = "msctls_updown32",
+    UPDOWN_CLASSW = "msctls_updown32",
+    UPDOWN_CLASS  = "msctls_updown32",
+}
+
+enum uint UD_MAXVAL = 0x00007fff;
+
+enum : uint
+{
+    UDS_WRAP        = 0x00000001,
+    UDS_SETBUDDYINT = 0x00000002,
+}
+
+enum : uint
+{
+    UDS_ALIGNRIGHT = 0x00000004,
+    UDS_ALIGNLEFT  = 0x00000008,
+}
+
+enum uint UDS_AUTOBUDDY = 0x00000010;
+enum uint UDS_ARROWKEYS = 0x00000020;
+
+enum : uint
+{
+    UDS_HORZ        = 0x00000040,
+    UDS_NOTHOUSANDS = 0x00000080,
+}
+
+enum uint UDS_HOTTRACK = 0x00000100;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-setrange))], [])*/uint UDM_SETRANGE = 0x00000465;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-getrange))], [])*/uint UDM_GETRANGE = 0x00000466;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-setpos))], [])*/uint UDM_SETPOS = 0x00000467;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-getpos))], [])*/uint UDM_GETPOS = 0x00000468;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-setbuddy))], [])*/uint UDM_SETBUDDY = 0x00000469;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-getbuddy))], [])*/uint UDM_GETBUDDY = 0x0000046a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-setaccel))], [])*/uint UDM_SETACCEL = 0x0000046b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-getaccel))], [])*/uint UDM_GETACCEL = 0x0000046c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-setbase))], [])*/uint UDM_SETBASE = 0x0000046d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-getbase))], [])*/uint UDM_GETBASE = 0x0000046e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-setrange32))], [])*/uint UDM_SETRANGE32 = 0x0000046f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-getrange32))], [])*/uint UDM_GETRANGE32 = 0x00000470;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-setunicodeformat))], [])*/uint UDM_SETUNICODEFORMAT = 0x00002005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-getunicodeformat))], [])*/uint UDM_GETUNICODEFORMAT = 0x00002006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-setpos32))], [])*/uint UDM_SETPOS32 = 0x00000471;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udm-getpos32))], [])*/uint UDM_GETPOS32 = 0x00000472;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/udn-deltapos))], [])*/uint UDN_DELTAPOS = 0xfffffd2e;
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    PROGRESS_CLASSA = "msctls_progress32",
+    PROGRESS_CLASSW = "msctls_progress32",
+    PROGRESS_CLASS  = "msctls_progress32",
+}
+
+enum uint PBS_SMOOTH = 0x00000001;
+enum uint PBS_VERTICAL = 0x00000004;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pbm-setrange))], [])*/uint
+{
+    PBM_SETRANGE = 0x00000401,
+    PBM_SETPOS   = 0x00000402,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pbm-deltapos))], [])*/uint PBM_DELTAPOS = 0x00000403;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pbm-setstep))], [])*/uint
+{
+    PBM_SETSTEP    = 0x00000404,
+    PBM_STEPIT     = 0x00000405,
+    PBM_SETRANGE32 = 0x00000406,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pbm-getrange))], [])*/uint
+{
+    PBM_GETRANGE = 0x00000407,
+    PBM_GETPOS   = 0x00000408,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pbm-setbarcolor))], [])*/uint
+{
+    PBM_SETBARCOLOR = 0x00000409,
+    PBM_SETBKCOLOR  = 0x00002001,
+}
+
+enum uint PBS_MARQUEE = 0x00000008;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pbm-setmarquee))], [])*/uint PBM_SETMARQUEE = 0x0000040a;
+enum uint PBS_SMOOTHREVERSE = 0x00000010;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pbm-getstep))], [])*/uint
+{
+    PBM_GETSTEP     = 0x0000040d,
+    PBM_GETBKCOLOR  = 0x0000040e,
+    PBM_GETBARCOLOR = 0x0000040f,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pbm-setstate))], [])*/uint PBM_SETSTATE = 0x00000410;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pbm-getstate))], [])*/uint PBM_GETSTATE = 0x00000411;
+
+enum : uint
+{
+    PBST_NORMAL = 0x00000001,
+    PBST_ERROR  = 0x00000002,
+    PBST_PAUSED = 0x00000003,
+}
+
+enum : uint
+{
+    HOTKEYF_SHIFT   = 0x00000001,
+    HOTKEYF_CONTROL = 0x00000002,
+    HOTKEYF_ALT     = 0x00000004,
+}
+
+enum : uint
+{
+    HKCOMB_NONE = 0x00000001,
+    HKCOMB_S    = 0x00000002,
+    HKCOMB_C    = 0x00000004,
+    HKCOMB_A    = 0x00000008,
+    HKCOMB_SC   = 0x00000010,
+    HKCOMB_SA   = 0x00000020,
+    HKCOMB_CA   = 0x00000040,
+    HKCOMB_SCA  = 0x00000080,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hkm-sethotkey))], [])*/uint HKM_SETHOTKEY = 0x00000401;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hkm-gethotkey))], [])*/uint HKM_GETHOTKEY = 0x00000402;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/hkm-setrules))], [])*/uint HKM_SETRULES = 0x00000403;
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    HOTKEY_CLASSA = "msctls_hotkey32",
+    HOTKEY_CLASSW = "msctls_hotkey32",
+    HOTKEY_CLASS  = "msctls_hotkey32",
+}
+
+enum : int
+{
+    CCS_TOP     = 0x00000001,
+    CCS_NOMOVEY = 0x00000002,
+}
+
+enum int CCS_BOTTOM = 0x00000003;
+
+enum : int
+{
+    CCS_NORESIZE      = 0x00000004,
+    CCS_NOPARENTALIGN = 0x00000008,
+}
+
+enum int CCS_ADJUSTABLE = 0x00000020;
+enum int CCS_NODIVIDER = 0x00000040;
+enum int CCS_VERT = 0x00000080;
+enum int INVALID_LINK_INDEX = 0xffffffff;
+enum uint MAX_LINKID_TEXT = 0x00000030;
+enum const(wchar)* WC_LINK = "SysLink";
+enum uint LWS_TRANSPARENT = 0x00000001;
+enum uint LWS_IGNORERETURN = 0x00000002;
+enum uint LWS_NOPREFIX = 0x00000004;
+enum uint LWS_USEVISUALSTYLE = 0x00000008;
+enum uint LWS_USECUSTOMTEXT = 0x00000010;
+enum uint LWS_RIGHT = 0x00000020;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lm-hittest))], [])*/uint LM_HITTEST = 0x00000700;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lm-getidealheight))], [])*/uint LM_GETIDEALHEIGHT = 0x00000701;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lm-setitem))], [])*/uint LM_SETITEM = 0x00000702;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lm-getitem))], [])*/uint
+{
+    LM_GETITEM      = 0x00000703,
+    LM_GETIDEALSIZE = 0x00000701,
+}
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    WC_LISTVIEWA = "SysListView32",
+    WC_LISTVIEWW = "SysListView32",
+    WC_LISTVIEW  = "SysListView32",
+}
+
+enum : uint
+{
+    LVS_ICON   = 0x00000000,
+    LVS_REPORT = 0x00000001,
+}
+
+enum uint LVS_SMALLICON = 0x00000002;
+
+enum : uint
+{
+    LVS_LIST     = 0x00000003,
+    LVS_TYPEMASK = 0x00000003,
+}
+
+enum uint LVS_SINGLESEL = 0x00000004;
+enum uint LVS_SHOWSELALWAYS = 0x00000008;
+
+enum : uint
+{
+    LVS_SORTASCENDING  = 0x00000010,
+    LVS_SORTDESCENDING = 0x00000020,
+}
+
+enum uint LVS_SHAREIMAGELISTS = 0x00000040;
+enum uint LVS_NOLABELWRAP = 0x00000080;
+enum uint LVS_AUTOARRANGE = 0x00000100;
+enum uint LVS_EDITLABELS = 0x00000200;
+enum uint LVS_OWNERDATA = 0x00001000;
+enum uint LVS_NOSCROLL = 0x00002000;
+enum uint LVS_TYPESTYLEMASK = 0x0000fc00;
+
+enum : uint
+{
+    LVS_ALIGNTOP  = 0x00000000,
+    LVS_ALIGNLEFT = 0x00000800,
+    LVS_ALIGNMASK = 0x00000c00,
+}
+
+enum uint LVS_OWNERDRAWFIXED = 0x00000400;
+enum uint LVS_NOCOLUMNHEADER = 0x00004000;
+enum uint LVS_NOSORTHEADER = 0x00008000;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setunicodeformat))], [])*/uint LVM_SETUNICODEFORMAT = 0x00002005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getunicodeformat))], [])*/uint LVM_GETUNICODEFORMAT = 0x00002006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getbkcolor))], [])*/uint LVM_GETBKCOLOR = 0x00001000;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setbkcolor))], [])*/uint LVM_SETBKCOLOR = 0x00001001;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getimagelist))], [])*/uint LVM_GETIMAGELIST = 0x00001002;
+
+enum : uint
+{
+    LVSIL_NORMAL      = 0x00000000,
+    LVSIL_SMALL       = 0x00000001,
+    LVSIL_STATE       = 0x00000002,
+    LVSIL_GROUPHEADER = 0x00000003,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setimagelist))], [])*/uint LVM_SETIMAGELIST = 0x00001003;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getitemcount))], [])*/uint LVM_GETITEMCOUNT = 0x00001004;
+enum int I_INDENTCALLBACK = 0xffffffff;
+
+enum : int
+{
+    I_IMAGECALLBACK = 0xffffffff,
+    I_IMAGENONE     = 0xfffffffe,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getitem))], [])*/uint
+{
+    LVM_GETITEMA = 0x00001005,
+    LVM_GETITEMW = 0x0000104b,
+    LVM_GETITEM  = 0x0000104b,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setitem))], [])*/uint
+{
+    LVM_SETITEMA = 0x00001006,
+    LVM_SETITEMW = 0x0000104c,
+    LVM_SETITEM  = 0x0000104c,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-insertitem))], [])*/uint
+{
+    LVM_INSERTITEMA = 0x00001007,
+    LVM_INSERTITEMW = 0x0000104d,
+    LVM_INSERTITEM  = 0x0000104d,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-deleteitem))], [])*/uint
+{
+    LVM_DELETEITEM     = 0x00001008,
+    LVM_DELETEALLITEMS = 0x00001009,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getcallbackmask))], [])*/uint LVM_GETCALLBACKMASK = 0x0000100a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setcallbackmask))], [])*/uint LVM_SETCALLBACKMASK = 0x0000100b;
+
+enum : uint
+{
+    LVNI_ALL      = 0x00000000,
+    LVNI_FOCUSED  = 0x00000001,
+    LVNI_SELECTED = 0x00000002,
+}
+
+enum : uint
+{
+    LVNI_CUT         = 0x00000004,
+    LVNI_DROPHILITED = 0x00000008,
+}
+
+enum uint LVNI_VISIBLEORDER = 0x00000010;
+enum uint LVNI_PREVIOUS = 0x00000020;
+enum uint LVNI_VISIBLEONLY = 0x00000040;
+enum uint LVNI_SAMEGROUPONLY = 0x00000080;
+
+enum : uint
+{
+    LVNI_ABOVE   = 0x00000100,
+    LVNI_BELOW   = 0x00000200,
+    LVNI_TOLEFT  = 0x00000400,
+    LVNI_TORIGHT = 0x00000800,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getnextitem))], [])*/uint LVM_GETNEXTITEM = 0x0000100c;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-finditem))], [])*/uint
+{
+    LVM_FINDITEMA = 0x0000100d,
+    LVM_FINDITEMW = 0x00001053,
+    LVM_FINDITEM  = 0x00001053,
+}
+
+enum : uint
+{
+    LVIR_BOUNDS       = 0x00000000,
+    LVIR_ICON         = 0x00000001,
+    LVIR_LABEL        = 0x00000002,
+    LVIR_SELECTBOUNDS = 0x00000003,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getitemrect))], [])*/uint LVM_GETITEMRECT = 0x0000100e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setitemposition))], [])*/uint LVM_SETITEMPOSITION = 0x0000100f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getitemposition))], [])*/uint LVM_GETITEMPOSITION = 0x00001010;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getstringwidth))], [])*/uint
+{
+    LVM_GETSTRINGWIDTHA = 0x00001011,
+    LVM_GETSTRINGWIDTHW = 0x00001057,
+    LVM_GETSTRINGWIDTH  = 0x00001057,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-hittest))], [])*/uint LVM_HITTEST = 0x00001012;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-ensurevisible))], [])*/uint LVM_ENSUREVISIBLE = 0x00001013;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-scroll))], [])*/uint LVM_SCROLL = 0x00001014;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-redrawitems))], [])*/uint LVM_REDRAWITEMS = 0x00001015;
+enum uint LVA_DEFAULT = 0x00000000;
+
+enum : uint
+{
+    LVA_ALIGNLEFT = 0x00000001,
+    LVA_ALIGNTOP  = 0x00000002,
+}
+
+enum uint LVA_SNAPTOGRID = 0x00000005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-arrange))], [])*/uint LVM_ARRANGE = 0x00001016;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-editlabel))], [])*/uint
+{
+    LVM_EDITLABELA = 0x00001017,
+    LVM_EDITLABELW = 0x00001076,
+    LVM_EDITLABEL  = 0x00001076,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-geteditcontrol))], [])*/uint LVM_GETEDITCONTROL = 0x00001018;
+
+enum : uint
+{
+    LVM_GETCOLUMNA = 0x00001019,
+    LVM_GETCOLUMNW = 0x0000105f,
+    LVM_GETCOLUMN  = 0x0000105f,
+}
+
+enum : uint
+{
+    LVM_SETCOLUMNA = 0x0000101a,
+    LVM_SETCOLUMNW = 0x00001060,
+    LVM_SETCOLUMN  = 0x00001060,
+}
+
+enum : uint
+{
+    LVM_INSERTCOLUMNA = 0x0000101b,
+    LVM_INSERTCOLUMNW = 0x00001061,
+    LVM_INSERTCOLUMN  = 0x00001061,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-deletecolumn))], [])*/uint LVM_DELETECOLUMN = 0x0000101c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getcolumnwidth))], [])*/uint LVM_GETCOLUMNWIDTH = 0x0000101d;
+
+enum : int
+{
+    LVSCW_AUTOSIZE           = 0xffffffff,
+    LVSCW_AUTOSIZE_USEHEADER = 0xfffffffe,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setcolumnwidth))], [])*/uint LVM_SETCOLUMNWIDTH = 0x0000101e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getheader))], [])*/uint LVM_GETHEADER = 0x0000101f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-createdragimage))], [])*/uint LVM_CREATEDRAGIMAGE = 0x00001021;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getviewrect))], [])*/uint
+{
+    LVM_GETVIEWRECT  = 0x00001022,
+    LVM_GETTEXTCOLOR = 0x00001023,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-settextcolor))], [])*/uint LVM_SETTEXTCOLOR = 0x00001024;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-gettextbkcolor))], [])*/uint LVM_GETTEXTBKCOLOR = 0x00001025;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-settextbkcolor))], [])*/uint LVM_SETTEXTBKCOLOR = 0x00001026;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-gettopindex))], [])*/uint
+{
+    LVM_GETTOPINDEX     = 0x00001027,
+    LVM_GETCOUNTPERPAGE = 0x00001028,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getorigin))], [])*/uint LVM_GETORIGIN = 0x00001029;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-update))], [])*/uint LVM_UPDATE = 0x0000102a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setitemstate))], [])*/uint LVM_SETITEMSTATE = 0x0000102b;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getitemstate))], [])*/uint
+{
+    LVM_GETITEMSTATE = 0x0000102c,
+    LVM_GETITEMTEXTA = 0x0000102d,
+    LVM_GETITEMTEXTW = 0x00001073,
+    LVM_GETITEMTEXT  = 0x00001073,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setitemtext))], [])*/uint
+{
+    LVM_SETITEMTEXTA = 0x0000102e,
+    LVM_SETITEMTEXTW = 0x00001074,
+    LVM_SETITEMTEXT  = 0x00001074,
+}
+
+enum : uint
+{
+    LVSICF_NOINVALIDATEALL = 0x00000001,
+    LVSICF_NOSCROLL        = 0x00000002,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setitemcount))], [])*/uint LVM_SETITEMCOUNT = 0x0000102f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-sortitems))], [])*/uint LVM_SORTITEMS = 0x00001030;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setitemposition32))], [])*/uint LVM_SETITEMPOSITION32 = 0x00001031;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getselectedcount))], [])*/uint LVM_GETSELECTEDCOUNT = 0x00001032;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getitemspacing))], [])*/uint
+{
+    LVM_GETITEMSPACING    = 0x00001033,
+    LVM_GETISEARCHSTRINGA = 0x00001034,
+    LVM_GETISEARCHSTRINGW = 0x00001075,
+    LVM_GETISEARCHSTRING  = 0x00001075,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-seticonspacing))], [])*/uint LVM_SETICONSPACING = 0x00001035;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setextendedlistviewstyle))], [])*/uint LVM_SETEXTENDEDLISTVIEWSTYLE = 0x00001036;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getextendedlistviewstyle))], [])*/uint LVM_GETEXTENDEDLISTVIEWSTYLE = 0x00001037;
+
+enum : uint
+{
+    LVS_EX_GRIDLINES     = 0x00000001,
+    LVS_EX_SUBITEMIMAGES = 0x00000002,
+}
+
+enum : uint
+{
+    LVS_EX_CHECKBOXES  = 0x00000004,
+    LVS_EX_TRACKSELECT = 0x00000008,
+}
+
+enum uint LVS_EX_HEADERDRAGDROP = 0x00000010;
+enum uint LVS_EX_FULLROWSELECT = 0x00000020;
+enum uint LVS_EX_ONECLICKACTIVATE = 0x00000040;
+enum uint LVS_EX_TWOCLICKACTIVATE = 0x00000080;
+
+enum : uint
+{
+    LVS_EX_FLATSB        = 0x00000100,
+    LVS_EX_REGIONAL      = 0x00000200,
+    LVS_EX_INFOTIP       = 0x00000400,
+    LVS_EX_UNDERLINEHOT  = 0x00000800,
+    LVS_EX_UNDERLINECOLD = 0x00001000,
+}
+
+enum uint LVS_EX_MULTIWORKAREAS = 0x00002000;
+
+enum : uint
+{
+    LVS_EX_LABELTIP     = 0x00004000,
+    LVS_EX_BORDERSELECT = 0x00008000,
+}
+
+enum uint LVS_EX_DOUBLEBUFFER = 0x00010000;
+
+enum : uint
+{
+    LVS_EX_HIDELABELS   = 0x00020000,
+    LVS_EX_SINGLEROW    = 0x00040000,
+    LVS_EX_SNAPTOGRID   = 0x00080000,
+    LVS_EX_SIMPLESELECT = 0x00100000,
+}
+
+enum uint LVS_EX_JUSTIFYCOLUMNS = 0x00200000;
+
+enum : uint
+{
+    LVS_EX_TRANSPARENTBKGND      = 0x00400000,
+    LVS_EX_TRANSPARENTSHADOWTEXT = 0x00800000,
+}
+
+enum uint LVS_EX_AUTOAUTOARRANGE = 0x01000000;
+enum uint LVS_EX_HEADERINALLVIEWS = 0x02000000;
+
+enum : uint
+{
+    LVS_EX_AUTOCHECKSELECT = 0x08000000,
+    LVS_EX_AUTOSIZECOLUMNS = 0x10000000,
+}
+
+enum : uint
+{
+    LVS_EX_COLUMNSNAPPOINTS = 0x40000000,
+    LVS_EX_COLUMNOVERFLOW   = 0x80000000,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getsubitemrect))], [])*/uint LVM_GETSUBITEMRECT = 0x00001038;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-subitemhittest))], [])*/uint LVM_SUBITEMHITTEST = 0x00001039;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setcolumnorderarray))], [])*/uint LVM_SETCOLUMNORDERARRAY = 0x0000103a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getcolumnorderarray))], [])*/uint LVM_GETCOLUMNORDERARRAY = 0x0000103b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-sethotitem))], [])*/uint LVM_SETHOTITEM = 0x0000103c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-gethotitem))], [])*/uint LVM_GETHOTITEM = 0x0000103d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-sethotcursor))], [])*/uint LVM_SETHOTCURSOR = 0x0000103e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-gethotcursor))], [])*/uint LVM_GETHOTCURSOR = 0x0000103f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-approximateviewrect))], [])*/uint LVM_APPROXIMATEVIEWRECT = 0x00001040;
+enum uint LV_MAX_WORKAREAS = 0x00000010;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setworkareas))], [])*/uint LVM_SETWORKAREAS = 0x00001041;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getworkareas))], [])*/uint
+{
+    LVM_GETWORKAREAS         = 0x00001046,
+    LVM_GETNUMBEROFWORKAREAS = 0x00001049,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getselectionmark))], [])*/uint LVM_GETSELECTIONMARK = 0x00001042;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setselectionmark))], [])*/uint LVM_SETSELECTIONMARK = 0x00001043;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-sethovertime))], [])*/uint LVM_SETHOVERTIME = 0x00001047;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-gethovertime))], [])*/uint LVM_GETHOVERTIME = 0x00001048;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-settooltips))], [])*/uint LVM_SETTOOLTIPS = 0x0000104a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-gettooltips))], [])*/uint LVM_GETTOOLTIPS = 0x0000104e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-sortitemsex))], [])*/uint LVM_SORTITEMSEX = 0x00001051;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setbkimage))], [])*/uint
+{
+    LVM_SETBKIMAGEA = 0x00001044,
+    LVM_SETBKIMAGEW = 0x0000108a,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getbkimage))], [])*/uint
+{
+    LVM_GETBKIMAGEA = 0x00001045,
+    LVM_GETBKIMAGEW = 0x0000108b,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setselectedcolumn))], [])*/uint LVM_SETSELECTEDCOLUMN = 0x0000108c;
+
+enum : uint
+{
+    LV_VIEW_ICON      = 0x00000000,
+    LV_VIEW_DETAILS   = 0x00000001,
+    LV_VIEW_SMALLICON = 0x00000002,
+    LV_VIEW_LIST      = 0x00000003,
+    LV_VIEW_TILE      = 0x00000004,
+    LV_VIEW_MAX       = 0x00000004,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setview))], [])*/uint LVM_SETVIEW = 0x0000108e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getview))], [])*/uint LVM_GETVIEW = 0x0000108f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-insertgroup))], [])*/uint LVM_INSERTGROUP = 0x00001091;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setgroupinfo))], [])*/uint LVM_SETGROUPINFO = 0x00001093;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getgroupinfo))], [])*/uint LVM_GETGROUPINFO = 0x00001095;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-removegroup))], [])*/uint LVM_REMOVEGROUP = 0x00001096;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-movegroup))], [])*/uint LVM_MOVEGROUP = 0x00001097;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getgroupcount))], [])*/uint
+{
+    LVM_GETGROUPCOUNT       = 0x00001098,
+    LVM_GETGROUPINFOBYINDEX = 0x00001099,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-moveitemtogroup))], [])*/uint LVM_MOVEITEMTOGROUP = 0x0000109a;
+
+enum : uint
+{
+    LVGGR_GROUP      = 0x00000000,
+    LVGGR_HEADER     = 0x00000001,
+    LVGGR_LABEL      = 0x00000002,
+    LVGGR_SUBSETLINK = 0x00000003,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getgrouprect))], [])*/uint LVM_GETGROUPRECT = 0x00001062;
+
+enum : uint
+{
+    LVGMF_NONE        = 0x00000000,
+    LVGMF_BORDERSIZE  = 0x00000001,
+    LVGMF_BORDERCOLOR = 0x00000002,
+}
+
+enum uint LVGMF_TEXTCOLOR = 0x00000004;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setgroupmetrics))], [])*/uint LVM_SETGROUPMETRICS = 0x0000109b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getgroupmetrics))], [])*/uint LVM_GETGROUPMETRICS = 0x0000109c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-enablegroupview))], [])*/uint LVM_ENABLEGROUPVIEW = 0x0000109d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-sortgroups))], [])*/uint LVM_SORTGROUPS = 0x0000109e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-insertgroupsorted))], [])*/uint LVM_INSERTGROUPSORTED = 0x0000109f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-removeallgroups))], [])*/uint LVM_REMOVEALLGROUPS = 0x000010a0;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-hasgroup))], [])*/uint LVM_HASGROUP = 0x000010a1;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getgroupstate))], [])*/uint
+{
+    LVM_GETGROUPSTATE   = 0x0000105c,
+    LVM_GETFOCUSEDGROUP = 0x0000105d,
+}
+
+enum uint LVTVIF_EXTENDED = 0x00000004;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-settileviewinfo))], [])*/uint LVM_SETTILEVIEWINFO = 0x000010a2;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-gettileviewinfo))], [])*/uint LVM_GETTILEVIEWINFO = 0x000010a3;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-settileinfo))], [])*/uint LVM_SETTILEINFO = 0x000010a4;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-gettileinfo))], [])*/uint LVM_GETTILEINFO = 0x000010a5;
+enum uint LVIM_AFTER = 0x00000001;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setinsertmark))], [])*/uint LVM_SETINSERTMARK = 0x000010a6;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getinsertmark))], [])*/uint LVM_GETINSERTMARK = 0x000010a7;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-insertmarkhittest))], [])*/uint LVM_INSERTMARKHITTEST = 0x000010a8;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getinsertmarkrect))], [])*/uint LVM_GETINSERTMARKRECT = 0x000010a9;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setinsertmarkcolor))], [])*/uint LVM_SETINSERTMARKCOLOR = 0x000010aa;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getinsertmarkcolor))], [])*/uint LVM_GETINSERTMARKCOLOR = 0x000010ab;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setinfotip))], [])*/uint LVM_SETINFOTIP = 0x000010ad;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getselectedcolumn))], [])*/uint LVM_GETSELECTEDCOLUMN = 0x000010ae;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-isgroupviewenabled))], [])*/uint LVM_ISGROUPVIEWENABLED = 0x000010af;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getoutlinecolor))], [])*/uint LVM_GETOUTLINECOLOR = 0x000010b0;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setoutlinecolor))], [])*/uint LVM_SETOUTLINECOLOR = 0x000010b1;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-canceleditlabel))], [])*/uint LVM_CANCELEDITLABEL = 0x000010b3;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-mapindextoid))], [])*/uint
+{
+    LVM_MAPINDEXTOID = 0x000010b4,
+    LVM_MAPIDTOINDEX = 0x000010b5,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-isitemvisible))], [])*/uint LVM_ISITEMVISIBLE = 0x000010b6;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getemptytext))], [])*/uint
+{
+    LVM_GETEMPTYTEXT  = 0x000010cc,
+    LVM_GETFOOTERRECT = 0x000010cd,
+}
+
+enum uint LVFF_ITEMCOUNT = 0x00000001;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getfooterinfo))], [])*/uint
+{
+    LVM_GETFOOTERINFO     = 0x000010ce,
+    LVM_GETFOOTERITEMRECT = 0x000010cf,
+}
+
+enum uint LVFIS_FOCUSED = 0x00000001;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getfooteritem))], [])*/uint
+{
+    LVM_GETFOOTERITEM    = 0x000010d0,
+    LVM_GETITEMINDEXRECT = 0x000010d1,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setitemindexstate))], [])*/uint LVM_SETITEMINDEXSTATE = 0x000010d2;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getnextitemindex))], [])*/uint LVM_GETNEXTITEMINDEX = 0x000010d3;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-setbkimage))], [])*/uint LVM_SETBKIMAGE = 0x0000108a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvm-getbkimage))], [])*/uint LVM_GETBKIMAGE = 0x0000108b;
+
+enum : uint
+{
+    LVKF_ALT     = 0x00000001,
+    LVKF_CONTROL = 0x00000002,
+    LVKF_SHIFT   = 0x00000004,
+}
+
+enum : uint
+{
+    LVCDRF_NOSELECT     = 0x00010000,
+    LVCDRF_NOGROUPFRAME = 0x00020000,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-itemchanging))], [])*/uint
+{
+    LVN_ITEMCHANGING = 0xffffff9c,
+    LVN_ITEMCHANGED  = 0xffffff9b,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-insertitem))], [])*/uint LVN_INSERTITEM = 0xffffff9a;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-deleteitem))], [])*/uint
+{
+    LVN_DELETEITEM     = 0xffffff99,
+    LVN_DELETEALLITEMS = 0xffffff98,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-beginlabeledit))], [])*/uint
+{
+    LVN_BEGINLABELEDITA = 0xffffff97,
+    LVN_BEGINLABELEDITW = 0xffffff51,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-endlabeledit))], [])*/uint
+{
+    LVN_ENDLABELEDITA = 0xffffff96,
+    LVN_ENDLABELEDITW = 0xffffff50,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-columnclick))], [])*/uint LVN_COLUMNCLICK = 0xffffff94;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-begindrag))], [])*/uint
+{
+    LVN_BEGINDRAG  = 0xffffff93,
+    LVN_BEGINRDRAG = 0xffffff91,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-odcachehint))], [])*/uint LVN_ODCACHEHINT = 0xffffff8f;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-odfinditem))], [])*/uint
+{
+    LVN_ODFINDITEMA = 0xffffff68,
+    LVN_ODFINDITEMW = 0xffffff4d,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-itemactivate))], [])*/uint LVN_ITEMACTIVATE = 0xffffff8e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-odstatechanged))], [])*/uint LVN_ODSTATECHANGED = 0xffffff8d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-odfinditem))], [])*/uint LVN_ODFINDITEM = 0xffffff4d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-hottrack))], [])*/uint LVN_HOTTRACK = 0xffffff87;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-getdispinfo))], [])*/uint
+{
+    LVN_GETDISPINFOA = 0xffffff6a,
+    LVN_GETDISPINFOW = 0xffffff4f,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-setdispinfo))], [])*/uint
+{
+    LVN_SETDISPINFOA = 0xffffff69,
+    LVN_SETDISPINFOW = 0xffffff4e,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-beginlabeledit))], [])*/uint LVN_BEGINLABELEDIT = 0xffffff51;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-endlabeledit))], [])*/uint LVN_ENDLABELEDIT = 0xffffff50;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-getdispinfo))], [])*/uint LVN_GETDISPINFO = 0xffffff4f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-setdispinfo))], [])*/uint LVN_SETDISPINFO = 0xffffff4e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-keydown))], [])*/uint LVN_KEYDOWN = 0xffffff65;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-marqueebegin))], [])*/uint LVN_MARQUEEBEGIN = 0xffffff64;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-getinfotip))], [])*/uint
+{
+    LVN_GETINFOTIPA = 0xffffff63,
+    LVN_GETINFOTIPW = 0xffffff62,
+    LVN_GETINFOTIP  = 0xffffff62,
+}
+
+enum : int
+{
+    LVNSCH_DEFAULT = 0xffffffff,
+    LVNSCH_ERROR   = 0xfffffffe,
+    LVNSCH_IGNORE  = 0xfffffffd,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-incrementalsearch))], [])*/uint
+{
+    LVN_INCREMENTALSEARCHA = 0xffffff5e,
+    LVN_INCREMENTALSEARCHW = 0xffffff5d,
+    LVN_INCREMENTALSEARCH  = 0xffffff5d,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-columndropdown))], [])*/uint
+{
+    LVN_COLUMNDROPDOWN      = 0xffffff5c,
+    LVN_COLUMNOVERFLOWCLICK = 0xffffff5a,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-beginscroll))], [])*/uint LVN_BEGINSCROLL = 0xffffff4c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-endscroll))], [])*/uint LVN_ENDSCROLL = 0xffffff4b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-linkclick))], [])*/uint LVN_LINKCLICK = 0xffffff48;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/lvn-getemptymarkup))], [])*/uint LVN_GETEMPTYMARKUP = 0xffffff45;
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    WC_TREEVIEWA = "SysTreeView32",
+    WC_TREEVIEWW = "SysTreeView32",
+    WC_TREEVIEW  = "SysTreeView32",
+}
+
+enum : uint
+{
+    TVS_HASBUTTONS = 0x00000001,
+    TVS_HASLINES   = 0x00000002,
+}
+
+enum uint TVS_LINESATROOT = 0x00000004;
+enum uint TVS_EDITLABELS = 0x00000008;
+enum uint TVS_DISABLEDRAGDROP = 0x00000010;
+enum uint TVS_SHOWSELALWAYS = 0x00000020;
+enum uint TVS_RTLREADING = 0x00000040;
+enum uint TVS_NOTOOLTIPS = 0x00000080;
+enum uint TVS_CHECKBOXES = 0x00000100;
+enum uint TVS_TRACKSELECT = 0x00000200;
+enum uint TVS_SINGLEEXPAND = 0x00000400;
+enum uint TVS_INFOTIP = 0x00000800;
+enum uint TVS_FULLROWSELECT = 0x00001000;
+
+enum : uint
+{
+    TVS_NOSCROLL      = 0x00002000,
+    TVS_NONEVENHEIGHT = 0x00004000,
+}
+
+enum uint TVS_NOHSCROLL = 0x00008000;
+enum uint TVS_EX_NOSINGLECOLLAPSE = 0x00000001;
+enum uint TVS_EX_MULTISELECT = 0x00000002;
+enum uint TVS_EX_DOUBLEBUFFER = 0x00000004;
+enum uint TVS_EX_NOINDENTSTATE = 0x00000008;
+enum uint TVS_EX_RICHTOOLTIP = 0x00000010;
+enum uint TVS_EX_AUTOHSCROLL = 0x00000020;
+enum uint TVS_EX_FADEINOUTEXPANDOS = 0x00000040;
+enum uint TVS_EX_PARTIALCHECKBOXES = 0x00000080;
+enum uint TVS_EX_EXCLUSIONCHECKBOXES = 0x00000100;
+enum uint TVS_EX_DIMMEDCHECKBOXES = 0x00000200;
+enum uint TVS_EX_DRAWIMAGEASYNC = 0x00000400;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-insertitem))], [])*/uint
+{
+    TVM_INSERTITEMA = 0x00001100,
+    TVM_INSERTITEMW = 0x00001132,
+    TVM_INSERTITEM  = 0x00001132,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-deleteitem))], [])*/uint TVM_DELETEITEM = 0x00001101;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-expand))], [])*/uint TVM_EXPAND = 0x00001102;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getitemrect))], [])*/uint
+{
+    TVM_GETITEMRECT = 0x00001104,
+    TVM_GETCOUNT    = 0x00001105,
+    TVM_GETINDENT   = 0x00001106,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-setindent))], [])*/uint TVM_SETINDENT = 0x00001107;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getimagelist))], [])*/uint TVM_GETIMAGELIST = 0x00001108;
+
+enum : uint
+{
+    TVSIL_NORMAL = 0x00000000,
+    TVSIL_STATE  = 0x00000002,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-setimagelist))], [])*/uint TVM_SETIMAGELIST = 0x00001109;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getnextitem))], [])*/uint TVM_GETNEXTITEM = 0x0000110a;
+
+enum : uint
+{
+    TVGN_ROOT         = 0x00000000,
+    TVGN_NEXT         = 0x00000001,
+    TVGN_PREVIOUS     = 0x00000002,
+    TVGN_PARENT       = 0x00000003,
+    TVGN_CHILD        = 0x00000004,
+    TVGN_FIRSTVISIBLE = 0x00000005,
+}
+
+enum uint TVGN_NEXTVISIBLE = 0x00000006;
+enum uint TVGN_PREVIOUSVISIBLE = 0x00000007;
+enum uint TVGN_DROPHILITE = 0x00000008;
+
+enum : uint
+{
+    TVGN_CARET       = 0x00000009,
+    TVGN_LASTVISIBLE = 0x0000000a,
+}
+
+enum uint TVGN_NEXTSELECTED = 0x0000000b;
+enum uint TVSI_NOSINGLEEXPAND = 0x00008000;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-selectitem))], [])*/uint TVM_SELECTITEM = 0x0000110b;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getitem))], [])*/uint
+{
+    TVM_GETITEMA = 0x0000110c,
+    TVM_GETITEMW = 0x0000113e,
+    TVM_GETITEM  = 0x0000113e,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-setitem))], [])*/uint
+{
+    TVM_SETITEMA = 0x0000110d,
+    TVM_SETITEMW = 0x0000113f,
+    TVM_SETITEM  = 0x0000113f,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-editlabel))], [])*/uint
+{
+    TVM_EDITLABELA = 0x0000110e,
+    TVM_EDITLABELW = 0x00001141,
+    TVM_EDITLABEL  = 0x00001141,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-geteditcontrol))], [])*/uint TVM_GETEDITCONTROL = 0x0000110f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getvisiblecount))], [])*/uint TVM_GETVISIBLECOUNT = 0x00001110;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-hittest))], [])*/uint TVM_HITTEST = 0x00001111;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-createdragimage))], [])*/uint TVM_CREATEDRAGIMAGE = 0x00001112;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-sortchildren))], [])*/uint TVM_SORTCHILDREN = 0x00001113;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-ensurevisible))], [])*/uint TVM_ENSUREVISIBLE = 0x00001114;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-sortchildrencb))], [])*/uint TVM_SORTCHILDRENCB = 0x00001115;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-endeditlabelnow))], [])*/uint TVM_ENDEDITLABELNOW = 0x00001116;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getisearchstring))], [])*/uint
+{
+    TVM_GETISEARCHSTRINGA = 0x00001117,
+    TVM_GETISEARCHSTRINGW = 0x00001140,
+    TVM_GETISEARCHSTRING  = 0x00001140,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-settooltips))], [])*/uint TVM_SETTOOLTIPS = 0x00001118;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-gettooltips))], [])*/uint TVM_GETTOOLTIPS = 0x00001119;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-setinsertmark))], [])*/uint
+{
+    TVM_SETINSERTMARK    = 0x0000111a,
+    TVM_SETUNICODEFORMAT = 0x00002005,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getunicodeformat))], [])*/uint TVM_GETUNICODEFORMAT = 0x00002006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-setitemheight))], [])*/uint TVM_SETITEMHEIGHT = 0x0000111b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getitemheight))], [])*/uint TVM_GETITEMHEIGHT = 0x0000111c;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-setbkcolor))], [])*/uint
+{
+    TVM_SETBKCOLOR   = 0x0000111d,
+    TVM_SETTEXTCOLOR = 0x0000111e,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getbkcolor))], [])*/uint
+{
+    TVM_GETBKCOLOR   = 0x0000111f,
+    TVM_GETTEXTCOLOR = 0x00001120,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-setscrolltime))], [])*/uint TVM_SETSCROLLTIME = 0x00001121;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getscrolltime))], [])*/uint TVM_GETSCROLLTIME = 0x00001122;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-setinsertmarkcolor))], [])*/uint TVM_SETINSERTMARKCOLOR = 0x00001125;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getinsertmarkcolor))], [])*/uint TVM_GETINSERTMARKCOLOR = 0x00001126;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-setborder))], [])*/uint TVM_SETBORDER = 0x00001123;
+
+enum : uint
+{
+    TVSBF_XBORDER = 0x00000001,
+    TVSBF_YBORDER = 0x00000002,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getitemstate))], [])*/uint TVM_GETITEMSTATE = 0x00001127;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-setlinecolor))], [])*/uint TVM_SETLINECOLOR = 0x00001128;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getlinecolor))], [])*/uint TVM_GETLINECOLOR = 0x00001129;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-mapaccidtohtreeitem))], [])*/uint TVM_MAPACCIDTOHTREEITEM = 0x0000112a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-maphtreeitemtoaccid))], [])*/uint TVM_MAPHTREEITEMTOACCID = 0x0000112b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-setextendedstyle))], [])*/uint TVM_SETEXTENDEDSTYLE = 0x0000112c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getextendedstyle))], [])*/uint TVM_GETEXTENDEDSTYLE = 0x0000112d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-setautoscrollinfo))], [])*/uint TVM_SETAUTOSCROLLINFO = 0x0000113b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-sethot))], [])*/uint TVM_SETHOT = 0x0000113a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getselectedcount))], [])*/uint TVM_GETSELECTEDCOUNT = 0x00001146;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-showinfotip))], [])*/uint TVM_SHOWINFOTIP = 0x00001147;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvm-getitempartrect))], [])*/uint TVM_GETITEMPARTRECT = 0x00001148;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-selchanging))], [])*/uint
+{
+    TVN_SELCHANGINGA = 0xfffffe6f,
+    TVN_SELCHANGINGW = 0xfffffe3e,
+    TVN_SELCHANGEDA  = 0xfffffe6e,
+    TVN_SELCHANGEDW  = 0xfffffe3d,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-getdispinfo))], [])*/uint
+{
+    TVN_GETDISPINFOA = 0xfffffe6d,
+    TVN_GETDISPINFOW = 0xfffffe3c,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-setdispinfo))], [])*/uint
+{
+    TVN_SETDISPINFOA = 0xfffffe6c,
+    TVN_SETDISPINFOW = 0xfffffe3b,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-itemexpanding))], [])*/uint
+{
+    TVN_ITEMEXPANDINGA = 0xfffffe6b,
+    TVN_ITEMEXPANDINGW = 0xfffffe3a,
+    TVN_ITEMEXPANDEDA  = 0xfffffe6a,
+    TVN_ITEMEXPANDEDW  = 0xfffffe39,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-begindrag))], [])*/uint
+{
+    TVN_BEGINDRAGA  = 0xfffffe69,
+    TVN_BEGINDRAGW  = 0xfffffe38,
+    TVN_BEGINRDRAGA = 0xfffffe68,
+    TVN_BEGINRDRAGW = 0xfffffe37,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-deleteitem))], [])*/uint
+{
+    TVN_DELETEITEMA = 0xfffffe67,
+    TVN_DELETEITEMW = 0xfffffe36,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-beginlabeledit))], [])*/uint
+{
+    TVN_BEGINLABELEDITA = 0xfffffe66,
+    TVN_BEGINLABELEDITW = 0xfffffe35,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-endlabeledit))], [])*/uint
+{
+    TVN_ENDLABELEDITA = 0xfffffe65,
+    TVN_ENDLABELEDITW = 0xfffffe34,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-keydown))], [])*/uint TVN_KEYDOWN = 0xfffffe64;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-getinfotip))], [])*/uint
+{
+    TVN_GETINFOTIPA = 0xfffffe63,
+    TVN_GETINFOTIPW = 0xfffffe62,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-singleexpand))], [])*/uint TVN_SINGLEEXPAND = 0xfffffe61;
+
+enum : uint
+{
+    TVNRET_DEFAULT = 0x00000000,
+    TVNRET_SKIPOLD = 0x00000001,
+    TVNRET_SKIPNEW = 0x00000002,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-itemchanging))], [])*/uint
+{
+    TVN_ITEMCHANGINGA = 0xfffffe60,
+    TVN_ITEMCHANGINGW = 0xfffffe5f,
+    TVN_ITEMCHANGEDA  = 0xfffffe5e,
+    TVN_ITEMCHANGEDW  = 0xfffffe5d,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-asyncdraw))], [])*/uint TVN_ASYNCDRAW = 0xfffffe5c;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-selchanging))], [])*/uint
+{
+    TVN_SELCHANGING = 0xfffffe3e,
+    TVN_SELCHANGED  = 0xfffffe3d,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-getdispinfo))], [])*/uint TVN_GETDISPINFO = 0xfffffe3c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-setdispinfo))], [])*/uint TVN_SETDISPINFO = 0xfffffe3b;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-itemexpanding))], [])*/uint
+{
+    TVN_ITEMEXPANDING = 0xfffffe3a,
+    TVN_ITEMEXPANDED  = 0xfffffe39,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-begindrag))], [])*/uint
+{
+    TVN_BEGINDRAG  = 0xfffffe38,
+    TVN_BEGINRDRAG = 0xfffffe37,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-deleteitem))], [])*/uint TVN_DELETEITEM = 0xfffffe36;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-beginlabeledit))], [])*/uint TVN_BEGINLABELEDIT = 0xfffffe35;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-endlabeledit))], [])*/uint TVN_ENDLABELEDIT = 0xfffffe34;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-getinfotip))], [])*/uint TVN_GETINFOTIP = 0xfffffe62;
+enum uint TVCDRF_NOIMAGES = 0x00010000;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tvn-itemchanging))], [])*/uint
+{
+    TVN_ITEMCHANGING = 0xfffffe5f,
+    TVN_ITEMCHANGED  = 0xfffffe5d,
+}
+
+enum : const(wchar)*
+{
+    WC_COMBOBOXEXW = "ComboBoxEx32",
+    WC_COMBOBOXEXA = "ComboBoxEx32",
+    WC_COMBOBOXEX  = "ComboBoxEx32",
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-insertitem))], [])*/uint CBEM_INSERTITEMA = 0x00000401;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-setimagelist))], [])*/uint CBEM_SETIMAGELIST = 0x00000402;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-getimagelist))], [])*/uint
+{
+    CBEM_GETIMAGELIST = 0x00000403,
+    CBEM_GETITEMA     = 0x00000404,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-setitem))], [])*/uint CBEM_SETITEMA = 0x00000405;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-getcombocontrol))], [])*/uint CBEM_GETCOMBOCONTROL = 0x00000406;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-geteditcontrol))], [])*/uint CBEM_GETEDITCONTROL = 0x00000407;
+
+enum : uint
+{
+    CBEM_SETEXSTYLE       = 0x00000408,
+    CBEM_SETEXTENDEDSTYLE = 0x0000040e,
+}
+
+enum : uint
+{
+    CBEM_GETEXSTYLE       = 0x00000409,
+    CBEM_GETEXTENDEDSTYLE = 0x00000409,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-setunicodeformat))], [])*/uint CBEM_SETUNICODEFORMAT = 0x00002005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-getunicodeformat))], [])*/uint CBEM_GETUNICODEFORMAT = 0x00002006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-haseditchanged))], [])*/uint CBEM_HASEDITCHANGED = 0x0000040a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-insertitem))], [])*/uint CBEM_INSERTITEMW = 0x0000040b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-setitem))], [])*/uint CBEM_SETITEMW = 0x0000040c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-getitem))], [])*/uint CBEM_GETITEMW = 0x0000040d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-insertitem))], [])*/uint CBEM_INSERTITEM = 0x0000040b;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cbem-setitem))], [])*/uint
+{
+    CBEM_SETITEM        = 0x0000040c,
+    CBEM_GETITEM        = 0x0000040d,
+    CBEM_SETWINDOWTHEME = 0x0000200b,
+}
+
+enum : uint
+{
+    CBES_EX_NOEDITIMAGE       = 0x00000001,
+    CBES_EX_NOEDITIMAGEINDENT = 0x00000002,
+}
+
+enum uint CBES_EX_PATHWORDBREAKPROC = 0x00000004;
+
+enum : uint
+{
+    CBES_EX_NOSIZELIMIT   = 0x00000008,
+    CBES_EX_CASESENSITIVE = 0x00000010,
+}
+
+enum uint CBES_EX_TEXTENDELLIPSIS = 0x00000020;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cben-getdispinfo))], [])*/uint CBEN_GETDISPINFOA = 0xfffffce0;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cben-insertitem))], [])*/uint CBEN_INSERTITEM = 0xfffffcdf;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cben-deleteitem))], [])*/uint CBEN_DELETEITEM = 0xfffffcde;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cben-beginedit))], [])*/uint CBEN_BEGINEDIT = 0xfffffcdc;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cben-endedit))], [])*/uint
+{
+    CBEN_ENDEDITA = 0xfffffcdb,
+    CBEN_ENDEDITW = 0xfffffcda,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cben-getdispinfo))], [])*/uint CBEN_GETDISPINFOW = 0xfffffcd9;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cben-dragbegin))], [])*/uint
+{
+    CBEN_DRAGBEGINA = 0xfffffcd8,
+    CBEN_DRAGBEGINW = 0xfffffcd7,
+    CBEN_DRAGBEGIN  = 0xfffffcd7,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cben-endedit))], [])*/uint CBEN_ENDEDIT = 0xfffffcda;
+enum uint CBENF_KILLFOCUS = 0x00000001;
+
+enum : uint
+{
+    CBENF_RETURN   = 0x00000002,
+    CBENF_ESCAPE   = 0x00000003,
+    CBENF_DROPDOWN = 0x00000004,
+}
+
+enum uint CBEMAXSTRLEN = 0x00000104;
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    WC_TABCONTROLA = "SysTabControl32",
+    WC_TABCONTROLW = "SysTabControl32",
+    WC_TABCONTROL  = "SysTabControl32",
+}
+
+enum uint TCS_SCROLLOPPOSITE = 0x00000001;
+enum uint TCS_BOTTOM = 0x00000002;
+
+enum : uint
+{
+    TCS_RIGHT       = 0x00000002,
+    TCS_MULTISELECT = 0x00000004,
+}
+
+enum uint TCS_FLATBUTTONS = 0x00000008;
+
+enum : uint
+{
+    TCS_FORCEICONLEFT  = 0x00000010,
+    TCS_FORCELABELLEFT = 0x00000020,
+}
+
+enum uint TCS_HOTTRACK = 0x00000040;
+enum uint TCS_VERTICAL = 0x00000080;
+
+enum : uint
+{
+    TCS_TABS    = 0x00000000,
+    TCS_BUTTONS = 0x00000100,
+}
+
+enum uint TCS_SINGLELINE = 0x00000000;
+enum uint TCS_MULTILINE = 0x00000200;
+enum uint TCS_RIGHTJUSTIFY = 0x00000000;
+enum uint TCS_FIXEDWIDTH = 0x00000400;
+enum uint TCS_RAGGEDRIGHT = 0x00000800;
+enum uint TCS_FOCUSONBUTTONDOWN = 0x00001000;
+enum uint TCS_OWNERDRAWFIXED = 0x00002000;
+enum uint TCS_TOOLTIPS = 0x00004000;
+enum uint TCS_FOCUSNEVER = 0x00008000;
+enum uint TCS_EX_FLATSEPARATORS = 0x00000001;
+enum uint TCS_EX_REGISTERDROP = 0x00000002;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-getimagelist))], [])*/uint TCM_GETIMAGELIST = 0x00001302;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-setimagelist))], [])*/uint TCM_SETIMAGELIST = 0x00001303;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-getitemcount))], [])*/uint
+{
+    TCM_GETITEMCOUNT = 0x00001304,
+    TCM_GETITEMA     = 0x00001305,
+    TCM_GETITEMW     = 0x0000133c,
+    TCM_GETITEM      = 0x0000133c,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-setitem))], [])*/uint
+{
+    TCM_SETITEMA = 0x00001306,
+    TCM_SETITEMW = 0x0000133d,
+    TCM_SETITEM  = 0x0000133d,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-insertitem))], [])*/uint
+{
+    TCM_INSERTITEMA = 0x00001307,
+    TCM_INSERTITEMW = 0x0000133e,
+    TCM_INSERTITEM  = 0x0000133e,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-deleteitem))], [])*/uint
+{
+    TCM_DELETEITEM     = 0x00001308,
+    TCM_DELETEALLITEMS = 0x00001309,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-getitemrect))], [])*/uint
+{
+    TCM_GETITEMRECT = 0x0000130a,
+    TCM_GETCURSEL   = 0x0000130b,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-setcursel))], [])*/uint TCM_SETCURSEL = 0x0000130c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-hittest))], [])*/uint TCM_HITTEST = 0x0000130d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-setitemextra))], [])*/uint TCM_SETITEMEXTRA = 0x0000130e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-adjustrect))], [])*/uint TCM_ADJUSTRECT = 0x00001328;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-setitemsize))], [])*/uint TCM_SETITEMSIZE = 0x00001329;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-removeimage))], [])*/uint TCM_REMOVEIMAGE = 0x0000132a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-setpadding))], [])*/uint TCM_SETPADDING = 0x0000132b;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-getrowcount))], [])*/uint
+{
+    TCM_GETROWCOUNT = 0x0000132c,
+    TCM_GETTOOLTIPS = 0x0000132d,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-settooltips))], [])*/uint TCM_SETTOOLTIPS = 0x0000132e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-getcurfocus))], [])*/uint TCM_GETCURFOCUS = 0x0000132f;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-setcurfocus))], [])*/uint
+{
+    TCM_SETCURFOCUS    = 0x00001330,
+    TCM_SETMINTABWIDTH = 0x00001331,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-deselectall))], [])*/uint TCM_DESELECTALL = 0x00001332;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-highlightitem))], [])*/uint TCM_HIGHLIGHTITEM = 0x00001333;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-setextendedstyle))], [])*/uint TCM_SETEXTENDEDSTYLE = 0x00001334;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-getextendedstyle))], [])*/uint TCM_GETEXTENDEDSTYLE = 0x00001335;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-setunicodeformat))], [])*/uint TCM_SETUNICODEFORMAT = 0x00002005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcm-getunicodeformat))], [])*/uint TCM_GETUNICODEFORMAT = 0x00002006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcn-keydown))], [])*/uint TCN_KEYDOWN = 0xfffffdda;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcn-selchange))], [])*/uint
+{
+    TCN_SELCHANGE   = 0xfffffdd9,
+    TCN_SELCHANGING = 0xfffffdd8,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcn-getobject))], [])*/uint TCN_GETOBJECT = 0xfffffdd7;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/tcn-focuschange))], [])*/uint TCN_FOCUSCHANGE = 0xfffffdd6;
+
+enum : const(wchar)*
+{
+    ANIMATE_CLASSW = "SysAnimate32",
+    ANIMATE_CLASSA = "SysAnimate32",
+    ANIMATE_CLASS  = "SysAnimate32",
+}
+
+enum uint ACS_CENTER = 0x00000001;
+enum uint ACS_TRANSPARENT = 0x00000002;
+enum uint ACS_AUTOPLAY = 0x00000004;
+enum uint ACS_TIMER = 0x00000008;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/acm-open))], [])*/uint
+{
+    ACM_OPENA     = 0x00000464,
+    ACM_OPENW     = 0x00000467,
+    ACM_OPEN      = 0x00000467,
+    ACM_PLAY      = 0x00000465,
+    ACM_STOP      = 0x00000466,
+    ACM_ISPLAYING = 0x00000468,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/acn-start))], [])*/uint
+{
+    ACN_START = 0x00000001,
+    ACN_STOP  = 0x00000002,
+}
+
+enum : const(wchar)*
+{
+    MONTHCAL_CLASSW = "SysMonthCal32",
+    MONTHCAL_CLASSA = "SysMonthCal32",
+    MONTHCAL_CLASS  = "SysMonthCal32",
+}
+
+enum : uint
+{
+    MCM_FIRST     = 0x00001000,
+    MCM_GETCURSEL = 0x00001001,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-setcursel))], [])*/uint MCM_SETCURSEL = 0x00001002;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-getmaxselcount))], [])*/uint MCM_GETMAXSELCOUNT = 0x00001003;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-setmaxselcount))], [])*/uint MCM_SETMAXSELCOUNT = 0x00001004;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-getselrange))], [])*/uint MCM_GETSELRANGE = 0x00001005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-setselrange))], [])*/uint MCM_SETSELRANGE = 0x00001006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-getmonthrange))], [])*/uint MCM_GETMONTHRANGE = 0x00001007;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-setdaystate))], [])*/uint MCM_SETDAYSTATE = 0x00001008;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-getminreqrect))], [])*/uint MCM_GETMINREQRECT = 0x00001009;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-setcolor))], [])*/uint MCM_SETCOLOR = 0x0000100a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-getcolor))], [])*/uint MCM_GETCOLOR = 0x0000100b;
+enum uint MCSC_BACKGROUND = 0x00000000;
+
+enum : uint
+{
+    MCSC_TEXT      = 0x00000001,
+    MCSC_TITLEBK   = 0x00000002,
+    MCSC_TITLETEXT = 0x00000003,
+}
+
+enum : uint
+{
+    MCSC_MONTHBK      = 0x00000004,
+    MCSC_TRAILINGTEXT = 0x00000005,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-settoday))], [])*/uint MCM_SETTODAY = 0x0000100c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-gettoday))], [])*/uint MCM_GETTODAY = 0x0000100d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-hittest))], [])*/uint MCM_HITTEST = 0x0000100e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-setfirstdayofweek))], [])*/uint MCM_SETFIRSTDAYOFWEEK = 0x0000100f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-getfirstdayofweek))], [])*/uint MCM_GETFIRSTDAYOFWEEK = 0x00001010;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-getrange))], [])*/uint MCM_GETRANGE = 0x00001011;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-setrange))], [])*/uint MCM_SETRANGE = 0x00001012;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-getmonthdelta))], [])*/uint MCM_GETMONTHDELTA = 0x00001013;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-setmonthdelta))], [])*/uint MCM_SETMONTHDELTA = 0x00001014;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-getmaxtodaywidth))], [])*/uint MCM_GETMAXTODAYWIDTH = 0x00001015;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-setunicodeformat))], [])*/uint MCM_SETUNICODEFORMAT = 0x00002005;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-getunicodeformat))], [])*/uint MCM_GETUNICODEFORMAT = 0x00002006;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-getcurrentview))], [])*/uint
+{
+    MCM_GETCURRENTVIEW      = 0x00001016,
+    MCM_GETCALENDARCOUNT    = 0x00001017,
+    MCM_GETCALENDARGRIDINFO = 0x00001018,
+    MCM_GETCALID            = 0x0000101b,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-setcalid))], [])*/uint
+{
+    MCM_SETCALID      = 0x0000101c,
+    MCM_SIZERECTTOMIN = 0x0000101d,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-setcalendarborder))], [])*/uint MCM_SETCALENDARBORDER = 0x0000101e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-getcalendarborder))], [])*/uint MCM_GETCALENDARBORDER = 0x0000101f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcm-setcurrentview))], [])*/uint MCM_SETCURRENTVIEW = 0x00001020;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcn-selchange))], [])*/uint MCN_SELCHANGE = 0xfffffd13;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcn-getdaystate))], [])*/uint MCN_GETDAYSTATE = 0xfffffd15;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcn-select))], [])*/uint MCN_SELECT = 0xfffffd16;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/mcn-viewchange))], [])*/uint MCN_VIEWCHANGE = 0xfffffd12;
+enum uint MCS_DAYSTATE = 0x00000001;
+enum uint MCS_MULTISELECT = 0x00000002;
+enum uint MCS_WEEKNUMBERS = 0x00000004;
+
+enum : uint
+{
+    MCS_NOTODAYCIRCLE   = 0x00000008,
+    MCS_NOTODAY         = 0x00000010,
+    MCS_NOTRAILINGDATES = 0x00000040,
+}
+
+enum uint MCS_SHORTDAYSOFWEEK = 0x00000080;
+enum uint MCS_NOSELCHANGEONNAV = 0x00000100;
+enum uint GMR_VISIBLE = 0x00000000;
+enum uint GMR_DAYSTATE = 0x00000001;
+
+enum : const(wchar)*
+{
+    DATETIMEPICK_CLASSW = "SysDateTimePick32",
+    DATETIMEPICK_CLASSA = "SysDateTimePick32",
+    DATETIMEPICK_CLASS  = "SysDateTimePick32",
+}
+
+enum : uint
+{
+    DTM_FIRST         = 0x00001000,
+    DTM_GETSYSTEMTIME = 0x00001001,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtm-setsystemtime))], [])*/uint DTM_SETSYSTEMTIME = 0x00001002;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtm-getrange))], [])*/uint DTM_GETRANGE = 0x00001003;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtm-setrange))], [])*/uint
+{
+    DTM_SETRANGE   = 0x00001004,
+    DTM_SETFORMATA = 0x00001005,
+    DTM_SETFORMATW = 0x00001032,
+    DTM_SETFORMAT  = 0x00001032,
+    DTM_SETMCCOLOR = 0x00001006,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtm-getmccolor))], [])*/uint
+{
+    DTM_GETMCCOLOR  = 0x00001007,
+    DTM_GETMONTHCAL = 0x00001008,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtm-setmcfont))], [])*/uint DTM_SETMCFONT = 0x00001009;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtm-getmcfont))], [])*/uint DTM_GETMCFONT = 0x0000100a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtm-setmcstyle))], [])*/uint DTM_SETMCSTYLE = 0x0000100b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtm-getmcstyle))], [])*/uint DTM_GETMCSTYLE = 0x0000100c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtm-closemonthcal))], [])*/uint DTM_CLOSEMONTHCAL = 0x0000100d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtm-getdatetimepickerinfo))], [])*/uint DTM_GETDATETIMEPICKERINFO = 0x0000100e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtm-getidealsize))], [])*/uint DTM_GETIDEALSIZE = 0x0000100f;
+enum uint DTS_UPDOWN = 0x00000001;
+
+enum : uint
+{
+    DTS_SHOWNONE        = 0x00000002,
+    DTS_SHORTDATEFORMAT = 0x00000000,
+}
+
+enum uint DTS_LONGDATEFORMAT = 0x00000004;
+enum uint DTS_SHORTDATECENTURYFORMAT = 0x0000000c;
+enum uint DTS_TIMEFORMAT = 0x00000009;
+enum uint DTS_APPCANPARSE = 0x00000010;
+enum uint DTS_RIGHTALIGN = 0x00000020;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtn-datetimechange))], [])*/uint DTN_DATETIMECHANGE = 0xfffffd09;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtn-userstring))], [])*/uint
+{
+    DTN_USERSTRINGA = 0xfffffd0a,
+    DTN_USERSTRINGW = 0xfffffd17,
+    DTN_USERSTRING  = 0xfffffd17,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtn-wmkeydown))], [])*/uint
+{
+    DTN_WMKEYDOWNA = 0xfffffd0b,
+    DTN_WMKEYDOWNW = 0xfffffd18,
+    DTN_WMKEYDOWN  = 0xfffffd18,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtn-format))], [])*/uint
+{
+    DTN_FORMATA      = 0xfffffd0c,
+    DTN_FORMATW      = 0xfffffd19,
+    DTN_FORMAT       = 0xfffffd19,
+    DTN_FORMATQUERYA = 0xfffffd0d,
+    DTN_FORMATQUERYW = 0xfffffd1a,
+    DTN_FORMATQUERY  = 0xfffffd1a,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtn-dropdown))], [])*/uint DTN_DROPDOWN = 0xfffffd0e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/dtn-closeup))], [])*/uint DTN_CLOSEUP = 0xfffffd0f;
+
+enum : uint
+{
+    GDTR_MIN = 0x00000001,
+    GDTR_MAX = 0x00000002,
+}
+
+enum int GDT_ERROR = 0xffffffff;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ipm-clearaddress))], [])*/uint IPM_CLEARADDRESS = 0x00000464;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ipm-setaddress))], [])*/uint IPM_SETADDRESS = 0x00000465;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ipm-getaddress))], [])*/uint IPM_GETADDRESS = 0x00000466;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ipm-setrange))], [])*/uint
+{
+    IPM_SETRANGE = 0x00000467,
+    IPM_SETFOCUS = 0x00000468,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ipm-isblank))], [])*/uint IPM_ISBLANK = 0x00000469;
+
+enum : const(wchar)*
+{
+    WC_IPADDRESSW = "SysIPAddress32",
+    WC_IPADDRESSA = "SysIPAddress32",
+    WC_IPADDRESS  = "SysIPAddress32",
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/ipn-fieldchanged))], [])*/uint IPN_FIELDCHANGED = 0xfffffca4;
+
+enum : const(wchar)*
+{
+    WC_PAGESCROLLERW = "SysPager",
+    WC_PAGESCROLLERA = "SysPager",
+    WC_PAGESCROLLER  = "SysPager",
+}
+
+enum : uint
+{
+    PGS_VERT       = 0x00000000,
+    PGS_HORZ       = 0x00000001,
+    PGS_AUTOSCROLL = 0x00000002,
+}
+
+enum uint PGS_DRAGNDROP = 0x00000004;
+enum uint PGF_INVISIBLE = 0x00000000;
+enum uint PGF_NORMAL = 0x00000001;
+enum uint PGF_GRAYED = 0x00000002;
+enum uint PGF_DEPRESSED = 0x00000004;
+enum uint PGF_HOT = 0x00000008;
+enum uint PGB_TOPORLEFT = 0x00000000;
+enum uint PGB_BOTTOMORRIGHT = 0x00000001;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-setchild))], [])*/uint PGM_SETCHILD = 0x00001401;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-recalcsize))], [])*/uint PGM_RECALCSIZE = 0x00001402;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-forwardmouse))], [])*/uint PGM_FORWARDMOUSE = 0x00001403;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-setbkcolor))], [])*/uint PGM_SETBKCOLOR = 0x00001404;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-getbkcolor))], [])*/uint PGM_GETBKCOLOR = 0x00001405;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-setborder))], [])*/uint PGM_SETBORDER = 0x00001406;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-getborder))], [])*/uint PGM_GETBORDER = 0x00001407;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-setpos))], [])*/uint PGM_SETPOS = 0x00001408;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-getpos))], [])*/uint PGM_GETPOS = 0x00001409;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-setbuttonsize))], [])*/uint PGM_SETBUTTONSIZE = 0x0000140a;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-getbuttonsize))], [])*/uint
+{
+    PGM_GETBUTTONSIZE  = 0x0000140b,
+    PGM_GETBUTTONSTATE = 0x0000140c,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-getdroptarget))], [])*/uint PGM_GETDROPTARGET = 0x00002004;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgm-setscrollinfo))], [])*/uint PGM_SETSCROLLINFO = 0x0000140d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgn-scroll))], [])*/uint PGN_SCROLL = 0xfffffc7b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgn-calcsize))], [])*/uint PGN_CALCSIZE = 0xfffffc7a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/pgn-hotitemchange))], [])*/uint PGN_HOTITEMCHANGE = 0xfffffc79;
+
+enum : const(wchar)*
+{
+    WC_NATIVEFONTCTLW = "NativeFontCtl",
+    WC_NATIVEFONTCTLA = "NativeFontCtl",
+    WC_NATIVEFONTCTL  = "NativeFontCtl",
+}
+
+enum : uint
+{
+    NFS_EDIT   = 0x00000001,
+    NFS_STATIC = 0x00000002,
+}
+
+enum uint NFS_LISTCOMBO = 0x00000004;
+enum uint NFS_BUTTON = 0x00000008;
+
+enum : uint
+{
+    NFS_ALL          = 0x00000010,
+    NFS_USEFONTASSOC = 0x00000020,
+}
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    WC_BUTTONA = "Button",
+    WC_BUTTONW = "Button",
+    WC_BUTTON  = "Button",
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcm-getidealsize))], [])*/uint BCM_GETIDEALSIZE = 0x00001601;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcm-setimagelist))], [])*/uint BCM_SETIMAGELIST = 0x00001602;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcm-getimagelist))], [])*/uint BCM_GETIMAGELIST = 0x00001603;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcm-settextmargin))], [])*/uint BCM_SETTEXTMARGIN = 0x00001604;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcm-gettextmargin))], [])*/uint BCM_GETTEXTMARGIN = 0x00001605;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcn-hotitemchange))], [])*/uint BCN_HOTITEMCHANGE = 0xfffffb1f;
+
+enum : uint
+{
+    BST_HOT            = 0x00000200,
+    BST_DROPDOWNPUSHED = 0x00000400,
+}
+
+enum int BS_SPLITBUTTON = 0x0000000c;
+enum int BS_DEFSPLITBUTTON = 0x0000000d;
+enum int BS_COMMANDLINK = 0x0000000e;
+enum int BS_DEFCOMMANDLINK = 0x0000000f;
+
+enum : uint
+{
+    BCSIF_GLYPH = 0x00000001,
+    BCSIF_IMAGE = 0x00000002,
+    BCSIF_STYLE = 0x00000004,
+    BCSIF_SIZE  = 0x00000008,
+}
+
+enum : uint
+{
+    BCSS_NOSPLIT   = 0x00000001,
+    BCSS_STRETCH   = 0x00000002,
+    BCSS_ALIGNLEFT = 0x00000004,
+}
+
+enum uint BCSS_IMAGE = 0x00000008;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcm-setdropdownstate))], [])*/uint BCM_SETDROPDOWNSTATE = 0x00001606;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcm-setsplitinfo))], [])*/uint BCM_SETSPLITINFO = 0x00001607;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcm-getsplitinfo))], [])*/uint BCM_GETSPLITINFO = 0x00001608;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcm-setnote))], [])*/uint BCM_SETNOTE = 0x00001609;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcm-getnote))], [])*/uint
+{
+    BCM_GETNOTE       = 0x0000160a,
+    BCM_GETNOTELENGTH = 0x0000160b,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcm-setshield))], [])*/uint BCM_SETSHIELD = 0x0000160c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/bcn-dropdown))], [])*/uint BCN_DROPDOWN = 0xfffffb20;
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    WC_STATICA = "Static",
+    WC_STATICW = "Static",
+    WC_STATIC  = "Static",
+}
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    WC_EDITA = "Edit",
+    WC_EDITW = "Edit",
+    WC_EDIT  = "Edit",
+}
+
+enum : int
+{
+    ES_EX_ALLOWEOL_CR = 0x00000001,
+    ES_EX_ALLOWEOL_LF = 0x00000002,
+}
+
+enum int ES_EX_CONVERT_EOL_ON_PASTE = 0x00000004;
+enum int ES_EX_ZOOMABLE = 0x00000010;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setcuebanner))], [])*/uint EM_SETCUEBANNER = 0x00001501;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getcuebanner))], [])*/uint EM_GETCUEBANNER = 0x00001502;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-showballoontip))], [])*/uint EM_SHOWBALLOONTIP = 0x00001503;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-hideballoontip))], [])*/uint EM_HIDEBALLOONTIP = 0x00001504;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-sethilite))], [])*/uint EM_SETHILITE = 0x00001505;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gethilite))], [])*/uint EM_GETHILITE = 0x00001506;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-nosetfocus))], [])*/uint EM_NOSETFOCUS = 0x00001507;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-takefocus))], [])*/uint EM_TAKEFOCUS = 0x00001508;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setextendedstyle))], [])*/uint EM_SETEXTENDEDSTYLE = 0x0000150a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getextendedstyle))], [])*/uint EM_GETEXTENDEDSTYLE = 0x0000150b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setendofline))], [])*/uint EM_SETENDOFLINE = 0x0000150c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getendofline))], [])*/uint EM_GETENDOFLINE = 0x0000150d;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-enablesearchweb))], [])*/uint EM_ENABLESEARCHWEB = 0x0000150e;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-searchweb))], [])*/uint
+{
+    EM_SEARCHWEB     = 0x0000150f,
+    EM_SETCARETINDEX = 0x00001511,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getcaretindex))], [])*/uint EM_GETCARETINDEX = 0x00001512;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-filelinefromchar))], [])*/uint
+{
+    EM_FILELINEFROMCHAR = 0x00001513,
+    EM_FILELINEINDEX    = 0x00001514,
+    EM_FILELINELENGTH   = 0x00001515,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getfileline))], [])*/uint
+{
+    EM_GETFILELINE      = 0x00001516,
+    EM_GETFILELINECOUNT = 0x00001517,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-searchweb))], [])*/uint EN_SEARCHWEB = 0xfffffa10;
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    WC_LISTBOXA = "ListBox",
+    WC_LISTBOXW = "ListBox",
+    WC_LISTBOX  = "ListBox",
+}
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    WC_COMBOBOXA = "ComboBox",
+    WC_COMBOBOXW = "ComboBox",
+    WC_COMBOBOX  = "ComboBox",
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-setminvisible))], [])*/uint CB_SETMINVISIBLE = 0x00001701;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-getminvisible))], [])*/uint CB_GETMINVISIBLE = 0x00001702;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-setcuebanner))], [])*/uint CB_SETCUEBANNER = 0x00001703;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/cb-getcuebanner))], [])*/uint CB_GETCUEBANNER = 0x00001704;
+
+enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
+{
+    WC_SCROLLBARA = "ScrollBar",
+    WC_SCROLLBARW = "ScrollBar",
+    WC_SCROLLBAR  = "ScrollBar",
+}
+
+enum PWSTR TD_WARNING_ICON = PWSTR(0xffff);
+enum PWSTR TD_ERROR_ICON = PWSTR(0xfffe);
+enum PWSTR TD_INFORMATION_ICON = PWSTR(0xfffd);
+enum PWSTR TD_SHIELD_ICON = PWSTR(0xfffc);
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/inputdev/wm-mousehover))], [])*/uint
+{
+    WM_MOUSEHOVER = 0x000002a1,
+    WM_MOUSELEAVE = 0x000002a3,
+}
+
+enum uint HOVER_DEFAULT = 0xffffffff;
+enum int WSB_PROP_MASK = 0x00000fff;
+enum uint FSB_FLAT_MODE = 0x00000002;
+enum uint FSB_ENCARTA_MODE = 0x00000001;
+enum uint FSB_REGULAR_MODE = 0x00000000;
+enum uint ILDRF_IMAGELOWQUALITY = 0x00000001;
+enum uint ILDRF_OVERLAYLOWQUALITY = 0x00000010;
+enum uint ILR_DEFAULT = 0x00000000;
+
+enum : uint
+{
+    ILR_HORIZONTAL_LEFT   = 0x00000000,
+    ILR_HORIZONTAL_CENTER = 0x00000001,
+    ILR_HORIZONTAL_RIGHT  = 0x00000002,
+}
+
+enum : uint
+{
+    ILR_VERTICAL_TOP    = 0x00000000,
+    ILR_VERTICAL_CENTER = 0x00000010,
+    ILR_VERTICAL_BOTTOM = 0x00000020,
+}
+
+enum : uint
+{
+    ILR_SCALE_CLIP        = 0x00000000,
+    ILR_SCALE_ASPECTRATIO = 0x00000100,
+}
+
+enum : uint
+{
+    ILGOS_ALWAYS      = 0x00000000,
+    ILGOS_FROMSTANDBY = 0x00000001,
+}
+
+enum : uint
+{
+    ILFIP_ALWAYS      = 0x00000000,
+    ILFIP_FROMSTANDBY = 0x00000001,
+}
+
+enum : uint
+{
+    ILDI_PURGE       = 0x00000001,
+    ILDI_STANDBY     = 0x00000002,
+    ILDI_RESETACCESS = 0x00000004,
+}
+
+enum uint ILDI_QUERYACCESS = 0x00000008;
+
+enum : uint
+{
+    CCHCCCLASS = 0x00000020,
+    CCHCCDESC  = 0x00000020,
+    CCHCCTEXT  = 0x00000100,
+}
+
+enum uint CCF_NOTEXT = 0x00000001;
+enum uint ctlFirst = 0x00000400;
+enum uint ctlLast = 0x000004ff;
+
+enum : uint
+{
+    psh1    = 0x00000400,
+    psh2    = 0x00000401,
+    psh3    = 0x00000402,
+    psh4    = 0x00000403,
+    psh5    = 0x00000404,
+    psh6    = 0x00000405,
+    psh7    = 0x00000406,
+    psh8    = 0x00000407,
+    psh9    = 0x00000408,
+    psh10   = 0x00000409,
+    psh11   = 0x0000040a,
+    psh12   = 0x0000040b,
+    psh13   = 0x0000040c,
+    psh14   = 0x0000040d,
+    psh15   = 0x0000040e,
+    pshHelp = 0x0000040e,
+    psh16   = 0x0000040f,
+}
+
+enum : uint
+{
+    chx1  = 0x00000410,
+    chx2  = 0x00000411,
+    chx3  = 0x00000412,
+    chx4  = 0x00000413,
+    chx5  = 0x00000414,
+    chx6  = 0x00000415,
+    chx7  = 0x00000416,
+    chx8  = 0x00000417,
+    chx9  = 0x00000418,
+    chx10 = 0x00000419,
+    chx11 = 0x0000041a,
+    chx12 = 0x0000041b,
+    chx13 = 0x0000041c,
+    chx14 = 0x0000041d,
+    chx15 = 0x0000041e,
+    chx16 = 0x0000041f,
+}
+
+enum : uint
+{
+    rad1  = 0x00000420,
+    rad2  = 0x00000421,
+    rad3  = 0x00000422,
+    rad4  = 0x00000423,
+    rad5  = 0x00000424,
+    rad6  = 0x00000425,
+    rad7  = 0x00000426,
+    rad8  = 0x00000427,
+    rad9  = 0x00000428,
+    rad10 = 0x00000429,
+    rad11 = 0x0000042a,
+    rad12 = 0x0000042b,
+    rad13 = 0x0000042c,
+    rad14 = 0x0000042d,
+    rad15 = 0x0000042e,
+    rad16 = 0x0000042f,
+}
+
+enum : uint
+{
+    grp1 = 0x00000430,
+    grp2 = 0x00000431,
+    grp3 = 0x00000432,
+    grp4 = 0x00000433,
+}
+
+enum : uint
+{
+    frm1 = 0x00000434,
+    frm2 = 0x00000435,
+    frm3 = 0x00000436,
+    frm4 = 0x00000437,
+}
+
+enum : uint
+{
+    rct1 = 0x00000438,
+    rct2 = 0x00000439,
+    rct3 = 0x0000043a,
+    rct4 = 0x0000043b,
+}
+
+enum : uint
+{
+    ico1 = 0x0000043c,
+    ico2 = 0x0000043d,
+    ico3 = 0x0000043e,
+    ico4 = 0x0000043f,
+}
+
+enum : uint
+{
+    stc1  = 0x00000440,
+    stc2  = 0x00000441,
+    stc3  = 0x00000442,
+    stc4  = 0x00000443,
+    stc5  = 0x00000444,
+    stc6  = 0x00000445,
+    stc7  = 0x00000446,
+    stc8  = 0x00000447,
+    stc9  = 0x00000448,
+    stc10 = 0x00000449,
+    stc11 = 0x0000044a,
+    stc12 = 0x0000044b,
+    stc13 = 0x0000044c,
+    stc14 = 0x0000044d,
+    stc15 = 0x0000044e,
+    stc16 = 0x0000044f,
+    stc17 = 0x00000450,
+    stc18 = 0x00000451,
+    stc19 = 0x00000452,
+    stc20 = 0x00000453,
+    stc21 = 0x00000454,
+    stc22 = 0x00000455,
+    stc23 = 0x00000456,
+    stc24 = 0x00000457,
+    stc25 = 0x00000458,
+    stc26 = 0x00000459,
+    stc27 = 0x0000045a,
+    stc28 = 0x0000045b,
+    stc29 = 0x0000045c,
+    stc30 = 0x0000045d,
+    stc31 = 0x0000045e,
+    stc32 = 0x0000045f,
+}
+
+enum : uint
+{
+    lst1  = 0x00000460,
+    lst2  = 0x00000461,
+    lst3  = 0x00000462,
+    lst4  = 0x00000463,
+    lst5  = 0x00000464,
+    lst6  = 0x00000465,
+    lst7  = 0x00000466,
+    lst8  = 0x00000467,
+    lst9  = 0x00000468,
+    lst10 = 0x00000469,
+    lst11 = 0x0000046a,
+    lst12 = 0x0000046b,
+    lst13 = 0x0000046c,
+    lst14 = 0x0000046d,
+    lst15 = 0x0000046e,
+    lst16 = 0x0000046f,
+}
+
+enum : uint
+{
+    cmb1  = 0x00000470,
+    cmb2  = 0x00000471,
+    cmb3  = 0x00000472,
+    cmb4  = 0x00000473,
+    cmb5  = 0x00000474,
+    cmb6  = 0x00000475,
+    cmb7  = 0x00000476,
+    cmb8  = 0x00000477,
+    cmb9  = 0x00000478,
+    cmb10 = 0x00000479,
+    cmb11 = 0x0000047a,
+    cmb12 = 0x0000047b,
+    cmb13 = 0x0000047c,
+    cmb14 = 0x0000047d,
+    cmb15 = 0x0000047e,
+    cmb16 = 0x0000047f,
+}
+
+enum : uint
+{
+    edt1  = 0x00000480,
+    edt2  = 0x00000481,
+    edt3  = 0x00000482,
+    edt4  = 0x00000483,
+    edt5  = 0x00000484,
+    edt6  = 0x00000485,
+    edt7  = 0x00000486,
+    edt8  = 0x00000487,
+    edt9  = 0x00000488,
+    edt10 = 0x00000489,
+    edt11 = 0x0000048a,
+    edt12 = 0x0000048b,
+    edt13 = 0x0000048c,
+    edt14 = 0x0000048d,
+    edt15 = 0x0000048e,
+    edt16 = 0x0000048f,
+}
+
+enum : uint
+{
+    scr1 = 0x00000490,
+    scr2 = 0x00000491,
+    scr3 = 0x00000492,
+    scr4 = 0x00000493,
+    scr5 = 0x00000494,
+    scr6 = 0x00000495,
+    scr7 = 0x00000496,
+    scr8 = 0x00000497,
+}
+
+enum uint ctl1 = 0x000004a0;
+enum uint FILEOPENORD = 0x00000600;
+enum uint MULTIFILEOPENORD = 0x00000601;
+enum uint PRINTDLGORD = 0x00000602;
+enum uint PRNSETUPDLGORD = 0x00000603;
+enum uint FINDDLGORD = 0x00000604;
+enum uint REPLACEDLGORD = 0x00000605;
+enum uint FONTDLGORD = 0x00000606;
+
+enum : uint
+{
+    FORMATDLGORD31 = 0x00000607,
+    FORMATDLGORD30 = 0x00000608,
+}
+
+enum uint RUNDLGORD = 0x00000609;
+enum uint PAGESETUPDLGORD = 0x0000060a;
+enum uint NEWFILEOPENORD = 0x0000060b;
+enum uint PRINTDLGEXORD = 0x0000060d;
+enum uint PAGESETUPDLGORDMOTIF = 0x0000060e;
+enum uint COLORMGMTDLGORD = 0x0000060f;
+
+enum : uint
+{
+    NEWFILEOPENV2ORD = 0x00000610,
+    NEWFILEOPENV3ORD = 0x00000611,
+}
+
+enum uint NEWFORMATDLGWITHLINK = 0x00000637;
+enum uint IDC_MANAGE_LINK = 0x00000638;
+enum uint DA_LAST = 0x7fffffff;
+enum int DA_ERR = 0xffffffff;
+enum uint DSA_APPEND = 0x7fffffff;
+enum int DSA_ERR = 0xffffffff;
+
+enum : uint
+{
+    DPAM_SORTED    = 0x00000001,
+    DPAM_NORMAL    = 0x00000002,
+    DPAM_UNION     = 0x00000004,
+    DPAM_INTERSECT = 0x00000008,
+}
+
+enum : uint
+{
+    DPAS_SORTED       = 0x00000001,
+    DPAS_INSERTBEFORE = 0x00000002,
+    DPAS_INSERTAFTER  = 0x00000004,
+}
+
+enum uint DPA_APPEND = 0x7fffffff;
+enum int DPA_ERR = 0xffffffff;
+enum uint MAXPROPPAGES = 0x00000064;
+
+enum : uint
+{
+    PSP_DEFAULT     = 0x00000000,
+    PSP_DLGINDIRECT = 0x00000001,
+}
+
+enum : uint
+{
+    PSP_USEHICON  = 0x00000002,
+    PSP_USEICONID = 0x00000004,
+    PSP_USETITLE  = 0x00000008,
+}
+
+enum uint PSP_RTLREADING = 0x00000010;
+enum uint PSP_HASHELP = 0x00000020;
+
+enum : uint
+{
+    PSP_USEREFPARENT = 0x00000040,
+    PSP_USECALLBACK  = 0x00000080,
+}
+
+enum uint PSP_PREMATURE = 0x00000400;
+enum uint PSP_HIDEHEADER = 0x00000800;
+
+enum : uint
+{
+    PSP_USEHEADERTITLE    = 0x00001000,
+    PSP_USEHEADERSUBTITLE = 0x00002000,
+}
+
+enum uint PSP_USEFUSIONCONTEXT = 0x00004000;
+enum uint PSH_DEFAULT = 0x00000000;
+enum uint PSH_PROPTITLE = 0x00000001;
+
+enum : uint
+{
+    PSH_USEHICON  = 0x00000002,
+    PSH_USEICONID = 0x00000004,
+}
+
+enum uint PSH_PROPSHEETPAGE = 0x00000008;
+
+enum : uint
+{
+    PSH_WIZARDHASFINISH = 0x00000010,
+    PSH_WIZARD          = 0x00000020,
+}
+
+enum uint PSH_USEPSTARTPAGE = 0x00000040;
+enum uint PSH_NOAPPLYNOW = 0x00000080;
+enum uint PSH_USECALLBACK = 0x00000100;
+enum uint PSH_HASHELP = 0x00000200;
+enum uint PSH_MODELESS = 0x00000400;
+enum uint PSH_RTLREADING = 0x00000800;
+
+enum : uint
+{
+    PSH_WIZARDCONTEXTHELP = 0x00001000,
+    PSH_WIZARD97          = 0x00002000,
+    PSH_WATERMARK         = 0x00008000,
+}
+
+enum : uint
+{
+    PSH_USEHBMWATERMARK = 0x00010000,
+    PSH_USEHPLWATERMARK = 0x00020000,
+}
+
+enum uint PSH_STRETCHWATERMARK = 0x00040000;
+enum uint PSH_HEADER = 0x00080000;
+
+enum : uint
+{
+    PSH_USEHBMHEADER = 0x00100000,
+    PSH_USEPAGELANG  = 0x00200000,
+}
+
+enum uint PSH_WIZARD_LITE = 0x00400000;
+enum uint PSH_NOCONTEXTHELP = 0x02000000;
+enum uint PSH_AEROWIZARD = 0x00004000;
+enum uint PSH_RESIZABLE = 0x04000000;
+enum uint PSH_HEADERBITMAP = 0x08000000;
+enum uint PSH_NOMARGIN = 0x10000000;
+enum uint PSCB_INITIALIZED = 0x00000001;
+enum uint PSCB_PRECREATE = 0x00000002;
+enum uint PSCB_BUTTONPRESSED = 0x00000003;
+
+enum : uint
+{
+    PSN_FIRST     = 0xffffff38,
+    PSN_LAST      = 0xfffffed5,
+    PSN_SETACTIVE = 0xffffff38,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psn-killactive))], [])*/uint PSN_KILLACTIVE = 0xffffff37;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psn-apply))], [])*/uint
+{
+    PSN_APPLY     = 0xffffff36,
+    PSN_RESET     = 0xffffff35,
+    PSN_HELP      = 0xffffff33,
+    PSN_WIZBACK   = 0xffffff32,
+    PSN_WIZNEXT   = 0xffffff31,
+    PSN_WIZFINISH = 0xffffff30,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psn-querycancel))], [])*/uint PSN_QUERYCANCEL = 0xffffff2f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psn-getobject))], [])*/uint PSN_GETOBJECT = 0xffffff2e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psn-translateaccelerator))], [])*/uint PSN_TRANSLATEACCELERATOR = 0xffffff2c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psn-queryinitialfocus))], [])*/uint PSN_QUERYINITIALFOCUS = 0xffffff2b;
+
+enum : uint
+{
+    PSNRET_NOERROR              = 0x00000000,
+    PSNRET_INVALID              = 0x00000001,
+    PSNRET_INVALID_NOCHANGEPAGE = 0x00000002,
+}
+
+enum uint PSNRET_MESSAGEHANDLED = 0x00000003;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-setcursel))], [])*/uint PSM_SETCURSEL = 0x00000465;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-removepage))], [])*/uint PSM_REMOVEPAGE = 0x00000466;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-addpage))], [])*/uint PSM_ADDPAGE = 0x00000467;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-changed))], [])*/uint PSM_CHANGED = 0x00000468;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-restartwindows))], [])*/uint PSM_RESTARTWINDOWS = 0x00000469;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-rebootsystem))], [])*/uint PSM_REBOOTSYSTEM = 0x0000046a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-canceltoclose))], [])*/uint PSM_CANCELTOCLOSE = 0x0000046b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-querysiblings))], [])*/uint PSM_QUERYSIBLINGS = 0x0000046c;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-unchanged))], [])*/uint PSM_UNCHANGED = 0x0000046d;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-apply))], [])*/uint
+{
+    PSM_APPLY         = 0x0000046e,
+    PSM_SETTITLEA     = 0x0000046f,
+    PSM_SETTITLEW     = 0x00000478,
+    PSM_SETTITLE      = 0x00000478,
+    PSM_SETWIZBUTTONS = 0x00000470,
+}
+
+enum : uint
+{
+    PSWIZB_BACK           = 0x00000001,
+    PSWIZB_NEXT           = 0x00000002,
+    PSWIZB_FINISH         = 0x00000004,
+    PSWIZB_DISABLEDFINISH = 0x00000008,
+}
+
+enum uint PSWIZBF_ELEVATIONREQUIRED = 0x00000001;
+enum uint PSWIZB_CANCEL = 0x00000010;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-pressbutton))], [])*/uint PSM_PRESSBUTTON = 0x00000471;
+
+enum : uint
+{
+    PSBTN_BACK     = 0x00000000,
+    PSBTN_NEXT     = 0x00000001,
+    PSBTN_FINISH   = 0x00000002,
+    PSBTN_OK       = 0x00000003,
+    PSBTN_APPLYNOW = 0x00000004,
+    PSBTN_CANCEL   = 0x00000005,
+    PSBTN_HELP     = 0x00000006,
+    PSBTN_MAX      = 0x00000006,
+}
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-setcurselid))], [])*/uint
+{
+    PSM_SETCURSELID    = 0x00000472,
+    PSM_SETFINISHTEXTA = 0x00000473,
+    PSM_SETFINISHTEXTW = 0x00000479,
+    PSM_SETFINISHTEXT  = 0x00000479,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-gettabcontrol))], [])*/uint PSM_GETTABCONTROL = 0x00000474;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-isdialogmessage))], [])*/uint PSM_ISDIALOGMESSAGE = 0x00000475;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-getcurrentpagehwnd))], [])*/uint PSM_GETCURRENTPAGEHWND = 0x00000476;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-insertpage))], [])*/uint PSM_INSERTPAGE = 0x00000477;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-setheadertitle))], [])*/uint
+{
+    PSM_SETHEADERTITLEA    = 0x0000047d,
+    PSM_SETHEADERTITLEW    = 0x0000047e,
+    PSM_SETHEADERTITLE     = 0x0000047e,
+    PSM_SETHEADERSUBTITLEA = 0x0000047f,
+    PSM_SETHEADERSUBTITLEW = 0x00000480,
+    PSM_SETHEADERSUBTITLE  = 0x00000480,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-hwndtoindex))], [])*/uint PSM_HWNDTOINDEX = 0x00000481;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-indextohwnd))], [])*/uint PSM_INDEXTOHWND = 0x00000482;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-pagetoindex))], [])*/uint PSM_PAGETOINDEX = 0x00000483;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-indextopage))], [])*/uint PSM_INDEXTOPAGE = 0x00000484;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-idtoindex))], [])*/uint PSM_IDTOINDEX = 0x00000485;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-indextoid))], [])*/uint PSM_INDEXTOID = 0x00000486;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-getresult))], [])*/uint PSM_GETRESULT = 0x00000487;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-recalcpagesizes))], [])*/uint PSM_RECALCPAGESIZES = 0x00000488;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-setnexttext))], [])*/uint
+{
+    PSM_SETNEXTTEXTW = 0x00000489,
+    PSM_SETNEXTTEXT  = 0x00000489,
+}
+
+enum : uint
+{
+    PSWIZB_SHOW    = 0x00000000,
+    PSWIZB_RESTORE = 0x00000001,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-showwizbuttons))], [])*/uint PSM_SHOWWIZBUTTONS = 0x0000048a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-enablewizbuttons))], [])*/uint PSM_ENABLEWIZBUTTONS = 0x0000048b;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/psm-setbuttontext))], [])*/uint
+{
+    PSM_SETBUTTONTEXTW = 0x0000048c,
+    PSM_SETBUTTONTEXT  = 0x0000048c,
+}
+
+enum uint ID_PSRESTARTWINDOWS = 0x00000002;
+
+enum : uint
+{
+    WIZ_CXDLG  = 0x00000114,
+    WIZ_CYDLG  = 0x0000008c,
+    WIZ_CXBMP  = 0x00000050,
+    WIZ_BODYX  = 0x0000005c,
+    WIZ_BODYCX = 0x000000b8,
+}
+
+enum : uint
+{
+    PROP_SM_CXDLG = 0x000000d4,
+    PROP_SM_CYDLG = 0x000000bc,
+}
+
+enum : uint
+{
+    PROP_MED_CXDLG = 0x000000e3,
+    PROP_MED_CYDLG = 0x000000d7,
+}
+
+enum : uint
+{
+    PROP_LG_CXDLG = 0x000000fc,
+    PROP_LG_CYDLG = 0x000000da,
+}
+
+enum : uint
+{
+    MAX_THEMECOLOR = 0x00000040,
+    MAX_THEMESIZE  = 0x00000040,
+}
+
+enum uint DTBG_CLIPRECT = 0x00000001;
+enum uint DTBG_DRAWSOLID = 0x00000002;
+
+enum : uint
+{
+    DTBG_OMITBORDER  = 0x00000004,
+    DTBG_OMITCONTENT = 0x00000008,
+}
+
+enum uint DTBG_COMPUTINGREGION = 0x00000010;
+enum uint DTBG_MIRRORDC = 0x00000020;
+enum uint DTBG_NOMIRROR = 0x00000040;
+enum uint DTT_GRAYED = 0x00000001;
+enum uint DTT_FLAGS2VALIDBITS = 0x00000001;
+enum uint MAX_INTLIST_COUNT = 0x00000192;
+
+enum : uint
+{
+    ETDT_DISABLE                 = 0x00000001,
+    ETDT_ENABLE                  = 0x00000002,
+    ETDT_USETABTEXTURE           = 0x00000004,
+    ETDT_USEAEROWIZARDTABTEXTURE = 0x00000008,
+}
+
+enum : const(wchar)*
+{
+    SZ_THDOCPROP_DISPLAYNAME   = "DisplayName",
+    SZ_THDOCPROP_CANONICALNAME = "ThemeName",
+    SZ_THDOCPROP_TOOLTIP       = "ToolTip",
+    SZ_THDOCPROP_AUTHOR        = "author",
+}
+
+enum : uint
+{
+    WTNCA_NODRAWCAPTION = 0x00000001,
+    WTNCA_NODRAWICON    = 0x00000002,
+    WTNCA_NOSYSMENU     = 0x00000004,
+    WTNCA_NOMIRRORHELP  = 0x00000008,
+}
+
+enum : uint
+{
+    TMTVS_RESERVEDLOW  = 0x000186a0,
+    TMTVS_RESERVEDHIGH = 0x00004e1f,
+}
+
+enum : const(wchar)*
+{
+    VSCLASS_AEROWIZARDSTYLE     = "AEROWIZARDSTYLE",
+    VSCLASS_AEROWIZARD          = "AEROWIZARD",
+    VSCLASS_BUTTONSTYLE         = "BUTTONSTYLE",
+    VSCLASS_BUTTON              = "BUTTON",
+    VSCLASS_COMBOBOXSTYLE       = "COMBOBOXSTYLE",
+    VSCLASS_COMBOBOX            = "COMBOBOX",
+    VSCLASS_COMMUNICATIONSSTYLE = "COMMUNICATIONSSTYLE",
+    VSCLASS_COMMUNICATIONS      = "COMMUNICATIONS",
+    VSCLASS_CONTROLPANELSTYLE   = "CONTROLPANELSTYLE",
+    VSCLASS_CONTROLPANEL        = "CONTROLPANEL",
+}
+
+enum : const(wchar)*
+{
+    VSCLASS_DATEPICKERSTYLE      = "DATEPICKERSTYLE",
+    VSCLASS_DATEPICKER           = "DATEPICKER",
+    VSCLASS_DRAGDROPSTYLE        = "DRAGDROPSTYLE",
+    VSCLASS_DRAGDROP             = "DRAGDROP",
+    VSCLASS_EDITSTYLE            = "EDITSTYLE",
+    VSCLASS_EDIT                 = "EDIT",
+    VSCLASS_EXPLORERBARSTYLE     = "EXPLORERBARSTYLE",
+    VSCLASS_EXPLORERBAR          = "EXPLORERBAR",
+    VSCLASS_FLYOUTSTYLE          = "FLYOUTSTYLE",
+    VSCLASS_FLYOUT               = "FLYOUT",
+    VSCLASS_HEADERSTYLE          = "HEADERSTYLE",
+    VSCLASS_HEADER               = "HEADER",
+    VSCLASS_LISTBOXSTYLE         = "LISTBOXSTYLE",
+    VSCLASS_LISTBOX              = "LISTBOX",
+    VSCLASS_LISTVIEWSTYLE        = "LISTVIEWSTYLE",
+    VSCLASS_LISTVIEW             = "LISTVIEW",
+    VSCLASS_MENUSTYLE            = "MENUSTYLE",
+    VSCLASS_MENU                 = "MENU",
+    VSCLASS_NAVIGATION           = "NAVIGATION",
+    VSCLASS_PROGRESSSTYLE        = "PROGRESSSTYLE",
+    VSCLASS_PROGRESS             = "PROGRESS",
+    VSCLASS_REBARSTYLE           = "REBARSTYLE",
+    VSCLASS_REBAR                = "REBAR",
+    VSCLASS_SCROLLBARSTYLE       = "SCROLLBARSTYLE",
+    VSCLASS_SCROLLBAR            = "SCROLLBAR",
+    VSCLASS_SPINSTYLE            = "SPINSTYLE",
+    VSCLASS_SPIN                 = "SPIN",
+    VSCLASS_STATUSSTYLE          = "STATUSSTYLE",
+    VSCLASS_STATUS               = "STATUS",
+    VSCLASS_TABSTYLE             = "TABSTYLE",
+    VSCLASS_TAB                  = "TAB",
+    VSCLASS_TASKDIALOGSTYLE      = "TASKDIALOGSTYLE",
+    VSCLASS_TASKDIALOG           = "TASKDIALOG",
+    VSCLASS_TEXTSTYLE            = "TEXTSTYLE",
+    VSCLASS_TOOLBARSTYLE         = "TOOLBARSTYLE",
+    VSCLASS_TOOLBAR              = "TOOLBAR",
+    VSCLASS_TOOLTIPSTYLE         = "TOOLTIPSTYLE",
+    VSCLASS_TOOLTIP              = "TOOLTIP",
+    VSCLASS_TRACKBARSTYLE        = "TRACKBARSTYLE",
+    VSCLASS_TRACKBAR             = "TRACKBAR",
+    VSCLASS_TREEVIEWSTYLE        = "TREEVIEWSTYLE",
+    VSCLASS_TREEVIEW             = "TREEVIEW",
+    VSCLASS_USERTILE             = "USERTILE",
+    VSCLASS_TEXTSELECTIONGRIPPER = "TEXTSELECTIONGRIPPER",
+}
+
+enum : const(wchar)*
+{
+    VSCLASS_WINDOWSTYLE = "WINDOWSTYLE",
+    VSCLASS_WINDOW      = "WINDOW",
+    VSCLASS_LINK        = "LINK",
+    VSCLASS_EMPTYMARKUP = "EMPTYMARKUP",
+    VSCLASS_STATIC      = "STATIC",
+    VSCLASS_PAGE        = "PAGE",
+    VSCLASS_MONTHCAL    = "MONTHCAL",
+    VSCLASS_CLOCK       = "CLOCK",
+    VSCLASS_TRAYNOTIFY  = "TRAYNOTIFY",
+    VSCLASS_TASKBAR     = "TASKBAR",
+    VSCLASS_TASKBAND    = "TASKBAND",
+    VSCLASS_STARTPANEL  = "STARTPANEL",
+    VSCLASS_MENUBAND    = "MENUBAND",
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getsel))], [])*/uint EM_GETSEL = 0x000000b0;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setsel))], [])*/uint EM_SETSEL = 0x000000b1;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getrect))], [])*/uint EM_GETRECT = 0x000000b2;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setrect))], [])*/uint
+{
+    EM_SETRECT   = 0x000000b3,
+    EM_SETRECTNP = 0x000000b4,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-scroll))], [])*/uint EM_SCROLL = 0x000000b5;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-linescroll))], [])*/uint EM_LINESCROLL = 0x000000b6;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getmodify))], [])*/uint EM_GETMODIFY = 0x000000b8;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setmodify))], [])*/uint EM_SETMODIFY = 0x000000b9;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getlinecount))], [])*/uint EM_GETLINECOUNT = 0x000000ba;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-lineindex))], [])*/uint EM_LINEINDEX = 0x000000bb;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-sethandle))], [])*/uint EM_SETHANDLE = 0x000000bc;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gethandle))], [])*/uint
+{
+    EM_GETHANDLE = 0x000000bd,
+    EM_GETTHUMB  = 0x000000be,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-linelength))], [])*/uint EM_LINELENGTH = 0x000000c1;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-replacesel))], [])*/uint EM_REPLACESEL = 0x000000c2;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getline))], [])*/uint EM_GETLINE = 0x000000c4;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-limittext))], [])*/uint EM_LIMITTEXT = 0x000000c5;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-canundo))], [])*/uint EM_CANUNDO = 0x000000c6;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-undo))], [])*/uint
+{
+    EM_UNDO     = 0x000000c7,
+    EM_FMTLINES = 0x000000c8,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-linefromchar))], [])*/uint EM_LINEFROMCHAR = 0x000000c9;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settabstops))], [])*/uint
+{
+    EM_SETTABSTOPS     = 0x000000cb,
+    EM_SETPASSWORDCHAR = 0x000000cc,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-emptyundobuffer))], [])*/uint EM_EMPTYUNDOBUFFER = 0x000000cd;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getfirstvisibleline))], [])*/uint EM_GETFIRSTVISIBLELINE = 0x000000ce;
+
+enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setreadonly))], [])*/uint
+{
+    EM_SETREADONLY      = 0x000000cf,
+    EM_SETWORDBREAKPROC = 0x000000d0,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getwordbreakproc))], [])*/uint EM_GETWORDBREAKPROC = 0x000000d1;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getpasswordchar))], [])*/uint EM_GETPASSWORDCHAR = 0x000000d2;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setmargins))], [])*/uint EM_SETMARGINS = 0x000000d3;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getmargins))], [])*/uint EM_GETMARGINS = 0x000000d4;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setimestatus))], [])*/uint EM_SETIMESTATUS = 0x000000d8;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimestatus))], [])*/uint EM_GETIMESTATUS = 0x000000d9;
+enum uint EM_ENABLEFEATURE = 0x000000da;
+
+// Callbacks
+
+//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
+alias LPFNPSPCALLBACKA = uint function(HWND hwnd, PSPCB_MESSAGE uMsg, PROPSHEETPAGEA* ppsp);
+//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+alias LPFNPSPCALLBACKW = uint function(HWND hwnd, PSPCB_MESSAGE uMsg, PROPSHEETPAGEW* ppsp);
+alias PFNPROPSHEETCALLBACK = int function(HWND param0, uint param1, LPARAM param2);
+alias LPFNSVADDPROPSHEETPAGE = BOOL function(HPROPSHEETPAGE param0, LPARAM param1);
+alias LPFNADDPROPSHEETPAGES = BOOL function(void* param0, LPFNSVADDPROPSHEETPAGE param1, LPARAM param2);
+alias PFNLVCOMPARE = int function(LPARAM param0, LPARAM param1, LPARAM param2);
+alias PFNLVGROUPCOMPARE = int function(int param0, int param1, void* param2);
+alias PFNTVCOMPARE = int function(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
+alias PFTASKDIALOGCALLBACK = HRESULT function(HWND hwnd, 
+                                              /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TASKDIALOG_NOTIFICATIONS))], [])*/uint msg, 
+                                              WPARAM wParam, LPARAM lParam, ptrdiff_t lpRefData);
+alias PFNDAENUMCALLBACK = int function(void* p, void* pData);
+alias PFNDAENUMCALLBACKCONST = int function(const(void)* p, void* pData);
+alias PFNDACOMPARE = int function(void* p1, void* p2, LPARAM lParam);
+alias PFNDACOMPARECONST = int function(const(void)* p1, const(void)* p2, LPARAM lParam);
+alias PFNDPASTREAM = HRESULT function(DPASTREAMINFO* pinfo, IStream pstream, void* pvInstData);
+alias PFNDPAMERGE = void* function(DPAMM_MESSAGE uMsg, void* pvDest, void* pvSrc, LPARAM lParam);
+alias PFNDPAMERGECONST = void* function(DPAMM_MESSAGE uMsg, const(void)* pvDest, const(void)* pvSrc, LPARAM lParam);
+alias DTT_CALLBACK_PROC = int function(HDC hdc, PWSTR pszText, int cchText, RECT* prc, uint dwFlags, LPARAM lParam);
+//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
+alias LPFNCCSTYLEA = BOOL function(HWND hwndParent, CCSTYLEA* pccs);
+//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+alias LPFNCCSTYLEW = BOOL function(HWND hwndParent, CCSTYLEW* pccs);
+//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
+alias LPFNCCSIZETOTEXTA = int function(uint flStyle, uint flExtStyle, HFONT hfont, PSTR pszText);
+//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+alias LPFNCCSIZETOTEXTW = int function(uint flStyle, uint flExtStyle, HFONT hfont, PWSTR pszText);
+//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
+alias LPFNCCINFOA = uint function(CCINFOA* acci);
+//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+alias LPFNCCINFOW = uint function(CCINFOW* acci);
+//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
+alias EDITWORDBREAKPROCA = int function(PSTR lpch, int ichCurrent, int cch, WORD_BREAK_ACTION code);
+//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+alias EDITWORDBREAKPROCW = int function(PWSTR lpch, int ichCurrent, int cch, WORD_BREAK_ACTION code);
+
+// Structs
+
+
+@RAIIFree!DestroyPropertySheetPage
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HPROPSHEETPAGE
+{
+    void* Value;
+}
+
+@RAIIFree!ImageList_Destroy
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HIMAGELIST
+{
+    ptrdiff_t Value;
+}
+
+@RAIIFree!CloseThemeData
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HTHEME
+{
+    ptrdiff_t Value;
+}
+
+struct HTREEITEM
+{
+    ptrdiff_t Value;
+}
+
+@RAIIFree!DSA_Destroy
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HDSA
+{
+    ptrdiff_t Value;
+}
+
+@RAIIFree!DPA_Destroy
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
+//STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
+struct HDPA
+{
+    ptrdiff_t Value;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbbutton))], [])
+//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
+struct TBBUTTON
+{
+    int       iBitmap;
+    int       idCommand;
+    ubyte     fsState;
+    ubyte     fsStyle;
+    ubyte[6]  bReserved;
+    size_t    dwData;
+    ptrdiff_t iString;
+}
+
+struct PROPSHEETPAGEA_V1
+{
+    uint                 dwSize;
+    uint                 dwFlags;
+    HINSTANCE            hInstance;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    const(PSTR)          pszTitle;
+    DLGPROC              pfnDlgProc;
+    LPARAM               lParam;
+    LPFNPSPCALLBACKA     pfnCallback;
+    uint*                pcRefParent;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prsht/ns-prsht-propsheetpagea_v2))], [])
+struct PROPSHEETPAGEA_V2
+{
+    uint                 dwSize;
+    uint                 dwFlags;
+    HINSTANCE            hInstance;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    const(PSTR)          pszTitle;
+    DLGPROC              pfnDlgProc;
+    LPARAM               lParam;
+    LPFNPSPCALLBACKA     pfnCallback;
+    uint*                pcRefParent;
+    const(PSTR)          pszHeaderTitle;
+    const(PSTR)          pszHeaderSubTitle;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prsht/ns-prsht-propsheetpagea_v3))], [])
+struct PROPSHEETPAGEA_V3
+{
+    uint                 dwSize;
+    uint                 dwFlags;
+    HINSTANCE            hInstance;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    const(PSTR)          pszTitle;
+    DLGPROC              pfnDlgProc;
+    LPARAM               lParam;
+    LPFNPSPCALLBACKA     pfnCallback;
+    uint*                pcRefParent;
+    const(PSTR)          pszHeaderTitle;
+    const(PSTR)          pszHeaderSubTitle;
+    HANDLE               hActCtx;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+struct PROPSHEETPAGEA
+{
+    uint                 dwSize;
+    uint                 dwFlags;
+    HINSTANCE            hInstance;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    const(PSTR)          pszTitle;
+    DLGPROC              pfnDlgProc;
+    LPARAM               lParam;
+    LPFNPSPCALLBACKA     pfnCallback;
+    uint*                pcRefParent;
+    const(PSTR)          pszHeaderTitle;
+    const(PSTR)          pszHeaderSubTitle;
+    HANDLE               hActCtx;
+    _Anonymous3_e__Union Anonymous3;
+}
+
+struct PROPSHEETPAGEW_V1
+{
+    uint                 dwSize;
+    uint                 dwFlags;
+    HINSTANCE            hInstance;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    const(PWSTR)         pszTitle;
+    DLGPROC              pfnDlgProc;
+    LPARAM               lParam;
+    LPFNPSPCALLBACKW     pfnCallback;
+    uint*                pcRefParent;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prsht/ns-prsht-propsheetpagew_v2))], [])
+struct PROPSHEETPAGEW_V2
+{
+    uint                 dwSize;
+    uint                 dwFlags;
+    HINSTANCE            hInstance;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    const(PWSTR)         pszTitle;
+    DLGPROC              pfnDlgProc;
+    LPARAM               lParam;
+    LPFNPSPCALLBACKW     pfnCallback;
+    uint*                pcRefParent;
+    const(PWSTR)         pszHeaderTitle;
+    const(PWSTR)         pszHeaderSubTitle;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prsht/ns-prsht-propsheetpagew_v3))], [])
+struct PROPSHEETPAGEW_V3
+{
+    uint                 dwSize;
+    uint                 dwFlags;
+    HINSTANCE            hInstance;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    const(PWSTR)         pszTitle;
+    DLGPROC              pfnDlgProc;
+    LPARAM               lParam;
+    LPFNPSPCALLBACKW     pfnCallback;
+    uint*                pcRefParent;
+    const(PWSTR)         pszHeaderTitle;
+    const(PWSTR)         pszHeaderSubTitle;
+    HANDLE               hActCtx;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+struct PROPSHEETPAGEW
+{
+    uint                 dwSize;
+    uint                 dwFlags;
+    HINSTANCE            hInstance;
+    _Anonymous1_e__Union Anonymous1;
+    _Anonymous2_e__Union Anonymous2;
+    const(PWSTR)         pszTitle;
+    DLGPROC              pfnDlgProc;
+    LPARAM               lParam;
+    LPFNPSPCALLBACKW     pfnCallback;
+    uint*                pcRefParent;
+    const(PWSTR)         pszHeaderTitle;
+    const(PWSTR)         pszHeaderSubTitle;
+    HANDLE               hActCtx;
+    _Anonymous3_e__Union Anonymous3;
+}
+
+struct PROPSHEETHEADERA_V1
+{
+    uint                 dwSize;
+    uint                 dwFlags;
+    HWND                 hwndParent;
+    HINSTANCE            hInstance;
+    _Anonymous1_e__Union Anonymous1;
+    const(PSTR)          pszCaption;
+    uint                 nPages;
+    _Anonymous2_e__Union Anonymous2;
+    _Anonymous3_e__Union Anonymous3;
+    PFNPROPSHEETCALLBACK pfnCallback;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prsht/ns-prsht-propsheetheadera_v2))], [])
+struct PROPSHEETHEADERA_V2
+{
+    uint                 dwSize;
+    uint                 dwFlags;
+    HWND                 hwndParent;
+    HINSTANCE            hInstance;
+    _Anonymous1_e__Union Anonymous1;
+    const(PSTR)          pszCaption;
+    uint                 nPages;
+    _Anonymous2_e__Union Anonymous2;
+    _Anonymous3_e__Union Anonymous3;
+    PFNPROPSHEETCALLBACK pfnCallback;
+    _Anonymous4_e__Union Anonymous4;
+    HPALETTE             hplWatermark;
+    _Anonymous5_e__Union Anonymous5;
+}
+
+struct PROPSHEETHEADERW_V1
+{
+    uint                 dwSize;
+    uint                 dwFlags;
+    HWND                 hwndParent;
+    HINSTANCE            hInstance;
+    _Anonymous1_e__Union Anonymous1;
+    const(PWSTR)         pszCaption;
+    uint                 nPages;
+    _Anonymous2_e__Union Anonymous2;
+    _Anonymous3_e__Union Anonymous3;
+    PFNPROPSHEETCALLBACK pfnCallback;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prsht/ns-prsht-propsheetheaderw_v2))], [])
+struct PROPSHEETHEADERW_V2
+{
+    uint                 dwSize;
+    uint                 dwFlags;
+    HWND                 hwndParent;
+    HINSTANCE            hInstance;
+    _Anonymous1_e__Union Anonymous1;
+    const(PWSTR)         pszCaption;
+    uint                 nPages;
+    _Anonymous2_e__Union Anonymous2;
+    _Anonymous3_e__Union Anonymous3;
+    PFNPROPSHEETCALLBACK pfnCallback;
+    _Anonymous4_e__Union Anonymous4;
+    HPALETTE             hplWatermark;
+    _Anonymous5_e__Union Anonymous5;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prsht/ns-prsht-pshnotify))], [])
+struct PSHNOTIFY
+{
+    NMHDR  hdr;
+    LPARAM lParam;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-initcommoncontrolsex))], [])
+struct INITCOMMONCONTROLSEX
+{
+    uint dwSize;
+    INITCOMMONCONTROLSEX_ICC dwICC;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-colorscheme))], [])
+struct COLORSCHEME
+{
+    uint     dwSize;
+    COLORREF clrBtnHighlight;
+    COLORREF clrBtnShadow;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtooltipscreated))], [])
+struct NMTOOLTIPSCREATED
+{
+    NMHDR hdr;
+    HWND  hwndToolTips;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmmouse))], [])
+struct NMMOUSE
+{
+    NMHDR  hdr;
+    size_t dwItemSpec;
+    size_t dwItemData;
+    POINT  pt;
+    LPARAM dwHitInfo;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmobjectnotify))], [])
+struct NMOBJECTNOTIFY
+{
+    NMHDR        hdr;
+    int          iItem;
+    const(GUID)* piid;
+    void*        pObject;
+    HRESULT      hResult;
+    uint         dwFlags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmkey))], [])
+struct NMKEY
+{
+    NMHDR hdr;
+    uint  nVKey;
+    uint  uFlags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmchar))], [])
+struct NMCHAR
+{
+    NMHDR hdr;
+    uint  ch;
+    uint  dwItemPrev;
+    uint  dwItemNext;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcustomtext))], [])
+struct NMCUSTOMTEXT
+{
+    NMHDR        hdr;
+    HDC          hDC;
+    const(PWSTR) lpString;
+    int          nCount;
+    RECT*        lpRect;
+    uint         uFormat;
+    BOOL         fLink;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcustomdraw))], [])
+struct NMCUSTOMDRAW
+{
+    NMHDR  hdr;
+    NMCUSTOMDRAW_DRAW_STAGE dwDrawStage;
+    HDC    hdc;
+    RECT   rc;
+    size_t dwItemSpec;
+    NMCUSTOMDRAW_DRAW_STATE_FLAGS uItemState;
+    LPARAM lItemlParam;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmttcustomdraw))], [])
+struct NMTTCUSTOMDRAW
+{
+    NMCUSTOMDRAW nmcd;
+    uint         uDrawFlags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcustomsplitrectinfo))], [])
+struct NMCUSTOMSPLITRECTINFO
+{
+    NMHDR hdr;
+    RECT  rcClient;
+    RECT  rcButton;
+    RECT  rcSplit;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-imagelistdrawparams))], [])
+struct IMAGELISTDRAWPARAMS
+{
+    uint       cbSize;
+    HIMAGELIST himl;
+    int        i;
+    HDC        hdcDst;
+    int        x;
+    int        y;
+    int        cx;
+    int        cy;
+    int        xBitmap;
+    int        yBitmap;
+    COLORREF   rgbBk;
+    COLORREF   rgbFg;
+    uint       fStyle;
+    uint       dwRop;
+    uint       fState;
+    uint       Frame;
+    COLORREF   crEffect;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-imageinfo))], [])
+struct IMAGEINFO
+{
+    HBITMAP hbmImage;
+    HBITMAP hbmMask;
+    int     Unused1;
+    int     Unused2;
+    RECT    rcImage;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-hd_textfiltera))], [])
+struct HD_TEXTFILTERA
+{
+    PSTR pszText;
+    int  cchTextMax;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-hd_textfilterw))], [])
+struct HD_TEXTFILTERW
+{
+    PWSTR pszText;
+    int   cchTextMax;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-hditema))], [])
+struct HDITEMA
+{
+    HDI_MASK mask;
+    int      cxy;
+    PSTR     pszText;
+    HBITMAP  hbm;
+    int      cchTextMax;
+    HEADER_CONTROL_FORMAT_FLAGS fmt;
+    LPARAM   lParam;
+    int      iImage;
+    int      iOrder;
+    HEADER_CONTROL_FORMAT_TYPE type;
+    void*    pvFilter;
+    HEADER_CONTROL_FORMAT_STATE state;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-hditemw))], [])
+struct HDITEMW
+{
+    HDI_MASK mask;
+    int      cxy;
+    PWSTR    pszText;
+    HBITMAP  hbm;
+    int      cchTextMax;
+    HEADER_CONTROL_FORMAT_FLAGS fmt;
+    LPARAM   lParam;
+    int      iImage;
+    int      iOrder;
+    HEADER_CONTROL_FORMAT_TYPE type;
+    void*    pvFilter;
+    HEADER_CONTROL_FORMAT_STATE state;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-hdlayout))], [])
+struct HDLAYOUT
+{
+    RECT*      prc;
+    WINDOWPOS* pwpos;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-hdhittestinfo))], [])
+struct HDHITTESTINFO
+{
+    POINT pt;
+    HEADER_HITTEST_INFO_FLAGS flags;
+    int   iItem;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmheadera))], [])
+struct NMHEADERA
+{
+    NMHDR    hdr;
+    int      iItem;
+    HEADER_CONTROL_NOTIFICATION_BUTTON iButton;
+    HDITEMA* pitem;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmheaderw))], [])
+struct NMHEADERW
+{
+    NMHDR    hdr;
+    int      iItem;
+    HEADER_CONTROL_NOTIFICATION_BUTTON iButton;
+    HDITEMW* pitem;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmhddispinfow))], [])
+struct NMHDDISPINFOW
+{
+    NMHDR    hdr;
+    int      iItem;
+    HDI_MASK mask;
+    PWSTR    pszText;
+    int      cchTextMax;
+    int      iImage;
+    LPARAM   lParam;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmhddispinfoa))], [])
+struct NMHDDISPINFOA
+{
+    NMHDR    hdr;
+    int      iItem;
+    HDI_MASK mask;
+    PSTR     pszText;
+    int      cchTextMax;
+    int      iImage;
+    LPARAM   lParam;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmhdfilterbtnclick))], [])
+struct NMHDFILTERBTNCLICK
+{
+    NMHDR hdr;
+    int   iItem;
+    RECT  rc;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbbutton))], [])
+//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
+struct TBBUTTON
+{
+    int       iBitmap;
+    int       idCommand;
+    ubyte     fsState;
+    ubyte     fsStyle;
+    ubyte[2]  bReserved;
+    size_t    dwData;
+    ptrdiff_t iString;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-colormap))], [])
+struct COLORMAP
+{
+    COLORREF from;
+    COLORREF to;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtbcustomdraw))], [])
+struct NMTBCUSTOMDRAW
+{
+    NMCUSTOMDRAW nmcd;
+    HBRUSH       hbrMonoDither;
+    HBRUSH       hbrLines;
+    HPEN         hpenLines;
+    COLORREF     clrText;
+    COLORREF     clrMark;
+    COLORREF     clrTextHighlight;
+    COLORREF     clrBtnFace;
+    COLORREF     clrBtnHighlight;
+    COLORREF     clrHighlightHotTrack;
+    RECT         rcText;
+    int          nStringBkMode;
+    int          nHLStringBkMode;
+    int          iListGap;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbaddbitmap))], [])
+struct TBADDBITMAP
+{
+    HINSTANCE hInst;
+    size_t    nID;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbsaveparamsa))], [])
+struct TBSAVEPARAMSA
+{
+    HKEY        hkr;
+    const(PSTR) pszSubKey;
+    const(PSTR) pszValueName;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbsaveparamsw))], [])
+struct TBSAVEPARAMSW
+{
+    HKEY         hkr;
+    const(PWSTR) pszSubKey;
+    const(PWSTR) pszValueName;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbinsertmark))], [])
+struct TBINSERTMARK
+{
+    int                iButton;
+    TBINSERTMARK_FLAGS dwFlags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbreplacebitmap))], [])
+struct TBREPLACEBITMAP
+{
+    HINSTANCE hInstOld;
+    size_t    nIDOld;
+    HINSTANCE hInstNew;
+    size_t    nIDNew;
+    int       nButtons;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbbuttoninfoa))], [])
+struct TBBUTTONINFOA
+{
+    uint               cbSize;
+    TBBUTTONINFOW_MASK dwMask;
+    int                idCommand;
+    int                iImage;
+    ubyte              fsState;
+    ubyte              fsStyle;
+    ushort             cx;
+    size_t             lParam;
+    PSTR               pszText;
+    int                cchText;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbbuttoninfow))], [])
+struct TBBUTTONINFOW
+{
+    uint               cbSize;
+    TBBUTTONINFOW_MASK dwMask;
+    int                idCommand;
+    int                iImage;
+    ubyte              fsState;
+    ubyte              fsStyle;
+    ushort             cx;
+    size_t             lParam;
+    PWSTR              pszText;
+    int                cchText;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tbmetrics))], [])
+struct TBMETRICS
+{
+    uint cbSize;
+    uint dwMask;
+    int  cxPad;
+    int  cyPad;
+    int  cxBarPad;
+    int  cyBarPad;
+    int  cxButtonSpacing;
+    int  cyButtonSpacing;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtbhotitem))], [])
+struct NMTBHOTITEM
+{
+    NMHDR             hdr;
+    int               idOld;
+    int               idNew;
+    NMTBHOTITEM_FLAGS dwFlags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtbsave))], [])
+struct NMTBSAVE
+{
+    NMHDR    hdr;
+    uint*    pData;
+    uint*    pCurrent;
+    uint     cbData;
+    int      iItem;
+    int      cButtons;
+    TBBUTTON tbButton;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtbrestore))], [])
+struct NMTBRESTORE
+{
+    NMHDR    hdr;
+    uint*    pData;
+    uint*    pCurrent;
+    uint     cbData;
+    int      iItem;
+    int      cButtons;
+    int      cbBytesPerRecord;
+    TBBUTTON tbButton;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtbgetinfotipa))], [])
+struct NMTBGETINFOTIPA
+{
+    NMHDR  hdr;
+    PSTR   pszText;
+    int    cchTextMax;
+    int    iItem;
+    LPARAM lParam;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtbgetinfotipw))], [])
+struct NMTBGETINFOTIPW
+{
+    NMHDR  hdr;
+    PWSTR  pszText;
+    int    cchTextMax;
+    int    iItem;
+    LPARAM lParam;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtbdispinfoa))], [])
+struct NMTBDISPINFOA
+{
+    NMHDR              hdr;
+    NMTBDISPINFOW_MASK dwMask;
+    int                idCommand;
+    size_t             lParam;
+    int                iImage;
+    PSTR               pszText;
+    int                cchText;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtbdispinfow))], [])
+struct NMTBDISPINFOW
+{
+    NMHDR              hdr;
+    NMTBDISPINFOW_MASK dwMask;
+    int                idCommand;
+    size_t             lParam;
+    int                iImage;
+    PWSTR              pszText;
+    int                cchText;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtoolbara))], [])
+struct NMTOOLBARA
+{
+    NMHDR    hdr;
+    int      iItem;
+    TBBUTTON tbButton;
+    int      cchText;
+    PSTR     pszText;
+    RECT     rcButton;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtoolbarw))], [])
+struct NMTOOLBARW
+{
+    NMHDR    hdr;
+    int      iItem;
+    TBBUTTON tbButton;
+    int      cchText;
+    PWSTR    pszText;
+    RECT     rcButton;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-rebarinfo))], [])
+struct REBARINFO
+{
+    uint       cbSize;
+    uint       fMask;
+    HIMAGELIST himl;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-rebarbandinfoa))], [])
+struct REBARBANDINFOA
+{
+    uint     cbSize;
+    uint     fMask;
+    uint     fStyle;
+    COLORREF clrFore;
+    COLORREF clrBack;
+    PSTR     lpText;
+    uint     cch;
+    int      iImage;
+    HWND     hwndChild;
+    uint     cxMinChild;
+    uint     cyMinChild;
+    uint     cx;
+    HBITMAP  hbmBack;
+    uint     wID;
+    uint     cyChild;
+    uint     cyMaxChild;
+    uint     cyIntegral;
+    uint     cxIdeal;
+    LPARAM   lParam;
+    uint     cxHeader;
+    RECT     rcChevronLocation;
+    uint     uChevronState;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-rebarbandinfow))], [])
+struct REBARBANDINFOW
+{
+    uint     cbSize;
+    uint     fMask;
+    uint     fStyle;
+    COLORREF clrFore;
+    COLORREF clrBack;
+    PWSTR    lpText;
+    uint     cch;
+    int      iImage;
+    HWND     hwndChild;
+    uint     cxMinChild;
+    uint     cyMinChild;
+    uint     cx;
+    HBITMAP  hbmBack;
+    uint     wID;
+    uint     cyChild;
+    uint     cyMaxChild;
+    uint     cyIntegral;
+    uint     cxIdeal;
+    LPARAM   lParam;
+    uint     cxHeader;
+    RECT     rcChevronLocation;
+    uint     uChevronState;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmrebarchildsize))], [])
+struct NMREBARCHILDSIZE
+{
+    NMHDR hdr;
+    uint  uBand;
+    uint  wID;
+    RECT  rcChild;
+    RECT  rcBand;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmrebar))], [])
+struct NMREBAR
+{
+    NMHDR              hdr;
+    NMREBAR_MASK_FLAGS dwMask;
+    uint               uBand;
+    uint               fStyle;
+    uint               wID;
+    LPARAM             lParam;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmrbautosize))], [])
+struct NMRBAUTOSIZE
+{
+    NMHDR hdr;
+    BOOL  fChanged;
+    RECT  rcTarget;
+    RECT  rcActual;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmrebarchevron))], [])
+struct NMREBARCHEVRON
+{
+    NMHDR  hdr;
+    uint   uBand;
+    uint   wID;
+    LPARAM lParam;
+    RECT   rc;
+    LPARAM lParamNM;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmrebarsplitter))], [])
+struct NMREBARSPLITTER
+{
+    NMHDR hdr;
+    RECT  rcSizing;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmrebarautobreak))], [])
+struct NMREBARAUTOBREAK
+{
+    NMHDR  hdr;
+    uint   uBand;
+    uint   wID;
+    LPARAM lParam;
+    uint   uMsg;
+    uint   fStyleCurrent;
+    BOOL   fAutoBreak;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-rbhittestinfo))], [])
+struct RBHITTESTINFO
+{
+    POINT pt;
+    uint  flags;
+    int   iBand;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tttoolinfoa))], [])
+struct TTTOOLINFOA
+{
+    uint          cbSize;
+    TOOLTIP_FLAGS uFlags;
+    HWND          hwnd;
+    size_t        uId;
+    RECT          rect;
+    HINSTANCE     hinst;
+    PSTR          lpszText;
+    LPARAM        lParam;
+    void*         lpReserved;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tttoolinfow))], [])
+struct TTTOOLINFOW
+{
+    uint          cbSize;
+    TOOLTIP_FLAGS uFlags;
+    HWND          hwnd;
+    size_t        uId;
+    RECT          rect;
+    HINSTANCE     hinst;
+    PWSTR         lpszText;
+    LPARAM        lParam;
+    void*         lpReserved;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-ttgettitle))], [])
+struct TTGETTITLE
+{
+    uint  dwSize;
+    uint  uTitleBitmap;
+    uint  cch;
+    PWSTR pszTitle;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tthittestinfoa))], [])
+struct TTHITTESTINFOA
+{
+    HWND        hwnd;
+    POINT       pt;
+    TTTOOLINFOA ti;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tthittestinfow))], [])
+struct TTHITTESTINFOW
+{
+    HWND        hwnd;
+    POINT       pt;
+    TTTOOLINFOW ti;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmttdispinfoa))], [])
+struct NMTTDISPINFOA
+{
+    NMHDR         hdr;
+    PSTR          lpszText;
+    CHAR[80]      szText;
+    HINSTANCE     hinst;
+    TOOLTIP_FLAGS uFlags;
+    LPARAM        lParam;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmttdispinfow))], [])
+struct NMTTDISPINFOW
+{
+    NMHDR         hdr;
+    PWSTR         lpszText;
+    wchar[80]     szText;
+    HINSTANCE     hinst;
+    TOOLTIP_FLAGS uFlags;
+    LPARAM        lParam;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtrbthumbposchanging))], [])
+struct NMTRBTHUMBPOSCHANGING
+{
+    NMHDR hdr;
+    uint  dwPos;
+    int   nReason;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-draglistinfo))], [])
+struct DRAGLISTINFO
+{
+    DRAGLISTINFO_NOTIFICATION_FLAGS uNotification;
+    HWND  hWnd;
+    POINT ptCursor;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-udaccel))], [])
+struct UDACCEL
+{
+    uint nSec;
+    uint nInc;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmupdown))], [])
+struct NMUPDOWN
+{
+    NMHDR hdr;
+    int   iPos;
+    int   iDelta;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-pbrange))], [])
+struct PBRANGE
+{
+    int iLow;
+    int iHigh;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-litem))], [])
+struct LITEM
+{
+    LIST_ITEM_FLAGS mask;
+    int             iLink;
+    LIST_ITEM_STATE_FLAGS state;
+    LIST_ITEM_STATE_FLAGS stateMask;
+    wchar[48]       szID;
+    wchar[2084]     szUrl;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lhittestinfo))], [])
+struct LHITTESTINFO
+{
+    POINT pt;
+    LITEM item;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlink))], [])
+struct NMLINK
+{
+    NMHDR hdr;
+    LITEM item;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvitema))], [])
+struct LVITEMA
+{
+    LIST_VIEW_ITEM_FLAGS mask;
+    int                  iItem;
+    int                  iSubItem;
+    LIST_VIEW_ITEM_STATE_FLAGS state;
+    LIST_VIEW_ITEM_STATE_FLAGS stateMask;
+    PSTR                 pszText;
+    int                  cchTextMax;
+    int                  iImage;
+    LPARAM               lParam;
+    int                  iIndent;
+    int                  iGroupId;
+    uint                 cColumns;
+    uint*                puColumns;
+    LIST_VIEW_ITEM_COLUMN_FORMAT_FLAGS* piColFmt;
+    int                  iGroup;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvitemw))], [])
+struct LVITEMW
+{
+    LIST_VIEW_ITEM_FLAGS mask;
+    int                  iItem;
+    int                  iSubItem;
+    LIST_VIEW_ITEM_STATE_FLAGS state;
+    LIST_VIEW_ITEM_STATE_FLAGS stateMask;
+    PWSTR                pszText;
+    int                  cchTextMax;
+    int                  iImage;
+    LPARAM               lParam;
+    int                  iIndent;
+    int                  iGroupId;
+    uint                 cColumns;
+    uint*                puColumns;
+    LIST_VIEW_ITEM_COLUMN_FORMAT_FLAGS* piColFmt;
+    int                  iGroup;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvfindinfoa))], [])
+struct LVFINDINFOA
+{
+    LVFINDINFOW_FLAGS flags;
+    const(PSTR)       psz;
+    LPARAM            lParam;
+    POINT             pt;
+    uint              vkDirection;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvfindinfow))], [])
+struct LVFINDINFOW
+{
+    LVFINDINFOW_FLAGS flags;
+    const(PWSTR)      psz;
+    LPARAM            lParam;
+    POINT             pt;
+    uint              vkDirection;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvhittestinfo))], [])
+struct LVHITTESTINFO
+{
+    POINT               pt;
+    LVHITTESTINFO_FLAGS flags;
+    int                 iItem;
+    int                 iSubItem;
+    int                 iGroup;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvcolumna))], [])
+struct LVCOLUMNA
+{
+    LVCOLUMNW_MASK   mask;
+    LVCOLUMNW_FORMAT fmt;
+    int              cx;
+    PSTR             pszText;
+    int              cchTextMax;
+    int              iSubItem;
+    int              iImage;
+    int              iOrder;
+    int              cxMin;
+    int              cxDefault;
+    int              cxIdeal;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvcolumnw))], [])
+struct LVCOLUMNW
+{
+    LVCOLUMNW_MASK   mask;
+    LVCOLUMNW_FORMAT fmt;
+    int              cx;
+    PWSTR            pszText;
+    int              cchTextMax;
+    int              iSubItem;
+    int              iImage;
+    int              iOrder;
+    int              cxMin;
+    int              cxDefault;
+    int              cxIdeal;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvbkimagea))], [])
+struct LVBKIMAGEA
+{
+    LIST_VIEW_BACKGROUND_IMAGE_FLAGS ulFlags;
+    HBITMAP hbm;
+    PSTR    pszImage;
+    uint    cchImageMax;
+    int     xOffsetPercent;
+    int     yOffsetPercent;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvbkimagew))], [])
+struct LVBKIMAGEW
+{
+    LIST_VIEW_BACKGROUND_IMAGE_FLAGS ulFlags;
+    HBITMAP hbm;
+    PWSTR   pszImage;
+    uint    cchImageMax;
+    int     xOffsetPercent;
+    int     yOffsetPercent;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvgroup))], [])
+struct LVGROUP
+{
+    uint         cbSize;
+    LVGROUP_MASK mask;
+    PWSTR        pszHeader;
+    int          cchHeader;
+    PWSTR        pszFooter;
+    int          cchFooter;
+    int          iGroupId;
+    LIST_VIEW_GROUP_STATE_FLAGS stateMask;
+    LIST_VIEW_GROUP_STATE_FLAGS state;
+    LIST_VIEW_GROUP_ALIGN_FLAGS uAlign;
+    PWSTR        pszSubtitle;
+    uint         cchSubtitle;
+    PWSTR        pszTask;
+    uint         cchTask;
+    PWSTR        pszDescriptionTop;
+    uint         cchDescriptionTop;
+    PWSTR        pszDescriptionBottom;
+    uint         cchDescriptionBottom;
+    int          iTitleImage;
+    int          iExtendedImage;
+    int          iFirstItem;
+    uint         cItems;
+    PWSTR        pszSubsetTitle;
+    uint         cchSubsetTitle;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvgroupmetrics))], [])
+struct LVGROUPMETRICS
+{
+    uint     cbSize;
+    uint     mask;
+    uint     Left;
+    uint     Top;
+    uint     Right;
+    uint     Bottom;
+    COLORREF crLeft;
+    COLORREF crTop;
+    COLORREF crRight;
+    COLORREF crBottom;
+    COLORREF crHeader;
+    COLORREF crFooter;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvinsertgroupsorted))], [])
+struct LVINSERTGROUPSORTED
+{
+    PFNLVGROUPCOMPARE pfnGroupCompare;
+    void*             pvData;
+    LVGROUP           lvGroup;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvtileviewinfo))], [])
+struct LVTILEVIEWINFO
+{
+    uint                 cbSize;
+    LVTILEVIEWINFO_MASK  dwMask;
+    LVTILEVIEWINFO_FLAGS dwFlags;
+    SIZE                 sizeTile;
+    int                  cLines;
+    RECT                 rcLabelMargin;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvtileinfo))], [])
+struct LVTILEINFO
+{
+    uint  cbSize;
+    int   iItem;
+    uint  cColumns;
+    uint* puColumns;
+    int*  piColFmt;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvinsertmark))], [])
+struct LVINSERTMARK
+{
+    uint cbSize;
+    uint dwFlags;
+    int  iItem;
+    uint dwReserved;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvsetinfotip))], [])
+struct LVSETINFOTIP
+{
+    uint  cbSize;
+    uint  dwFlags;
+    PWSTR pszText;
+    int   iItem;
+    int   iSubItem;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvfooterinfo))], [])
+struct LVFOOTERINFO
+{
+    uint  mask;
+    PWSTR pszText;
+    int   cchTextMax;
+    uint  cItems;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvfooteritem))], [])
+struct LVFOOTERITEM
+{
+    LVFOOTERITEM_MASK mask;
+    int               iItem;
+    PWSTR             pszText;
+    int               cchTextMax;
+    uint              state;
+    uint              stateMask;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-lvitemindex))], [])
+struct LVITEMINDEX
+{
+    int iItem;
+    int iGroup;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlistview))], [])
+struct NMLISTVIEW
+{
+    NMHDR                hdr;
+    int                  iItem;
+    int                  iSubItem;
+    uint                 uNewState;
+    uint                 uOldState;
+    LIST_VIEW_ITEM_FLAGS uChanged;
+    POINT                ptAction;
+    LPARAM               lParam;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmitemactivate))], [])
+struct NMITEMACTIVATE
+{
+    NMHDR  hdr;
+    int    iItem;
+    int    iSubItem;
+    uint   uNewState;
+    uint   uOldState;
+    uint   uChanged;
+    POINT  ptAction;
+    LPARAM lParam;
+    uint   uKeyFlags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvcustomdraw))], [])
+struct NMLVCUSTOMDRAW
+{
+    NMCUSTOMDRAW nmcd;
+    COLORREF     clrText;
+    COLORREF     clrTextBk;
+    int          iSubItem;
+    NMLVCUSTOMDRAW_ITEM_TYPE dwItemType;
+    COLORREF     clrFace;
+    int          iIconEffect;
+    int          iIconPhase;
+    int          iPartId;
+    int          iStateId;
+    RECT         rcText;
+    LIST_VIEW_GROUP_ALIGN_FLAGS uAlign;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvcachehint))], [])
+struct NMLVCACHEHINT
+{
+    NMHDR hdr;
+    int   iFrom;
+    int   iTo;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvfinditema))], [])
+struct NMLVFINDITEMA
+{
+    NMHDR       hdr;
+    int         iStart;
+    LVFINDINFOA lvfi;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvfinditemw))], [])
+struct NMLVFINDITEMW
+{
+    NMHDR       hdr;
+    int         iStart;
+    LVFINDINFOW lvfi;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvodstatechange))], [])
+struct NMLVODSTATECHANGE
+{
+    NMHDR hdr;
+    int   iFrom;
+    int   iTo;
+    LIST_VIEW_ITEM_STATE_FLAGS uNewState;
+    LIST_VIEW_ITEM_STATE_FLAGS uOldState;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvdispinfoa))], [])
+struct NMLVDISPINFOA
+{
+    NMHDR   hdr;
+    LVITEMA item;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvdispinfow))], [])
+struct NMLVDISPINFOW
+{
+    NMHDR   hdr;
+    LVITEMW item;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvkeydown))], [])
+struct NMLVKEYDOWN
+{
+align (1):
+    NMHDR  hdr;
+    ushort wVKey;
+    uint   flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvlink))], [])
+struct NMLVLINK
+{
+    NMHDR hdr;
+    LITEM link;
+    int   iItem;
+    int   iSubItem;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvgetinfotipa))], [])
+struct NMLVGETINFOTIPA
+{
+    NMHDR                hdr;
+    NMLVGETINFOTIP_FLAGS dwFlags;
+    PSTR                 pszText;
+    int                  cchTextMax;
+    int                  iItem;
+    int                  iSubItem;
+    LPARAM               lParam;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvgetinfotipw))], [])
+struct NMLVGETINFOTIPW
+{
+    NMHDR                hdr;
+    NMLVGETINFOTIP_FLAGS dwFlags;
+    PWSTR                pszText;
+    int                  cchTextMax;
+    int                  iItem;
+    int                  iSubItem;
+    LPARAM               lParam;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvscroll))], [])
+struct NMLVSCROLL
+{
+    NMHDR hdr;
+    int   dx;
+    int   dy;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmlvemptymarkup))], [])
+struct NMLVEMPTYMARKUP
+{
+    NMHDR       hdr;
+    NMLVEMPTYMARKUP_FLAGS dwFlags;
+    wchar[2084] szMarkup;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvstateimagechanging))], [])
+struct NMTVSTATEIMAGECHANGING
+{
+    NMHDR     hdr;
+    HTREEITEM hti;
+    int       iOldStateImageIndex;
+    int       iNewStateImageIndex;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvitema))], [])
+struct TVITEMA
+{
+    TVITEM_MASK        mask;
+    HTREEITEM          hItem;
+    TREE_VIEW_ITEM_STATE_FLAGS state;
+    TREE_VIEW_ITEM_STATE_FLAGS stateMask;
+    PSTR               pszText;
+    int                cchTextMax;
+    int                iImage;
+    int                iSelectedImage;
+    TVITEMEXW_CHILDREN cChildren;
+    LPARAM             lParam;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvitemw))], [])
+struct TVITEMW
+{
+    TVITEM_MASK        mask;
+    HTREEITEM          hItem;
+    TREE_VIEW_ITEM_STATE_FLAGS state;
+    TREE_VIEW_ITEM_STATE_FLAGS stateMask;
+    PWSTR              pszText;
+    int                cchTextMax;
+    int                iImage;
+    int                iSelectedImage;
+    TVITEMEXW_CHILDREN cChildren;
+    LPARAM             lParam;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvitemexa))], [])
+struct TVITEMEXA
+{
+    TVITEM_MASK        mask;
+    HTREEITEM          hItem;
+    uint               state;
+    uint               stateMask;
+    PSTR               pszText;
+    int                cchTextMax;
+    int                iImage;
+    int                iSelectedImage;
+    TVITEMEXW_CHILDREN cChildren;
+    LPARAM             lParam;
+    int                iIntegral;
+    uint               uStateEx;
+    HWND               hwnd;
+    int                iExpandedImage;
+    int                iReserved;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvitemexw))], [])
+struct TVITEMEXW
+{
+    TVITEM_MASK        mask;
+    HTREEITEM          hItem;
+    uint               state;
+    uint               stateMask;
+    PWSTR              pszText;
+    int                cchTextMax;
+    int                iImage;
+    int                iSelectedImage;
+    TVITEMEXW_CHILDREN cChildren;
+    LPARAM             lParam;
+    int                iIntegral;
+    uint               uStateEx;
+    HWND               hwnd;
+    int                iExpandedImage;
+    int                iReserved;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvinsertstructa))], [])
+struct TVINSERTSTRUCTA
+{
+    HTREEITEM           hParent;
+    HTREEITEM           hInsertAfter;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvinsertstructw))], [])
+struct TVINSERTSTRUCTW
+{
+    HTREEITEM           hParent;
+    HTREEITEM           hInsertAfter;
+    _Anonymous_e__Union Anonymous;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvhittestinfo))], [])
+struct TVHITTESTINFO
+{
+    POINT               pt;
+    TVHITTESTINFO_FLAGS flags;
+    HTREEITEM           hItem;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvgetitempartrectinfo))], [])
+struct TVGETITEMPARTRECTINFO
+{
+    HTREEITEM  hti;
+    RECT*      prc;
+    TVITEMPART partID;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tvsortcb))], [])
+struct TVSORTCB
+{
+    HTREEITEM    hParent;
+    PFNTVCOMPARE lpfnCompare;
+    LPARAM       lParam;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtreeviewa))], [])
+struct NMTREEVIEWA
+{
+    NMHDR              hdr;
+    NM_TREEVIEW_ACTION action;
+    TVITEMA            itemOld;
+    TVITEMA            itemNew;
+    POINT              ptDrag;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtreevieww))], [])
+struct NMTREEVIEWW
+{
+    NMHDR              hdr;
+    NM_TREEVIEW_ACTION action;
+    TVITEMW            itemOld;
+    TVITEMW            itemNew;
+    POINT              ptDrag;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvdispinfoa))], [])
+struct NMTVDISPINFOA
+{
+    NMHDR   hdr;
+    TVITEMA item;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvdispinfow))], [])
+struct NMTVDISPINFOW
+{
+    NMHDR   hdr;
+    TVITEMW item;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvdispinfoexa))], [])
+struct NMTVDISPINFOEXA
+{
+    NMHDR     hdr;
+    TVITEMEXA item;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvdispinfoexw))], [])
+struct NMTVDISPINFOEXW
+{
+    NMHDR     hdr;
+    TVITEMEXW item;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvkeydown))], [])
+struct NMTVKEYDOWN
+{
+align (1):
+    NMHDR  hdr;
+    ushort wVKey;
+    uint   flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvcustomdraw))], [])
+struct NMTVCUSTOMDRAW
+{
+    NMCUSTOMDRAW nmcd;
+    COLORREF     clrText;
+    COLORREF     clrTextBk;
+    int          iLevel;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvgetinfotipa))], [])
+struct NMTVGETINFOTIPA
+{
+    NMHDR     hdr;
+    PSTR      pszText;
+    int       cchTextMax;
+    HTREEITEM hItem;
+    LPARAM    lParam;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvgetinfotipw))], [])
+struct NMTVGETINFOTIPW
+{
+    NMHDR     hdr;
+    PWSTR     pszText;
+    int       cchTextMax;
+    HTREEITEM hItem;
+    LPARAM    lParam;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvitemchange))], [])
+struct NMTVITEMCHANGE
+{
+    NMHDR     hdr;
+    uint      uChanged;
+    HTREEITEM hItem;
+    uint      uStateNew;
+    uint      uStateOld;
+    LPARAM    lParam;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtvasyncdraw))], [])
+struct NMTVASYNCDRAW
+{
+    NMHDR                hdr;
+    IMAGELISTDRAWPARAMS* pimldp;
+    HRESULT              hr;
+    HTREEITEM            hItem;
+    LPARAM               lParam;
+    uint                 dwRetFlags;
+    int                  iRetImageIndex;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-comboboxexitema))], [])
+struct COMBOBOXEXITEMA
+{
+    COMBOBOX_EX_ITEM_FLAGS mask;
+    ptrdiff_t iItem;
+    PSTR      pszText;
+    int       cchTextMax;
+    int       iImage;
+    int       iSelectedImage;
+    int       iOverlay;
+    int       iIndent;
+    LPARAM    lParam;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-comboboxexitemw))], [])
+struct COMBOBOXEXITEMW
+{
+    COMBOBOX_EX_ITEM_FLAGS mask;
+    ptrdiff_t iItem;
+    PWSTR     pszText;
+    int       cchTextMax;
+    int       iImage;
+    int       iSelectedImage;
+    int       iOverlay;
+    int       iIndent;
+    LPARAM    lParam;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcomboboxexa))], [])
+struct NMCOMBOBOXEXA
+{
+    NMHDR           hdr;
+    COMBOBOXEXITEMA ceItem;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcomboboxexw))], [])
+struct NMCOMBOBOXEXW
+{
+    NMHDR           hdr;
+    COMBOBOXEXITEMW ceItem;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcbedragbeginw))], [])
+struct NMCBEDRAGBEGINW
+{
+    NMHDR      hdr;
+    int        iItemid;
+    wchar[260] szText;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcbedragbegina))], [])
+struct NMCBEDRAGBEGINA
+{
+    NMHDR     hdr;
+    int       iItemid;
+    CHAR[260] szText;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcbeendeditw))], [])
+struct NMCBEENDEDITW
+{
+    NMHDR      hdr;
+    BOOL       fChanged;
+    int        iNewSelection;
+    wchar[260] szText;
+    int        iWhy;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmcbeendedita))], [])
+struct NMCBEENDEDITA
+{
+    NMHDR     hdr;
+    BOOL      fChanged;
+    int       iNewSelection;
+    CHAR[260] szText;
+    int       iWhy;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tcitemheadera))], [])
+struct TCITEMHEADERA
+{
+    TCITEMHEADERA_MASK mask;
+    uint               lpReserved1;
+    uint               lpReserved2;
+    PSTR               pszText;
+    int                cchTextMax;
+    int                iImage;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tcitemheaderw))], [])
+struct TCITEMHEADERW
+{
+    TCITEMHEADERA_MASK mask;
+    uint               lpReserved1;
+    uint               lpReserved2;
+    PWSTR              pszText;
+    int                cchTextMax;
+    int                iImage;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tcitema))], [])
+struct TCITEMA
+{
+    TCITEMHEADERA_MASK mask;
+    TAB_CONTROL_ITEM_STATE dwState;
+    TAB_CONTROL_ITEM_STATE dwStateMask;
+    PSTR               pszText;
+    int                cchTextMax;
+    int                iImage;
+    LPARAM             lParam;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tcitemw))], [])
+struct TCITEMW
+{
+    TCITEMHEADERA_MASK mask;
+    TAB_CONTROL_ITEM_STATE dwState;
+    TAB_CONTROL_ITEM_STATE dwStateMask;
+    PWSTR              pszText;
+    int                cchTextMax;
+    int                iImage;
+    LPARAM             lParam;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-tchittestinfo))], [])
+struct TCHITTESTINFO
+{
+    POINT               pt;
+    TCHITTESTINFO_FLAGS flags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmtckeydown))], [])
+struct NMTCKEYDOWN
+{
+align (1):
+    NMHDR  hdr;
+    ushort wVKey;
+    uint   flags;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-mchittestinfo))], [])
+struct MCHITTESTINFO
+{
+    uint       cbSize;
+    POINT      pt;
+    MCHITTESTINFO_HIT_FLAGS uHit;
+    SYSTEMTIME st;
+    RECT       rc;
+    int        iOffset;
+    int        iRow;
+    int        iCol;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-mcgridinfo))], [])
+struct MCGRIDINFO
+{
+    uint             cbSize;
+    MCGRIDINFO_PART  dwPart;
+    MCGRIDINFO_FLAGS dwFlags;
+    int              iCalendar;
+    int              iRow;
+    int              iCol;
+    BOOL             bSelected;
+    SYSTEMTIME       stStart;
+    SYSTEMTIME       stEnd;
+    RECT             rc;
+    PWSTR            pszName;
+    size_t           cchName;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmselchange))], [])
+struct NMSELCHANGE
+{
+    NMHDR      nmhdr;
+    SYSTEMTIME stSelStart;
+    SYSTEMTIME stSelEnd;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdaystate))], [])
+struct NMDAYSTATE
+{
+    NMHDR      nmhdr;
+    SYSTEMTIME stStart;
+    int        cDayState;
+    uint*      prgDayState;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmviewchange))], [])
+struct NMVIEWCHANGE
+{
+    NMHDR nmhdr;
+    MONTH_CALDENDAR_MESSAGES_VIEW dwOldView;
+    MONTH_CALDENDAR_MESSAGES_VIEW dwNewView;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-datetimepickerinfo))], [])
+struct DATETIMEPICKERINFO
+{
+    uint cbSize;
+    RECT rcCheck;
+    uint stateCheck;
+    RECT rcButton;
+    uint stateButton;
+    HWND hwndEdit;
+    HWND hwndUD;
+    HWND hwndDropDown;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimechange))], [])
+struct NMDATETIMECHANGE
+{
+    NMHDR      nmhdr;
+    NMDATETIMECHANGE_FLAGS dwFlags;
+    SYSTEMTIME st;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimestringa))], [])
+struct NMDATETIMESTRINGA
+{
+    NMHDR       nmhdr;
+    const(PSTR) pszUserString;
+    SYSTEMTIME  st;
+    uint        dwFlags;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimestringw))], [])
+struct NMDATETIMESTRINGW
+{
+    NMHDR        nmhdr;
+    const(PWSTR) pszUserString;
+    SYSTEMTIME   st;
+    uint         dwFlags;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimewmkeydowna))], [])
+struct NMDATETIMEWMKEYDOWNA
+{
+    NMHDR       nmhdr;
+    int         nVirtKey;
+    const(PSTR) pszFormat;
+    SYSTEMTIME  st;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimewmkeydownw))], [])
+struct NMDATETIMEWMKEYDOWNW
+{
+    NMHDR        nmhdr;
+    int          nVirtKey;
+    const(PWSTR) pszFormat;
+    SYSTEMTIME   st;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimeformata))], [])
+struct NMDATETIMEFORMATA
+{
+    NMHDR       nmhdr;
+    const(PSTR) pszFormat;
+    SYSTEMTIME  st;
+    const(PSTR) pszDisplay;
+    CHAR[64]    szDisplay;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimeformatw))], [])
+struct NMDATETIMEFORMATW
+{
+    NMHDR        nmhdr;
+    const(PWSTR) pszFormat;
+    SYSTEMTIME   st;
+    const(PWSTR) pszDisplay;
+    wchar[64]    szDisplay;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimeformatquerya))], [])
+struct NMDATETIMEFORMATQUERYA
+{
+    NMHDR       nmhdr;
+    const(PSTR) pszFormat;
+    SIZE        szMax;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmdatetimeformatqueryw))], [])
+struct NMDATETIMEFORMATQUERYW
+{
+    NMHDR        nmhdr;
+    const(PWSTR) pszFormat;
+    SIZE         szMax;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmipaddress))], [])
+struct NMIPADDRESS
+{
+    NMHDR hdr;
+    int   iField;
+    int   iValue;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmpgscroll))], [])
+struct NMPGSCROLL
+{
+align (1):
+    NMHDR           hdr;
+    NMPGSCROLL_KEYS fwKeys;
+    RECT            rcParent;
+    NMPGSCROLL_DIR  iDir;
+    int             iXpos;
+    int             iYpos;
+    int             iScroll;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmpgcalcsize))], [])
+struct NMPGCALCSIZE
+{
+    NMHDR              hdr;
+    NMPGCALCSIZE_FLAGS dwFlag;
+    int                iWidth;
+    int                iHeight;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmpghotitem))], [])
+struct NMPGHOTITEM
+{
+    NMHDR hdr;
+    int   idOld;
+    int   idNew;
+    uint  dwFlags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-button_imagelist))], [])
+struct BUTTON_IMAGELIST
+{
+    HIMAGELIST himl;
+    RECT       margin;
+    BUTTON_IMAGELIST_ALIGN uAlign;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmbchotitem))], [])
+struct NMBCHOTITEM
+{
+    NMHDR             hdr;
+    NMTBHOTITEM_FLAGS dwFlags;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-button_splitinfo))], [])
+struct BUTTON_SPLITINFO
+{
+    uint       mask;
+    HIMAGELIST himlGlyph;
+    uint       uSplitStyle;
+    SIZE       size;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmbcdropdown))], [])
+struct NMBCDROPDOWN
+{
+    NMHDR hdr;
+    RECT  rcButton;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-editballoontip))], [])
+struct EDITBALLOONTIP
+{
+    uint                cbStruct;
+    const(PWSTR)        pszTitle;
+    const(PWSTR)        pszText;
+    EDITBALLOONTIP_ICON ttiIcon;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-nmsearchweb))], [])
+struct NMSEARCHWEB
+{
+    NMHDR hdr;
+    EC_SEARCHWEB_ENTRYPOINT entrypoint;
+    BOOL  hasQueryText;
+    BOOL  invokeSucceeded;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-taskdialog_button))], [])
+struct TASKDIALOG_BUTTON
+{
+align (1):
+    int          nButtonID;
+    const(PWSTR) pszButtonText;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commctrl/ns-commctrl-taskdialogconfig))], [])
+struct TASKDIALOGCONFIG
+{
+align (1):
+    uint                 cbSize;
+    HWND                 hwndParent;
+    HINSTANCE            hInstance;
+    TASKDIALOG_FLAGS     dwFlags;
+    TASKDIALOG_COMMON_BUTTON_FLAGS dwCommonButtons;
+    const(PWSTR)         pszWindowTitle;
+    _Anonymous1_e__Union Anonymous1;
+    const(PWSTR)         pszMainInstruction;
+    const(PWSTR)         pszContent;
+    uint                 cButtons;
+    const(TASKDIALOG_BUTTON)* pButtons;
+    int                  nDefaultButton;
+    uint                 cRadioButtons;
+    const(TASKDIALOG_BUTTON)* pRadioButtons;
+    int                  nDefaultRadioButton;
+    const(PWSTR)         pszVerificationText;
+    const(PWSTR)         pszExpandedInformation;
+    const(PWSTR)         pszExpandedControlText;
+    const(PWSTR)         pszCollapsedControlText;
+    _Anonymous2_e__Union Anonymous2;
+    const(PWSTR)         pszFooter;
+    PFTASKDIALOGCALLBACK pfCallback;
+    ptrdiff_t            lpCallbackData;
+    uint                 cxWidth;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dpa_dsa/ns-dpa_dsa-dpastreaminfo))], [])
+struct DPASTREAMINFO
+{
+    int   iPos;
+    void* pvItem;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/ns-commoncontrols-imageliststats))], [])
+struct IMAGELISTSTATS
+{
+    uint cbSize;
+    int  cAlloc;
+    int  cUsed;
+    int  cStandby;
+}
+
+struct TA_TRANSFORM
+{
+    TA_TRANSFORM_TYPE eTransformType;
+    uint              dwTimingFunctionId;
+    uint              dwStartTime;
+    uint              dwDurationTime;
+    TA_TRANSFORM_FLAG eFlags;
+}
+
+struct TA_TRANSFORM_2D
+{
+    TA_TRANSFORM header;
+    float        rX;
+    float        rY;
+    float        rInitialX;
+    float        rInitialY;
+    float        rOriginX;
+    float        rOriginY;
+}
+
+struct TA_TRANSFORM_OPACITY
+{
+    TA_TRANSFORM header;
+    float        rOpacity;
+    float        rInitialOpacity;
+}
+
+struct TA_TRANSFORM_CLIP
+{
+    TA_TRANSFORM header;
+    float        rLeft;
+    float        rTop;
+    float        rRight;
+    float        rBottom;
+    float        rInitialLeft;
+    float        rInitialTop;
+    float        rInitialRight;
+    float        rInitialBottom;
+}
+
+struct TA_TIMINGFUNCTION
+{
+    TA_TIMINGFUNCTION_TYPE eTimingFunctionType;
+}
+
+struct TA_CUBIC_BEZIER
+{
+    TA_TIMINGFUNCTION header;
+    float             rX0;
+    float             rY0;
+    float             rX1;
+    float             rY1;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uxtheme/ns-uxtheme-dtbgopts))], [])
+struct DTBGOPTS
+{
+    uint dwSize;
+    uint dwFlags;
+    RECT rcClip;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uxtheme/ns-uxtheme-margins))], [])
+struct MARGINS
+{
+    int cxLeftWidth;
+    int cxRightWidth;
+    int cyTopHeight;
+    int cyBottomHeight;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uxtheme/ns-uxtheme-intlist))], [])
+struct INTLIST
+{
+    int      iValueCount;
+    int[402] iValues;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uxtheme/ns-uxtheme-wta_options))], [])
+struct WTA_OPTIONS
+{
+    uint dwFlags;
+    uint dwMask;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uxtheme/ns-uxtheme-dttopts))], [])
+struct DTTOPTS
+{
+    uint              dwSize;
+    DTTOPTS_FLAGS     dwFlags;
+    COLORREF          crText;
+    COLORREF          crBorder;
+    COLORREF          crShadow;
+    int               iTextShadowType;
+    POINT             ptShadowOffset;
+    int               iBorderSize;
+    int               iFontPropId;
+    int               iColorPropId;
+    int               iStateId;
+    BOOL              fApplyOverlay;
+    int               iGlowSize;
+    DTT_CALLBACK_PROC pfnDrawTextCallback;
+    LPARAM            lParam;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uxtheme/ns-uxtheme-bp_animationparams))], [])
+struct BP_ANIMATIONPARAMS
+{
+    uint              cbSize;
+    uint              dwFlags;
+    BP_ANIMATIONSTYLE style;
+    uint              dwDuration;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uxtheme/ns-uxtheme-bp_paintparams))], [])
+struct BP_PAINTPARAMS
+{
+    uint                 cbSize;
+    BP_PAINTPARAMS_FLAGS dwFlags;
+    const(RECT)*         prcExclude;
+    const(BLENDFUNCTION)* pBlendFunction;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+struct CCSTYLEA
+{
+    uint      flStyle;
+    uint      flExtStyle;
+    CHAR[256] szText;
+    ushort    lgid;
+    ushort    wReserved1;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+struct CCSTYLEW
+{
+    uint       flStyle;
+    uint       flExtStyle;
+    wchar[256] szText;
+    ushort     lgid;
+    ushort     wReserved1;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+struct CCSTYLEFLAGA
+{
+    uint flStyle;
+    uint flStyleMask;
+    PSTR pszStyle;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+struct CCSTYLEFLAGW
+{
+    uint  flStyle;
+    uint  flStyleMask;
+    PWSTR pszStyle;
+}
+
+//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+struct CCINFOA
+{
+    CHAR[32]          szClass;
+    uint              flOptions;
+    CHAR[32]          szDesc;
+    uint              cxDefault;
+    uint              cyDefault;
+    uint              flStyleDefault;
+    uint              flExtStyleDefault;
+    uint              flCtrlTypeMask;
+    CHAR[256]         szTextDefault;
+    int               cStyleFlags;
+    CCSTYLEFLAGA*     aStyleFlags;
+    LPFNCCSTYLEA      lpfnStyle;
+    LPFNCCSIZETOTEXTA lpfnSizeToText;
+    uint              dwReserved1;
+    uint              dwReserved2;
+}
+
+//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+struct CCINFOW
+{
+    wchar[32]         szClass;
+    uint              flOptions;
+    wchar[32]         szDesc;
+    uint              cxDefault;
+    uint              cyDefault;
+    uint              flStyleDefault;
+    uint              flExtStyleDefault;
+    uint              flCtrlTypeMask;
+    int               cStyleFlags;
+    CCSTYLEFLAGW*     aStyleFlags;
+    wchar[256]        szTextDefault;
+    LPFNCCSTYLEW      lpfnStyle;
+    LPFNCCSIZETOTEXTW lpfnSizeToText;
+    uint              dwReserved1;
+    uint              dwReserved2;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-nmhdr))], [])
+struct NMHDR
+{
+    HWND   hwndFrom;
+    size_t idFrom;
+    uint   code;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-measureitemstruct))], [])
+struct MEASUREITEMSTRUCT
+{
+    DRAWITEMSTRUCT_CTL_TYPE CtlType;
+    uint   CtlID;
+    uint   itemID;
+    uint   itemWidth;
+    uint   itemHeight;
+    size_t itemData;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-drawitemstruct))], [])
+struct DRAWITEMSTRUCT
+{
+    DRAWITEMSTRUCT_CTL_TYPE CtlType;
+    uint      CtlID;
+    uint      itemID;
+    ODA_FLAGS itemAction;
+    ODS_FLAGS itemState;
+    HWND      hwndItem;
+    HDC       hDC;
+    RECT      rcItem;
+    size_t    itemData;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-deleteitemstruct))], [])
+struct DELETEITEMSTRUCT
+{
+    DRAWITEMSTRUCT_CTL_TYPE CtlType;
+    uint   CtlID;
+    uint   itemID;
+    HWND   hwndItem;
+    size_t itemData;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-compareitemstruct))], [])
+struct COMPAREITEMSTRUCT
+{
+    DRAWITEMSTRUCT_CTL_TYPE CtlType;
+    uint   CtlID;
+    HWND   hwndItem;
+    uint   itemID1;
+    size_t itemData1;
+    uint   itemID2;
+    size_t itemData2;
+    uint   dwLocaleId;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-usage_properties))], [])
+struct USAGE_PROPERTIES
+{
+    ushort level;
+    ushort page;
+    ushort usage;
+    int    logicalMinimum;
+    int    logicalMaximum;
+    ushort unit;
+    ushort exponent;
+    ubyte  count;
+    int    physicalMinimum;
+    int    physicalMaximum;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-touch_hit_testing_proximity_evaluation))], [])
+struct TOUCH_HIT_TESTING_PROXIMITY_EVALUATION
+{
+    ushort score;
+    POINT  adjustedPoint;
+}
+
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-touch_hit_testing_input))], [])
+struct TOUCH_HIT_TESTING_INPUT
+{
+    uint  pointerId;
+    POINT point;
+    RECT  boundingBox;
+    RECT  nonOccludedBoundingBox;
+    uint  orientation;
+}
+
+//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-comboboxinfo))], [])
+struct COMBOBOXINFO
+{
+    uint cbSize;
+    RECT rcItem;
+    RECT rcButton;
+    COMBOBOXINFO_BUTTON_STATE stateButton;
+    HWND hwndCombo;
+    HWND hwndItem;
+    HWND hwndList;
+}
+
+// Functions
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HPROPSHEETPAGE CreatePropertySheetPageA(PROPSHEETPAGEA* constPropSheetPagePointer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HPROPSHEETPAGE CreatePropertySheetPageW(PROPSHEETPAGEW* constPropSheetPagePointer);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DestroyPropertySheetPage(HPROPSHEETPAGE param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+ptrdiff_t PropertySheetA(PROPSHEETHEADERA_V2* param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+ptrdiff_t PropertySheetW(PROPSHEETHEADERW_V2* param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void InitCommonControls();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL InitCommonControlsEx(const(INITCOMMONCONTROLSEX)* picce);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HIMAGELIST ImageList_Create(int cx, int cy, IMAGELIST_CREATION_FLAGS flags, int cInitial, int cGrow);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_Destroy(HIMAGELIST himl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int ImageList_GetImageCount(HIMAGELIST himl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_SetImageCount(HIMAGELIST himl, uint uNewCount);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int ImageList_Add(HIMAGELIST himl, HBITMAP hbmImage, HBITMAP hbmMask);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int ImageList_ReplaceIcon(HIMAGELIST himl, int i, HICON hicon);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+COLORREF ImageList_SetBkColor(HIMAGELIST himl, COLORREF clrBk);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+COLORREF ImageList_GetBkColor(HIMAGELIST himl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_SetOverlayImage(HIMAGELIST himl, int iImage, int iOverlay);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_Draw(HIMAGELIST himl, int i, HDC hdcDst, int x, int y, IMAGE_LIST_DRAW_STYLE fStyle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_Replace(HIMAGELIST himl, int i, HBITMAP hbmImage, HBITMAP hbmMask);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int ImageList_AddMasked(HIMAGELIST himl, HBITMAP hbmImage, COLORREF crMask);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_DrawEx(HIMAGELIST himl, int i, HDC hdcDst, int x, int y, int dx, int dy, COLORREF rgbBk, 
+                      COLORREF rgbFg, IMAGE_LIST_DRAW_STYLE fStyle);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_DrawIndirect(IMAGELISTDRAWPARAMS* pimldp);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_Remove(HIMAGELIST himl, int i);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HICON ImageList_GetIcon(HIMAGELIST himl, int i, IMAGE_LIST_DRAW_STYLE flags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HIMAGELIST ImageList_LoadImageA(HINSTANCE hi, const(PSTR) lpbmp, int cx, int cGrow, COLORREF crMask, uint uType, 
+                                IMAGE_FLAGS uFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HIMAGELIST ImageList_LoadImageW(HINSTANCE hi, const(PWSTR) lpbmp, int cx, int cGrow, COLORREF crMask, uint uType, 
+                                IMAGE_FLAGS uFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_Copy(HIMAGELIST himlDst, int iDst, HIMAGELIST himlSrc, int iSrc, IMAGE_LIST_COPY_FLAGS uFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_BeginDrag(HIMAGELIST himlTrack, int iTrack, int dxHotspot, int dyHotspot);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void ImageList_EndDrag();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_DragEnter(HWND hwndLock, int x, int y);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_DragLeave(HWND hwndLock);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_DragMove(int x, int y);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_SetDragCursorImage(HIMAGELIST himlDrag, int iDrag, int dxHotspot, int dyHotspot);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_DragShowNolock(BOOL fShow);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HIMAGELIST ImageList_GetDragImage(POINT* ppt, POINT* pptHotspot);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HIMAGELIST ImageList_Read(IStream pstm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_Write(HIMAGELIST himl, IStream pstm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HRESULT ImageList_ReadEx(uint dwFlags, IStream pstm, const(GUID)* riid, void** ppv);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HRESULT ImageList_WriteEx(HIMAGELIST himl, IMAGE_LIST_WRITE_STREAM_FLAGS dwFlags, IStream pstm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_GetIconSize(HIMAGELIST himl, int* cx, int* cy);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_SetIconSize(HIMAGELIST himl, int cx, int cy);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ImageList_GetImageInfo(HIMAGELIST himl, int i, IMAGEINFO* pImageInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HIMAGELIST ImageList_Merge(HIMAGELIST himl1, int i1, HIMAGELIST himl2, int i2, int dx, int dy);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HIMAGELIST ImageList_Duplicate(HIMAGELIST himl);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HRESULT HIMAGELIST_QueryInterface(HIMAGELIST himl, const(GUID)* riid, void** ppv);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HWND CreateToolbarEx(HWND hwnd, uint ws, uint wID, int nBitmaps, HINSTANCE hBMInst, size_t wBMID, 
+                     TBBUTTON* lpButtons, int iNumButtons, int dxButton, int dyButton, int dxBitmap, int dyBitmap, 
+                     uint uStructSize);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HBITMAP CreateMappedBitmap(HINSTANCE hInstance, ptrdiff_t idBitmap, uint wFlags, COLORMAP* lpColorMap, 
+                           int iNumMaps);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void DrawStatusTextA(HDC hDC, RECT* lprc, const(PSTR) pszText, uint uFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void DrawStatusTextW(HDC hDC, RECT* lprc, const(PWSTR) pszText, uint uFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HWND CreateStatusWindowA(int style, const(PSTR) lpszText, HWND hwndParent, uint wID);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HWND CreateStatusWindowW(int style, const(PWSTR) lpszText, HWND hwndParent, uint wID);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void MenuHelp(uint uMsg, WPARAM wParam, LPARAM lParam, HMENU hMainMenu, HINSTANCE hInst, HWND hwndStatus, 
+              uint* lpwIDs);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL ShowHideMenuCtl(HWND hWnd, size_t uFlags, int* lpInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void GetEffectiveClientRect(HWND hWnd, RECT* lprc, const(int)* lpInfo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL MakeDragList(HWND hLB);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void DrawInsert(HWND handParent, HWND hLB, int nItem);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int LBItemFromPt(HWND hLB, POINT pt, BOOL bAutoScroll);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HWND CreateUpDownControl(uint dwStyle, int x, int y, int cx, int cy, HWND hParent, int nID, HINSTANCE hInst, 
+                         HWND hBuddy, int nUpper, int nLower, int nPos);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HRESULT TaskDialogIndirect(const(TASKDIALOGCONFIG)* pTaskConfig, int* pnButton, int* pnRadioButton, 
+                           BOOL* pfVerificationFlagChecked);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HRESULT TaskDialog(HWND hwndOwner, HINSTANCE hInstance, const(PWSTR) pszWindowTitle, 
+                   const(PWSTR) pszMainInstruction, const(PWSTR) pszContent, 
+                   TASKDIALOG_COMMON_BUTTON_FLAGS dwCommonButtons, const(PWSTR) pszIcon, int* pnButton);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void InitMUILanguage(ushort uiLang);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+ushort GetMUILanguage();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HDSA DSA_Create(int cbItem, int cItemGrow);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DSA_Destroy(HDSA hdsa);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void DSA_DestroyCallback(HDSA hdsa, PFNDAENUMCALLBACK pfnCB, void* pData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DSA_DeleteItem(HDSA hdsa, int i);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DSA_DeleteAllItems(HDSA hdsa);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void DSA_EnumCallback(HDSA hdsa, PFNDAENUMCALLBACK pfnCB, void* pData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int DSA_InsertItem(HDSA hdsa, int i, const(void)* pitem);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void* DSA_GetItemPtr(HDSA hdsa, int i);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DSA_GetItem(HDSA hdsa, int i, void* pitem);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DSA_SetItem(HDSA hdsa, int i, const(void)* pitem);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HDSA DSA_Clone(HDSA hdsa);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+ulong DSA_GetSize(HDSA hdsa);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DSA_Sort(HDSA pdsa, PFNDACOMPARE pfnCompare, LPARAM lParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HDPA DPA_Create(int cItemGrow);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HDPA DPA_CreateEx(int cpGrow, HANDLE hheap);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HDPA DPA_Clone(const(HDPA) hdpa, HDPA hdpaNew);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DPA_Destroy(HDPA hdpa);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void DPA_DestroyCallback(HDPA hdpa, PFNDAENUMCALLBACK pfnCB, void* pData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void* DPA_DeletePtr(HDPA hdpa, int i);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DPA_DeleteAllPtrs(HDPA hdpa);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void DPA_EnumCallback(HDPA hdpa, PFNDAENUMCALLBACK pfnCB, void* pData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DPA_Grow(HDPA pdpa, int cp);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int DPA_InsertPtr(HDPA hdpa, int i, void* p);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DPA_SetPtr(HDPA hdpa, int i, void* p);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+void* DPA_GetPtr(HDPA hdpa, ptrdiff_t i);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int DPA_GetPtrIndex(HDPA hdpa, const(void)* p);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+ulong DPA_GetSize(HDPA hdpa);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DPA_Sort(HDPA hdpa, PFNDACOMPARE pfnCompare, LPARAM lParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HRESULT DPA_LoadStream(HDPA* phdpa, PFNDPASTREAM pfn, IStream pstream, void* pvInstData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HRESULT DPA_SaveStream(HDPA hdpa, PFNDPASTREAM pfn, IStream pstream, void* pvInstData);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL DPA_Merge(HDPA hdpaDest, HDPA hdpaSrc, uint dwFlags, PFNDACOMPARE pfnCompare, PFNDPAMERGE pfnMerge, 
+               LPARAM lParam);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int DPA_Search(HDPA hdpa, void* pFind, int iStart, PFNDACOMPARE pfnCompare, LPARAM lParam, uint options);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL Str_SetPtrW(PWSTR* ppsz, const(PWSTR) psz);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL FlatSB_EnableScrollBar(HWND param0, int param1, uint param2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL FlatSB_ShowScrollBar(HWND param0, SCROLLBAR_CONSTANTS code, BOOL param2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL FlatSB_GetScrollRange(HWND param0, SCROLLBAR_CONSTANTS code, int* param2, int* param3);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL FlatSB_GetScrollInfo(HWND param0, SCROLLBAR_CONSTANTS code, SCROLLINFO* param2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int FlatSB_GetScrollPos(HWND param0, SCROLLBAR_CONSTANTS code);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL FlatSB_GetScrollProp(HWND param0, WSB_PROP propIndex, int* param2);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int FlatSB_SetScrollPos(HWND param0, SCROLLBAR_CONSTANTS code, int pos, BOOL fRedraw);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int FlatSB_SetScrollInfo(HWND param0, SCROLLBAR_CONSTANTS code, SCROLLINFO* psi, BOOL fRedraw);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int FlatSB_SetScrollRange(HWND param0, SCROLLBAR_CONSTANTS code, int min, int max, BOOL fRedraw);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL FlatSB_SetScrollProp(HWND param0, 
+                          /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSB_PROP))], [])*/uint index, 
+                          ptrdiff_t newValue, BOOL param3);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+BOOL InitializeFlatSB(HWND param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HRESULT UninitializeFlatSB(HWND param0);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HRESULT LoadIconMetric(HINSTANCE hinst, const(PWSTR) pszName, _LI_METRIC lims, HICON* phico);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HRESULT LoadIconWithScaleDown(HINSTANCE hinst, const(PWSTR) pszName, int cx, int cy, HICON* phico);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+int DrawShadowText(HDC hdc, const(PWSTR) pszText, uint cch, RECT* prc, uint dwFlags, COLORREF crText, 
+                   COLORREF crShadow, int ixOffset, int iyOffset);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("COMCTL32.dll")
+HRESULT ImageList_CoCreateInstance(const(GUID)* rclsid, const(IUnknown) punkOuter, const(GUID)* riid, void** ppv);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("UxTheme.dll")
+BOOL BeginPanningFeedback(HWND hwnd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("UxTheme.dll")
+BOOL UpdatePanningFeedback(HWND hwnd, int lTotalOverpanOffsetX, int lTotalOverpanOffsetY, BOOL fInInertia);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
+@DllImport("UxTheme.dll")
+BOOL EndPanningFeedback(HWND hwnd, BOOL fAnimateBack);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeAnimationProperty(HTHEME hTheme, int iStoryboardId, int iTargetId, TA_PROPERTY eProperty, 
+                                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* pvProperty, 
+                                  uint cbSize, uint* pcbSizeOut);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeAnimationTransform(HTHEME hTheme, int iStoryboardId, int iTargetId, uint dwTransformIndex, 
+                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/TA_TRANSFORM* pTransform, 
+                                   uint cbSize, uint* pcbSizeOut);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeTimingFunction(HTHEME hTheme, int iTimingFunctionId, 
+                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/TA_TIMINGFUNCTION* pTimingFunction, 
+                               uint cbSize, uint* pcbSizeOut);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HTHEME OpenThemeData(HWND hwnd, const(PWSTR) pszClassList);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HTHEME OpenThemeDataEx(HWND hwnd, const(PWSTR) pszClassList, OPEN_THEME_DATA_FLAGS dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT CloseThemeData(HTHEME hTheme);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT DrawThemeBackground(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, RECT* pRect, RECT* pClipRect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT DrawThemeBackgroundEx(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, RECT* pRect, 
+                              const(DTBGOPTS)* pOptions);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT DrawThemeText(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, const(PWSTR) pszText, int cchText, 
+                      DRAW_TEXT_FORMAT dwTextFlags, uint dwTextFlags2, RECT* pRect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeBackgroundContentRect(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, RECT* pBoundingRect, 
+                                      RECT* pContentRect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeBackgroundExtent(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, RECT* pContentRect, 
+                                 RECT* pExtentRect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemeBackgroundRegion(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, RECT* pRect, HRGN* pRegion);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemePartSize(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, RECT* prc, THEMESIZE eSize, SIZE* psz);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemeTextExtent(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, const(PWSTR) pszText, 
+                           int cchCharCount, DRAW_TEXT_FORMAT dwTextFlags, RECT* pBoundingRect, RECT* pExtentRect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemeTextMetrics(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, TEXTMETRICW* ptm);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT HitTestThemeBackground(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, 
+                               HIT_TEST_BACKGROUND_OPTIONS dwOptions, RECT* pRect, HRGN hrgn, POINT ptTest, 
+                               ushort* pwHitTestCode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT DrawThemeEdge(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, RECT* pDestRect, DRAWEDGE_FLAGS uEdge, 
+                      DRAW_EDGE_FLAGS uFlags, RECT* pContentRect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT DrawThemeIcon(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, RECT* pRect, HIMAGELIST himl, 
+                      int iImageIndex);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+BOOL IsThemePartDefined(HTHEME hTheme, int iPartId, int iStateId);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+BOOL IsThemeBackgroundPartiallyTransparent(HTHEME hTheme, int iPartId, int iStateId);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeColor(HTHEME hTheme, int iPartId, int iStateId, 
+                      /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iPropId, 
+                      COLORREF* pColor);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeMetric(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, 
+                       /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iPropId, 
+                       int* piVal);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemeString(HTHEME hTheme, int iPartId, int iStateId, int iPropId, PWSTR pszBuff, int cchMaxBuffChars);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemeBool(HTHEME hTheme, int iPartId, int iStateId, 
+                     /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iPropId, 
+                     BOOL* pfVal);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeInt(HTHEME hTheme, int iPartId, int iStateId, 
+                    /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iPropId, 
+                    int* piVal);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeEnumValue(HTHEME hTheme, int iPartId, int iStateId, 
+                          /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iPropId, 
+                          int* piVal);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemePosition(HTHEME hTheme, int iPartId, int iStateId, 
+                         /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iPropId, 
+                         POINT* pPoint);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeFont(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, int iPropId, LOGFONTW* pFont);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeRect(HTHEME hTheme, int iPartId, int iStateId, int iPropId, RECT* pRect);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeMargins(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, 
+                        /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iPropId, 
+                        RECT* prc, MARGINS* pMargins);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemeIntList(HTHEME hTheme, int iPartId, int iStateId, 
+                        /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iPropId, 
+                        INTLIST* pIntList);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemePropertyOrigin(HTHEME hTheme, int iPartId, int iStateId, int iPropId, PROPERTYORIGIN* pOrigin);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT SetWindowTheme(HWND hwnd, const(PWSTR) pszSubAppName, const(PWSTR) pszSubIdList);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemeFilename(HTHEME hTheme, int iPartId, int iStateId, 
+                         /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iPropId, 
+                         PWSTR pszThemeFileName, int cchMaxBuffChars);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+COLORREF GetThemeSysColor(HTHEME hTheme, int iColorId);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HBRUSH GetThemeSysColorBrush(HTHEME hTheme, 
+                             /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iColorId);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+BOOL GetThemeSysBool(HTHEME hTheme, 
+                     /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iBoolId);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+int GetThemeSysSize(HTHEME hTheme, int iSizeId);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemeSysFont(HTHEME hTheme, 
+                        /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iFontId, 
+                        LOGFONTW* plf);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemeSysString(HTHEME hTheme, 
+                          /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iStringId, 
+                          PWSTR pszStringBuff, int cchMaxStringChars);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemeSysInt(HTHEME hTheme, 
+                       /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iIntId, 
+                       int* piValue);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+BOOL IsThemeActive();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+BOOL IsAppThemed();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HTHEME GetWindowTheme(HWND hwnd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT EnableThemeDialogTexture(HWND hwnd, uint dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+BOOL IsThemeDialogTextureEnabled(HWND hwnd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+SET_THEME_APP_PROPERTIES_FLAGS GetThemeAppProperties();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+void SetThemeAppProperties(SET_THEME_APP_PROPERTIES_FLAGS dwFlags);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetCurrentThemeName(PWSTR pszThemeFileName, int cchMaxNameChars, PWSTR pszColorBuff, int cchMaxColorChars, 
+                            PWSTR pszSizeBuff, int cchMaxSizeChars);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemeDocumentationProperty(const(PWSTR) pszThemeName, const(PWSTR) pszPropertyName, PWSTR pszValueBuff, 
+                                      int cchMaxValChars);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT DrawThemeParentBackground(HWND hwnd, HDC hdc, const(RECT)* prc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT EnableTheming(BOOL fEnable);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT DrawThemeParentBackgroundEx(HWND hwnd, HDC hdc, DRAW_THEME_PARENT_BACKGROUND_FLAGS dwFlags, 
+                                    const(RECT)* prc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT SetWindowThemeAttribute(HWND hwnd, WINDOWTHEMEATTRIBUTETYPE eAttribute, 
+                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvAttribute, 
+                                uint cbAttribute);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT DrawThemeTextEx(HTHEME hTheme, HDC hdc, int iPartId, int iStateId, const(PWSTR) pszText, int cchText, 
+                        DRAW_TEXT_FORMAT dwTextFlags, RECT* pRect, const(DTTOPTS)* pOptions);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeBitmap(HTHEME hTheme, int iPartId, int iStateId, 
+                       /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(THEME_PROPERTY_SYMBOL_ID))], [])*/int iPropId, 
+                       GET_THEME_BITMAP_FLAGS dwFlags, HBITMAP* phBitmap);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetThemeStream(HTHEME hTheme, int iPartId, int iStateId, int iPropId, void** ppvStream, uint* pcbStream, 
+                       HINSTANCE hInst);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT BufferedPaintInit();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT BufferedPaintUnInit();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+ptrdiff_t BeginBufferedPaint(HDC hdcTarget, const(RECT)* prcTarget, BP_BUFFERFORMAT dwFormat, 
+                             BP_PAINTPARAMS* pPaintParams, HDC* phdc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT EndBufferedPaint(ptrdiff_t hBufferedPaint, BOOL fUpdateTarget);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetBufferedPaintTargetRect(ptrdiff_t hBufferedPaint, RECT* prc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HDC GetBufferedPaintTargetDC(ptrdiff_t hBufferedPaint);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HDC GetBufferedPaintDC(ptrdiff_t hBufferedPaint);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT GetBufferedPaintBits(ptrdiff_t hBufferedPaint, RGBQUAD** ppbBuffer, int* pcxRow);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT BufferedPaintClear(ptrdiff_t hBufferedPaint, const(RECT)* prc);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT BufferedPaintSetAlpha(ptrdiff_t hBufferedPaint, const(RECT)* prc, ubyte alpha);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+HRESULT BufferedPaintStopAllAnimations(HWND hwnd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+ptrdiff_t BeginBufferedAnimation(HWND hwnd, HDC hdcTarget, const(RECT)* prcTarget, BP_BUFFERFORMAT dwFormat, 
+                                 BP_PAINTPARAMS* pPaintParams, BP_ANIMATIONPARAMS* pAnimationParams, HDC* phdcFrom, 
+                                 HDC* phdcTo);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT EndBufferedAnimation(ptrdiff_t hbpAnimation, BOOL fUpdateTarget);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+BOOL BufferedPaintRenderAnimation(HWND hwnd, HDC hdcTarget);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UXTHEME.dll")
+BOOL IsCompositionActive();
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("UxTheme.dll")
+HRESULT GetThemeTransitionDuration(HTHEME hTheme, int iPartId, int iStateIdFrom, int iStateIdTo, int iPropId, 
+                                   uint* pdwDuration);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+BOOL CheckDlgButton(HWND hDlg, int nIDButton, DLG_BUTTON_CHECK_STATE uCheck);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+BOOL CheckRadioButton(HWND hDlg, int nIDFirstButton, int nIDLastButton, int nIDCheckButton);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+uint IsDlgButtonChecked(HWND hDlg, int nIDButton);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17763))], [])
+@DllImport("USER32.dll")
+HSYNTHETICPOINTERDEVICE CreateSyntheticPointerDevice(POINTER_INPUT_TYPE pointerType, uint maxCount, 
+                                                     POINTER_FEEDBACK_MODE mode);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("USER32.dll")
+BOOL RegisterTouchHitTestingWindow(HWND hwnd, uint value);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("USER32.dll")
+BOOL EvaluateProximityToRect(const(RECT)* controlBoundingBox, const(TOUCH_HIT_TESTING_INPUT)* pHitTestingInput, 
+                             TOUCH_HIT_TESTING_PROXIMITY_EVALUATION* pProximityEval);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("USER32.dll")
+BOOL EvaluateProximityToPolygon(uint numVertices, const(POINT)* controlPolygon, 
+                                const(TOUCH_HIT_TESTING_INPUT)* pHitTestingInput, 
+                                TOUCH_HIT_TESTING_PROXIMITY_EVALUATION* pProximityEval);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("USER32.dll")
+LRESULT PackTouchHitTestingProximityEvaluation(const(TOUCH_HIT_TESTING_INPUT)* pHitTestingInput, 
+                                               const(TOUCH_HIT_TESTING_PROXIMITY_EVALUATION)* pProximityEval);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("USER32.dll")
+BOOL GetWindowFeedbackSetting(HWND hwnd, FEEDBACK_TYPE feedback, uint dwFlags, uint* pSize, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* config);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("USER32.dll")
+BOOL SetWindowFeedbackSetting(HWND hwnd, FEEDBACK_TYPE feedback, uint dwFlags, uint size, 
+                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* configuration);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+int SetScrollPos(HWND hWnd, SCROLLBAR_CONSTANTS nBar, int nPos, BOOL bRedraw);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+BOOL SetScrollRange(HWND hWnd, SCROLLBAR_CONSTANTS nBar, int nMinPos, int nMaxPos, BOOL bRedraw);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+BOOL ShowScrollBar(HWND hWnd, SCROLLBAR_CONSTANTS wBar, BOOL bShow);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+BOOL EnableScrollBar(HWND hWnd, uint wSBflags, ENABLE_SCROLL_BAR_ARROWS wArrows);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+int DlgDirListA(HWND hDlg, PSTR lpPathSpec, int nIDListBox, int nIDStaticPath, DLG_DIR_LIST_FILE_TYPE uFileType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+int DlgDirListW(HWND hDlg, PWSTR lpPathSpec, int nIDListBox, int nIDStaticPath, DLG_DIR_LIST_FILE_TYPE uFileType);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+BOOL DlgDirSelectExA(HWND hwndDlg, PSTR lpString, int chCount, int idListBox);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+BOOL DlgDirSelectExW(HWND hwndDlg, PWSTR lpString, int chCount, int idListBox);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+int DlgDirListComboBoxA(HWND hDlg, PSTR lpPathSpec, int nIDComboBox, int nIDStaticPath, 
+                        DLG_DIR_LIST_FILE_TYPE uFiletype);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+int DlgDirListComboBoxW(HWND hDlg, PWSTR lpPathSpec, int nIDComboBox, int nIDStaticPath, 
+                        DLG_DIR_LIST_FILE_TYPE uFiletype);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+BOOL DlgDirSelectComboBoxExA(HWND hwndDlg, PSTR lpString, int cchOut, int idComboBox);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+BOOL DlgDirSelectComboBoxExW(HWND hwndDlg, PWSTR lpString, int cchOut, int idComboBox);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+int SetScrollInfo(HWND hwnd, SCROLLBAR_CONSTANTS nBar, SCROLLINFO* lpsi, BOOL redraw);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+BOOL GetComboBoxInfo(HWND hwndCombo, COMBOBOXINFO* pcbi);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+@DllImport("USER32.dll")
+uint GetListBoxInfo(HWND hwnd);
+
+//METH ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
+@DllImport("USER32.dll")
+BOOL RegisterPointerDeviceNotifications(HWND window, BOOL notifyRange);
+
+
+// Interfaces
+
+@GUID("7c476ba2-02b1-48f4-8048-b24619ddc058")
+struct ImageList;
+
+@GUID("46eb5926-582e-4017-9fdf-e8998daa0950")
+//INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nn-commoncontrols-iimagelist))], [])
+interface IImageList : IUnknown
+{
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-add))], [])
+    HRESULT Add(HBITMAP hbmImage, HBITMAP hbmMask, int* pi);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-replaceicon))], [])
+    HRESULT ReplaceIcon(int i, HICON hicon, int* pi);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-setoverlayimage))], [])
+    HRESULT SetOverlayImage(int iImage, int iOverlay);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-replace))], [])
+    HRESULT Replace(int i, HBITMAP hbmImage, HBITMAP hbmMask);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-addmasked))], [])
+    HRESULT AddMasked(HBITMAP hbmImage, COLORREF crMask, int* pi);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-draw))], [])
+    HRESULT Draw(IMAGELISTDRAWPARAMS* pimldp);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-remove))], [])
+    HRESULT Remove(int i);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-geticon))], [])
+    HRESULT GetIcon(int i, uint flags, HICON* picon);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-getimageinfo))], [])
+    HRESULT GetImageInfo(int i, IMAGEINFO* pImageInfo);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-copy))], [])
+    HRESULT Copy(int iDst, IUnknown punkSrc, int iSrc, uint uFlags);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-merge))], [])
+    HRESULT Merge(int i1, IUnknown punk2, int i2, int dx, int dy, const(GUID)* riid, void** ppv);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-clone))], [])
+    HRESULT Clone(const(GUID)* riid, void** ppv);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-getimagerect))], [])
+    HRESULT GetImageRect(int i, RECT* prc);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-geticonsize))], [])
+    HRESULT GetIconSize(int* cx, int* cy);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-seticonsize))], [])
+    HRESULT SetIconSize(int cx, int cy);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-getimagecount))], [])
+    HRESULT GetImageCount(int* pi);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-setimagecount))], [])
+    HRESULT SetImageCount(uint uNewCount);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-setbkcolor))], [])
+    HRESULT SetBkColor(COLORREF clrBk, COLORREF* pclr);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-getbkcolor))], [])
+    HRESULT GetBkColor(COLORREF* pclr);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-begindrag))], [])
+    HRESULT BeginDrag(int iTrack, int dxHotspot, int dyHotspot);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-enddrag))], [])
+    HRESULT EndDrag();
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-dragenter))], [])
+    HRESULT DragEnter(HWND hwndLock, int x, int y);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-dragleave))], [])
+    HRESULT DragLeave(HWND hwndLock);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-dragmove))], [])
+    HRESULT DragMove(int x, int y);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-setdragcursorimage))], [])
+    HRESULT SetDragCursorImage(IUnknown punk, int iDrag, int dxHotspot, int dyHotspot);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-dragshownolock))], [])
+    HRESULT DragShowNolock(BOOL fShow);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-getdragimage))], [])
+    HRESULT GetDragImage(POINT* ppt, POINT* pptHotspot, const(GUID)* riid, void** ppv);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-getitemflags))], [])
+    HRESULT GetItemFlags(int i, IMAGE_LIST_ITEM_FLAGS* dwFlags);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist-getoverlayimage))], [])
+    HRESULT GetOverlayImage(int iOverlay, int* piIndex);
+}
+
+@GUID("192b9d83-50fc-457b-90a0-2b82a8b5dae1")
+//INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
+//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nn-commoncontrols-iimagelist2))], [])
+interface IImageList2 : IImageList
+{
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-resize))], [])
+    HRESULT Resize(int cxNewIconSize, int cyNewIconSize);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-getoriginalsize))], [])
+    HRESULT GetOriginalSize(int iImage, uint dwFlags, int* pcx, int* pcy);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-setoriginalsize))], [])
+    HRESULT SetOriginalSize(int iImage, int cx, int cy);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-setcallback))], [])
+    HRESULT SetCallback(IUnknown punk);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-getcallback))], [])
+    HRESULT GetCallback(const(GUID)* riid, void** ppv);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-forceimagepresent))], [])
+    HRESULT ForceImagePresent(int iImage, uint dwFlags);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-discardimages))], [])
+    HRESULT DiscardImages(int iFirstImage, int iLastImage, uint dwFlags);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-preloadimages))], [])
+    HRESULT PreloadImages(IMAGELISTDRAWPARAMS* pimldp);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-getstatistics))], [])
+    HRESULT GetStatistics(IMAGELISTSTATS* pils);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-initialize))], [])
+    HRESULT Initialize(int cx, int cy, IMAGELIST_CREATION_FLAGS flags, int cInitial, int cGrow);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-replace2))], [])
+    HRESULT Replace2(int i, HBITMAP hbmImage, HBITMAP hbmMask, IUnknown punk, uint dwFlags);
+//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nf-commoncontrols-iimagelist2-replacefromimagelist))], [])
+    HRESULT ReplaceFromImageList(int i, IImageList pil, int iSrc, IUnknown punk, uint dwFlags);
+}
+
+
+// GUIDs
+
+const GUID CLSID_ImageList = GUIDOF!ImageList;
+
+const GUID IID_IImageList  = GUIDOF!IImageList;
+const GUID IID_IImageList2 = GUIDOF!IImageList2;

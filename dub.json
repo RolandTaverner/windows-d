@@ -43,7 +43,7 @@
             "targetName": "windows",
             "targetPath": "bin/$BUILD_TYPE",
             "sourcePaths": [
-                "out/windows"
+                "out"
             ],
             "importPaths": [
                 "out"
